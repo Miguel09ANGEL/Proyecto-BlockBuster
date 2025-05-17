@@ -58,8 +58,10 @@ public class ConfirmarCompra extends JFrame {
 	    		JButton btnSi = new JButton("Si");
 	    		btnSi.addActionListener(new ActionListener() {
 	    			public void actionPerformed(ActionEvent e) {
-	    				new DetallesCompra();
+	    				panelCentral.setVisible(false);
 	    				dispose();
+	    				new DetallesCompra();
+
 	    			}
 	    		});
 	    		btnSi.setBackground(Color.decode("#6D91B9")); // Color de fondo (azul oscuro)

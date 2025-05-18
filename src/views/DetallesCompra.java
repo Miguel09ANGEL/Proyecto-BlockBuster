@@ -13,7 +13,7 @@ public class DetallesCompra extends JFrame {
 
     public DetallesCompra() {
         // Configuración básica de la ventana
-        setTitle("Detalles Compra");
+        setTitle("Detalles de Compra");
         setSize(1024, 576);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
@@ -31,89 +31,65 @@ public class DetallesCompra extends JFrame {
         layeredPane.add(panelCentral, JLayeredPane.PALETTE_LAYER);
         
         //Logotipo
-        ImageIcon iconoOriginal = new ImageIcon(getClass().getResource("/images/Block.png"));
-        Image imagenEscalada = iconoOriginal.getImage().getScaledInstance(70, 70, Image.SCALE_SMOOTH);
+        ImageIcon iconoOriginal = new ImageIcon(getClass().getResource("/images/contra.png"));
+        Image imagenEscalada = iconoOriginal.getImage().getScaledInstance(100, 70, Image.SCALE_SMOOTH);
         
         JLabel iniciar = new JLabel("DETALLES DE VIDEOJUEGO");
 		iniciar.setSize(285, 42);
-		iniciar.setLocation(366, 32);
+		iniciar.setLocation(442, 32);
 		iniciar.setHorizontalAlignment(JLabel.CENTER);
 		iniciar.setFont(new Font("Calibri", Font.BOLD, 24));
 		panelCentral.add(iniciar);
 	    		
-	    		JLabel iniciar_1_1 = new JLabel("1988");
-	    		iniciar_1_1.setHorizontalAlignment(SwingConstants.LEFT);
-	    		iniciar_1_1.setFont(new Font("Calibri", Font.BOLD, 18));
-	    		iniciar_1_1.setBounds(55, 155, 70, 42);
-	    		panelCentral.add(iniciar_1_1);
-	    		
 	    		JLabel iniciar_1_1_2_1 = new JLabel("Miguel Garcia");
 	    		iniciar_1_1_2_1.setHorizontalAlignment(SwingConstants.CENTER);
-	    		iniciar_1_1_2_1.setFont(new Font("Calibri", Font.BOLD, 14));
-	    		iniciar_1_1_2_1.setBounds(428, 85, 97, 42);
+	    		iniciar_1_1_2_1.setFont(new Font("Calibri", Font.BOLD, 18));
+	    		iniciar_1_1_2_1.setBounds(226, 102, 112, 42);
 	    		panelCentral.add(iniciar_1_1_2_1);
 
 	    		
-	    		JButton btnCancelar = new JButton("MENU DE RENTA");
+	    		JButton btnCancelar = new JButton("REGRESAR");
 	    		btnCancelar.addActionListener(new ActionListener() {
 	    			public void actionPerformed(ActionEvent e) {
-	    				new AdministradorRentaCompra();
+	    				new Compra();
 	    				dispose();
 	    			}
 	    		});
 	    		btnCancelar.setBackground(Color.decode("#B82F2F")); // Color de fondo (azul oscuro)
 		    	btnCancelar.setForeground(Color.WHITE);
-	    		btnCancelar.setBounds(450, 406, 183, 33);
+	    		btnCancelar.setBounds(185, 406, 183, 33);
 	    		panelCentral.add(btnCancelar);
 	    		
 	    		JButton btnConfirmar = new JButton("Descargar (PDF)");
 	    		btnConfirmar.addActionListener(new ActionListener() {
 	    			public void actionPerformed(ActionEvent e) {
 	    				
-	    				 new AvisoPdfCompra();
-	    				 dispose();
+	    				new Confirma_14();
+	    				 
 	    			}
 	    		});
 	    		btnConfirmar.setBackground(Color.decode("#263C54")); // Color de fondo (azul oscuro)
 		    	btnConfirmar.setForeground(Color.WHITE);
-	    		btnConfirmar.setBounds(682, 406, 183, 33);
+	    		btnConfirmar.setBounds(614, 406, 183, 33);
 	    		panelCentral.add(btnConfirmar);
 	    		
-	    		ImageIcon iconoOrigina = new ImageIcon(getClass().getResource("/images/Block.png"));
-	            Image imagen = iconoOriginal.getImage().getScaledInstance(70, 70, Image.SCALE_SMOOTH);
+	    		ImageIcon iconoOrigina = new ImageIcon(getClass().getResource("/images/Contra.png"));
+	            Image imagen = iconoOriginal.getImage().getScaledInstance(180, 120, Image.SCALE_SMOOTH);
 	            JLabel logo = new JLabel(new ImageIcon(imagen));
-	            logo.setBounds(55, 32, 70, 70); //posicion
+	            logo.setBounds(32, 32, 184, 112); //posicion
 	            panelCentral.add(logo);
 	            
 	            JLabel lblContra = new JLabel("CONTRA");
 	            lblContra.setHorizontalAlignment(SwingConstants.LEFT);
 	            lblContra.setFont(new Font("Calibri", Font.BOLD, 24));
-	            lblContra.setBounds(55, 127, 135, 42);
+	            lblContra.setBounds(32, 141, 135, 42);
 	            panelCentral.add(lblContra);
 	            
-	            JLabel iniciar_1_1_1 = new JLabel("Clasificación: Mayores 18");
-	            iniciar_1_1_1.setHorizontalAlignment(SwingConstants.LEFT);
-	            iniciar_1_1_1.setFont(new Font("Calibri", Font.BOLD, 18));
-	            iniciar_1_1_1.setBounds(55, 191, 190, 42);
-	            panelCentral.add(iniciar_1_1_1);
-	            
-	            JLabel iniciar_1_1_1_1 = new JLabel("Distribuidores: Konami");
-	            iniciar_1_1_1_1.setHorizontalAlignment(SwingConstants.LEFT);
-	            iniciar_1_1_1_1.setFont(new Font("Calibri", Font.BOLD, 18));
-	            iniciar_1_1_1_1.setBounds(55, 219, 190, 42);
-	            panelCentral.add(iniciar_1_1_1_1);
-	            
-	            JLabel iniciar_1_1_1_1_1 = new JLabel("Precio: $100.00 MXN");
-	            iniciar_1_1_1_1_1.setHorizontalAlignment(SwingConstants.LEFT);
-	            iniciar_1_1_1_1_1.setFont(new Font("Calibri", Font.BOLD, 18));
-	            iniciar_1_1_1_1_1.setBounds(55, 258, 190, 42);
-	            panelCentral.add(iniciar_1_1_1_1_1);
-	            
-	            JLabel iniciar_1_1_1_1_2_2_1 = new JLabel("$800.00MX");
+	            JLabel iniciar_1_1_1_1_2_2_1 = new JLabel("$800.00 MXN");
 	            iniciar_1_1_1_1_2_2_1.setForeground(new Color(153, 0, 0));
 	            iniciar_1_1_1_1_2_2_1.setHorizontalAlignment(SwingConstants.LEFT);
 	            iniciar_1_1_1_1_2_2_1.setFont(new Font("Calibri", Font.BOLD, 18));
-	            iniciar_1_1_1_1_2_2_1.setBounds(743, 341, 126, 42);
+	            iniciar_1_1_1_1_2_2_1.setBounds(719, 359, 126, 42);
 	            panelCentral.add(iniciar_1_1_1_1_2_2_1);
 	            
 	            JTextArea txtrTotalivaIncluidoEn = new JTextArea("Total(IVA incluído, en caso de ser aplicable):");
@@ -122,104 +98,146 @@ public class DetallesCompra extends JFrame {
 	            txtrTotalivaIncluidoEn.setLineWrap(true);
 	            txtrTotalivaIncluidoEn.setFont(new Font("Calibri", Font.BOLD, 20));
 	            txtrTotalivaIncluidoEn.setEditable(false);
-	            txtrTotalivaIncluidoEn.setBounds(648, 324, 298, 54);
+	            txtrTotalivaIncluidoEn.setBounds(628, 341, 298, 54);
 	            panelCentral.add(txtrTotalivaIncluidoEn);
-	            
-	            JLabel iniciar_1_1_1_1_1_1 = new JLabel("Folio: 0002");
-	            iniciar_1_1_1_1_1_1.setHorizontalAlignment(SwingConstants.LEFT);
-	            iniciar_1_1_1_1_1_1.setFont(new Font("Calibri", Font.BOLD, 18));
-	            iniciar_1_1_1_1_1_1.setBounds(55, 305, 190, 42);
-	            panelCentral.add(iniciar_1_1_1_1_1_1);
-	            
-	            JLabel iniciar_1_1_1_1_1_1_1 = new JLabel("Tipo: Renta");
-	            iniciar_1_1_1_1_1_1_1.setHorizontalAlignment(SwingConstants.LEFT);
-	            iniciar_1_1_1_1_1_1_1.setFont(new Font("Calibri", Font.BOLD, 18));
-	            iniciar_1_1_1_1_1_1_1.setBounds(55, 354, 190, 42);
-	            panelCentral.add(iniciar_1_1_1_1_1_1_1);
 	            
 	            JLabel iniciar_1_1_2 = new JLabel("Cliente:");
 	            iniciar_1_1_2.setHorizontalAlignment(SwingConstants.LEFT);
 	            iniciar_1_1_2.setFont(new Font("Calibri", Font.BOLD, 18));
-	            iniciar_1_1_2.setBounds(376, 85, 70, 42);
+	            iniciar_1_1_2.setBounds(256, 85, 70, 42);
 	            panelCentral.add(iniciar_1_1_2);
 	            
 	            JLabel iniciar_1_1_2_2 = new JLabel("Correo:");
 	            iniciar_1_1_2_2.setHorizontalAlignment(SwingConstants.LEFT);
 	            iniciar_1_1_2_2.setFont(new Font("Calibri", Font.BOLD, 18));
-	            iniciar_1_1_2_2.setBounds(376, 113, 70, 42);
+	            iniciar_1_1_2_2.setBounds(503, 85, 70, 42);
 	            panelCentral.add(iniciar_1_1_2_2);
 	            
 	            JLabel iniciar_1_1_2_1_1 = new JLabel("mga@gmail.com");
 	            iniciar_1_1_2_1_1.setHorizontalAlignment(SwingConstants.CENTER);
-	            iniciar_1_1_2_1_1.setFont(new Font("Calibri", Font.BOLD, 14));
-	            iniciar_1_1_2_1_1.setBounds(428, 113, 112, 42);
+	            iniciar_1_1_2_1_1.setFont(new Font("Calibri", Font.BOLD, 18));
+	            iniciar_1_1_2_1_1.setBounds(466, 102, 149, 42);
 	            panelCentral.add(iniciar_1_1_2_1_1);
 	            
-	            JLabel iniciar_1_1_2_2_1 = new JLabel("Vigencia:");
-	            iniciar_1_1_2_2_1.setHorizontalAlignment(SwingConstants.LEFT);
-	            iniciar_1_1_2_2_1.setFont(new Font("Calibri", Font.BOLD, 18));
-	            iniciar_1_1_2_2_1.setBounds(376, 155, 70, 42);
-	            panelCentral.add(iniciar_1_1_2_2_1);
-	            
-	            JLabel iniciar_1_1_2_1_1_1 = new JLabel("15/02/2025");
-	            iniciar_1_1_2_1_1_1.setHorizontalAlignment(SwingConstants.CENTER);
-	            iniciar_1_1_2_1_1_1.setFont(new Font("Calibri", Font.BOLD, 18));
-	            iniciar_1_1_2_1_1_1.setBounds(352, 185, 112, 33);
-	            panelCentral.add(iniciar_1_1_2_1_1_1);
-	            
-	            JLabel iniciar_1_1_2_2_1_1 = new JLabel("Fecha de renta");
+	            JLabel iniciar_1_1_2_2_1_1 = new JLabel("Fecha de compra:");
 	            iniciar_1_1_2_2_1_1.setHorizontalAlignment(SwingConstants.LEFT);
 	            iniciar_1_1_2_2_1_1.setFont(new Font("Calibri", Font.BOLD, 18));
-	            iniciar_1_1_2_2_1_1.setBounds(352, 219, 112, 42);
+	            iniciar_1_1_2_2_1_1.setBounds(426, 204, 147, 42);
 	            panelCentral.add(iniciar_1_1_2_2_1_1);
-	            
-	            JLabel iniciar_1_1_2_1_1_1_1 = new JLabel("15/02/2025");
-	            iniciar_1_1_2_1_1_1_1.setHorizontalAlignment(SwingConstants.CENTER);
-	            iniciar_1_1_2_1_1_1_1.setFont(new Font("Calibri", Font.BOLD, 18));
-	            iniciar_1_1_2_1_1_1_1.setBounds(352, 249, 112, 33);
-	            panelCentral.add(iniciar_1_1_2_1_1_1_1);
-	            
-	            JLabel iniciar_1_1_2_2_1_1_1 = new JLabel("Límite de devolución");
-	            iniciar_1_1_2_2_1_1_1.setHorizontalAlignment(SwingConstants.LEFT);
-	            iniciar_1_1_2_2_1_1_1.setFont(new Font("Calibri", Font.BOLD, 18));
-	            iniciar_1_1_2_2_1_1_1.setBounds(331, 285, 157, 42);
-	            panelCentral.add(iniciar_1_1_2_2_1_1_1);
-	            
-	            JLabel iniciar_1_1_2_1_1_1_1_1 = new JLabel("15/02/2025");
-	            iniciar_1_1_2_1_1_1_1_1.setHorizontalAlignment(SwingConstants.CENTER);
-	            iniciar_1_1_2_1_1_1_1_1.setFont(new Font("Calibri", Font.BOLD, 18));
-	            iniciar_1_1_2_1_1_1_1_1.setBounds(352, 318, 112, 33);
-	            panelCentral.add(iniciar_1_1_2_1_1_1_1_1);
 	            
 	            JLabel iniciar_1_1_2_2_1_2 = new JLabel("Información de pago");
 	            iniciar_1_1_2_2_1_2.setHorizontalAlignment(SwingConstants.LEFT);
 	            iniciar_1_1_2_2_1_2.setFont(new Font("Calibri", Font.BOLD, 18));
-	            iniciar_1_1_2_2_1_2.setBounds(729, 141, 167, 42);
+	            iniciar_1_1_2_2_1_2.setBounds(700, 141, 167, 42);
 	            panelCentral.add(iniciar_1_1_2_2_1_2);
 	            
-	            JLabel iniciar_1_1_2_1_1_2 = new JLabel("Producto: $100.00 MXN");
-	            iniciar_1_1_2_1_1_2.setHorizontalAlignment(SwingConstants.LEFT);
-	            iniciar_1_1_2_1_1_2.setFont(new Font("Calibri", Font.BOLD, 14));
-	            iniciar_1_1_2_1_1_2.setBounds(729, 181, 167, 42);
-	            panelCentral.add(iniciar_1_1_2_1_1_2);
+	            JLabel iniciar_1_1_2_2_2 = new JLabel("Tipo:");
+	            iniciar_1_1_2_2_2.setHorizontalAlignment(SwingConstants.CENTER);
+	            iniciar_1_1_2_2_2.setFont(new Font("Calibri", Font.BOLD, 18));
+	            iniciar_1_1_2_2_2.setBounds(772, 85, 70, 42);
+	            panelCentral.add(iniciar_1_1_2_2_2);
 	            
-	            JLabel iniciar_1_1_2_1_1_2_1 = new JLabel("IVA:$8");
-	            iniciar_1_1_2_1_1_2_1.setHorizontalAlignment(SwingConstants.LEFT);
-	            iniciar_1_1_2_1_1_2_1.setFont(new Font("Calibri", Font.BOLD, 14));
-	            iniciar_1_1_2_1_1_2_1.setBounds(729, 205, 167, 42);
-	            panelCentral.add(iniciar_1_1_2_1_1_2_1);
+	            JLabel iniciar_1_1_2_1_1_3 = new JLabel("Renta");
+	            iniciar_1_1_2_1_1_3.setHorizontalAlignment(SwingConstants.CENTER);
+	            iniciar_1_1_2_1_1_3.setFont(new Font("Calibri", Font.BOLD, 18));
+	            iniciar_1_1_2_1_1_3.setBounds(755, 102, 112, 42);
+	            panelCentral.add(iniciar_1_1_2_1_1_3);
 	            
-	            JLabel iniciar_1_1_2_1_1_2_1_1 = new JLabel("Subtotal: $108.00 MXN");
-	            iniciar_1_1_2_1_1_2_1_1.setHorizontalAlignment(SwingConstants.LEFT);
-	            iniciar_1_1_2_1_1_2_1_1.setFont(new Font("Calibri", Font.BOLD, 14));
-	            iniciar_1_1_2_1_1_2_1_1.setBounds(729, 245, 167, 42);
-	            panelCentral.add(iniciar_1_1_2_1_1_2_1_1);
+	            JLabel iniciar_1_1_2_2_1_3 = new JLabel("Clasificación:");
+	            iniciar_1_1_2_2_1_3.setHorizontalAlignment(SwingConstants.LEFT);
+	            iniciar_1_1_2_2_1_3.setFont(new Font("Calibri", Font.BOLD, 18));
+	            iniciar_1_1_2_2_1_3.setBounds(188, 204, 112, 42);
+	            panelCentral.add(iniciar_1_1_2_2_1_3);
 	            
-	            JLabel iniciar_1_1_2_1_1_2_1_2 = new JLabel("Descuento: 7%");
-	            iniciar_1_1_2_1_1_2_1_2.setHorizontalAlignment(SwingConstants.LEFT);
-	            iniciar_1_1_2_1_1_2_1_2.setFont(new Font("Calibri", Font.BOLD, 14));
-	            iniciar_1_1_2_1_1_2_1_2.setBounds(729, 274, 167, 42);
-	            panelCentral.add(iniciar_1_1_2_1_1_2_1_2);
+	            JLabel iniciar_1_1_2_1_2 = new JLabel("E");
+	            iniciar_1_1_2_1_2.setHorizontalAlignment(SwingConstants.CENTER);
+	            iniciar_1_1_2_1_2.setFont(new Font("Calibri", Font.BOLD, 18));
+	            iniciar_1_1_2_1_2.setBounds(185, 232, 97, 42);
+	            panelCentral.add(iniciar_1_1_2_1_2);
+	            
+	            JLabel iniciar_1_1_2_2_1_4 = new JLabel("Distribuidores:");
+	            iniciar_1_1_2_2_1_4.setHorizontalAlignment(SwingConstants.LEFT);
+	            iniciar_1_1_2_2_1_4.setFont(new Font("Calibri", Font.BOLD, 18));
+	            iniciar_1_1_2_2_1_4.setBounds(188, 285, 112, 42);
+	            panelCentral.add(iniciar_1_1_2_2_1_4);
+	            
+	            JLabel iniciar_1_1_2_1_3 = new JLabel("Konami");
+	            iniciar_1_1_2_1_3.setHorizontalAlignment(SwingConstants.CENTER);
+	            iniciar_1_1_2_1_3.setFont(new Font("Calibri", Font.BOLD, 18));
+	            iniciar_1_1_2_1_3.setBounds(198, 309, 97, 42);
+	            panelCentral.add(iniciar_1_1_2_1_3);
+	            
+	            JLabel iniciar_1_1_2_1_2_1 = new JLabel("15/02/2025");
+	            iniciar_1_1_2_1_2_1.setHorizontalAlignment(SwingConstants.CENTER);
+	            iniciar_1_1_2_1_2_1.setFont(new Font("Calibri", Font.BOLD, 18));
+	            iniciar_1_1_2_1_2_1.setBounds(436, 232, 97, 42);
+	            panelCentral.add(iniciar_1_1_2_1_2_1);
+	            
+	            JLabel iniciar_1_1_2_1_4 = new JLabel("Cantidad:");
+	            iniciar_1_1_2_1_4.setHorizontalAlignment(SwingConstants.LEFT);
+	            iniciar_1_1_2_1_4.setFont(new Font("Calibri", Font.BOLD, 14));
+	            iniciar_1_1_2_1_4.setBounds(700, 174, 57, 42);
+	            panelCentral.add(iniciar_1_1_2_1_4);
+	            
+	            JLabel iniciar_1_1_2_1_4_1 = new JLabel("Producto:");
+	            iniciar_1_1_2_1_4_1.setHorizontalAlignment(SwingConstants.LEFT);
+	            iniciar_1_1_2_1_4_1.setFont(new Font("Calibri", Font.BOLD, 14));
+	            iniciar_1_1_2_1_4_1.setBounds(700, 205, 70, 42);
+	            panelCentral.add(iniciar_1_1_2_1_4_1);
+	            
+	            JLabel iniciar_1_1_2_1_4_1_1 = new JLabel("IVA:");
+	            iniciar_1_1_2_1_4_1_1.setHorizontalAlignment(SwingConstants.LEFT);
+	            iniciar_1_1_2_1_4_1_1.setFont(new Font("Calibri", Font.BOLD, 14));
+	            iniciar_1_1_2_1_4_1_1.setBounds(700, 232, 57, 42);
+	            panelCentral.add(iniciar_1_1_2_1_4_1_1);
+	            
+	            JLabel iniciar_1_1_2_1_4_1_2 = new JLabel("Subtotal:");
+	            iniciar_1_1_2_1_4_1_2.setHorizontalAlignment(SwingConstants.LEFT);
+	            iniciar_1_1_2_1_4_1_2.setFont(new Font("Calibri", Font.BOLD, 14));
+	            iniciar_1_1_2_1_4_1_2.setBounds(700, 258, 57, 42);
+	            panelCentral.add(iniciar_1_1_2_1_4_1_2);
+	            
+	            JLabel iniciar_1_1_2_1_4_1_2_1 = new JLabel("Descuento:");
+	            iniciar_1_1_2_1_4_1_2_1.setHorizontalAlignment(SwingConstants.LEFT);
+	            iniciar_1_1_2_1_4_1_2_1.setFont(new Font("Calibri", Font.BOLD, 14));
+	            iniciar_1_1_2_1_4_1_2_1.setBounds(700, 285, 70, 42);
+	            panelCentral.add(iniciar_1_1_2_1_4_1_2_1);
+	            
+	            JLabel iniciar_1_1_2_1_4_2 = new JLabel("1");
+	            iniciar_1_1_2_1_4_2.setHorizontalAlignment(SwingConstants.LEFT);
+	            iniciar_1_1_2_1_4_2.setFont(new Font("Calibri", Font.BOLD, 14));
+	            iniciar_1_1_2_1_4_2.setBounds(760, 174, 57, 42);
+	            panelCentral.add(iniciar_1_1_2_1_4_2);
+	            
+	            JLabel iniciar_1_1_2_1_4_2_1 = new JLabel("100.00 MXN");
+	            iniciar_1_1_2_1_4_2_1.setHorizontalAlignment(SwingConstants.LEFT);
+	            iniciar_1_1_2_1_4_2_1.setFont(new Font("Calibri", Font.BOLD, 14));
+	            iniciar_1_1_2_1_4_2_1.setBounds(760, 204, 85, 42);
+	            panelCentral.add(iniciar_1_1_2_1_4_2_1);
+	            
+	            JLabel iniciar_1_1_2_1_4_2_2 = new JLabel("$8");
+	            iniciar_1_1_2_1_4_2_2.setHorizontalAlignment(SwingConstants.LEFT);
+	            iniciar_1_1_2_1_4_2_2.setFont(new Font("Calibri", Font.BOLD, 14));
+	            iniciar_1_1_2_1_4_2_2.setBounds(728, 232, 57, 42);
+	            panelCentral.add(iniciar_1_1_2_1_4_2_2);
+	            
+	            JLabel iniciar_1_1_2_1_4_2_3 = new JLabel("$108.00 MXN");
+	            iniciar_1_1_2_1_4_2_3.setHorizontalAlignment(SwingConstants.LEFT);
+	            iniciar_1_1_2_1_4_2_3.setFont(new Font("Calibri", Font.BOLD, 14));
+	            iniciar_1_1_2_1_4_2_3.setBounds(760, 258, 78, 42);
+	            panelCentral.add(iniciar_1_1_2_1_4_2_3);
+	            
+	            JLabel iniciar_1_1_2_1_4_2_4 = new JLabel("7%");
+	            iniciar_1_1_2_1_4_2_4.setHorizontalAlignment(SwingConstants.LEFT);
+	            iniciar_1_1_2_1_4_2_4.setFont(new Font("Calibri", Font.BOLD, 14));
+	            iniciar_1_1_2_1_4_2_4.setBounds(770, 285, 57, 42);
+	            panelCentral.add(iniciar_1_1_2_1_4_2_4);
+	            
+	            JLabel iniciar_1_1_2_1_4_3 = new JLabel("1987");
+	            iniciar_1_1_2_1_4_3.setHorizontalAlignment(SwingConstants.LEFT);
+	            iniciar_1_1_2_1_4_3.setFont(new Font("Calibri", Font.BOLD, 18));
+	            iniciar_1_1_2_1_4_3.setBounds(42, 174, 57, 42);
+	            panelCentral.add(iniciar_1_1_2_1_4_3);
 
         
 

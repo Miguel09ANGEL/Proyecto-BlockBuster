@@ -19,6 +19,7 @@ public class AgregarJuego extends JFrame {
 	private JTextField textField_7;
 	private JTextField textField_8;
 	private JTextField textField_9;
+	private JTextField textField_10;
 
     public AgregarJuego() {
         // Configuración básica de la ventana
@@ -61,7 +62,7 @@ public class AgregarJuego extends JFrame {
 	    		);
 	    		iniciar_1.setHorizontalAlignment(SwingConstants.CENTER);
 	    		iniciar_1.setFont(new Font("Calibri", Font.BOLD, 14));
-	    		iniciar_1.setBounds(55, 108, 140, 42); // Ajusta tamaño si es necesario
+	    		iniciar_1.setBounds(55, 108, 164, 42); // Ajusta tamaño si es necesario
 	    		panelCentral.add(iniciar_1);
 	    		
 	    		JLabel iniciar_1_1 = new JLabel("Año de lanzamiento :");
@@ -71,7 +72,7 @@ public class AgregarJuego extends JFrame {
 	    		panelCentral.add(iniciar_1_1);
 	    		
 	    		JLabel iniciar_1_1_1 = new JLabel("Género:");
-	    		iniciar_1_1_1.setHorizontalAlignment(SwingConstants.CENTER);
+	    		iniciar_1_1_1.setHorizontalAlignment(SwingConstants.LEFT);
 	    		iniciar_1_1_1.setFont(new Font("Calibri", Font.BOLD, 14));
 	    		iniciar_1_1_1.setBounds(55, 259, 140, 42);
 	    		panelCentral.add(iniciar_1_1_1);
@@ -155,7 +156,7 @@ public class AgregarJuego extends JFrame {
 	    		panelCentral.add(iniciar_1_1_2_2);
 	    		
 	    		JLabel iniciar_1_1_3 = new JLabel("Existencias disponibles:");
-	    		iniciar_1_1_3.setHorizontalAlignment(SwingConstants.CENTER);
+	    		iniciar_1_1_3.setHorizontalAlignment(SwingConstants.LEFT);
 	    		iniciar_1_1_3.setFont(new Font("Calibri", Font.BOLD, 14));
 	    		iniciar_1_1_3.setBounds(289, 252, 153, 42);
 	    		panelCentral.add(iniciar_1_1_3);
@@ -178,12 +179,8 @@ public class AgregarJuego extends JFrame {
 	    		iniciar_1_1_2_2_1.setBounds(619, 220, 97, 42);
 	    		panelCentral.add(iniciar_1_1_2_2_1);
 	    		
-	    		JButton btnNewButton = new JButton("New button");
-	    		btnNewButton.setBounds(619, 142, 343, 86);
-	    		panelCentral.add(btnNewButton);
-	    		
 	    		JLabel iniciar_1_1_2_2_1_1 = new JLabel("Acerca de:");
-	    		iniciar_1_1_2_2_1_1.setHorizontalAlignment(SwingConstants.CENTER);
+	    		iniciar_1_1_2_2_1_1.setHorizontalAlignment(SwingConstants.LEFT);
 	    		iniciar_1_1_2_2_1_1.setFont(new Font("Calibri", Font.BOLD, 14));
 	    		iniciar_1_1_2_2_1_1.setBounds(619, 108, 97, 42);
 	    		panelCentral.add(iniciar_1_1_2_2_1_1);
@@ -191,14 +188,33 @@ public class AgregarJuego extends JFrame {
 	    		JButton btnCancelar = new JButton("Cancelar");
 	    		btnCancelar.setBackground(Color.decode("#B82F2F")); // Color de fondo (azul oscuro)
 		    	btnCancelar.setForeground(Color.WHITE);
-	    		btnCancelar.setBounds(175, 406, 183, 33);
+	    		btnCancelar.setBounds(259, 417, 183, 33);
+    			btnCancelar.addActionListener(new ActionListener() {
+    			public void actionPerformed(ActionEvent e) {
+    				new AdministradorJuegos();
+    				dispose();
+			
+    				}
+    			});
 	    		panelCentral.add(btnCancelar);
 	    		
 	    		JButton btnConfirmar = new JButton("Confirmar");
 	    		btnConfirmar.setBackground(Color.decode("#263C54")); // Color de fondo (azul oscuro)
 		    	btnConfirmar.setForeground(Color.WHITE);
-	    		btnConfirmar.setBounds(533, 406, 183, 33);
+	    		btnConfirmar.setBounds(561, 417, 183, 33);
+	    		btnConfirmar.addActionListener(new ActionListener() {
+	    			public void actionPerformed(ActionEvent e) {
+	    				new Confirma_9();
+	    				
+	    			}
+	    		});
 	    		panelCentral.add(btnConfirmar);
+	    		
+	    		textField_10 = new JTextField();
+	    		textField_10.setColumns(10);
+	    		textField_10.setBackground(new Color(217, 217, 217));
+	    		textField_10.setBounds(619, 145, 343, 82);
+	    		panelCentral.add(textField_10);
 
         
 

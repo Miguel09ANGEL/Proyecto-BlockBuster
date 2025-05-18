@@ -19,6 +19,7 @@ public class PanelAdministrador extends JFrame {
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
+    	
         // Configuración básica de la ventana
         setTitle("Panel Administrador");
         setSize(1024, 576);
@@ -101,6 +102,26 @@ public class PanelAdministrador extends JFrame {
 	    	    }
 	    	});
 	    	panelCentral.add(acceder);
+	    	
+	    	JLabel lblagregarNuevoAdministrador = new JLabel("¿Agregar nuevo administrador?");
+	    	lblagregarNuevoAdministrador.setHorizontalAlignment(SwingConstants.CENTER);
+	    	lblagregarNuevoAdministrador.setFont(new Font("SansSerif", Font.BOLD, 14));
+	    	lblagregarNuevoAdministrador.setBounds(27, 410, 224, 26);
+	    	panelCentral.add(lblagregarNuevoAdministrador);
+	    	
+	    	JButton btnAgregarAqui = new JButton("Agregar aqui");
+	    	btnAgregarAqui.setForeground(Color.BLACK);
+	    	btnAgregarAqui.setFont(new Font("Calibri", Font.BOLD, 15));
+	    	btnAgregarAqui.setBackground(Color.decode("#F2F2F2"));
+	    	btnAgregarAqui.setBounds(247, 414, 111, 26);
+	    	panelCentral.add(btnAgregarAqui);
+	    	btnAgregarAqui.addActionListener(new ActionListener() {
+	    	public void actionPerformed(ActionEvent e) {
+    	    	new CodigoRegistro();         // Abre la segunda ventana
+                dispose();  
+    	    	}
+    		});
+    		panelCentral.add(btnAgregarAqui);
 
         
 

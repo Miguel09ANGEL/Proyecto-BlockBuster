@@ -38,7 +38,10 @@ public class AdministradorRentaCompra extends JFrame {
         btnClientes.setBackground(Color.decode("#263C54"));
         btnClientes.setForeground(Color.WHITE);
         btnClientes.setBounds(10, 11, 237, 100); // x, y, ancho, alto
-
+        btnClientes.addActionListener(e -> {
+            new AdministradorCliente();         // Abre la segunda ventana
+            dispose();            // Cierra la ventana actual
+        });
         panelIzq.add(btnClientes);
         
         JButton btnVideojuegos = new JButton("VIDEOJUEGOS");
@@ -59,12 +62,16 @@ public class AdministradorRentaCompra extends JFrame {
         btnRentaYCompra.setBounds(10, 242, 237, 100);
         panelIzq.add(btnRentaYCompra);
         
-        JButton btnClientes_3 = new JButton("NUEVA OPERACIÓN");
-        btnClientes_3.setForeground(Color.WHITE);
-        btnClientes_3.setFont(new Font("Calibri", Font.BOLD, 16));
-        btnClientes_3.setBackground(new Color(38, 60, 84));
-        btnClientes_3.setBounds(10, 364, 237, 100);
-        panelIzq.add(btnClientes_3);
+        JButton btnNuevaOperacion = new JButton("NUEVA OPERACIÓN");
+        btnNuevaOperacion.setForeground(Color.WHITE);
+        btnNuevaOperacion.setFont(new Font("Calibri", Font.BOLD, 16));
+        btnNuevaOperacion.setBackground(new Color(38, 60, 84));
+        btnNuevaOperacion.setBounds(10, 364, 237, 100);
+        btnNuevaOperacion.addActionListener(e -> {
+            new NuevaOperacion();         // Abre la segunda ventana
+            dispose();            // Cierra la ventana actual
+        });
+        panelIzq.add(btnNuevaOperacion);
 
         // 2. PANEL GRIS CENTRAl
         JPanel panelCentral = new JPanel();
@@ -80,7 +87,7 @@ public class AdministradorRentaCompra extends JFrame {
         logo.setBounds(361, 31, 70, 70); //posicion
         panelCentral.add(logo); 
         
-        JLabel iniciar = new JLabel("Renta y compra");
+        JLabel iniciar = new JLabel("BIENVENIDO/A AL PANEL DE RENTA Y COMPRA");
 		iniciar.setSize(548, 60);
 		iniciar.setLocation(119, 112);
 		iniciar.setHorizontalAlignment(JLabel.CENTER);
@@ -98,7 +105,7 @@ public class AdministradorRentaCompra extends JFrame {
 	            dispose();            // Cierra la ventana actual
 	        });  
 	        
-	        JButton btnCompra = new JButton("Compra");
+	        JButton btnCompra = new JButton("Venta");
 	        btnCompra.setForeground(Color.WHITE);
 	        btnCompra.setFont(new Font("Calibri", Font.BOLD, 16));
 	        btnCompra.setBackground(new Color(38, 60, 84));

@@ -35,6 +35,10 @@ public class Renta extends JFrame {
         btnClientes.setBackground(Color.decode("#263C54"));
         btnClientes.setForeground(Color.WHITE);
         btnClientes.setBounds(10, 11, 237, 100);
+        btnClientes.addActionListener(e -> {
+            new AdministradorCliente();         // Abre la segunda ventana
+            dispose();            // Cierra la ventana actual
+        });
         panelIzq.add(btnClientes);
         
         JButton btnVideojuegos = new JButton("VIDEOJUEGOS");
@@ -53,14 +57,22 @@ public class Renta extends JFrame {
         btnRentaYCompra.setFont(new Font("Calibri", Font.BOLD, 16));
         btnRentaYCompra.setBackground(new Color(38, 60, 84));
         btnRentaYCompra.setBounds(10, 242, 237, 100);
+        btnRentaYCompra.addActionListener(e -> {
+            new AdministradorRentaCompra();         // Abre la segunda ventana
+            dispose();            // Cierra la ventana actual
+        });
         panelIzq.add(btnRentaYCompra);
         
-        JButton btnClientes_3 = new JButton("NUEVA OPERACIÓN");
-        btnClientes_3.setForeground(Color.WHITE);
-        btnClientes_3.setFont(new Font("Calibri", Font.BOLD, 16));
-        btnClientes_3.setBackground(new Color(38, 60, 84));
-        btnClientes_3.setBounds(10, 364, 237, 100);
-        panelIzq.add(btnClientes_3);
+        JButton btnNuevaOperacion = new JButton("NUEVA OPERACIÓN");
+        btnNuevaOperacion.setForeground(Color.WHITE);
+        btnNuevaOperacion.setFont(new Font("Calibri", Font.BOLD, 16));
+        btnNuevaOperacion.setBackground(new Color(38, 60, 84));
+        btnNuevaOperacion.setBounds(10, 364, 237, 100);
+        btnNuevaOperacion.addActionListener(e -> {
+            new NuevaOperacion();         // Abre la segunda ventana
+            dispose();            // Cierra la ventana actual
+        });
+        panelIzq.add(btnNuevaOperacion);
 
         // 2. PANEL GRIS CENTRAL
         JPanel panelCentral = new JPanel();
@@ -69,33 +81,46 @@ public class Renta extends JFrame {
         panelCentral.setBounds(277, 62, 731, 475);
         layeredPane.add(panelCentral, JLayeredPane.PALETTE_LAYER);
 
+        JLabel iniciar = new JLabel("RENTA");
+		iniciar.setSize(236, 60);
+		iniciar.setLocation(143, 11);
+		iniciar.setHorizontalAlignment(JLabel.CENTER);
+		iniciar.setFont(new Font("Calibri", Font.BOLD, 24));
+		panelCentral.add(iniciar);
+
         // Datos de la tabla
         Object[][] data = {
-            { null, null, null, null, "1", "2", "3" },
-            { "4", "5", "6", "7", "8", "9", "10" },
-            { "11", "12", "13", "14", "15", "16", "17" },
-            { "18", "19", "20", "21", "22", "23", "24" },
-            { "25", "26", "27", "28", "29", "30", "31" }
+            { "Identificador", "Nombre", "Plataforma", "Disponibilidad", "Precio(venta)", "Precio(renta)", },
+            { "000001", "Contra", "Nintendo", "5", "$800", "$100" },
+            { "000002", "God of War", "Play Station", "25", "$850", "$250"},
+            { "000003", "Halo", "Xbox", "32", "$890", "$640"},
+            { "000004", "Fornite", "Pc", "40", "$900", "$700" },
+            { "000005", "Pokemon", "Mixto", "41", "$950", "$720"},
+            { "000006", "ARK: Survival", "Mixto", "30", "$990", "$720"},
+            
+
         };
 
         DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
         centerRenderer.setHorizontalAlignment(JLabel.CENTER);
 
         // Tabla
-        JTable table = new JTable(data, new String[] { "", "", "", "", "", "", "" });
+        JTable table = new JTable(data, new String[] { "", "", "", "", "", "",});
         panelCentral.add(table);
-        table.setFont(new Font("Anton", Font.PLAIN, 16));
-        table.setBounds(20, 28, 591, 400);
+        table.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+        table.setBounds(26, 62, 695, 346);
         table.setBorder(BorderFactory.createLineBorder(new Color(204, 204, 204)));
         table.setShowGrid(true);
         table.setGridColor(new Color(204, 204, 204));
         table.setTableHeader(null);
         table.setDefaultRenderer(Object.class, centerRenderer);
-        table.setRowHeight(80);
+        table.setRowHeight(40);
         table.setShowHorizontalLines(true);
         table.setShowVerticalLines(true);
         
-        JButton btnNewButton = new JButton("Rentar");
+        JButton btnNewButton = new JButton("RENTAR");
+        btnNewButton.setForeground(Color.WHITE);
+        btnNewButton.setBackground(Color.decode("#6D91B9"));
         btnNewButton.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
         		new OperacionRentar();
@@ -103,8 +128,13 @@ public class Renta extends JFrame {
         		
         	}
         });
-        btnNewButton.setBounds(616, 379, 105, 23);
+        btnNewButton.setBounds(536, 419, 151, 30);
         panelCentral.add(btnNewButton);
+        
+        JButton btnBuscar = new JButton("Buscar");
+        btnBuscar.setFont(new Font("League Spartan Light", Font.PLAIN, 14));
+        btnBuscar.setBounds(619, 25, 86, 25);
+        panelCentral.add(btnBuscar);
 
         // 3. PANEL ROJO SUPERIOR (barra de título)
         JPanel barraRoja = new JPanel();

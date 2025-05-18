@@ -47,7 +47,12 @@ public class AdministradorJuegos extends JFrame {
         btnClientes.setBackground(Color.decode("#263C54"));
         btnClientes.setForeground(Color.WHITE);
         btnClientes.setBounds(10, 11, 237, 100); // x, y, ancho, alto
-
+        btnClientes.addActionListener(new ActionListener() {
+    	    public void actionPerformed(ActionEvent e) {
+    	    	new AdministradorCliente();         // Abre la segunda ventana
+                dispose();  
+    	    }
+    	});
         panelIzq.add(btnClientes);
         
         JButton btnVideojuegos = new JButton("VIDEOJUEGOS");
@@ -70,12 +75,18 @@ public class AdministradorJuegos extends JFrame {
     	});
         panelIzq.add(btnRentaYCompra);
         
-        JButton btnClientes_3 = new JButton("NUEVA OPERACIÓN");
-        btnClientes_3.setForeground(Color.WHITE);
-        btnClientes_3.setFont(new Font("Calibri", Font.BOLD, 16));
-        btnClientes_3.setBackground(new Color(38, 60, 84));
-        btnClientes_3.setBounds(10, 364, 237, 100);
-        panelIzq.add(btnClientes_3);
+        JButton btnNuevaOperacion = new JButton("NUEVA OPERACIÓN");
+        btnNuevaOperacion.setForeground(Color.WHITE);
+        btnNuevaOperacion.setFont(new Font("Calibri", Font.BOLD, 16));
+        btnNuevaOperacion.setBackground(new Color(38, 60, 84));
+        btnNuevaOperacion.setBounds(10, 364, 237, 100);
+        btnNuevaOperacion.addActionListener(new ActionListener() {
+    	    public void actionPerformed(ActionEvent e) {
+    	    	new NuevaOperacion();         // Abre la segunda ventana
+                dispose();  
+    	    }
+    	});
+        panelIzq.add(btnNuevaOperacion);
 
         // 2. PANEL GRIS CENTRAl
         JPanel panelCentral = new JPanel();
@@ -88,18 +99,18 @@ public class AdministradorJuegos extends JFrame {
         ImageIcon iconoOriginal = new ImageIcon(getClass().getResource("/images/Block.png"));
         Image imagenEscalada = iconoOriginal.getImage().getScaledInstance(70, 70, Image.SCALE_SMOOTH);
         JLabel logo = new JLabel(new ImageIcon(imagenEscalada));
-        logo.setBounds(361, 31, 70, 70); //posicion
+        logo.setBounds(344, 31, 70, 70); //posicion
         panelCentral.add(logo); 
         
         JLabel iniciar = new JLabel("¡BIENVENIDO/A AL PANEL DE VIDEOJUEGOS");
 		iniciar.setSize(548, 60);
-		iniciar.setLocation(119, 112);
+		iniciar.setLocation(100, 112);
 		iniciar.setHorizontalAlignment(JLabel.CENTER);
 		iniciar.setFont(new Font("Calibri", Font.BOLD, 24));
 		panelCentral.add(iniciar);
         
-		 JButton registros = new JButton("Registros");
-		 registros.setBounds(150, 205, 206, 100);
+		 JButton registros = new JButton("REGISTROS DE VIDEOJUEGOS");
+		 registros.setBounds(100, 261, 206, 100);
 		 panelCentral.add(registros);
 	        registros.setForeground(Color.WHITE);
 	        registros.setFont(new Font("Calibri", Font.BOLD, 16));
@@ -113,23 +124,20 @@ public class AdministradorJuegos extends JFrame {
 	        btnAgregarVideojuegos.setForeground(Color.WHITE);
 	        btnAgregarVideojuegos.setFont(new Font("Calibri", Font.BOLD, 16));
 	        btnAgregarVideojuegos.setBackground(new Color(38, 60, 84));
-	        btnAgregarVideojuegos.setBounds(430, 205, 206, 100);
+	        btnAgregarVideojuegos.setBounds(442, 261, 206, 100);
 	        panelCentral.add(btnAgregarVideojuegos);
+	        
+	        JLabel lblDesdeAquPodrs = new JLabel("Desde aquí podrás gestionar y controlar todas las \n funcionalidades de videojuegos. \n¿Qué deseas hacer hoy?\n");
+	        lblDesdeAquPodrs.setHorizontalAlignment(SwingConstants.CENTER);
+	        lblDesdeAquPodrs.setFont(new Font("Calibri", Font.BOLD, 24));
+	        lblDesdeAquPodrs.setBounds(100, 168, 464, 60);
+	        panelCentral.add(lblDesdeAquPodrs);
 	        btnAgregarVideojuegos.addActionListener(e -> {
 	            new AgregarJuego();         // Abre la segunda ventana
 	            dispose();            // Cierra la ventana actual
 	        }); 
 	        
-	        JButton borrarJuego = new JButton("ELIMINAR VIDEOJUEGOS");
-	        borrarJuego.setForeground(Color.WHITE);
-	        borrarJuego.setFont(new Font("Calibri", Font.BOLD, 16));
-	        borrarJuego.setBackground(new Color(38, 60, 84));
-	        borrarJuego.setBounds(294, 333, 206, 100);
-	        panelCentral.add(borrarJuego);
-	        borrarJuego.addActionListener(e -> {
-	            new EliminarJuego();         // Abre la segunda ventana
-	            dispose();            // Cierra la ventana actual
-	        }); 
+	       
 	    	
 	    	
 	    	

@@ -19,6 +19,7 @@ public class EditarJuego extends JFrame {
 	private JTextField textField_7;
 	private JTextField textField_8;
 	private JTextField textField_9;
+	private JTextField textField_10;
 
     public EditarJuego() {
         // Configuración básica de la ventana
@@ -71,7 +72,7 @@ public class EditarJuego extends JFrame {
 	    		panelCentral.add(iniciar_1_1);
 	    		
 	    		JLabel iniciar_1_1_1 = new JLabel("Género:");
-	    		iniciar_1_1_1.setHorizontalAlignment(SwingConstants.CENTER);
+	    		iniciar_1_1_1.setHorizontalAlignment(SwingConstants.LEFT);
 	    		iniciar_1_1_1.setFont(new Font("Calibri", Font.BOLD, 14));
 	    		iniciar_1_1_1.setBounds(55, 259, 140, 42);
 	    		panelCentral.add(iniciar_1_1_1);
@@ -178,12 +179,8 @@ public class EditarJuego extends JFrame {
 	    		iniciar_1_1_2_2_1.setBounds(619, 220, 97, 42);
 	    		panelCentral.add(iniciar_1_1_2_2_1);
 	    		
-	    		JButton btnNewButton = new JButton("New button");
-	    		btnNewButton.setBounds(619, 142, 343, 86);
-	    		panelCentral.add(btnNewButton);
-	    		
 	    		JLabel iniciar_1_1_2_2_1_1 = new JLabel("Acerca de:");
-	    		iniciar_1_1_2_2_1_1.setHorizontalAlignment(SwingConstants.CENTER);
+	    		iniciar_1_1_2_2_1_1.setHorizontalAlignment(SwingConstants.LEFT);
 	    		iniciar_1_1_2_2_1_1.setFont(new Font("Calibri", Font.BOLD, 14));
 	    		iniciar_1_1_2_2_1_1.setBounds(619, 108, 97, 42);
 	    		panelCentral.add(iniciar_1_1_2_2_1_1);
@@ -203,7 +200,19 @@ public class EditarJuego extends JFrame {
 	    		btnConfirmar.setBackground(Color.decode("#263C54")); // Color de fondo (azul oscuro)
 		    	btnConfirmar.setForeground(Color.WHITE);
 	    		btnConfirmar.setBounds(533, 406, 183, 33);
+	    		btnConfirmar.addActionListener(e -> {
+    	            new Confirma_8();         // Abre la segunda ventana
+    	                        // Cierra la ventana actual
+    	        });
+    		panelCentral.add(btnCancelar);
 	    		panelCentral.add(btnConfirmar);
+	    		
+	    		textField_10 = new JTextField();
+	    		textField_10.setColumns(10);
+	    		textField_10.setBackground(new Color(217, 217, 217));
+	    		textField_10.setBounds(619, 142, 343, 77);
+	    		panelCentral.add(textField_10);
+
 
         
 

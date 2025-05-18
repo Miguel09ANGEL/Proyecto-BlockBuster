@@ -12,7 +12,7 @@ public class Inicio extends JFrame {
 
     public Inicio() {
         // Configuración básica de la ventana
-        setTitle("Panel Administrador");
+        setTitle("Panel Inicio");
         setSize(1024, 576);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
@@ -36,6 +36,10 @@ public class Inicio extends JFrame {
         btnClientes.setBackground(Color.decode("#263C54"));
         btnClientes.setForeground(Color.WHITE);
         btnClientes.setBounds(10, 11, 237, 100); // x, y, ancho, alto
+        btnClientes.addActionListener(e -> {
+            new AdministradorCliente();         // Abre la segunda ventana
+            dispose();            // Cierra la ventana actual
+        });
         panelIzq.add(btnClientes);
         
         JButton btnVideojuegos = new JButton("VIDEOJUEGOS");
@@ -63,12 +67,16 @@ public class Inicio extends JFrame {
     	});
         panelIzq.add(btnRentaYCompra);
         
-        JButton btnClientes_3 = new JButton("NUEVA OPERACIÓN");
-        btnClientes_3.setForeground(Color.WHITE);
-        btnClientes_3.setFont(new Font("Calibri", Font.BOLD, 16));
-        btnClientes_3.setBackground(new Color(38, 60, 84));
-        btnClientes_3.setBounds(10, 364, 237, 100);
-        panelIzq.add(btnClientes_3);
+        JButton btnNuevaOperacion = new JButton("NUEVA OPERACIÓN");
+        btnNuevaOperacion.setForeground(Color.WHITE);
+        btnNuevaOperacion.setFont(new Font("Calibri", Font.BOLD, 16));
+        btnNuevaOperacion.setBackground(new Color(38, 60, 84));
+        btnNuevaOperacion.setBounds(10, 364, 237, 100);
+        btnNuevaOperacion.addActionListener(e -> {
+            new NuevaOperacion();         // Abre la segunda ventana
+            dispose();            // Cierra la ventana actual
+        });
+        panelIzq.add(btnNuevaOperacion);
 
         // 2. PANEL GRIS CENTRAl
         JPanel panelCentral = new JPanel();

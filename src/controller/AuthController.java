@@ -4,16 +4,16 @@ import views.HomeView;
 
 public class AuthController {
 	
-	
-	
+	private HomeView vista;
+
 	public AuthController() { 
 		
-		HomeView = new PanelAdministrador();
+		vista = new HomeView();
 	}
 	
 	public void login() {
 		
-		HomeView.PanelAdministrador();
+		vista.PanelAdministrador();
 	}
 	
 	

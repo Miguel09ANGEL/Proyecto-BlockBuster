@@ -1,14 +1,15 @@
-/*package aplication;
+package aplication;
 
-import views.AuthViews;
+import controller.AuthController;
 
 public class renta {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		AuthViews vista = vista AuthViews;
+		
+		AuthController app = new AuthController();
+		app.login();
+
 	}
 
-	//gjjjjj
 }
-*/

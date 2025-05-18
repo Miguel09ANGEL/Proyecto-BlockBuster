@@ -6,10 +6,11 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="lib" path="C:/Users/Miguel Àngel Garcia/Downloads/flatlaf-demo-3.6.jar">
+	<classpathentry kind="lib" path="src/flatlaf/flatlaf-demo-3.6.jar">
 		<attributes>
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="C:/Users/gabri/Downloads/flatlaf-demo-3.6.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

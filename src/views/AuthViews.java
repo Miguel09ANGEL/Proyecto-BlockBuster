@@ -30,7 +30,6 @@ public class AuthViews extends JFrame {
 	
 	 public void PanelAdministrador() {
 	    	
-	    	
 	    	try {
 				UIManager.setLookAndFeel(new FlatLightLaf());
 				UIManager.put("Button.arc", 15); // Esquinas redondeadas
@@ -115,8 +114,11 @@ public class AuthViews extends JFrame {
 		    	acceder.setBounds(40, 371, 289, 26); // También puedes usar setSize + setLocation si prefieres
 		    	acceder.addActionListener(new ActionListener() {
 		    	    public void actionPerformed(ActionEvent e) {
-		    	    	new Inicio();         // Abre la segunda ventana
-		                dispose();  
+		    	    	
+		    	    	dispose();
+		    	    	Inicio();
+//		    	    	new Inicio();         // Abre la segunda ventana
+//		                dispose();  
 		    	    }
 		    	});
 		    	panelCentral.add(acceder);
@@ -169,7 +171,9 @@ public class AuthViews extends JFrame {
 	        btnVideojuegos.setBounds(10, 128, 237, 100);
 	        panelIzq.add(btnVideojuegos);
 	        btnVideojuegos.addActionListener(e -> {
-	            new AdministradorJuegos();         // Abre la segunda ventana
+	        	
+	        	HomeView ventana = new HomeView();
+	        	ventana.AdministradorJuegos();         // Abre la segunda ventana
 	            dispose();            // Cierra la ventana actual
 	        });
 
@@ -181,7 +185,9 @@ public class AuthViews extends JFrame {
 	        btnRentaYCompra.setBounds(10, 242, 237, 100);
 	        btnRentaYCompra.addActionListener(new ActionListener() {
 	    	    public void actionPerformed(ActionEvent e) {
-	    	    	new AdministradorRentaCompra();         // Abre la segunda ventana
+	    	    	
+		        	HomeView ventana = new HomeView();
+	    	    	ventana.AdministradorRentaCompra();         // Abre la segunda ventana
 	                dispose();  
 	    	    }
 	    	});

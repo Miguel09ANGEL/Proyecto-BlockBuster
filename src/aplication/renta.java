@@ -9,5 +9,6 @@ public class renta {
 		AuthViews vista = vista AuthViews;
 	}
 
+	//gjjjjj
 }
 */

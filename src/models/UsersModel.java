@@ -1,0 +1,168 @@
+package models;
+
+import java.sql.Connection;
+import java.sql.Date;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+
+public class UsersModel {
+
+	private List<User> usuarios = new ArrayList<>();
+
+	String url = "jdbc:mysql://sql.freedb.tech:3306/freedb_Base_de_datos_renta?useSSL=false";
+	String usuario = "freedb_G_user";
+	String contraseña = "%eeFW9csb4$?Dcj";
+
+	public UsersModel() {
+		// TODO Auto-generated constructor stub
+	}
+
+	public List getAll() {
+
+		String query = "select * from users";
+
+		Connection conn = null;
+		Statement stmt = null;
+
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			conn = DriverManager.getConnection(url, usuario, contraseña);
+			stmt = conn.createStatement();
+			ResultSet rs = stmt.executeQuery(query);
+
+			while (rs.next()) {
+				
+				Integer id = rs.getInt(1);
+				String nombre = rs.getString(2);
+				String apellidoPaterno = rs.getString(3);
+				String apellidoMaterno = rs.getString(4);
+				Date fechaNacimiento = rs.getDate(5);
+				String telefono = rs.getString(6);
+				String correo = rs.getString(7);
+
+				System.out.println("empId:" + id);
+				System.out.println("firstName:" + nombre);
+
+				System.out.println("");
+
+				usuarios.add(new User(id, nombre, apellidoPaterno, apellidoMaterno, fechaNacimiento, telefono, correo, null, null));
+			}
+
+			rs.close();
+
+			return usuarios;
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				stmt.close();
+				conn.close();
+			} catch (Exception e) {
+			}
+		}
+
+		return usuarios;
+	}
+
+	public boolean remove(int id) {
+
+		String query = "DELETE FROM users WHERE id = " + id;
+		Connection conn = null;
+		Statement stmt = null;
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			conn = DriverManager.getConnection(url, usuario, contraseña);
+			stmt = conn.createStatement();
+
+			stmt.executeUpdate(query);
+
+			return true;
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				stmt.close();
+				conn.close();
+			} catch (Exception e) {
+			}
+		}
+
+		return false;
+
+	}
+
+	public boolean add(String name, String email, String role, String phone) {
+
+		String query = "INSERT INTO users (name, email, role, phone) VALUES ('" + name + "', '" + email + "', '" + role
+				+ "', " + (phone != null ? "'" + phone + "'" : "NULL") + ")";
+
+		Connection conn = null;
+		Statement stmt = null;
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			conn = DriverManager.getConnection(url, usuario, contraseña);
+			stmt = conn.createStatement();
+
+			stmt.executeUpdate(query);
+
+			return true;
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				stmt.close();
+				conn.close();
+			} catch (Exception e) {
+			}
+		}
+
+		return false;
+
+	}
+	
+//	usuarios.add(new User(id, nombre, apellidoPaterno, apellidoMaterno, fechaNacimiento, telefono, correo, null, null));
+
+
+	public boolean update(int id, String nombre, String apellidoP, String apellidoM, java.sql.Date fechaNacimiento, String telefono, String correo) {
+
+		String query = "UPDATE users SET " +
+                "nombre = '" + nombre + "', " +
+                "apellido_paterno = '" + apellidoP + "', " +
+                "apellido_materno = " + (apellidoM != null ? "'" + apellidoM + "'" : "NULL") + ", " +
+                "fecha_nacimiento = '" + fechaNacimiento + "', " +
+                "telefono = " + (telefono != null ? "'" + telefono + "'" : "NULL") + ", " +
+                "correo = '" + correo + "' " +
+                "WHERE id = " + id;
+
+		Connection conn = null;
+		Statement stmt = null;
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			conn = DriverManager.getConnection(url, usuario, contraseña);
+			stmt = conn.createStatement();
+
+			stmt.executeUpdate(query);
+
+			return true;
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				stmt.close();
+				conn.close();
+			} catch (Exception e) {
+			}
+		}
+
+		return false;
+
+	}
+
+}

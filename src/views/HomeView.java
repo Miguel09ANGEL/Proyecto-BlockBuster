@@ -6,6 +6,10 @@ import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Iterator;
+import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -13,7 +17,9 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
@@ -21,8 +27,14 @@ import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
 
 import com.formdev.flatlaf.FlatLightLaf;
+import com.formdev.flatlaf.json.ParseException;
+
+import controller.UserController;
+import models.User;
+import models.UsersModel;
 
 public class HomeView extends JFrame {
 
@@ -112,7 +124,7 @@ public class HomeView extends JFrame {
 		acceder.setBounds(40, 371, 289, 26); // También puedes usar setSize + setLocation si prefieres
 		acceder.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-//				dispose();
+				dispose();
 				Inicio(); // Abre la segunda ventana
 			}
 		});
@@ -172,8 +184,8 @@ public class HomeView extends JFrame {
 		btnClientes.setForeground(Color.WHITE);
 		btnClientes.setBounds(10, 11, 237, 100); // x, y, ancho, alto
 		btnClientes.addActionListener(e -> {
-			AdministradorCliente(); // Abre la segunda ventana
 			dispose(); // Cierra la ventana actual
+			AdministradorCliente(); // Abre la segunda ventana
 		});
 		panelIzq.add(btnClientes);
 
@@ -184,8 +196,8 @@ public class HomeView extends JFrame {
 		btnVideojuegos.setBounds(10, 128, 237, 100);
 		panelIzq.add(btnVideojuegos);
 		btnVideojuegos.addActionListener(e -> {
-			AdministradorJuegos(); // Abre la segunda ventana
 			dispose(); // Cierra la ventana actual
+			AdministradorJuegos(); // Abre la segunda ventana
 		});
 
 		JButton btnRentaYCompra = new JButton("RENTA Y COMPRA");
@@ -195,8 +207,8 @@ public class HomeView extends JFrame {
 		btnRentaYCompra.setBounds(10, 242, 237, 100);
 		btnRentaYCompra.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				AdministradorRentaCompra(); // Abre la segunda ventana
 				dispose();
+				AdministradorRentaCompra(); // Abre la segunda ventana
 			}
 		});
 		panelIzq.add(btnRentaYCompra);
@@ -207,8 +219,8 @@ public class HomeView extends JFrame {
 		btnNuevaOperacion.setBackground(new Color(38, 60, 84));
 		btnNuevaOperacion.setBounds(10, 364, 237, 100);
 		btnNuevaOperacion.addActionListener(e -> {
-			NuevaOperacion(); // Abre la segunda ventana
 			dispose(); // Cierra la ventana actual
+			NuevaOperacion(); // Abre la segunda ventana
 		});
 		panelIzq.add(btnNuevaOperacion);
 
@@ -509,8 +521,8 @@ public class HomeView extends JFrame {
 		btnVideojuegos.setBounds(10, 128, 237, 100);
 		panelIzq.add(btnVideojuegos);
 		btnVideojuegos.addActionListener(e -> {
-			AdministradorJuegos(); // Abre la segunda ventana
 			dispose(); // Cierra la ventana actual
+			AdministradorJuegos(); // Abre la segunda ventana
 		});
 
 		JButton btnRentaYCompra = new JButton("RENTA Y COMPRA");
@@ -572,8 +584,10 @@ public class HomeView extends JFrame {
 		registros.setFont(new Font("Calibri", Font.BOLD, 16));
 		registros.setBackground(new Color(38, 60, 84));
 		registros.addActionListener(e -> {
-			RegistroClientes(); // Abre la segunda ventana
 			dispose();
+//			RegistroClientes(); // Abre la segunda ventana
+			UserController uc = new UserController();
+			uc.index();
 		});
 		panelCentral.add(registros);
 
@@ -597,7 +611,7 @@ public class HomeView extends JFrame {
 		setVisible(true);
 	}
 
-	public void RegistroClientes() {
+	public void RegistroClientes(List usuarios) {
 
 		try {
 			UIManager.setLookAndFeel(new FlatLightLaf());
@@ -681,47 +695,39 @@ public class HomeView extends JFrame {
 		iniciar.setFont(new Font("Calibri", Font.BOLD, 24));
 		panelCentral.add(iniciar);
 
-		// Datos de la tabla
-		Object[][] data = {
-				{ "Identificador", "Nombre", "Apellido Paterno", "Apellido  Materno", "Numero celular)", "Correo", },
-				{ "000001", "Manuel", "Orozco", "Vazquez", "612000000", "mov@gmail.com" },
-				{ "000002", "Gabriel", "Lauro", "Hernandez", "612000002", "glh@gmail.com" },
-				{ "000003", "Miguel", "Garcia", "Ahuanta", "61200124", "mga@gmail.com" },
-				{ "000004", "Fransisco", "Navarro", "Navarro", "612000034", "fnc@gmail.com" },
-				{ "000005", "Imies", "Kinn", "lokin", "$950", "612000253", "aik@gmail.com" },
-				{ "000006", "ARK: Survival", "Mixto", "30", "612000247", "wik@gmail.com" },
-
+		// Crear unan tabla
+		String[] columnNames = { "ID", "Nombre", "A. pat:", "A. mat;", "Fecha de nacimierto", "telefono", "Correo" };
+		DefaultTableModel model = new DefaultTableModel(columnNames, 0) {
+			@Override
+			public boolean isCellEditable(int row, int column) {
+				return false; // Hacer que la tabla no sea editable
+			}
 		};
 
-		DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
-		centerRenderer.setHorizontalAlignment(JLabel.CENTER);
+		// Llenar la tabla con datos
+		for (Iterator iterator = usuarios.iterator(); iterator.hasNext();) {
+			User usuario = (User) iterator.next();
+			Object[] rowData = { usuario.getId(), usuario.getNombre(), usuario.getApellidoPaterno(), 
+					usuario.getApellidoMaterno(), usuario.getFechaNacimiento(),
+					usuario.getTelefono(), usuario.getCorreo() };
+			model.addRow(rowData);
+		}
 
-		// Tabla
-		JTable table = new JTable(data, new String[] { "", "", "", "", "", "", });
-		panelCentral.add(table);
-		table.setFont(new Font("Segoe UI", Font.PLAIN, 16));
-		table.setBounds(26, 62, 695, 366);
-		table.setBorder(BorderFactory.createLineBorder(new Color(204, 204, 204)));
-		table.setShowGrid(true);
-		table.setGridColor(new Color(204, 204, 204));
-		table.setTableHeader(null);
-		table.setDefaultRenderer(Object.class, centerRenderer);
-		table.setRowHeight(40);
-		table.setShowHorizontalLines(true);
-		table.setShowVerticalLines(true);
+		// se crea la tabla
+		JTable table = new JTable(model);
+		
+		table.getColumnModel().getColumn(0).setPreferredWidth(10);
+		table.getColumnModel().getColumn(4).setPreferredWidth(50); 
 
-		JButton btnDetalles = new JButton("DETALLES");
-		btnDetalles.setForeground(Color.WHITE);
-		btnDetalles.setBackground(Color.decode("#6D91B9"));
-		btnDetalles.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				DetallesCliente();
-				dispose();
+		table.setFont(new Font("Arial", Font.PLAIN, 14));
+		table.setRowHeight(25);
+		table.getTableHeader().setFont(new Font("Arial", Font.BOLD, 14));
+		table.setAutoCreateRowSorter(true); // ordenar por columnas
 
-			}
-		});
-		btnDetalles.setBounds(406, 439, 172, 25);
-		panelCentral.add(btnDetalles);
+		// Agregar la tabla a un JScrollPane
+		JScrollPane scrollPane = new JScrollPane(table);
+		scrollPane.setBounds(26, 62, 695, 366);
+		panelCentral.add(scrollPane);
 
 		JButton btnEliminar = new JButton("ELIMINAR");
 		btnEliminar.setForeground(Color.WHITE);
@@ -729,7 +735,37 @@ public class HomeView extends JFrame {
 		btnEliminar.setBounds(187, 439, 172, 25);
 		btnEliminar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Confirma_1();
+
+				int selectedRow = table.getSelectedRow();
+
+				if (selectedRow == -1) {
+					JOptionPane.showMessageDialog(layeredPane, "Por favor seleccione un usuario", "Advertencia",
+							JOptionPane.WARNING_MESSAGE);
+					return;
+				}
+
+				// Confirmamos eliminacion
+				int confirm = JOptionPane.showConfirmDialog(layeredPane,
+						"¿Está seguro que desea eliminar este usuario?", "Confirmar eliminación",
+						JOptionPane.YES_NO_OPTION);
+
+				if (confirm == JOptionPane.YES_OPTION) {
+					// Obtener ID del usuario seleccionado
+					int userId = (int) model.getValueAt(selectedRow, 0);
+
+					// Eliminamos de la base de datos
+					UsersModel um = new UsersModel();
+					boolean eliminado = um.remove(userId);
+
+					if (eliminado) {
+						// Eliminar de la tabla
+						model.removeRow(selectedRow);
+						JOptionPane.showMessageDialog(layeredPane, "Usuario eliminado correctamente");
+					} else {
+						JOptionPane.showMessageDialog(layeredPane, "Error al eliminar el usuario", "Error",
+								JOptionPane.ERROR_MESSAGE);
+					}
+				}
 
 			}
 		});
@@ -739,6 +775,49 @@ public class HomeView extends JFrame {
 		btnBuscar.setFont(new Font("League Spartan Light", Font.PLAIN, 14));
 		btnBuscar.setBounds(619, 25, 86, 25);
 		panelCentral.add(btnBuscar);
+		
+		//BOTON EDITAR PROVICIONAL, MEJORAR
+		JButton btnEditar = new JButton("Editar");
+		btnEditar.setForeground(Color.WHITE);
+		btnEditar.setBackground(Color.decode("#4fadbd"));
+		btnEditar.setBounds(379, 439, 172, 25);
+		btnEditar.addActionListener(e -> {
+
+		    int selectedRow = table.getSelectedRow();
+
+		    if (selectedRow == -1) {
+		        JOptionPane.showMessageDialog(layeredPane, "Por favor seleccione un usuario", "Advertencia",
+		                JOptionPane.WARNING_MESSAGE);
+		        return;
+		    }
+
+		    // Obtener datos del usuario seleccionado
+		    int userId = (int) model.getValueAt(selectedRow, 0);
+		    String nombre = (String) model.getValueAt(selectedRow, 1);
+		    String apellidoPaterno = (String) model.getValueAt(selectedRow, 2);
+		    String apellidoMaterno = (String) model.getValueAt(selectedRow, 3);
+		    String telefono = (String) model.getValueAt(selectedRow, 5);
+		    String correo = (String) model.getValueAt(selectedRow, 6);
+
+		    // Cerrar esta ventana y abrir ventana de edición con los datos cargados
+		    dispose();
+		    Object rawFecha = model.getValueAt(selectedRow, 4);
+
+		    String fechaFormateada;
+		    if (rawFecha instanceof java.sql.Date) {
+		        java.sql.Date fecha = (java.sql.Date) rawFecha;
+		        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+		        fechaFormateada = sdf.format(fecha);
+		    } else {
+		        // Por si ya viene como String o en otro formato
+		        fechaFormateada = rawFecha.toString();
+		    }
+
+		    EditarCliente(userId, nombre, apellidoPaterno, apellidoMaterno, fechaFormateada, telefono, correo);
+			
+		});
+		panelCentral.add(btnEditar);
+
 
 		// 3. PANEL ROJO SUPERIOR (barra de título)
 		JPanel barraRoja = new JPanel();
@@ -755,6 +834,7 @@ public class HomeView extends JFrame {
 			ex.printStackTrace();
 		}
 	}
+	
 
 	public void Confirma_1() {
 		// Configuración básica de la ventana
@@ -866,7 +946,7 @@ public class HomeView extends JFrame {
 		btnEditar.setBackground(Color.decode("#6D91B9"));
 		btnEditar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				EditarCliente();
+//				EditarCliente();
 				dispose();
 			}
 		});
@@ -891,7 +971,7 @@ public class HomeView extends JFrame {
 		JButton btnRegresar = new JButton("REGRESAR");
 		btnRegresar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				RegistroClientes();
+//				RegistroClientes();
 				dispose();
 			}
 		});
@@ -994,146 +1074,192 @@ public class HomeView extends JFrame {
 		setVisible(true);
 	}
 
-	public void EditarCliente() {
-		JTextField textField;
-		JTextField textField_1;
-		JTextField textField_2;
-		JTextField textField_3;
-		JTextField textField_4;
-		JTextField textField_5;
+	public void EditarCliente(int id, String nombre, String aPat, String aMat, String fechaNac, String telefono, String correo) {
+	    // Campos de texto renombrados con sentido
+	    JTextField txtNombre;
+	    JTextField txtApellidoMaterno;
+	    JTextField txtTelefono;
+	    JTextField txtApellidoPaterno;
+	    JTextField txtFechaNac;
+	    JTextField txtCorreo;
 
-		// Configuración básica de la ventana
-		setTitle("Editar Cliente");
-		setSize(1024, 576);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setLocationRelativeTo(null);
+	    // Configuración de la ventana
+	    setTitle("Editar Cliente");
+	    setSize(1024, 576);
+	    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	    setLocationRelativeTo(null);
 
-		// Usamos JLayeredPane para superponer componentes
-		JLayeredPane layeredPane = new JLayeredPane();
-		layeredPane.setPreferredSize(new Dimension(900, 650));
-		setContentPane(layeredPane);
+	    // Panel principal
+	    JLayeredPane layeredPane = new JLayeredPane();
+	    layeredPane.setPreferredSize(new Dimension(900, 650));
+	    setContentPane(layeredPane);
 
-		// 2. PANEL GRIS CENTRAl
-		JPanel panelCentral = new JPanel();
-		panelCentral.setLayout(null);
-		panelCentral.setBackground(Color.decode("#F2F2F2"));
-		panelCentral.setBounds(5, 62, 998, 475); // (x, y, ancho, alto)
-		layeredPane.add(panelCentral, JLayeredPane.PALETTE_LAYER);
+	    // Panel central
+	    JPanel panelCentral = new JPanel();
+	    panelCentral.setLayout(null);
+	    panelCentral.setBackground(Color.decode("#F2F2F2"));
+	    panelCentral.setBounds(5, 62, 998, 475);
+	    layeredPane.add(panelCentral, JLayeredPane.PALETTE_LAYER);
 
-		// Logotipo
-		ImageIcon iconoOriginal = new ImageIcon(getClass().getResource("/images/Block.png"));
-		Image imagenEscalada = iconoOriginal.getImage().getScaledInstance(70, 70, Image.SCALE_SMOOTH);
-		JLabel logo = new JLabel(new ImageIcon(imagenEscalada));
-		logo.setBounds(477, 11, 70, 70); // posicion
-		panelCentral.add(logo);
+	    // Logotipo
+	    ImageIcon iconoOriginal = new ImageIcon(getClass().getResource("/images/Block.png"));
+	    Image imagenEscalada = iconoOriginal.getImage().getScaledInstance(70, 70, Image.SCALE_SMOOTH);
+	    JLabel logo = new JLabel(new ImageIcon(imagenEscalada));
+	    logo.setBounds(477, 11, 70, 70);
+	    panelCentral.add(logo);
 
-		JLabel iniciar = new JLabel("EDITAR CLIENTE");
-		iniciar.setSize(263, 42);
-		iniciar.setLocation(370, 94);
-		iniciar.setHorizontalAlignment(JLabel.CENTER);
-		iniciar.setFont(new Font("Calibri", Font.BOLD, 24));
-		panelCentral.add(iniciar);
+	    // Título
+	    JLabel lblTitulo = new JLabel("EDITAR CLIENTE");
+	    lblTitulo.setSize(263, 42);
+	    lblTitulo.setLocation(370, 94);
+	    lblTitulo.setHorizontalAlignment(JLabel.CENTER);
+	    lblTitulo.setFont(new Font("Calibri", Font.BOLD, 24));
+	    panelCentral.add(lblTitulo);
 
-		JLabel iniciar_1 = new JLabel("Nombre:");
-		iniciar_1.setHorizontalAlignment(SwingConstants.LEFT);
-		iniciar_1.setFont(new Font("Calibri", Font.BOLD, 14));
-		iniciar_1.setBounds(84, 135, 87, 42); // Ajusta tamaño si es necesario
-		panelCentral.add(iniciar_1);
+	    // -------- LADO IZQUIERDO --------
 
-		JTextField nJuego = new JTextField();
-		nJuego.setBackground(Color.decode("#D9D9D9"));
-		nJuego.setBounds(84, 163, 330, 27);
-		panelCentral.add(nJuego);
-		nJuego.setColumns(10);
+	    // Nombre
+	    JLabel lblNombre = new JLabel("Nombre:");
+	    lblNombre.setBounds(84, 135, 87, 42);
+	    lblNombre.setFont(new Font("Calibri", Font.BOLD, 14));
+	    panelCentral.add(lblNombre);
 
-		JButton btnCancelar = new JButton("Cancelar");
-		btnCancelar.setBackground(Color.decode("#B82F2F")); // Color de fondo (azul oscuro)
-		btnCancelar.setForeground(Color.WHITE);
-		btnCancelar.setBounds(175, 406, 183, 33);
-		btnCancelar.addActionListener(e -> {
-			DetallesCliente(); // Abre la segunda ventana
-			dispose(); // Cierra la ventana actual
-		});
-		panelCentral.add(btnCancelar);
+	    txtNombre = new JTextField(nombre);
+	    txtNombre.setBounds(84, 163, 330, 27);
+	    txtNombre.setBackground(Color.decode("#D9D9D9"));
+	    txtNombre.setColumns(10);
+	    panelCentral.add(txtNombre);
 
-		JButton btnConfirmar = new JButton("Confirmar");
-		btnConfirmar.setBackground(Color.decode("#263C54")); // Color de fondo (azul oscuro)
-		btnConfirmar.setForeground(Color.WHITE);
-		btnConfirmar.setBounds(533, 406, 183, 33);
-		btnConfirmar.addActionListener(e -> {
-			Confirma_2(); // Abre la segunda ventana
-			// Cierra la ventana actual
-		});
-		panelCentral.add(btnConfirmar);
+	    // Apellido Materno
+	    JLabel lblApellidoMaterno = new JLabel("Apellido materno:");
+	    lblApellidoMaterno.setBounds(84, 209, 115, 42);
+	    lblApellidoMaterno.setFont(new Font("Calibri", Font.BOLD, 14));
+	    panelCentral.add(lblApellidoMaterno);
 
-		JLabel iniciar_1_1 = new JLabel("Apellido materno:");
-		iniciar_1_1.setHorizontalAlignment(SwingConstants.LEFT);
-		iniciar_1_1.setFont(new Font("Calibri", Font.BOLD, 14));
-		iniciar_1_1.setBounds(84, 209, 115, 42);
-		panelCentral.add(iniciar_1_1);
+	    txtApellidoMaterno = new JTextField(aMat);
+	    txtApellidoMaterno.setBounds(84, 236, 330, 27);
+	    txtApellidoMaterno.setBackground(Color.decode("#D9D9D9"));
+	    txtApellidoMaterno.setColumns(10);
+	    panelCentral.add(txtApellidoMaterno);
 
-		textField_1 = new JTextField();
-		textField_1.setColumns(10);
-		textField_1.setBackground(new Color(217, 217, 217));
-		textField_1.setBounds(84, 236, 330, 27);
-		panelCentral.add(textField_1);
+	    // Teléfono
+	    JLabel lblTelefono = new JLabel("Telefono:");
+	    lblTelefono.setBounds(84, 282, 87, 42);
+	    lblTelefono.setFont(new Font("Calibri", Font.BOLD, 14));
+	    panelCentral.add(lblTelefono);
 
-		JLabel iniciar_1_1_1 = new JLabel("Telefono:");
-		iniciar_1_1_1.setHorizontalAlignment(SwingConstants.LEFT);
-		iniciar_1_1_1.setFont(new Font("Calibri", Font.BOLD, 14));
-		iniciar_1_1_1.setBounds(84, 282, 87, 42);
-		panelCentral.add(iniciar_1_1_1);
+	    txtTelefono = new JTextField(telefono);
+	    txtTelefono.setBounds(84, 311, 330, 27);
+	    txtTelefono.setBackground(Color.decode("#D9D9D9"));
+	    txtTelefono.setColumns(10);
+	    panelCentral.add(txtTelefono);
 
-		textField_2 = new JTextField();
-		textField_2.setColumns(10);
-		textField_2.setBackground(new Color(217, 217, 217));
-		textField_2.setBounds(84, 311, 330, 27);
-		panelCentral.add(textField_2);
+	    // -------- LADO DERECHO --------
 
-		textField_3 = new JTextField();
-		textField_3.setColumns(10);
-		textField_3.setBackground(new Color(217, 217, 217));
-		textField_3.setBounds(596, 163, 330, 27);
-		panelCentral.add(textField_3);
+	    // Apellido Paterno
+	    JLabel lblApellidoPaterno = new JLabel("Apellido paterno:");
+	    lblApellidoPaterno.setBounds(594, 135, 122, 42);
+	    lblApellidoPaterno.setFont(new Font("Calibri", Font.BOLD, 14));
+	    panelCentral.add(lblApellidoPaterno);
 
-		textField_4 = new JTextField();
-		textField_4.setColumns(10);
-		textField_4.setBackground(new Color(217, 217, 217));
-		textField_4.setBounds(596, 236, 330, 27);
-		panelCentral.add(textField_4);
+	    txtApellidoPaterno = new JTextField(aPat);
+	    txtApellidoPaterno.setBounds(596, 163, 330, 27);
+	    txtApellidoPaterno.setBackground(Color.decode("#D9D9D9"));
+	    txtApellidoPaterno.setColumns(10);
+	    panelCentral.add(txtApellidoPaterno);
 
-		textField_5 = new JTextField();
-		textField_5.setColumns(10);
-		textField_5.setBackground(new Color(217, 217, 217));
-		textField_5.setBounds(596, 311, 330, 27);
-		panelCentral.add(textField_5);
+	    // Fecha de nacimiento
+	    JLabel lblFechaNac = new JLabel("Fecha de nacimiento:");
+	    lblFechaNac.setBounds(596, 209, 136, 42);
+	    lblFechaNac.setFont(new Font("Calibri", Font.BOLD, 14));
+	    panelCentral.add(lblFechaNac);
 
-		JLabel iniciar_1_2 = new JLabel("Apellido paterno:");
-		iniciar_1_2.setHorizontalAlignment(SwingConstants.LEFT);
-		iniciar_1_2.setFont(new Font("Calibri", Font.BOLD, 14));
-		iniciar_1_2.setBounds(594, 135, 122, 42);
-		panelCentral.add(iniciar_1_2);
+	    txtFechaNac = new JTextField(fechaNac);
+	    txtFechaNac.setBounds(596, 236, 330, 27);
+	    txtFechaNac.setBackground(Color.decode("#D9D9D9"));
+	    txtFechaNac.setColumns(10);
+	    panelCentral.add(txtFechaNac);
 
-		JLabel iniciar_1_1_2 = new JLabel("Fecha de nacimiento:");
-		iniciar_1_1_2.setHorizontalAlignment(SwingConstants.LEFT);
-		iniciar_1_1_2.setFont(new Font("Calibri", Font.BOLD, 14));
-		iniciar_1_1_2.setBounds(596, 209, 136, 42);
-		panelCentral.add(iniciar_1_1_2);
+	    // Correo
+	    JLabel lblCorreo = new JLabel("Correo:");
+	    lblCorreo.setBounds(596, 282, 87, 42);
+	    lblCorreo.setFont(new Font("Calibri", Font.BOLD, 14));
+	    panelCentral.add(lblCorreo);
 
-		JLabel iniciar_1_1_1_1 = new JLabel("Correo:");
-		iniciar_1_1_1_1.setHorizontalAlignment(SwingConstants.LEFT);
-		iniciar_1_1_1_1.setFont(new Font("Calibri", Font.BOLD, 14));
-		iniciar_1_1_1_1.setBounds(596, 282, 87, 42);
-		panelCentral.add(iniciar_1_1_1_1);
+	    txtCorreo = new JTextField(correo);
+	    txtCorreo.setBounds(596, 311, 330, 27);
+	    txtCorreo.setBackground(Color.decode("#D9D9D9"));
+	    txtCorreo.setColumns(10);
+	    panelCentral.add(txtCorreo);
 
-		// 3. PANEL ROJO SUPERIOR (barra de título)
-		JPanel barraRoja = new JPanel();
-		barraRoja.setBackground(Color.decode("#B44635"));
-		barraRoja.setBounds(0, 0, 1024, 60);
-		layeredPane.add(barraRoja, JLayeredPane.PALETTE_LAYER);
+	    // -------- BOTONES --------
 
-		setVisible(true);
+	    JButton btnCancelar = new JButton("Cancelar");
+	    btnCancelar.setBounds(175, 406, 183, 33);
+	    btnCancelar.setBackground(Color.decode("#B82F2F"));
+	    btnCancelar.setForeground(Color.WHITE);
+	    btnCancelar.addActionListener(e -> {
+	    	dispose();
+	        DetallesCliente();
+	    });
+	    panelCentral.add(btnCancelar);
+
+	    JButton btnConfirmar = new JButton("Confirmar");
+	    btnConfirmar.setBounds(533, 406, 183, 33);
+	    btnConfirmar.setBackground(Color.decode("#263C54"));
+	    btnConfirmar.setForeground(Color.WHITE);
+	    btnConfirmar.addActionListener(e -> {
+	        // Obtener valores desde los campos de texto
+	        String nuevoNombre = txtNombre.getText().trim();
+	        String nuevoApellidoPaterno = txtApellidoPaterno.getText().trim();
+	        String nuevoApellidoMaterno = txtApellidoMaterno.getText().trim();
+	        String nuevaFechaNacTexto = txtFechaNac.getText().trim();
+	        String nuevoTelefono = txtTelefono.getText().trim();
+	        String nuevoCorreo = txtCorreo.getText().trim();
+
+	        java.sql.Date nuevaFechaNac = null;
+
+	        try {
+	            // Validar y convertir la fecha
+	            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+	            sdf.setLenient(false); // No permite fechas inválidas como 31/02/2023
+	            Date fechaUtil = sdf.parse(nuevaFechaNacTexto);
+	            nuevaFechaNac = new java.sql.Date(fechaUtil.getTime());
+	        } catch (ParseException ex) {
+	            JOptionPane.showMessageDialog(panelCentral, "Fecha inválida. Usa el formato dd/MM/yyyy", "Error de fecha", JOptionPane.ERROR_MESSAGE);
+	            return; // No continúa con el proceso si la fecha es inválida
+	        } catch (java.text.ParseException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+
+	        // Llamar al método del modelo para actualizar
+	        UsersModel model = new UsersModel();
+	        boolean actualizado = model.update(id, nuevoNombre, nuevoApellidoPaterno, nuevoApellidoMaterno, nuevaFechaNac, nuevoTelefono, nuevoCorreo);
+
+	        if (actualizado) {
+	            JOptionPane.showMessageDialog(panelCentral, "Cliente actualizado correctamente", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+	            dispose(); 
+	            DetallesCliente(); // Vuelve a la vista anterior
+	        } else {
+	            JOptionPane.showMessageDialog(panelCentral, "Error al actualizar el cliente", "Error", JOptionPane.ERROR_MESSAGE);
+	        }
+	    });
+
+
+	    panelCentral.add(btnConfirmar);
+
+
+	    // -------- BARRA ROJA SUPERIOR --------
+
+	    JPanel barraRoja = new JPanel();
+	    barraRoja.setBackground(Color.decode("#B44635"));
+	    barraRoja.setBounds(0, 0, 1024, 60);
+	    layeredPane.add(barraRoja, JLayeredPane.PALETTE_LAYER);
+
+	    setVisible(true);
 	}
+
 
 	public void Confirma_2() {
 		// Configuración básica de la ventana

@@ -16,6 +16,11 @@ public class AuthController {
 		vista.PanelAdministrador();
 	}
 	
+//	public void framePrueba() {
+//		vista.EditarCliente();
+//
+//	}
+	
 	
 
 }

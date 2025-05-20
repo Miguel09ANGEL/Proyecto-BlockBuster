@@ -125,9 +125,6 @@ public class UsersModel {
 		return false;
 
 	}
-	
-//	usuarios.add(new User(id, nombre, apellidoPaterno, apellidoMaterno, fechaNacimiento, telefono, correo, null, null));
-
 
 	public boolean update(int id, String nombre, String apellidoP, String apellidoM, java.sql.Date fechaNacimiento, String telefono, String correo) {
 

@@ -33,8 +33,10 @@ import com.formdev.flatlaf.FlatLightLaf;
 import com.formdev.flatlaf.json.ParseException;
 
 import controller.UserController;
+import controller.VideogamesController;
 import models.User;
 import models.UsersModel;
+import models.VideoGames;
 
 public class HomeView extends JFrame {
 
@@ -532,8 +534,8 @@ public class HomeView extends JFrame {
 		btnRentaYCompra.setBounds(10, 242, 237, 100);
 		btnRentaYCompra.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				AdministradorRentaCompra(); // Abre la segunda ventana
 				dispose();
+				AdministradorRentaCompra(); // Abre la segunda ventana
 			}
 		});
 		panelIzq.add(btnRentaYCompra);
@@ -707,17 +709,17 @@ public class HomeView extends JFrame {
 		// Llenar la tabla con datos
 		for (Iterator iterator = usuarios.iterator(); iterator.hasNext();) {
 			User usuario = (User) iterator.next();
-			Object[] rowData = { usuario.getId(), usuario.getNombre(), usuario.getApellidoPaterno(), 
-					usuario.getApellidoMaterno(), usuario.getFechaNacimiento(),
-					usuario.getTelefono(), usuario.getCorreo() };
+			Object[] rowData = { usuario.getId(), usuario.getNombre(), usuario.getApellidoPaterno(),
+					usuario.getApellidoMaterno(), usuario.getFechaNacimiento(), usuario.getTelefono(),
+					usuario.getCorreo() };
 			model.addRow(rowData);
 		}
 
 		// se crea la tabla
 		JTable table = new JTable(model);
-		
+
 		table.getColumnModel().getColumn(0).setPreferredWidth(10);
-		table.getColumnModel().getColumn(4).setPreferredWidth(50); 
+		table.getColumnModel().getColumn(4).setPreferredWidth(50);
 
 		table.setFont(new Font("Arial", Font.PLAIN, 14));
 		table.setRowHeight(25);
@@ -775,49 +777,48 @@ public class HomeView extends JFrame {
 		btnBuscar.setFont(new Font("League Spartan Light", Font.PLAIN, 14));
 		btnBuscar.setBounds(619, 25, 86, 25);
 		panelCentral.add(btnBuscar);
-		
-		//BOTON EDITAR PROVICIONAL, MEJORAR
+
+		// BOTON EDITAR PROVICIONAL, MEJORAR
 		JButton btnEditar = new JButton("Editar");
 		btnEditar.setForeground(Color.WHITE);
 		btnEditar.setBackground(Color.decode("#4fadbd"));
 		btnEditar.setBounds(379, 439, 172, 25);
 		btnEditar.addActionListener(e -> {
 
-		    int selectedRow = table.getSelectedRow();
+			int selectedRow = table.getSelectedRow();
 
-		    if (selectedRow == -1) {
-		        JOptionPane.showMessageDialog(layeredPane, "Por favor seleccione un usuario", "Advertencia",
-		                JOptionPane.WARNING_MESSAGE);
-		        return;
-		    }
+			if (selectedRow == -1) {
+				JOptionPane.showMessageDialog(layeredPane, "Por favor seleccione un usuario", "Advertencia",
+						JOptionPane.WARNING_MESSAGE);
+				return;
+			}
 
-		    // Obtener datos del usuario seleccionado
-		    int userId = (int) model.getValueAt(selectedRow, 0);
-		    String nombre = (String) model.getValueAt(selectedRow, 1);
-		    String apellidoPaterno = (String) model.getValueAt(selectedRow, 2);
-		    String apellidoMaterno = (String) model.getValueAt(selectedRow, 3);
-		    String telefono = (String) model.getValueAt(selectedRow, 5);
-		    String correo = (String) model.getValueAt(selectedRow, 6);
+			// Obtener datos del usuario seleccionado
+			int userId = (int) model.getValueAt(selectedRow, 0);
+			String nombre = (String) model.getValueAt(selectedRow, 1);
+			String apellidoPaterno = (String) model.getValueAt(selectedRow, 2);
+			String apellidoMaterno = (String) model.getValueAt(selectedRow, 3);
+			String telefono = (String) model.getValueAt(selectedRow, 5);
+			String correo = (String) model.getValueAt(selectedRow, 6);
 
-		    // Cerrar esta ventana y abrir ventana de edición con los datos cargados
-		    dispose();
-		    Object rawFecha = model.getValueAt(selectedRow, 4);
+			// Cerrar esta ventana y abrir ventana de edición con los datos cargados
+			dispose();
+			Object rawFecha = model.getValueAt(selectedRow, 4);
 
-		    String fechaFormateada;
-		    if (rawFecha instanceof java.sql.Date) {
-		        java.sql.Date fecha = (java.sql.Date) rawFecha;
-		        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-		        fechaFormateada = sdf.format(fecha);
-		    } else {
-		        // Por si ya viene como String o en otro formato
-		        fechaFormateada = rawFecha.toString();
-		    }
+			String fechaFormateada;
+			if (rawFecha instanceof java.sql.Date) {
+				java.sql.Date fecha = (java.sql.Date) rawFecha;
+				SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+				fechaFormateada = sdf.format(fecha);
+			} else {
+				// Por si ya viene como String o en otro formato
+				fechaFormateada = rawFecha.toString();
+			}
 
-		    EditarCliente(userId, nombre, apellidoPaterno, apellidoMaterno, fechaFormateada, telefono, correo);
-			
+			EditarCliente(userId, nombre, apellidoPaterno, apellidoMaterno, fechaFormateada, telefono, correo);
+
 		});
 		panelCentral.add(btnEditar);
-
 
 		// 3. PANEL ROJO SUPERIOR (barra de título)
 		JPanel barraRoja = new JPanel();
@@ -834,7 +835,6 @@ public class HomeView extends JFrame {
 			ex.printStackTrace();
 		}
 	}
-	
 
 	public void Confirma_1() {
 		// Configuración básica de la ventana
@@ -1074,192 +1074,194 @@ public class HomeView extends JFrame {
 		setVisible(true);
 	}
 
-	public void EditarCliente(int id, String nombre, String aPat, String aMat, String fechaNac, String telefono, String correo) {
-	    // Campos de texto renombrados con sentido
-	    JTextField txtNombre;
-	    JTextField txtApellidoMaterno;
-	    JTextField txtTelefono;
-	    JTextField txtApellidoPaterno;
-	    JTextField txtFechaNac;
-	    JTextField txtCorreo;
+	public void EditarCliente(int id, String nombre, String aPat, String aMat, String fechaNac, String telefono,
+			String correo) {
+		// Campos de texto renombrados con sentido
+		JTextField txtNombre;
+		JTextField txtApellidoMaterno;
+		JTextField txtTelefono;
+		JTextField txtApellidoPaterno;
+		JTextField txtFechaNac;
+		JTextField txtCorreo;
 
-	    // Configuración de la ventana
-	    setTitle("Editar Cliente");
-	    setSize(1024, 576);
-	    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	    setLocationRelativeTo(null);
+		// Configuración de la ventana
+		setTitle("Editar Cliente");
+		setSize(1024, 576);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setLocationRelativeTo(null);
 
-	    // Panel principal
-	    JLayeredPane layeredPane = new JLayeredPane();
-	    layeredPane.setPreferredSize(new Dimension(900, 650));
-	    setContentPane(layeredPane);
+		// Panel principal
+		JLayeredPane layeredPane = new JLayeredPane();
+		layeredPane.setPreferredSize(new Dimension(900, 650));
+		setContentPane(layeredPane);
 
-	    // Panel central
-	    JPanel panelCentral = new JPanel();
-	    panelCentral.setLayout(null);
-	    panelCentral.setBackground(Color.decode("#F2F2F2"));
-	    panelCentral.setBounds(5, 62, 998, 475);
-	    layeredPane.add(panelCentral, JLayeredPane.PALETTE_LAYER);
+		// Panel central
+		JPanel panelCentral = new JPanel();
+		panelCentral.setLayout(null);
+		panelCentral.setBackground(Color.decode("#F2F2F2"));
+		panelCentral.setBounds(5, 62, 998, 475);
+		layeredPane.add(panelCentral, JLayeredPane.PALETTE_LAYER);
 
-	    // Logotipo
-	    ImageIcon iconoOriginal = new ImageIcon(getClass().getResource("/images/Block.png"));
-	    Image imagenEscalada = iconoOriginal.getImage().getScaledInstance(70, 70, Image.SCALE_SMOOTH);
-	    JLabel logo = new JLabel(new ImageIcon(imagenEscalada));
-	    logo.setBounds(477, 11, 70, 70);
-	    panelCentral.add(logo);
+		// Logotipo
+		ImageIcon iconoOriginal = new ImageIcon(getClass().getResource("/images/Block.png"));
+		Image imagenEscalada = iconoOriginal.getImage().getScaledInstance(70, 70, Image.SCALE_SMOOTH);
+		JLabel logo = new JLabel(new ImageIcon(imagenEscalada));
+		logo.setBounds(477, 11, 70, 70);
+		panelCentral.add(logo);
 
-	    // Título
-	    JLabel lblTitulo = new JLabel("EDITAR CLIENTE");
-	    lblTitulo.setSize(263, 42);
-	    lblTitulo.setLocation(370, 94);
-	    lblTitulo.setHorizontalAlignment(JLabel.CENTER);
-	    lblTitulo.setFont(new Font("Calibri", Font.BOLD, 24));
-	    panelCentral.add(lblTitulo);
+		// Título
+		JLabel lblTitulo = new JLabel("EDITAR CLIENTE");
+		lblTitulo.setSize(263, 42);
+		lblTitulo.setLocation(370, 94);
+		lblTitulo.setHorizontalAlignment(JLabel.CENTER);
+		lblTitulo.setFont(new Font("Calibri", Font.BOLD, 24));
+		panelCentral.add(lblTitulo);
 
-	    // -------- LADO IZQUIERDO --------
+		// -------- LADO IZQUIERDO --------
 
-	    // Nombre
-	    JLabel lblNombre = new JLabel("Nombre:");
-	    lblNombre.setBounds(84, 135, 87, 42);
-	    lblNombre.setFont(new Font("Calibri", Font.BOLD, 14));
-	    panelCentral.add(lblNombre);
+		// Nombre
+		JLabel lblNombre = new JLabel("Nombre:");
+		lblNombre.setBounds(84, 135, 87, 42);
+		lblNombre.setFont(new Font("Calibri", Font.BOLD, 14));
+		panelCentral.add(lblNombre);
 
-	    txtNombre = new JTextField(nombre);
-	    txtNombre.setBounds(84, 163, 330, 27);
-	    txtNombre.setBackground(Color.decode("#D9D9D9"));
-	    txtNombre.setColumns(10);
-	    panelCentral.add(txtNombre);
+		txtNombre = new JTextField(nombre);
+		txtNombre.setBounds(84, 163, 330, 27);
+		txtNombre.setBackground(Color.decode("#D9D9D9"));
+		txtNombre.setColumns(10);
+		panelCentral.add(txtNombre);
 
-	    // Apellido Materno
-	    JLabel lblApellidoMaterno = new JLabel("Apellido materno:");
-	    lblApellidoMaterno.setBounds(84, 209, 115, 42);
-	    lblApellidoMaterno.setFont(new Font("Calibri", Font.BOLD, 14));
-	    panelCentral.add(lblApellidoMaterno);
+		// Apellido Materno
+		JLabel lblApellidoMaterno = new JLabel("Apellido materno:");
+		lblApellidoMaterno.setBounds(84, 209, 115, 42);
+		lblApellidoMaterno.setFont(new Font("Calibri", Font.BOLD, 14));
+		panelCentral.add(lblApellidoMaterno);
 
-	    txtApellidoMaterno = new JTextField(aMat);
-	    txtApellidoMaterno.setBounds(84, 236, 330, 27);
-	    txtApellidoMaterno.setBackground(Color.decode("#D9D9D9"));
-	    txtApellidoMaterno.setColumns(10);
-	    panelCentral.add(txtApellidoMaterno);
+		txtApellidoMaterno = new JTextField(aMat);
+		txtApellidoMaterno.setBounds(84, 236, 330, 27);
+		txtApellidoMaterno.setBackground(Color.decode("#D9D9D9"));
+		txtApellidoMaterno.setColumns(10);
+		panelCentral.add(txtApellidoMaterno);
 
-	    // Teléfono
-	    JLabel lblTelefono = new JLabel("Telefono:");
-	    lblTelefono.setBounds(84, 282, 87, 42);
-	    lblTelefono.setFont(new Font("Calibri", Font.BOLD, 14));
-	    panelCentral.add(lblTelefono);
+		// Teléfono
+		JLabel lblTelefono = new JLabel("Telefono:");
+		lblTelefono.setBounds(84, 282, 87, 42);
+		lblTelefono.setFont(new Font("Calibri", Font.BOLD, 14));
+		panelCentral.add(lblTelefono);
 
-	    txtTelefono = new JTextField(telefono);
-	    txtTelefono.setBounds(84, 311, 330, 27);
-	    txtTelefono.setBackground(Color.decode("#D9D9D9"));
-	    txtTelefono.setColumns(10);
-	    panelCentral.add(txtTelefono);
+		txtTelefono = new JTextField(telefono);
+		txtTelefono.setBounds(84, 311, 330, 27);
+		txtTelefono.setBackground(Color.decode("#D9D9D9"));
+		txtTelefono.setColumns(10);
+		panelCentral.add(txtTelefono);
 
-	    // -------- LADO DERECHO --------
+		// -------- LADO DERECHO --------
 
-	    // Apellido Paterno
-	    JLabel lblApellidoPaterno = new JLabel("Apellido paterno:");
-	    lblApellidoPaterno.setBounds(594, 135, 122, 42);
-	    lblApellidoPaterno.setFont(new Font("Calibri", Font.BOLD, 14));
-	    panelCentral.add(lblApellidoPaterno);
+		// Apellido Paterno
+		JLabel lblApellidoPaterno = new JLabel("Apellido paterno:");
+		lblApellidoPaterno.setBounds(594, 135, 122, 42);
+		lblApellidoPaterno.setFont(new Font("Calibri", Font.BOLD, 14));
+		panelCentral.add(lblApellidoPaterno);
 
-	    txtApellidoPaterno = new JTextField(aPat);
-	    txtApellidoPaterno.setBounds(596, 163, 330, 27);
-	    txtApellidoPaterno.setBackground(Color.decode("#D9D9D9"));
-	    txtApellidoPaterno.setColumns(10);
-	    panelCentral.add(txtApellidoPaterno);
+		txtApellidoPaterno = new JTextField(aPat);
+		txtApellidoPaterno.setBounds(596, 163, 330, 27);
+		txtApellidoPaterno.setBackground(Color.decode("#D9D9D9"));
+		txtApellidoPaterno.setColumns(10);
+		panelCentral.add(txtApellidoPaterno);
 
-	    // Fecha de nacimiento
-	    JLabel lblFechaNac = new JLabel("Fecha de nacimiento:");
-	    lblFechaNac.setBounds(596, 209, 136, 42);
-	    lblFechaNac.setFont(new Font("Calibri", Font.BOLD, 14));
-	    panelCentral.add(lblFechaNac);
+		// Fecha de nacimiento
+		JLabel lblFechaNac = new JLabel("Fecha de nacimiento:");
+		lblFechaNac.setBounds(596, 209, 136, 42);
+		lblFechaNac.setFont(new Font("Calibri", Font.BOLD, 14));
+		panelCentral.add(lblFechaNac);
 
-	    txtFechaNac = new JTextField(fechaNac);
-	    txtFechaNac.setBounds(596, 236, 330, 27);
-	    txtFechaNac.setBackground(Color.decode("#D9D9D9"));
-	    txtFechaNac.setColumns(10);
-	    panelCentral.add(txtFechaNac);
+		txtFechaNac = new JTextField(fechaNac);
+		txtFechaNac.setBounds(596, 236, 330, 27);
+		txtFechaNac.setBackground(Color.decode("#D9D9D9"));
+		txtFechaNac.setColumns(10);
+		panelCentral.add(txtFechaNac);
 
-	    // Correo
-	    JLabel lblCorreo = new JLabel("Correo:");
-	    lblCorreo.setBounds(596, 282, 87, 42);
-	    lblCorreo.setFont(new Font("Calibri", Font.BOLD, 14));
-	    panelCentral.add(lblCorreo);
+		// Correo
+		JLabel lblCorreo = new JLabel("Correo:");
+		lblCorreo.setBounds(596, 282, 87, 42);
+		lblCorreo.setFont(new Font("Calibri", Font.BOLD, 14));
+		panelCentral.add(lblCorreo);
 
-	    txtCorreo = new JTextField(correo);
-	    txtCorreo.setBounds(596, 311, 330, 27);
-	    txtCorreo.setBackground(Color.decode("#D9D9D9"));
-	    txtCorreo.setColumns(10);
-	    panelCentral.add(txtCorreo);
+		txtCorreo = new JTextField(correo);
+		txtCorreo.setBounds(596, 311, 330, 27);
+		txtCorreo.setBackground(Color.decode("#D9D9D9"));
+		txtCorreo.setColumns(10);
+		panelCentral.add(txtCorreo);
 
-	    // -------- BOTONES --------
+		// -------- BOTONES --------
 
-	    JButton btnCancelar = new JButton("Cancelar");
-	    btnCancelar.setBounds(175, 406, 183, 33);
-	    btnCancelar.setBackground(Color.decode("#B82F2F"));
-	    btnCancelar.setForeground(Color.WHITE);
-	    btnCancelar.addActionListener(e -> {
-	    	dispose();
-	        DetallesCliente();
-	    });
-	    panelCentral.add(btnCancelar);
+		JButton btnCancelar = new JButton("Cancelar");
+		btnCancelar.setBounds(175, 406, 183, 33);
+		btnCancelar.setBackground(Color.decode("#B82F2F"));
+		btnCancelar.setForeground(Color.WHITE);
+		btnCancelar.addActionListener(e -> {
+			dispose();
+			DetallesCliente();
+		});
+		panelCentral.add(btnCancelar);
 
-	    JButton btnConfirmar = new JButton("Confirmar");
-	    btnConfirmar.setBounds(533, 406, 183, 33);
-	    btnConfirmar.setBackground(Color.decode("#263C54"));
-	    btnConfirmar.setForeground(Color.WHITE);
-	    btnConfirmar.addActionListener(e -> {
-	        // Obtener valores desde los campos de texto
-	        String nuevoNombre = txtNombre.getText().trim();
-	        String nuevoApellidoPaterno = txtApellidoPaterno.getText().trim();
-	        String nuevoApellidoMaterno = txtApellidoMaterno.getText().trim();
-	        String nuevaFechaNacTexto = txtFechaNac.getText().trim();
-	        String nuevoTelefono = txtTelefono.getText().trim();
-	        String nuevoCorreo = txtCorreo.getText().trim();
+		JButton btnConfirmar = new JButton("Confirmar");
+		btnConfirmar.setBounds(533, 406, 183, 33);
+		btnConfirmar.setBackground(Color.decode("#263C54"));
+		btnConfirmar.setForeground(Color.WHITE);
+		btnConfirmar.addActionListener(e -> {
+			// Obtener valores desde los campos de texto
+			String nuevoNombre = txtNombre.getText().trim();
+			String nuevoApellidoPaterno = txtApellidoPaterno.getText().trim();
+			String nuevoApellidoMaterno = txtApellidoMaterno.getText().trim();
+			String nuevaFechaNacTexto = txtFechaNac.getText().trim();
+			String nuevoTelefono = txtTelefono.getText().trim();
+			String nuevoCorreo = txtCorreo.getText().trim();
 
-	        java.sql.Date nuevaFechaNac = null;
+			java.sql.Date nuevaFechaNac = null;
 
-	        try {
-	            // Validar y convertir la fecha
-	            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-	            sdf.setLenient(false); // No permite fechas inválidas como 31/02/2023
-	            Date fechaUtil = sdf.parse(nuevaFechaNacTexto);
-	            nuevaFechaNac = new java.sql.Date(fechaUtil.getTime());
-	        } catch (ParseException ex) {
-	            JOptionPane.showMessageDialog(panelCentral, "Fecha inválida. Usa el formato dd/MM/yyyy", "Error de fecha", JOptionPane.ERROR_MESSAGE);
-	            return; // No continúa con el proceso si la fecha es inválida
-	        } catch (java.text.ParseException e1) {
+			try {
+				// Validar y convertir la fecha
+				SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+				sdf.setLenient(false); // No permite fechas inválidas como 31/02/2023
+				Date fechaUtil = sdf.parse(nuevaFechaNacTexto);
+				nuevaFechaNac = new java.sql.Date(fechaUtil.getTime());
+			} catch (ParseException ex) {
+				JOptionPane.showMessageDialog(panelCentral, "Fecha inválida. Usa el formato dd/MM/yyyy",
+						"Error de fecha", JOptionPane.ERROR_MESSAGE);
+				return; // No continúa con el proceso si la fecha es inválida
+			} catch (java.text.ParseException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 
-	        // Llamar al método del modelo para actualizar
-	        UsersModel model = new UsersModel();
-	        boolean actualizado = model.update(id, nuevoNombre, nuevoApellidoPaterno, nuevoApellidoMaterno, nuevaFechaNac, nuevoTelefono, nuevoCorreo);
+			// Llamar al método del modelo para actualizar
+			UsersModel model = new UsersModel();
+			boolean actualizado = model.update(id, nuevoNombre, nuevoApellidoPaterno, nuevoApellidoMaterno,
+					nuevaFechaNac, nuevoTelefono, nuevoCorreo);
 
-	        if (actualizado) {
-	            JOptionPane.showMessageDialog(panelCentral, "Cliente actualizado correctamente", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-	            dispose(); 
-	            DetallesCliente(); // Vuelve a la vista anterior
-	        } else {
-	            JOptionPane.showMessageDialog(panelCentral, "Error al actualizar el cliente", "Error", JOptionPane.ERROR_MESSAGE);
-	        }
-	    });
+			if (actualizado) {
+				JOptionPane.showMessageDialog(panelCentral, "Cliente actualizado correctamente", "Éxito",
+						JOptionPane.INFORMATION_MESSAGE);
+				dispose();
+				DetallesCliente(); // Vuelve a la vista anterior
+			} else {
+				JOptionPane.showMessageDialog(panelCentral, "Error al actualizar el cliente", "Error",
+						JOptionPane.ERROR_MESSAGE);
+			}
+		});
 
+		panelCentral.add(btnConfirmar);
 
-	    panelCentral.add(btnConfirmar);
+		// -------- BARRA ROJA SUPERIOR --------
 
+		JPanel barraRoja = new JPanel();
+		barraRoja.setBackground(Color.decode("#B44635"));
+		barraRoja.setBounds(0, 0, 1024, 60);
+		layeredPane.add(barraRoja, JLayeredPane.PALETTE_LAYER);
 
-	    // -------- BARRA ROJA SUPERIOR --------
-
-	    JPanel barraRoja = new JPanel();
-	    barraRoja.setBackground(Color.decode("#B44635"));
-	    barraRoja.setBounds(0, 0, 1024, 60);
-	    layeredPane.add(barraRoja, JLayeredPane.PALETTE_LAYER);
-
-	    setVisible(true);
+		setVisible(true);
 	}
-
 
 	public void Confirma_2() {
 		// Configuración básica de la ventana
@@ -1992,8 +1994,11 @@ public class HomeView extends JFrame {
 		registros.setFont(new Font("Calibri", Font.BOLD, 16));
 		registros.setBackground(new Color(38, 60, 84));
 		registros.addActionListener(e -> {
-			RegistroJuegos(); // Abre la segunda ventana
+//			RegistroJuegos(); // Abre la segunda ventana
+			
 			dispose(); // Cierra la ventana actual
+			VideogamesController lt = new VideogamesController();
+			lt.indexVideoGames();
 		});
 
 		JButton btnAgregarVideojuegos = new JButton("AGREGAR VIDEOJUEGOS");
@@ -2023,7 +2028,7 @@ public class HomeView extends JFrame {
 		setVisible(true);
 	}
 
-	public void RegistroJuegos() {
+	public void RegistroJuegos(List juegos) {
 
 		try {
 			UIManager.setLookAndFeel(new FlatLightLaf());
@@ -2107,33 +2112,74 @@ public class HomeView extends JFrame {
 		iniciar.setFont(new Font("Calibri", Font.BOLD, 24));
 		panelCentral.add(iniciar);
 
-		// Datos de la tabla
-		Object[][] data = {
-				{ "Identificador", "Nombre", "Plataforma", "Disponibilidad", "Precio(venta)", "Precio(renta)", },
-				{ "000001", "Contra", "Nintendo", "5", "$800", "$100" },
-				{ "000002", "God of War", "Play Station", "25", "$850", "$250" },
-				{ "000003", "Halo", "Xbox", "32", "$890", "$640" }, { "000004", "Fornite", "Pc", "40", "$900", "$700" },
-				{ "000005", "Pokemon", "Mixto", "41", "$950", "$720" },
-				{ "000006", "ARK: Survival", "Mixto", "30", "$990", "$720" },
+//		// Datos de la tabla
+//		Object[][] data = {
+//				{ "Identificador", "Nombre", "Plataforma", "Disponibilidad", "Precio(venta)", "Precio(renta)", },
+//				{ "000001", "Contra", "Nintendo", "5", "$800", "$100" },
+//				{ "000002", "God of War", "Play Station", "25", "$850", "$250" },
+//				{ "000003", "Halo", "Xbox", "32", "$890", "$640" }, { "000004", "Fornite", "Pc", "40", "$900", "$700" },
+//				{ "000005", "Pokemon", "Mixto", "41", "$950", "$720" },
+//				{ "000006", "ARK: Survival", "Mixto", "30", "$990", "$720" },
+//
+//		};
+//
+//		DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+//		centerRenderer.setHorizontalAlignment(JLabel.CENTER);
+//
+//		// Tabla
+//		JTable table = new JTable(data, new String[] { "", "", "", "", "", "", });
+//		panelCentral.add(table);
+//		table.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+//		table.setBounds(26, 62, 695, 366);
+//		table.setBorder(BorderFactory.createLineBorder(new Color(204, 204, 204)));
+//		table.setShowGrid(true);
+//		table.setGridColor(new Color(204, 204, 204));
+//		table.setTableHeader(null);
+//		table.setDefaultRenderer(Object.class, centerRenderer);
+//		table.setRowHeight(40);
+//		table.setShowHorizontalLines(true);
+//		table.setShowVerticalLines(true);
 
+		// Crear unan tabla
+		String[] columnNames = { "ID", "Nombre", "Plataforma", "Disponibilida", "Precio venta", "Precio renta" };
+		DefaultTableModel model = new DefaultTableModel(columnNames, 0) {
+			@Override
+			public boolean isCellEditable(int row, int column) {
+				return false; // Hacer que la tabla no sea editable
+			}
 		};
 
-		DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
-		centerRenderer.setHorizontalAlignment(JLabel.CENTER);
+		
+		// Llenar la tabla con datos
+		for (Iterator iterator = juegos.iterator(); iterator.hasNext();) {
+			VideoGames juego = (VideoGames) iterator.next();
+			 Object[] rowData = {
+				        juego.getId(),
+				        juego.getNombre(),
+				        juego.getPlataforma(),
+				        juego.isDisponibilidad() ? "Disponible" : "No disponible",
+				        "$" + juego.getPrecioCompra(),
+				        "$" + juego.getPrecioranta(),
+				        juego.getClasificacion()
+				    };
+			model.addRow(rowData);
+		}
 
-		// Tabla
-		JTable table = new JTable(data, new String[] { "", "", "", "", "", "", });
-		panelCentral.add(table);
-		table.setFont(new Font("Segoe UI", Font.PLAIN, 16));
-		table.setBounds(26, 62, 695, 366);
-		table.setBorder(BorderFactory.createLineBorder(new Color(204, 204, 204)));
-		table.setShowGrid(true);
-		table.setGridColor(new Color(204, 204, 204));
-		table.setTableHeader(null);
-		table.setDefaultRenderer(Object.class, centerRenderer);
-		table.setRowHeight(40);
-		table.setShowHorizontalLines(true);
-		table.setShowVerticalLines(true);
+		// se crea la tabla
+		JTable table = new JTable(model);
+
+		table.getColumnModel().getColumn(0).setPreferredWidth(10);
+		table.getColumnModel().getColumn(4).setPreferredWidth(50);
+
+		table.setFont(new Font("Arial", Font.PLAIN, 14));
+		table.setRowHeight(25);
+		table.getTableHeader().setFont(new Font("Arial", Font.BOLD, 14));
+		table.setAutoCreateRowSorter(true); // ordenar por columnas
+
+		// Agregar la tabla a un JScrollPane
+		JScrollPane scrollPane = new JScrollPane(table);
+		scrollPane.setBounds(26, 62, 695, 366);
+		panelCentral.add(scrollPane);
 
 		JButton btnNewButton = new JButton("DETALLES");
 		btnNewButton.setForeground(Color.WHITE);
@@ -2424,7 +2470,7 @@ public class HomeView extends JFrame {
 		btnRegresar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				RegistroJuegos();
+//				RegistroJuegos();
 				dispose();
 			}
 		});

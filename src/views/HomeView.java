@@ -796,27 +796,7 @@ public class HomeView extends JFrame {
 
 			// Obtener datos del usuario seleccionado
 			int userId = (int) model.getValueAt(selectedRow, 0);
-			String nombre = (String) model.getValueAt(selectedRow, 1);
-			String apellidoPaterno = (String) model.getValueAt(selectedRow, 2);
-			String apellidoMaterno = (String) model.getValueAt(selectedRow, 3);
-			String telefono = (String) model.getValueAt(selectedRow, 5);
-			String correo = (String) model.getValueAt(selectedRow, 6);
 
-			// Cerrar esta ventana y abrir ventana de edición con los datos cargados
-			dispose();
-			Object rawFecha = model.getValueAt(selectedRow, 4);
-
-//			String fechaFormateada;
-//			if (rawFecha instanceof java.sql.Date) {
-//				java.sql.Date fecha = (java.sql.Date) rawFecha;
-//				SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-//				fechaFormateada = sdf.format(fecha);
-//			} else {
-//				// Por si ya viene como String o en otro formato
-//				fechaFormateada = rawFecha.toString();
-//			}
-
-//			EditarCliente(userId, nombre, apellidoPaterno, apellidoMaterno, fechaFormateada, telefono, correo);
 			
 			UserController uc = new UserController();
 			uc.update(userId);
@@ -2132,7 +2112,7 @@ public class HomeView extends JFrame {
 				        juego.getId(),
 				        juego.getNombre(),
 				        juego.getPlataforma(),
-				        juego.isDisponibilidad() ? "Disponible" : "No disponible",
+				        juego.isDisponibilidad(),
 				        "$" + juego.getPrecioCompra(),
 				        "$" + juego.getPrecioranta(),
 				        juego.getClasificacion()
@@ -2186,15 +2166,13 @@ public class HomeView extends JFrame {
 		    // Obtener datos del juego seleccionado
 		    int juegoId = (int) model.getValueAt(selectedRow, 0);
 		    String nombre = (String) model.getValueAt(selectedRow, 1);
-		    String plataforma = (String) model.getValueAt(selectedRow, 2);
-		    String disponibilidad = (String) model.getValueAt(selectedRow, 3);
-		    String precioVenta = ((String) model.getValueAt(selectedRow, 4)).substring(1); // Eliminar el $
-		    String precioRenta = ((String) model.getValueAt(selectedRow, 5)).substring(1); // Eliminar el $
 
 		    // Cerrar esta ventana y abrir ventana de edición con los datos cargados
 		    dispose();
-		    EditarJuego(juegoId, nombre, plataforma, disponibilidad.equals("Disponible"), 
-		            Double.parseDouble(precioVenta), Double.parseDouble(precioRenta));
+		    
+		    VideogamesController vc = new VideogamesController();
+		    vc.updateVideogames(juegoId);
+		    
 		});
 		panelCentral.add(btnEditar);
 
@@ -2439,8 +2417,7 @@ public class HomeView extends JFrame {
 		setVisible(true);
 	}
 
-	public void EditarJuego(Integer juegoId, String nombre, String plataforma, boolean disponibilidad, 
-	        double precioVenta, double precioRenta) {
+	public void EditarJuego(VideoGames videogames) {
 	    
 	    // Declaración de campos de texto con nombres descriptivos
 	    JTextField txtNombreJuego;
@@ -2493,7 +2470,7 @@ public class HomeView extends JFrame {
 	    lblNombre.setBounds(55, 108, 140, 42);
 	    panelCentral.add(lblNombre);
 
-	    txtNombreJuego = new JTextField(nombre); // Campo prellenado con el nombre actual
+	    txtNombreJuego = new JTextField(videogames.getNombre()); // Campo prellenado con el nombre actual
 	    txtNombreJuego.setBackground(Color.decode("#D9D9D9"));
 	    txtNombreJuego.setBounds(53, 142, 230, 27);
 	    panelCentral.add(txtNombreJuego);
@@ -2526,7 +2503,7 @@ public class HomeView extends JFrame {
 	    lblPrecioRenta.setBounds(55, 327, 140, 42);
 	    panelCentral.add(lblPrecioRenta);
 
-	    txtPrecioRenta = new JTextField(String.valueOf(precioRenta)); // Campo prellenado
+	    txtPrecioRenta = new JTextField(String.valueOf(videogames.getPrecioranta())); // Campo prellenado
 	    txtPrecioRenta.setBackground(Color.decode("#D9D9D9"));
 	    txtPrecioRenta.setBounds(55, 368, 188, 27);
 	    panelCentral.add(txtPrecioRenta);
@@ -2537,7 +2514,7 @@ public class HomeView extends JFrame {
 	    lblPlataforma.setBounds(301, 108, 97, 42);
 	    panelCentral.add(lblPlataforma);
 
-	    txtPlataforma = new JTextField(plataforma); // Campo prellenado
+	    txtPlataforma = new JTextField(videogames.getPlataforma()); // Campo prellenado
 	    txtPlataforma.setBackground(Color.decode("#D9D9D9"));
 	    txtPlataforma.setBounds(301, 142, 202, 27);
 	    panelCentral.add(txtPlataforma);
@@ -2549,8 +2526,7 @@ public class HomeView extends JFrame {
 	    panelCentral.add(lblDisponibilidad);
 
 	    // CheckBox para disponibilidad
-	    JCheckBox chkDisponible = new JCheckBox("Disponible");
-	    chkDisponible.setSelected(disponibilidad); // Prellenado
+	    JTextField chkDisponible = new JTextField(videogames.isDisponibilidad());
 	    chkDisponible.setBackground(Color.decode("#F2F2F2"));
 	    chkDisponible.setBounds(227, 214, 120, 27);
 	    panelCentral.add(chkDisponible);
@@ -2583,7 +2559,7 @@ public class HomeView extends JFrame {
 	    lblPrecioVenta.setBounds(288, 327, 140, 42);
 	    panelCentral.add(lblPrecioVenta);
 
-	    txtPrecioVenta = new JTextField(String.valueOf(precioVenta)); // Campo prellenado
+	    txtPrecioVenta = new JTextField(String.valueOf(videogames.getPrecioCompra())); // Campo prellenado
 	    txtPrecioVenta.setBackground(Color.decode("#D9D9D9"));
 	    txtPrecioVenta.setBounds(288, 368, 215, 27);
 	    panelCentral.add(txtPrecioVenta);

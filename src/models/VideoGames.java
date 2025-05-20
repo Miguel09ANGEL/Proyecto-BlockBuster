@@ -7,7 +7,7 @@ public class VideoGames {
 	private int id;
 	private String nombre;
 	private String plataforma;
-	private boolean disponibilidad;
+	private int disponibilidad;
 	private BigDecimal precioranta;
 	private BigDecimal precioCompra;
 	private String clasificacion;
@@ -18,7 +18,7 @@ public class VideoGames {
 	private Date updatedAt;
 
 	// Constructor completo
-	public VideoGames(int id,String nombre, String plataforma, boolean disponibilidad,
+	public VideoGames(int id,String nombre, String plataforma, int disponibilidad,
                      BigDecimal precioranta, BigDecimal precioCompra, String clasificacion,
                      String desarrolladores, String genero, String acercaDe,
                      Date createdAt, Date updatedAt) {
@@ -60,11 +60,11 @@ public class VideoGames {
 		this.plataforma = plataforma;
 	}
 
-	public boolean isDisponibilidad() {
+	public int isDisponibilidad() {
 		return disponibilidad;
 	}
 
-	public void setDisponibilidad(boolean disponibilidad) {
+	public void setDisponibilidad(int disponibilidad) {
 		this.disponibilidad = disponibilidad;
 	}
 

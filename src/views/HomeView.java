@@ -806,17 +806,20 @@ public class HomeView extends JFrame {
 			dispose();
 			Object rawFecha = model.getValueAt(selectedRow, 4);
 
-			String fechaFormateada;
-			if (rawFecha instanceof java.sql.Date) {
-				java.sql.Date fecha = (java.sql.Date) rawFecha;
-				SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-				fechaFormateada = sdf.format(fecha);
-			} else {
-				// Por si ya viene como String o en otro formato
-				fechaFormateada = rawFecha.toString();
-			}
+//			String fechaFormateada;
+//			if (rawFecha instanceof java.sql.Date) {
+//				java.sql.Date fecha = (java.sql.Date) rawFecha;
+//				SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+//				fechaFormateada = sdf.format(fecha);
+//			} else {
+//				// Por si ya viene como String o en otro formato
+//				fechaFormateada = rawFecha.toString();
+//			}
 
-			EditarCliente(userId, nombre, apellidoPaterno, apellidoMaterno, fechaFormateada, telefono, correo);
+//			EditarCliente(userId, nombre, apellidoPaterno, apellidoMaterno, fechaFormateada, telefono, correo);
+			
+			UserController uc = new UserController();
+			uc.update(userId);
 
 		});
 		panelCentral.add(btnEditar);
@@ -1075,14 +1078,13 @@ public class HomeView extends JFrame {
 		setVisible(true);
 	}
 
-	public void EditarCliente(int id, String nombre, String aPat, String aMat, String fechaNac, String telefono,
-			String correo) {
+	public void EditarCliente(User user) {
 		// Campos de texto renombrados con sentido
 		JTextField txtNombre;
 		JTextField txtApellidoMaterno;
 		JTextField txtTelefono;
 		JTextField txtApellidoPaterno;
-		JTextField txtFechaNac;
+		JTextField txtFechaNac = null;
 		JTextField txtCorreo;
 
 		// Configuración de la ventana
@@ -1126,7 +1128,7 @@ public class HomeView extends JFrame {
 		lblNombre.setFont(new Font("Calibri", Font.BOLD, 14));
 		panelCentral.add(lblNombre);
 
-		txtNombre = new JTextField(nombre);
+		txtNombre = new JTextField(user.getNombre());
 		txtNombre.setBounds(84, 163, 330, 27);
 		txtNombre.setBackground(Color.decode("#D9D9D9"));
 		txtNombre.setColumns(10);
@@ -1138,7 +1140,7 @@ public class HomeView extends JFrame {
 		lblApellidoMaterno.setFont(new Font("Calibri", Font.BOLD, 14));
 		panelCentral.add(lblApellidoMaterno);
 
-		txtApellidoMaterno = new JTextField(aMat);
+		txtApellidoMaterno = new JTextField(user.getApellidoMaterno());
 		txtApellidoMaterno.setBounds(84, 236, 330, 27);
 		txtApellidoMaterno.setBackground(Color.decode("#D9D9D9"));
 		txtApellidoMaterno.setColumns(10);
@@ -1150,7 +1152,7 @@ public class HomeView extends JFrame {
 		lblTelefono.setFont(new Font("Calibri", Font.BOLD, 14));
 		panelCentral.add(lblTelefono);
 
-		txtTelefono = new JTextField(telefono);
+		txtTelefono = new JTextField(user.getTelefono());
 		txtTelefono.setBounds(84, 311, 330, 27);
 		txtTelefono.setBackground(Color.decode("#D9D9D9"));
 		txtTelefono.setColumns(10);
@@ -1164,7 +1166,7 @@ public class HomeView extends JFrame {
 		lblApellidoPaterno.setFont(new Font("Calibri", Font.BOLD, 14));
 		panelCentral.add(lblApellidoPaterno);
 
-		txtApellidoPaterno = new JTextField(aPat);
+		txtApellidoPaterno = new JTextField(user.getApellidoPaterno());
 		txtApellidoPaterno.setBounds(596, 163, 330, 27);
 		txtApellidoPaterno.setBackground(Color.decode("#D9D9D9"));
 		txtApellidoPaterno.setColumns(10);
@@ -1175,12 +1177,12 @@ public class HomeView extends JFrame {
 		lblFechaNac.setBounds(596, 209, 136, 42);
 		lblFechaNac.setFont(new Font("Calibri", Font.BOLD, 14));
 		panelCentral.add(lblFechaNac);
-
-		txtFechaNac = new JTextField(fechaNac);
-		txtFechaNac.setBounds(596, 236, 330, 27);
-		txtFechaNac.setBackground(Color.decode("#D9D9D9"));
-		txtFechaNac.setColumns(10);
-		panelCentral.add(txtFechaNac);
+//
+//		txtFechaNac = new JTextField(user.getFechaNacimiento());
+//		txtFechaNac.setBounds(596, 236, 330, 27);
+//		txtFechaNac.setBackground(Color.decode("#D9D9D9"));
+//		txtFechaNac.setColumns(10);
+//		panelCentral.add(txtFechaNac);
 
 		// Correo
 		JLabel lblCorreo = new JLabel("Correo:");
@@ -1188,7 +1190,7 @@ public class HomeView extends JFrame {
 		lblCorreo.setFont(new Font("Calibri", Font.BOLD, 14));
 		panelCentral.add(lblCorreo);
 
-		txtCorreo = new JTextField(correo);
+		txtCorreo = new JTextField(user.getCorreo());
 		txtCorreo.setBounds(596, 311, 330, 27);
 		txtCorreo.setBackground(Color.decode("#D9D9D9"));
 		txtCorreo.setColumns(10);
@@ -1238,7 +1240,7 @@ public class HomeView extends JFrame {
 
 			// Llamar al método del modelo para actualizar
 			UsersModel model = new UsersModel();
-			boolean actualizado = model.update(id, nuevoNombre, nuevoApellidoPaterno, nuevoApellidoMaterno,
+			boolean actualizado = model.update(user.getId(), nuevoNombre, nuevoApellidoPaterno, nuevoApellidoMaterno,
 					nuevaFechaNac, nuevoTelefono, nuevoCorreo);
 
 			if (actualizado) {

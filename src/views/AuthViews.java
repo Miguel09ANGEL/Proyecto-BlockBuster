@@ -871,8 +871,9 @@ public class AuthViews extends JFrame {
     btnCancelar.setForeground(Color.WHITE);
     btnCancelar.setBounds(175, 406, 183, 33);
     btnCancelar.addActionListener(e -> {
-        AdministradorCliente(); // Abre la ventana anterior (según tu código)
-        dispose(); // Cierra esta ventana
+    	dispose(); // Cierra esta ventana
+    	HomeView administradorclientes= new HomeView(); 
+		administradorclientes.AdministradorCliente();
     });
     panelCentral.add(btnCancelar);
 
@@ -882,7 +883,7 @@ public class AuthViews extends JFrame {
     btnConfirmar.setForeground(Color.WHITE);
     btnConfirmar.setBounds(533, 406, 183, 33);
     btnConfirmar.addActionListener(e -> {
-        Confirma_5(); // Acción para confirmar y guardar cliente
+         // Acción para confirmar y guardar cliente
     });
     panelCentral.add(btnConfirmar);
 
@@ -1122,8 +1123,9 @@ public class AuthViews extends JFrame {
     btnEditar.setBackground(Color.decode("#6D91B9"));
     btnEditar.addActionListener(new ActionListener() {
         public void actionPerformed(ActionEvent e) {
-            EditarJuego();
-            dispose();
+        	dispose();
+        	EditarJuego();
+        	
         }
     });
     btnEditar.setForeground(Color.WHITE);
@@ -1137,7 +1139,7 @@ public class AuthViews extends JFrame {
     panelCentral.add(btnDescargarPDF);
     btnDescargarPDF.addActionListener(new ActionListener() {
         public void actionPerformed(ActionEvent e) {
-            Confirma_7();
+            
         }
     });
 
@@ -1148,8 +1150,10 @@ public class AuthViews extends JFrame {
     panelCentral.add(btnRegresar);
     btnRegresar.addActionListener(new ActionListener() {
         public void actionPerformed(ActionEvent e) {
-            RegistroJuegos();
-            dispose();
+        	dispose();
+        	UserViews registrojuegos= new UserViews(); 
+    		registrojuegos.RegistroJuegos();
+        	
         }
     });
 
@@ -1346,7 +1350,7 @@ public class AuthViews extends JFrame {
     btnConfirmar.setForeground(Color.WHITE);
     btnConfirmar.setBounds(533, 406, 183, 33);
     btnConfirmar.addActionListener(e -> {
-        Confirma_8(); // Acción de confirmar
+        // Acción de confirmar
     });
     panelCentral.add(btnConfirmar);
 
@@ -1546,8 +1550,10 @@ public class AuthViews extends JFrame {
     btnCancelar.setBounds(259, 417, 183, 33);
     btnCancelar.addActionListener(new ActionListener() {
         public void actionPerformed(ActionEvent e) {
-            AdministradorJuegos();
-            dispose();
+        	dispose();
+        	HomeView administradorjuegos= new HomeView(); 
+    		administradorjuegos.AdministradorJuegos();
+        	
         }
     });
     panelCentral.add(btnCancelar);
@@ -1558,7 +1564,7 @@ public class AuthViews extends JFrame {
     btnConfirmar.setBounds(561, 417, 183, 33);
     btnConfirmar.addActionListener(new ActionListener() {
         public void actionPerformed(ActionEvent e) {
-            Confirma_9();
+           
         }
     });
     panelCentral.add(btnConfirmar);
@@ -1630,8 +1636,10 @@ public class AuthViews extends JFrame {
 		    btnCancelar.setForeground(Color.WHITE);
 		    btnCancelar.setBounds(175, 406, 183, 33);
 		    btnCancelar.addActionListener(e -> {
-		        Renta(); // Abre la segunda ventana
-		        dispose(); // Cierra la ventana actual
+		    	dispose(); // Cierra la ventana actual
+		    	UserViews renta= new UserViews(); 
+	    		renta.Renta();
+		    	 // Abre la segunda ventana
 		    });
 		    panelCentral.add(btnCancelar);
 
@@ -1640,7 +1648,7 @@ public class AuthViews extends JFrame {
 		    btnConfirmar.setForeground(Color.WHITE);
 		    btnConfirmar.setBounds(582, 406, 183, 33);
 		    btnConfirmar.addActionListener(e -> {
-		        Confirma_11(); // Acción confirmar
+		         // Acción confirmar
 		        // No cierras la ventana? (puedes agregar dispose(); si quieres)
 		    });
 		    panelCentral.add(btnConfirmar);
@@ -1741,8 +1749,10 @@ public class AuthViews extends JFrame {
     JButton btnRegresar = new JButton("REGRESAR");
     btnRegresar.addActionListener(new ActionListener() {
         public void actionPerformed(ActionEvent e) {
-            Renta();
-            dispose();
+        	dispose();
+        	UserViews renta= new UserViews(); 
+    		renta.Renta();
+            
         }
     });
     btnRegresar.setBackground(Color.decode("#B82F2F"));
@@ -1753,7 +1763,7 @@ public class AuthViews extends JFrame {
     JButton btnDescargarPDF = new JButton("Descargar (PDF)");
     btnDescargarPDF.addActionListener(new ActionListener() {
         public void actionPerformed(ActionEvent e) {
-            Confirma_12();
+            
         }
     });
     btnDescargarPDF.setBackground(Color.decode("#263C54"));
@@ -2011,8 +2021,10 @@ public class AuthViews extends JFrame {
     btnCancelar.setForeground(Color.WHITE);
     btnCancelar.setBounds(175, 406, 183, 33);
     btnCancelar.addActionListener(e -> {
-        Compra();
-        dispose();
+    	dispose();
+    	UserViews compra= new UserViews(); 
+		compra.Compra();
+    	
     });
     panelCentral.add(btnCancelar);
 
@@ -2021,7 +2033,7 @@ public class AuthViews extends JFrame {
     btnConfirmar.setForeground(Color.WHITE);
     btnConfirmar.setBounds(582, 406, 183, 33);
     btnConfirmar.addActionListener(e -> {
-        Confirma_13();
+        
     });
     panelCentral.add(btnConfirmar);
 
@@ -2153,8 +2165,10 @@ public class AuthViews extends JFrame {
     // Botones
     JButton btnRegresar = new JButton("REGRESAR");
     btnRegresar.addActionListener(e -> {
-        Compra();
-        dispose();
+    	dispose();
+    	UserViews compra= new UserViews(); 
+		compra.Compra();
+    	
     });
     btnRegresar.setBackground(Color.decode("#B82F2F"));
     btnRegresar.setForeground(Color.WHITE);
@@ -2162,10 +2176,13 @@ public class AuthViews extends JFrame {
     panelCentral.add(btnRegresar);
 
     JButton btnDescargarPDF = new JButton("Descargar (PDF)");
-    btnDescargarPDF.addActionListener(e -> Confirma_14());
     btnDescargarPDF.setBackground(Color.decode("#263C54"));
     btnDescargarPDF.setForeground(Color.WHITE);
     btnDescargarPDF.setBounds(614, 406, 183, 33);
+    btnDescargarPDF.addActionListener(e -> {
+    	
+    	
+    });
     panelCentral.add(btnDescargarPDF);
 
     // Imagen del juego
@@ -2574,8 +2591,11 @@ public class AuthViews extends JFrame {
     btnCancelar.setForeground(Color.WHITE);
     btnCancelar.setBounds(175, 406, 183, 33);
     btnCancelar.addActionListener(e -> {
-        PromocionAutomatica(); // Abre la segunda ventana
-        dispose(); // Cierra la ventana actual
+      
+    	dispose(); // Cierra la ventana actual
+    	UserViews promocionautomatica= new UserViews(); 
+		promocionautomatica.PromocionAutomatica();
+    	 // Abre la segunda ventana
     });
     panelCentral.add(btnCancelar);
 
@@ -2584,7 +2604,7 @@ public class AuthViews extends JFrame {
     btnConfirmar.setForeground(Color.WHITE);
     btnConfirmar.setBounds(582, 406, 183, 33);
     btnConfirmar.addActionListener(e -> {
-        Confirma_15(); // Abre la segunda ventana
+        // Abre la segunda ventana
     });
     panelCentral.add(btnConfirmar);
 
@@ -2660,8 +2680,10 @@ public class AuthViews extends JFrame {
     btnCancelar.setForeground(Color.WHITE);
     btnCancelar.setBounds(175, 406, 183, 33);
     btnCancelar.addActionListener(e -> {
-        DescuentoFrecuencia();
-        dispose();
+    	dispose();// Cierra la ventana actual
+    	UserViews descuentofrecuencia= new UserViews(); 
+		descuentofrecuencia.DescuentoFrecuencia();
+    	
     });
     panelCentral.add(btnCancelar);
 

@@ -68,8 +68,10 @@ public class UserViews extends JFrame {
 		btnClientes.setForeground(Color.WHITE);
 		btnClientes.setBounds(10, 11, 237, 100);
 		btnClientes.addActionListener(e -> {
-			AdministradorCliente(); // Abre la segunda ventana
 			dispose(); // Cierra la ventana actual
+			HomeView administradorcliente= new HomeView(); 
+			administradorcliente.AdministradorCliente();
+			 // Abre la segunda ventana
 		});
 		panelIzq.add(btnClientes);
 
@@ -80,8 +82,10 @@ public class UserViews extends JFrame {
 		btnVideojuegos.setBounds(10, 128, 237, 100);
 		panelIzq.add(btnVideojuegos);
 		btnVideojuegos.addActionListener(e -> {
-			AdministradorJuegos(); // Abre la segunda ventana
 			dispose(); // Cierra la ventana actual
+			HomeView administradorjuego= new HomeView(); 
+			administradorjuego.AdministradorJuegos();
+			 // Abre la segunda ventana
 		});
 
 		JButton btnRentaYCompra = new JButton("RENTA Y COMPRA");
@@ -90,8 +94,10 @@ public class UserViews extends JFrame {
 		btnRentaYCompra.setBackground(new Color(38, 60, 84));
 		btnRentaYCompra.setBounds(10, 242, 237, 100);
 		btnRentaYCompra.addActionListener(e -> {
-			AdministradorRentaCompra(); // Abre la segunda ventana
 			dispose(); // Cierra la ventana actual
+			HomeView administradorjuego= new HomeView(); 
+			administradorjuego.AdministradorRentaCompra();
+			 // Abre la segunda ventana
 		});
 		panelIzq.add(btnRentaYCompra);
 
@@ -101,8 +107,9 @@ public class UserViews extends JFrame {
 		btnNuevaOperacion.setBackground(new Color(38, 60, 84));
 		btnNuevaOperacion.setBounds(10, 364, 237, 100);
 		btnNuevaOperacion.addActionListener(e -> {
-			NuevaOperacion(); // Abre la segunda ventana
 			dispose(); // Cierra la ventana actual
+			HomeView nuevaoperacion= new HomeView(); 
+			nuevaoperacion.NuevaOperacion();// Abre la segunda ventana
 		});
 		panelIzq.add(btnNuevaOperacion);
 
@@ -237,8 +244,9 @@ public class UserViews extends JFrame {
 		        // Por si ya viene como String o en otro formato
 		        fechaFormateada = rawFecha.toString();
 		    }
-
-		    EditarCliente(userId, nombre, apellidoPaterno, apellidoMaterno, fechaFormateada, telefono, correo);
+		    AuthViews editarcliente= new AuthViews(); 
+			editarcliente.EditarCliente(userId, nombre, apellidoPaterno, apellidoMaterno, fechaFormateada, telefono, correo);
+		  //  EditarCliente(userId, nombre, apellidoPaterno, apellidoMaterno, fechaFormateada, telefono, correo);
 			
 		});
 		panelCentral.add(btnEditar);
@@ -325,8 +333,10 @@ public class UserViews extends JFrame {
 		btnConfirmar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				InformacionCliente();
 				dispose();
+				AuthViews informacioncliente= new AuthViews(); 
+				informacioncliente.InformacionCliente();
+				
 			}
 		});
 		btnConfirmar.setBackground(Color.decode("#263C54")); // Color de fondo (azul oscuro)
@@ -474,8 +484,10 @@ public class UserViews extends JFrame {
 		btnClientes.setForeground(Color.WHITE);
 		btnClientes.setBounds(10, 11, 237, 100);
 		btnClientes.addActionListener(e -> {
-			AdministradorCliente(); // Abre la segunda ventana
 			dispose(); // Cierra la ventana actual
+			HomeView administradorcliente= new HomeView(); 
+			administradorcliente.AdministradorCliente();
+			 // Abre la segunda ventana
 		});
 		panelIzq.add(btnClientes);
 
@@ -486,8 +498,10 @@ public class UserViews extends JFrame {
 		btnVideojuegos.setBounds(10, 128, 237, 100);
 		panelIzq.add(btnVideojuegos);
 		btnVideojuegos.addActionListener(e -> {
-			AdministradorJuegos(); // Abre la segunda ventana
 			dispose(); // Cierra la ventana actual
+			HomeView administradorjuegos= new HomeView(); 
+			administradorjuegos.AdministradorJuegos();
+			 // Abre la segunda ventana
 		});
 
 		JButton btnRentaYCompra = new JButton("RENTA Y COMPRA");
@@ -497,8 +511,10 @@ public class UserViews extends JFrame {
 		btnRentaYCompra.setBounds(10, 242, 237, 100);
 		panelIzq.add(btnRentaYCompra);
 		btnRentaYCompra.addActionListener(e -> {
-			AdministradorRentaCompra(); // Abre la segunda ventana
 			dispose(); // Cierra la ventana actual
+			HomeView administradorrentacompra= new HomeView(); 
+			administradorrentacompra.AdministradorRentaCompra();
+			 // Abre la segunda ventana
 		});
 
 		JButton btnClientes_3 = new JButton("NUEVA OPERACIÓN");
@@ -508,8 +524,10 @@ public class UserViews extends JFrame {
 		btnClientes_3.setBounds(10, 364, 237, 100);
 		panelIzq.add(btnClientes_3);
 		btnClientes_3.addActionListener(e -> {
-			NuevaOperacion(); // Abre la segunda ventana
 			dispose(); // Cierra la ventana actual
+			HomeView nuevaoperacion= new HomeView(); 
+			nuevaoperacion.NuevaOperacion();
+			 // Abre la segunda ventana
 		});
 
 		// 2. PANEL GRIS CENTRAL
@@ -559,8 +577,10 @@ public class UserViews extends JFrame {
 		btnNewButton.setBackground(Color.decode("#6D91B9"));
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				DetallesJuego();
 				dispose();
+				AuthViews detallesjuego= new AuthViews(); 
+				detallesjuego.DetallesJuego();
+				
 
 			}
 		});
@@ -573,7 +593,7 @@ public class UserViews extends JFrame {
 		btnEliminar.setBounds(187, 439, 172, 25);
 		btnEliminar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Confirma_6();
+				
 
 			}
 		});
@@ -627,8 +647,10 @@ public class UserViews extends JFrame {
 		btnClientes.setForeground(Color.WHITE);
 		btnClientes.setBounds(10, 11, 237, 100);
 		btnClientes.addActionListener(e -> {
-			AdministradorCliente(); // Abre la segunda ventana
 			dispose(); // Cierra la ventana actual
+			HomeView administradorcliente= new HomeView(); 
+			administradorcliente.AdministradorCliente();
+			 // Abre la segunda ventana
 		});
 		panelIzq.add(btnClientes);
 
@@ -639,8 +661,10 @@ public class UserViews extends JFrame {
 		btnVideojuegos.setBounds(10, 128, 237, 100);
 		panelIzq.add(btnVideojuegos);
 		btnVideojuegos.addActionListener(e -> {
-			AdministradorJuegos(); // Abre la segunda ventana
 			dispose(); // Cierra la ventana actual
+			HomeView administradorjuegos= new HomeView(); 
+			administradorjuegos.AdministradorJuegos();
+			 // Abre la segunda ventana
 		});
 
 		JButton btnRentaYCompra = new JButton("RENTA Y COMPRA");
@@ -649,8 +673,10 @@ public class UserViews extends JFrame {
 		btnRentaYCompra.setBackground(new Color(38, 60, 84));
 		btnRentaYCompra.setBounds(10, 242, 237, 100);
 		btnRentaYCompra.addActionListener(e -> {
-			AdministradorRentaCompra(); // Abre la segunda ventana
 			dispose(); // Cierra la ventana actual
+			HomeView administradorrentacompra= new HomeView(); 
+			administradorrentacompra.AdministradorRentaCompra();
+			// Abre la segunda ventana
 		});
 		panelIzq.add(btnRentaYCompra);
 
@@ -660,8 +686,10 @@ public class UserViews extends JFrame {
 		btnNuevaOperacion.setBackground(new Color(38, 60, 84));
 		btnNuevaOperacion.setBounds(10, 364, 237, 100);
 		btnNuevaOperacion.addActionListener(e -> {
-			NuevaOperacion(); // Abre la segunda ventana
 			dispose(); // Cierra la ventana actual
+			HomeView nuevaoperacion= new HomeView(); 
+			nuevaoperacion.NuevaOperacion();
+			 // Abre la segunda ventana
 		});
 		panelIzq.add(btnNuevaOperacion);
 
@@ -712,8 +740,10 @@ public class UserViews extends JFrame {
 		btnNewButton.setBackground(Color.decode("#6D91B9"));
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				OperacionRentar();
 				dispose();
+				HomeView operacionrentar= new HomeView(); 
+				operacionrentar.OperacionRentar();
+				
 
 			}
 		});
@@ -766,8 +796,10 @@ public class UserViews extends JFrame {
 		btnClientes.setForeground(Color.WHITE);
 		btnClientes.setBounds(10, 11, 237, 100);
 		btnClientes.addActionListener(e -> {
-			AdministradorCliente(); // Abre la segunda ventana
 			dispose(); // Cierra la ventana actual
+			HomeView administradorcliente= new HomeView(); 
+			administradorcliente.AdministradorCliente();
+			 // Abre la segunda ventana
 		});
 		panelIzq.add(btnClientes);
 
@@ -778,8 +810,10 @@ public class UserViews extends JFrame {
 		btnVideojuegos.setBounds(10, 128, 237, 100);
 		panelIzq.add(btnVideojuegos);
 		btnVideojuegos.addActionListener(e -> {
-			AdministradorJuegos(); // Abre la segunda ventana
 			dispose(); // Cierra la ventana actual
+			HomeView administradorjuegos= new HomeView(); 
+			administradorjuegos.AdministradorJuegos();
+			 // Abre la segunda ventana
 		});
 
 		JButton btnRentaYCompra = new JButton("RENTA Y COMPRA");
@@ -788,8 +822,9 @@ public class UserViews extends JFrame {
 		btnRentaYCompra.setBackground(new Color(38, 60, 84));
 		btnRentaYCompra.setBounds(10, 242, 237, 100);
 		btnRentaYCompra.addActionListener(e -> {
-			AdministradorRentaCompra(); // Abre la segunda ventana
 			dispose(); // Cierra la ventana actual
+			HomeView administradorrentacompra= new HomeView(); 
+			administradorrentacompra.AdministradorRentaCompra(); // Abre la segunda ventana
 		});
 		panelIzq.add(btnRentaYCompra);
 
@@ -799,8 +834,10 @@ public class UserViews extends JFrame {
 		btnNuevaOperacion.setBackground(new Color(38, 60, 84));
 		btnNuevaOperacion.setBounds(10, 364, 237, 100);
 		btnNuevaOperacion.addActionListener(e -> {
-			NuevaOperacion(); // Abre la segunda ventana
 			dispose(); // Cierra la ventana actual
+			HomeView nuevaoperacion= new HomeView(); 
+			nuevaoperacion.NuevaOperacion();
+			// Abre la segunda ventana
 		});
 		panelIzq.add(btnNuevaOperacion);
 
@@ -853,8 +890,10 @@ public class UserViews extends JFrame {
 		JButton btnNewButton = new JButton("Comprar");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				OperacionComprar();
 				dispose();
+				HomeView operacioncomprar= new HomeView(); 
+				operacioncomprar.OperacionComprar();
+				
 
 			}
 		});
@@ -903,8 +942,10 @@ public class UserViews extends JFrame {
 		btnClientes.setForeground(Color.WHITE);
 		btnClientes.setBounds(10, 11, 237, 100);
 		btnClientes.addActionListener(e -> {
-			AdministradorCliente(); // Abre la segunda ventana
 			dispose(); // Cierra la ventana actual
+			HomeView administradorcliente= new HomeView(); 
+			administradorcliente.AdministradorCliente();
+			 // Abre la segunda ventana
 		});
 		panelIzq.add(btnClientes);
 
@@ -915,8 +956,10 @@ public class UserViews extends JFrame {
 		btnVideojuegos.setBounds(10, 128, 237, 100);
 		panelIzq.add(btnVideojuegos);
 		btnVideojuegos.addActionListener(e -> {
-			AdministradorJuegos(); // Abre la segunda ventana
 			dispose(); // Cierra la ventana actual
+			HomeView administradorjuegos= new HomeView(); 
+			administradorjuegos.AdministradorJuegos();
+			 // Abre la segunda ventana
 		});
 
 		JButton btnRentaYCompra = new JButton("RENTA Y COMPRA");
@@ -925,8 +968,10 @@ public class UserViews extends JFrame {
 		btnRentaYCompra.setBackground(new Color(38, 60, 84));
 		btnRentaYCompra.setBounds(10, 242, 237, 100);
 		btnRentaYCompra.addActionListener(e -> {
-			AdministradorRentaCompra(); // Abre la segunda ventana
 			dispose(); // Cierra la ventana actual
+			HomeView administradorrentacompra= new HomeView(); 
+			administradorrentacompra.AdministradorRentaCompra();
+			// Abre la segunda ventana
 		});
 		panelIzq.add(btnRentaYCompra);
 
@@ -936,8 +981,10 @@ public class UserViews extends JFrame {
 		btnNuevaOperacion.setBackground(new Color(38, 60, 84));
 		btnNuevaOperacion.setBounds(10, 364, 237, 100);
 		btnNuevaOperacion.addActionListener(e -> {
-			NuevaOperacion(); // Abre la segunda ventana
 			dispose(); // Cierra la ventana actual
+			HomeView nuevacompra= new HomeView(); 
+			nuevacompra.NuevaOperacion();
+			 // Abre la segunda ventana
 		});
 		panelIzq.add(btnNuevaOperacion);
 
@@ -1027,8 +1074,10 @@ public class UserViews extends JFrame {
 		btnClientes.setForeground(Color.WHITE);
 		btnClientes.setBounds(10, 11, 237, 100);
 		btnClientes.addActionListener(e -> {
-			AdministradorCliente(); // Abre la segunda ventana
 			dispose(); // Cierra la ventana actual
+			HomeView administradorcliente = new HomeView(); 
+			administradorcliente.AdministradorCliente();
+			 // Abre la segunda ventana
 		});
 		panelIzq.add(btnClientes);
 
@@ -1039,8 +1088,10 @@ public class UserViews extends JFrame {
 		btnVideojuegos.setBounds(10, 128, 237, 100);
 		panelIzq.add(btnVideojuegos);
 		btnVideojuegos.addActionListener(e -> {
-			AdministradorJuegos(); // Abre la segunda ventana
 			dispose(); // Cierra la ventana actual
+			HomeView administradorjuegos = new HomeView(); 
+			administradorjuegos.AdministradorJuegos();
+			// Abre la segunda ventana
 		});
 
 		JButton btnRentaYCompra = new JButton("RENTA Y COMPRA");
@@ -1049,8 +1100,10 @@ public class UserViews extends JFrame {
 		btnRentaYCompra.setBackground(new Color(38, 60, 84));
 		btnRentaYCompra.setBounds(10, 242, 237, 100);
 		btnRentaYCompra.addActionListener(e -> {
-			AdministradorRentaCompra(); // Abre la segunda ventana
 			dispose(); // Cierra la ventana actual
+			HomeView administradorrentacompra = new HomeView(); 
+			administradorrentacompra.AdministradorRentaCompra();
+			// Abre la segunda ventana
 		});
 		panelIzq.add(btnRentaYCompra);
 
@@ -1060,8 +1113,10 @@ public class UserViews extends JFrame {
 		btnNuevaOperacion.setBackground(new Color(38, 60, 84));
 		btnNuevaOperacion.setBounds(10, 364, 237, 100);
 		btnNuevaOperacion.addActionListener(e -> {
-			NuevaOperacion(); // Abre la segunda ventana
 			dispose(); // Cierra la ventana actual
+			HomeView nuevaoperacion = new HomeView(); 
+			nuevaoperacion.NuevaOperacion();
+			 // Abre la segunda ventana
 		});
 		panelIzq.add(btnNuevaOperacion);
 
@@ -1134,8 +1189,10 @@ public class UserViews extends JFrame {
 		btnEditarPromocion.setBackground(Color.decode("#6D91B9"));
 		btnEditarPromocion.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				EditarPromociones();
 				dispose();
+				HomeView editarpromocion = new HomeView(); 
+				editarpromocion.EditarPromociones();
+				
 
 			}
 		});
@@ -1191,8 +1248,10 @@ public class UserViews extends JFrame {
 		btnVideojuegos.setBounds(10, 128, 237, 100);
 		panelIzq.add(btnVideojuegos);
 		btnVideojuegos.addActionListener(e -> {
-			AdministradorJuegos(); // Abre la segunda ventana
 			dispose(); // Cierra la ventana actual
+			HomeView administradorjuegos = new HomeView(); 
+			administradorjuegos.AdministradorJuegos();
+			 // Abre la segunda ventana
 		});
 
 		JButton btnRentaYCompra = new JButton("RENTA Y COMPRA");
@@ -1281,8 +1340,10 @@ public class UserViews extends JFrame {
 		btnEditarPromocion.setBounds(294, 428, 184, 25);
 		btnEditarPromocion.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				EditarDescuento(); // Abre la segunda ventana
 				dispose();
+				HomeView editardescuento = new HomeView(); 
+				editardescuento.EditarDescuento();
+				 // Abre la segunda ventana
 			}
 		});
 		panelCentral.add(btnEditarPromocion);

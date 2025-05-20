@@ -5,6 +5,7 @@ import views.HomeView;
 public class AuthController {
 	
 	private HomeView vista;
+	VideogamesController lt = new VideogamesController();
 
 	public AuthController() { 
 		
@@ -16,10 +17,11 @@ public class AuthController {
 		vista.PanelAdministrador();
 	}
 	
-//	public void framePrueba() {
+	public void framePrueba() {
 //		vista.EditarCliente();
-//
-//	}
+
+		lt.indexVideoGames();
+	}
 	
 	
 

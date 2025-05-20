@@ -125,9 +125,6 @@ public class UsersModel {
 		return false;
 
 	}
-	
-//	usuarios.add(new User(id, nombre, apellidoPaterno, apellidoMaterno, fechaNacimiento, telefono, correo, null, null));
-
 
 	public boolean update(int id, String nombre, String apellidoP, String apellidoM, java.sql.Date fechaNacimiento, String telefono, String correo) {
 
@@ -163,6 +160,56 @@ public class UsersModel {
 
 		return false;
 
+	}
+	
+	public User get(int id) {
+
+		String query = "select * from users WHERE id = " + id;
+
+		Connection conn = null;
+		Statement stmt = null;
+
+		User myUser = null;
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			conn = DriverManager.getConnection(url, usuario, contraseña);
+			stmt = conn.createStatement();
+			ResultSet rs = stmt.executeQuery(query);
+
+			while (rs.next()) {
+				
+				String nombre = rs.getString(2);
+				String apellidoPaterno = rs.getString(3);
+				String apellidoMaterno = rs.getString(4);
+				Date fechaNacimiento = rs.getDate(5);
+				String telefono = rs.getString(6);
+				String correo = rs.getString(7);
+
+				System.out.println("empId:" + id);
+				System.out.println("firstName:" + nombre);
+
+				System.out.println("");
+
+//				usuarios.add(new User(id, nombre, apellidoPaterno, apellidoMaterno, fechaNacimiento, telefono, correo, null, null));
+				
+				myUser = new User(id, nombre, apellidoPaterno, apellidoMaterno, fechaNacimiento, telefono, correo, null, null);
+			}
+
+			rs.close();
+
+			return myUser;
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				stmt.close();
+				conn.close();
+			} catch (Exception e) {
+			}
+		}
+
+		return myUser;
 	}
 
 }

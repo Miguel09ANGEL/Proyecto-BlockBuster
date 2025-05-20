@@ -1,0 +1,31 @@
+package controller;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import models.VideoGames;
+import models.VideoGamesModel;
+import views.HomeView;
+
+public class VideogamesController {
+
+	private HomeView vista;
+
+	private List<VideoGames> videogames = new ArrayList<>();
+
+	public VideogamesController() {
+		
+		vista = new HomeView();
+		
+	}
+	
+	public void indexVideoGames() {
+		
+		VideoGamesModel um = new VideoGamesModel();
+		
+		videogames = um.getAllVideogames();
+		
+		vista.RegistroJuegos(videogames);
+	}
+	
+}

@@ -28,4 +28,13 @@ public class UserController {
 		
 	}
 	
+	public void update(int id) {
+		
+		UsersModel um = new UsersModel();
+
+		User myUser = um.get(id);
+		
+		vista.EditarCliente(myUser);
+		
+	}
 }

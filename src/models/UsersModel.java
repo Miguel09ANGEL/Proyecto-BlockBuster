@@ -190,7 +190,6 @@ public class UsersModel {
 
 				System.out.println("");
 
-//				usuarios.add(new User(id, nombre, apellidoPaterno, apellidoMaterno, fechaNacimiento, telefono, correo, null, null));
 				
 				myUser = new User(id, nombre, apellidoPaterno, apellidoMaterno, fechaNacimiento, telefono, correo, null, null);
 			}

@@ -15,6 +15,10 @@ public class UsersModel {
 	String url = "jdbc:mysql://sql.freedb.tech:3306/freedb_Base_de_datos_renta?useSSL=false";
 	String usuario = "freedb_G_user";
 	String contraseña = "%eeFW9csb4$?Dcj";
+	
+//	String url = "jdbc:mysql://127.0.0.1:3306/base_de_datos_renta";
+//	String usuario = "root";
+//	String contraseña = "";
 
 	public UsersModel() {
 		// TODO Auto-generated constructor stub
@@ -96,10 +100,10 @@ public class UsersModel {
 
 	}
 
-	public boolean add(String name, String email, String role, String phone) {
-
-		String query = "INSERT INTO users (name, email, role, phone) VALUES ('" + name + "', '" + email + "', '" + role
-				+ "', " + (phone != null ? "'" + phone + "'" : "NULL") + ")";
+	public boolean add(String name, String apellidoPaterno, String apellidoMaterno,java.util.Date fechaNacimiento,String telefono, String correo) {
+		
+	    String query = "INSERT INTO users (nombre, apellido_paterno, apellido_materno, fecha_nacimiento, telefono, correo) "
+	    		+ "VALUES ('"+name+"', '"+apellidoPaterno+"', '"+apellidoMaterno+"', '"+fechaNacimiento+"', '"+telefono+"', '"+correo+"')";
 
 		Connection conn = null;
 		Statement stmt = null;
@@ -126,13 +130,13 @@ public class UsersModel {
 
 	}
 
-	public boolean update(int id, String nombre, String apellidoP, String apellidoM, java.sql.Date fechaNacimiento, String telefono, String correo) {
+	public boolean update(int id, String nombre, String apellidoP, String apellidoM, Date fechaNacimiento, String telefono, String correo) {
 
 		String query = "UPDATE users SET " +
                 "nombre = '" + nombre + "', " +
                 "apellido_paterno = '" + apellidoP + "', " +
                 "apellido_materno = " + (apellidoM != null ? "'" + apellidoM + "'" : "NULL") + ", " +
-                "fecha_nacimiento = '" + fechaNacimiento + "', " +
+                "fecha_nacimiento = '"+ fechaNacimiento + "', " +
                 "telefono = " + (telefono != null ? "'" + telefono + "'" : "NULL") + ", " +
                 "correo = '" + correo + "' " +
                 "WHERE id = " + id;

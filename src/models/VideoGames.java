@@ -4,34 +4,39 @@ import java.math.BigDecimal;
 import java.sql.Date;
 
 public class VideoGames {
-	private int id;
-	private String nombre;
-	private String plataforma;
-	private int disponibilidad;
-	private BigDecimal precioranta;
-	private BigDecimal precioCompra;
-	private String clasificacion;
-	private String desarrolladores;
-	private String genero;
-	private String acercaDe;
-	private Date createdAt;
-	private Date updatedAt;
+    private int id;
+    private String nombre;
+    private String plataforma;
+    private int añoLanzamiento;
+    private boolean disponibilidad;
+    private String clasificacion;
+    private String genero;
+    private int existenciasDisponibles;
+    private BigDecimal precioRenta;
+    private BigDecimal precioVenta;
+    private String desarrolladoPor;
+    private String descripcion;
+    private Date createdAt;
+    private Date updatedAt;
 
-	// Constructor completo
-	public VideoGames(int id,String nombre, String plataforma, int disponibilidad,
-                     BigDecimal precioranta, BigDecimal precioCompra, String clasificacion,
-                     String desarrolladores, String genero, String acercaDe,
-                     Date createdAt, Date updatedAt) {
+    // Constructor completo
+    public VideoGames(int id, String nombre, String plataforma, int añoLanzamiento,
+                    boolean disponibilidad, String clasificacion, String genero,
+                    int existenciasDisponibles, BigDecimal precioRenta,
+                    BigDecimal precioVenta, String desarrolladoPor, String descripcion,
+                    Date createdAt, Date updatedAt) {
         this.id = id;
         this.nombre = nombre;
         this.plataforma = plataforma;
+        this.añoLanzamiento = añoLanzamiento;
         this.disponibilidad = disponibilidad;
-        this.precioranta = precioranta;
-        this.precioCompra = precioCompra;
         this.clasificacion = clasificacion;
-        this.desarrolladores = desarrolladores;
         this.genero = genero;
-        this.acercaDe = acercaDe;
+        this.existenciasDisponibles = existenciasDisponibles;
+        this.precioRenta = precioRenta;
+        this.precioVenta = precioVenta;
+        this.desarrolladoPor = desarrolladoPor;
+        this.descripcion = descripcion;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
     }
@@ -60,28 +65,20 @@ public class VideoGames {
 		this.plataforma = plataforma;
 	}
 
-	public int isDisponibilidad() {
+	public int getAñoLanzamiento() {
+		return añoLanzamiento;
+	}
+
+	public void setAñoLanzamiento(int añoLanzamiento) {
+		this.añoLanzamiento = añoLanzamiento;
+	}
+
+	public boolean isDisponibilidad() {
 		return disponibilidad;
 	}
 
-	public void setDisponibilidad(int disponibilidad) {
+	public void setDisponibilidad(boolean disponibilidad) {
 		this.disponibilidad = disponibilidad;
-	}
-
-	public BigDecimal getPrecioranta() {
-		return precioranta;
-	}
-
-	public void setPrecioranta(BigDecimal precioranta) {
-		this.precioranta = precioranta;
-	}
-
-	public BigDecimal getPrecioCompra() {
-		return precioCompra;
-	}
-
-	public void setPrecioCompra(BigDecimal precioCompra) {
-		this.precioCompra = precioCompra;
 	}
 
 	public String getClasificacion() {
@@ -92,14 +89,6 @@ public class VideoGames {
 		this.clasificacion = clasificacion;
 	}
 
-	public String getDesarrolladores() {
-		return desarrolladores;
-	}
-
-	public void setDesarrolladores(String desarrolladores) {
-		this.desarrolladores = desarrolladores;
-	}
-
 	public String getGenero() {
 		return genero;
 	}
@@ -108,12 +97,44 @@ public class VideoGames {
 		this.genero = genero;
 	}
 
-	public String getAcercaDe() {
-		return acercaDe;
+	public int getExistenciasDisponibles() {
+		return existenciasDisponibles;
 	}
 
-	public void setAcercaDe(String acercaDe) {
-		this.acercaDe = acercaDe;
+	public void setExistenciasDisponibles(int existenciasDisponibles) {
+		this.existenciasDisponibles = existenciasDisponibles;
+	}
+
+	public BigDecimal getPrecioRenta() {
+		return precioRenta;
+	}
+
+	public void setPrecioRenta(BigDecimal precioRenta) {
+		this.precioRenta = precioRenta;
+	}
+
+	public BigDecimal getPrecioVenta() {
+		return precioVenta;
+	}
+
+	public void setPrecioVenta(BigDecimal precioVenta) {
+		this.precioVenta = precioVenta;
+	}
+
+	public String getDesarrolladoPor() {
+		return desarrolladoPor;
+	}
+
+	public void setDesarrolladoPor(String desarrolladoPor) {
+		this.desarrolladoPor = desarrolladoPor;
+	}
+
+	public String getDescripcion() {
+		return descripcion;
+	}
+
+	public void setDescripcion(String descripcion) {
+		this.descripcion = descripcion;
 	}
 
 	public Date getCreatedAt() {
@@ -131,6 +152,7 @@ public class VideoGames {
 	public void setUpdatedAt(Date updatedAt) {
 		this.updatedAt = updatedAt;
 	}
+
 	
-	
+    
 }

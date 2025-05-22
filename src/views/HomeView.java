@@ -6,6 +6,7 @@ import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Iterator;
@@ -20,6 +21,7 @@ import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
@@ -35,17 +37,20 @@ import com.formdev.flatlaf.json.ParseException;
 
 import controller.UserController;
 import controller.VideogamesController;
+import models.Admins;
 import models.User;
 import models.UsersModel;
 import models.VideoGames;
+import models.VideoGamesModel;
 
 public class HomeView extends JFrame {
-
+	
+	
 	public HomeView() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public void PanelAdministrador() {
+	public void PanelAdministrador(List administrador) {
 
 		try {
 			UIManager.setLookAndFeel(new FlatLightLaf());
@@ -97,13 +102,15 @@ public class HomeView extends JFrame {
 		correo.setFont(new Font("SansSerif", Font.BOLD, 20));
 		correo.setBounds(39, 146, 158, 26);
 		panelCentral.add(correo);
-
+		
 		JTextField gmail = new JTextField();
+		gmail.setBorder(BorderFactory.createLineBorder(Color.decode("#10A7DE")));
 		gmail.setBackground(Color.decode("#D9D9D9"));
 		gmail.setSize(290, 30);
-		gmail.setLocation(39, 288);
+		gmail.setLocation(39, 170);
 		gmail.setFont(new Font("Montserrat ", Font.BOLD, 15));
 		panelCentral.add(gmail);
+
 
 		JLabel contraseña = new JLabel("Contraseña:");
 		contraseña.setSize(116, 26);
@@ -112,13 +119,14 @@ public class HomeView extends JFrame {
 		contraseña.setFont(new Font("SansSerif", Font.BOLD, 20));
 		panelCentral.add(contraseña);
 
-		JTextField password = new JTextField();
-		password.setBorder(BorderFactory.createLineBorder(Color.decode("#10A7DE")));
+	
+	    JPasswordField password = new JPasswordField();
 		password.setBackground(Color.decode("#D9D9D9"));
 		password.setSize(290, 30);
-		password.setLocation(39, 170);
+		password.setLocation(39, 288);
 		password.setFont(new Font("Montserrat ", Font.BOLD, 15));
 		panelCentral.add(password);
+		
 
 		JButton acceder = new JButton("Acceder");
 		acceder.setBackground(Color.decode("#263C54")); // Color de fondo (azul oscuro)
@@ -127,8 +135,29 @@ public class HomeView extends JFrame {
 		acceder.setBounds(40, 371, 289, 26); // También puedes usar setSize + setLocation si prefieres
 		acceder.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				dispose();
-				Inicio(); // Abre la segunda ventana
+				
+				String passIngresada = new String(password.getPassword());
+
+				
+				// Aqui se valida la contraseña
+				for (Iterator iterator = administrador.iterator(); iterator.hasNext();) {
+					Admins ob = (Admins) iterator.next();
+					
+					// se valida el correo
+					if(gmail.getText().equals(ob.getEmail())) {
+						
+						// se valida la contraseña
+						if(passIngresada.equals(ob.getContraseña())) {
+							
+							// si la contraseña conside se pasa a la ventana ininc
+							dispose();
+							Inicio(); 
+						}
+					}
+					
+					
+				}
+			
 			}
 		});
 		panelCentral.add(acceder);
@@ -600,8 +629,10 @@ public class HomeView extends JFrame {
 		btnAgregarCliente.setBackground(new Color(38, 60, 84));
 		btnAgregarCliente.setBounds(442, 261, 206, 100);
 		btnAgregarCliente.addActionListener(e -> {
-			AgregarCliente(); // Abre la segunda ventana
 			dispose(); // Cierra la ventana actual
+			
+			AuthViews av = new AuthViews();
+			av.AgregarCliente();
 		});
 		panelCentral.add(btnAgregarCliente);
 
@@ -799,7 +830,7 @@ public class HomeView extends JFrame {
 
 			
 			UserController uc = new UserController();
-			uc.update(userId);
+			uc.update2(userId);
 
 		});
 		panelCentral.add(btnEditar);
@@ -878,7 +909,7 @@ public class HomeView extends JFrame {
 		setVisible(true);
 	}
 
-	public void DetallesCliente() {
+	public void DetallesCliente(User user) {
 		// Configuración básica de la ventana
 		setTitle("Detalles Cliente");
 		setSize(1024, 576);
@@ -918,7 +949,7 @@ public class HomeView extends JFrame {
 		ImageIcon iconoOrigina = new ImageIcon(getClass().getResource("/images/Block.png"));
 		Image imagen = iconoOriginal.getImage().getScaledInstance(70, 70, Image.SCALE_SMOOTH);
 
-		JLabel iniciar_1_1_1_3 = new JLabel("00001");
+		JLabel iniciar_1_1_1_3 = new JLabel(""+user.getId());
 		iniciar_1_1_1_3.setForeground(Color.decode("#3B3741"));
 		iniciar_1_1_1_3.setHorizontalAlignment(SwingConstants.CENTER);
 		iniciar_1_1_1_3.setFont(new Font("Calibri", Font.BOLD, 18));
@@ -930,6 +961,9 @@ public class HomeView extends JFrame {
 		btnEditar.setBackground(Color.decode("#6D91B9"));
 		btnEditar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
+				UserController uc = new UserController();
+				uc.update(user.getId());
 //				EditarCliente();
 				dispose();
 			}
@@ -943,8 +977,10 @@ public class HomeView extends JFrame {
 		btnConfirmar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				InformacionCliente();
 				dispose();
+//				VideogamesController vm = new VideogamesController();
+//				vm.updateVideogames2(WIDTH);
+//				InformacionCliente();
 			}
 		});
 		btnConfirmar.setBackground(Color.decode("#263C54")); // Color de fondo (azul oscuro)
@@ -1016,7 +1052,7 @@ public class HomeView extends JFrame {
 		iniciar_1_1_2_1_1.setBounds(230, 84, 97, 42);
 		panelCentral.add(iniciar_1_1_2_1_1);
 
-		JLabel iniciar_1_1_1_3_1 = new JLabel("Manuel Orozco Vazquez");
+		JLabel iniciar_1_1_1_3_1 = new JLabel(user.getNombre() + " " + user.getApellidoPaterno());
 		iniciar_1_1_1_3_1.setHorizontalAlignment(SwingConstants.CENTER);
 		iniciar_1_1_1_3_1.setForeground(new Color(59, 55, 65));
 		iniciar_1_1_1_3_1.setFont(new Font("Calibri", Font.BOLD, 18));
@@ -1029,7 +1065,7 @@ public class HomeView extends JFrame {
 		iniciar_1_1_2_1_1_1.setBounds(480, 85, 97, 42);
 		panelCentral.add(iniciar_1_1_2_1_1_1);
 
-		JLabel iniciar_1_1_1_3_1_1 = new JLabel("mov@gmail.com");
+		JLabel iniciar_1_1_1_3_1_1 = new JLabel(user.getCorreo());
 		iniciar_1_1_1_3_1_1.setHorizontalAlignment(SwingConstants.CENTER);
 		iniciar_1_1_1_3_1_1.setForeground(new Color(59, 55, 65));
 		iniciar_1_1_1_3_1_1.setFont(new Font("Calibri", Font.BOLD, 18));
@@ -1042,7 +1078,7 @@ public class HomeView extends JFrame {
 		iniciar_1_1_2_1_1_1_1.setBounds(767, 84, 97, 42);
 		panelCentral.add(iniciar_1_1_2_1_1_1_1);
 
-		JLabel iniciar_1_1_1_3_1_1_1 = new JLabel("6120000000");
+		JLabel iniciar_1_1_1_3_1_1_1 = new JLabel(user.getTelefono());
 		iniciar_1_1_1_3_1_1_1.setHorizontalAlignment(SwingConstants.CENTER);
 		iniciar_1_1_1_3_1_1_1.setForeground(new Color(59, 55, 65));
 		iniciar_1_1_1_3_1_1_1.setFont(new Font("Calibri", Font.BOLD, 18));
@@ -1058,256 +1094,7 @@ public class HomeView extends JFrame {
 		setVisible(true);
 	}
 
-	public void EditarCliente(User user) {
-		// Campos de texto renombrados con sentido
-		JTextField txtNombre;
-		JTextField txtApellidoMaterno;
-		JTextField txtTelefono;
-		JTextField txtApellidoPaterno;
-		JTextField txtFechaNac = null;
-		JTextField txtCorreo;
-
-		// Configuración de la ventana
-		setTitle("Editar Cliente");
-		setSize(1024, 576);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setLocationRelativeTo(null);
-
-		// Panel principal
-		JLayeredPane layeredPane = new JLayeredPane();
-		layeredPane.setPreferredSize(new Dimension(900, 650));
-		setContentPane(layeredPane);
-
-		// Panel central
-		JPanel panelCentral = new JPanel();
-		panelCentral.setLayout(null);
-		panelCentral.setBackground(Color.decode("#F2F2F2"));
-		panelCentral.setBounds(5, 62, 998, 475);
-		layeredPane.add(panelCentral, JLayeredPane.PALETTE_LAYER);
-
-		// Logotipo
-		ImageIcon iconoOriginal = new ImageIcon(getClass().getResource("/images/Block.png"));
-		Image imagenEscalada = iconoOriginal.getImage().getScaledInstance(70, 70, Image.SCALE_SMOOTH);
-		JLabel logo = new JLabel(new ImageIcon(imagenEscalada));
-		logo.setBounds(477, 11, 70, 70);
-		panelCentral.add(logo);
-
-		// Título
-		JLabel lblTitulo = new JLabel("EDITAR CLIENTE");
-		lblTitulo.setSize(263, 42);
-		lblTitulo.setLocation(370, 94);
-		lblTitulo.setHorizontalAlignment(JLabel.CENTER);
-		lblTitulo.setFont(new Font("Calibri", Font.BOLD, 24));
-		panelCentral.add(lblTitulo);
-
-		// -------- LADO IZQUIERDO --------
-
-		// Nombre
-		JLabel lblNombre = new JLabel("Nombre:");
-		lblNombre.setBounds(84, 135, 87, 42);
-		lblNombre.setFont(new Font("Calibri", Font.BOLD, 14));
-		panelCentral.add(lblNombre);
-
-		txtNombre = new JTextField(user.getNombre());
-		txtNombre.setBounds(84, 163, 330, 27);
-		txtNombre.setBackground(Color.decode("#D9D9D9"));
-		txtNombre.setColumns(10);
-		panelCentral.add(txtNombre);
-
-		// Apellido Materno
-		JLabel lblApellidoMaterno = new JLabel("Apellido materno:");
-		lblApellidoMaterno.setBounds(84, 209, 115, 42);
-		lblApellidoMaterno.setFont(new Font("Calibri", Font.BOLD, 14));
-		panelCentral.add(lblApellidoMaterno);
-
-		txtApellidoMaterno = new JTextField(user.getApellidoMaterno());
-		txtApellidoMaterno.setBounds(84, 236, 330, 27);
-		txtApellidoMaterno.setBackground(Color.decode("#D9D9D9"));
-		txtApellidoMaterno.setColumns(10);
-		panelCentral.add(txtApellidoMaterno);
-
-		// Teléfono
-		JLabel lblTelefono = new JLabel("Telefono:");
-		lblTelefono.setBounds(84, 282, 87, 42);
-		lblTelefono.setFont(new Font("Calibri", Font.BOLD, 14));
-		panelCentral.add(lblTelefono);
-
-		txtTelefono = new JTextField(user.getTelefono());
-		txtTelefono.setBounds(84, 311, 330, 27);
-		txtTelefono.setBackground(Color.decode("#D9D9D9"));
-		txtTelefono.setColumns(10);
-		panelCentral.add(txtTelefono);
-
-		// -------- LADO DERECHO --------
-
-		// Apellido Paterno
-		JLabel lblApellidoPaterno = new JLabel("Apellido paterno:");
-		lblApellidoPaterno.setBounds(594, 135, 122, 42);
-		lblApellidoPaterno.setFont(new Font("Calibri", Font.BOLD, 14));
-		panelCentral.add(lblApellidoPaterno);
-
-		txtApellidoPaterno = new JTextField(user.getApellidoPaterno());
-		txtApellidoPaterno.setBounds(596, 163, 330, 27);
-		txtApellidoPaterno.setBackground(Color.decode("#D9D9D9"));
-		txtApellidoPaterno.setColumns(10);
-		panelCentral.add(txtApellidoPaterno);
-
-		// Fecha de nacimiento
-		JLabel lblFechaNac = new JLabel("Fecha de nacimiento:");
-		lblFechaNac.setBounds(596, 209, 136, 42);
-		lblFechaNac.setFont(new Font("Calibri", Font.BOLD, 14));
-		panelCentral.add(lblFechaNac);
-//
-//		txtFechaNac = new JTextField(user.getFechaNacimiento());
-//		txtFechaNac.setBounds(596, 236, 330, 27);
-//		txtFechaNac.setBackground(Color.decode("#D9D9D9"));
-//		txtFechaNac.setColumns(10);
-//		panelCentral.add(txtFechaNac);
-
-		// Correo
-		JLabel lblCorreo = new JLabel("Correo:");
-		lblCorreo.setBounds(596, 282, 87, 42);
-		lblCorreo.setFont(new Font("Calibri", Font.BOLD, 14));
-		panelCentral.add(lblCorreo);
-
-		txtCorreo = new JTextField(user.getCorreo());
-		txtCorreo.setBounds(596, 311, 330, 27);
-		txtCorreo.setBackground(Color.decode("#D9D9D9"));
-		txtCorreo.setColumns(10);
-		panelCentral.add(txtCorreo);
-
-		// -------- BOTONES --------
-
-		JButton btnCancelar = new JButton("Cancelar");
-		btnCancelar.setBounds(175, 406, 183, 33);
-		btnCancelar.setBackground(Color.decode("#B82F2F"));
-		btnCancelar.setForeground(Color.WHITE);
-		btnCancelar.addActionListener(e -> {
-			dispose();
-			DetallesCliente();
-		});
-		panelCentral.add(btnCancelar);
-
-		JButton btnConfirmar = new JButton("Confirmar");
-		btnConfirmar.setBounds(533, 406, 183, 33);
-		btnConfirmar.setBackground(Color.decode("#263C54"));
-		btnConfirmar.setForeground(Color.WHITE);
-		btnConfirmar.addActionListener(e -> {
-			// Obtener valores desde los campos de texto
-			String nuevoNombre = txtNombre.getText().trim();
-			String nuevoApellidoPaterno = txtApellidoPaterno.getText().trim();
-			String nuevoApellidoMaterno = txtApellidoMaterno.getText().trim();
-			String nuevaFechaNacTexto = txtFechaNac.getText().trim();
-			String nuevoTelefono = txtTelefono.getText().trim();
-			String nuevoCorreo = txtCorreo.getText().trim();
-
-			java.sql.Date nuevaFechaNac = null;
-
-			try {
-				// Validar y convertir la fecha
-				SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-				sdf.setLenient(false); // No permite fechas inválidas como 31/02/2023
-				Date fechaUtil = sdf.parse(nuevaFechaNacTexto);
-				nuevaFechaNac = new java.sql.Date(fechaUtil.getTime());
-			} catch (ParseException ex) {
-				JOptionPane.showMessageDialog(panelCentral, "Fecha inválida. Usa el formato dd/MM/yyyy",
-						"Error de fecha", JOptionPane.ERROR_MESSAGE);
-				return; // No continúa con el proceso si la fecha es inválida
-			} catch (java.text.ParseException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-
-			// Llamar al método del modelo para actualizar
-			UsersModel model = new UsersModel();
-			boolean actualizado = model.update(user.getId(), nuevoNombre, nuevoApellidoPaterno, nuevoApellidoMaterno,
-					nuevaFechaNac, nuevoTelefono, nuevoCorreo);
-
-			if (actualizado) {
-				JOptionPane.showMessageDialog(panelCentral, "Cliente actualizado correctamente", "Éxito",
-						JOptionPane.INFORMATION_MESSAGE);
-				dispose();
-				DetallesCliente(); // Vuelve a la vista anterior
-			} else {
-				JOptionPane.showMessageDialog(panelCentral, "Error al actualizar el cliente", "Error",
-						JOptionPane.ERROR_MESSAGE);
-			}
-		});
-
-		panelCentral.add(btnConfirmar);
-
-		// -------- BARRA ROJA SUPERIOR --------
-
-		JPanel barraRoja = new JPanel();
-		barraRoja.setBackground(Color.decode("#B44635"));
-		barraRoja.setBounds(0, 0, 1024, 60);
-		layeredPane.add(barraRoja, JLayeredPane.PALETTE_LAYER);
-
-		setVisible(true);
-	}
-
-	public void Confirma_2() {
-		// Configuración básica de la ventana
-		setTitle("Confirmar Eliminación");
-		setUndecorated(true);
-
-		setSize(654, 252);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setLocationRelativeTo(null);
-
-		// Usamos JLayeredPane para superponer componentes
-		JLayeredPane layeredPane = new JLayeredPane();
-		layeredPane.setPreferredSize(new Dimension(900, 650));
-		setContentPane(layeredPane);
-
-		// 2. PANEL GRIS CENTRAl
-		JPanel panelCentral = new JPanel();
-		panelCentral.setLayout(null);
-		panelCentral.setBackground(Color.decode("#D9D9D9"));
-		panelCentral.setBounds(0, 0, 654, 252); // (x, y, ancho, alto)
-		layeredPane.add(panelCentral, JLayeredPane.PALETTE_LAYER);
-
-		// Logotipo
-		ImageIcon iconoOriginal = new ImageIcon(getClass().getResource("/images/Block.png"));
-		Image imagenEscalada = iconoOriginal.getImage().getScaledInstance(70, 70, Image.SCALE_SMOOTH);
-
-		JLabel iniciar = new JLabel("¿Esta seguro de hacer cambios?");
-		iniciar.setSize(285, 42);
-		iniciar.setLocation(233, 51);
-		iniciar.setHorizontalAlignment(JLabel.CENTER);
-		iniciar.setFont(new Font("Calibri", Font.BOLD, 24));
-
-		panelCentral.add(iniciar);
-
-		JButton btnCancelar = new JButton("CANCELAR");
-		btnCancelar.setBackground(Color.decode("#B82F2F")); // Color de fondo (azul oscuro)
-		btnCancelar.setForeground(Color.WHITE);
-		btnCancelar.setBounds(31, 130, 183, 33);
-		btnCancelar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-
-				dispose();
-			}
-		});
-		panelCentral.add(btnCancelar);
-
-		JButton btnSi = new JButton("SI");
-		btnSi.setBackground(Color.decode("#6D91B9")); // Color de fondo (azul oscuro)
-		btnSi.setForeground(Color.WHITE);
-		btnSi.setBounds(418, 130, 183, 33);
-		btnSi.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				InformacionCliente();
-				dispose();
-
-			}
-		});
-		panelCentral.add(btnSi);
-
-		setVisible(true);
-	}
-
-	public void InformacionCliente() {
+	public void InformacionCliente(User user) {
 		// Configuración básica de la ventana
 		setTitle("Informacion Cliente");
 		setSize(1024, 576);
@@ -1351,7 +1138,7 @@ public class HomeView extends JFrame {
 		btnCancelar.setForeground(Color.WHITE);
 		btnCancelar.setBounds(103, 406, 183, 33);
 		btnCancelar.addActionListener(e -> {
-			DetallesCliente(); // Abre la segunda ventana
+//			DetallesCliente(); // Abre la segunda ventana
 			dispose(); // Cierra la ventana actual
 		});
 		panelCentral.add(btnCancelar);
@@ -1362,7 +1149,6 @@ public class HomeView extends JFrame {
 		btnConfirmar.setBounds(621, 406, 183, 33);
 		btnConfirmar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Confirma_3(); // Abre la segunda ventana
 
 			}
 		});
@@ -1456,66 +1242,6 @@ public class HomeView extends JFrame {
 		setVisible(true);
 	}
 
-	public void Confirma_3() {
-		// Configuración básica de la ventana
-		setTitle("Confirmar Eliminación");
-		setUndecorated(true);
-
-		setSize(654, 252);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setLocationRelativeTo(null);
-
-		// Usamos JLayeredPane para superponer componentes
-		JLayeredPane layeredPane = new JLayeredPane();
-		layeredPane.setPreferredSize(new Dimension(900, 650));
-		setContentPane(layeredPane);
-
-		// 2. PANEL GRIS CENTRAl
-		JPanel panelCentral = new JPanel();
-		panelCentral.setLayout(null);
-		panelCentral.setBackground(Color.decode("#D9D9D9"));
-		panelCentral.setBounds(0, 0, 654, 252); // (x, y, ancho, alto)
-		layeredPane.add(panelCentral, JLayeredPane.PALETTE_LAYER);
-
-		// Logotipo
-		ImageIcon iconoOriginal = new ImageIcon(getClass().getResource("/images/Block.png"));
-		Image imagenEscalada = iconoOriginal.getImage().getScaledInstance(70, 70, Image.SCALE_SMOOTH);
-
-		JLabel iniciar = new JLabel("Descargar información del Cliente");
-		iniciar.setSize(285, 42);
-		iniciar.setLocation(233, 51);
-		iniciar.setHorizontalAlignment(JLabel.CENTER);
-		iniciar.setFont(new Font("Calibri", Font.BOLD, 24));
-		panelCentral.add(iniciar);
-
-		JButton btnCancelar = new JButton("Cancelar");
-		btnCancelar.setBackground(Color.decode("#B82F2F")); // Color de fondo (azul oscuro)
-		btnCancelar.setForeground(Color.WHITE);
-		btnCancelar.setBounds(31, 130, 183, 33);
-		btnCancelar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-
-				dispose();
-			}
-		});
-		panelCentral.add(btnCancelar);
-
-		JButton btnSi = new JButton("Si");
-		btnSi.setBackground(Color.decode("#6D91B9")); // Color de fondo (azul oscuro)
-		btnSi.setForeground(Color.WHITE);
-		btnSi.setBounds(418, 130, 183, 33);
-		btnSi.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-
-				dispose();
-
-			}
-		});
-		panelCentral.add(btnSi);
-
-		setVisible(true);
-	}
-
 	public void TarjetaCliente() {
 		// Configuración básica de la ventana
 		setTitle("Tarjeta Cliente");
@@ -1554,7 +1280,7 @@ public class HomeView extends JFrame {
 		btnCancelar.setForeground(Color.WHITE);
 		btnCancelar.setBounds(47, 406, 183, 33);
 		btnCancelar.addActionListener(e -> {
-			InformacionCliente(); // Abre la segunda ventana
+//			InformacionCliente(); // Abre la segunda ventana
 			dispose(); // Cierra la ventana actual
 		});
 		panelCentral.add(btnCancelar);
@@ -1562,7 +1288,6 @@ public class HomeView extends JFrame {
 		JButton btnConfirmar = new JButton("Descargar PDF");
 		btnConfirmar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Confirmar_4();
 			}
 		});
 		btnConfirmar.setBackground(Color.decode("#263C54")); // Color de fondo (azul oscuro)
@@ -1605,207 +1330,6 @@ public class HomeView extends JFrame {
 		iniciar_1_1_2_1_1.setFont(new Font("Calibri", Font.BOLD, 18));
 		iniciar_1_1_2_1_1.setBounds(213, 262, 162, 42);
 		panelCentral.add(iniciar_1_1_2_1_1);
-
-		// 3. PANEL ROJO SUPERIOR (barra de título)
-		JPanel barraRoja = new JPanel();
-		barraRoja.setBackground(Color.decode("#B44635"));
-		barraRoja.setBounds(0, 0, 1024, 60);
-		layeredPane.add(barraRoja, JLayeredPane.PALETTE_LAYER);
-
-		setVisible(true);
-	}
-
-	public void Confirmar_4() {
-		// Configuración básica de la ventana
-		setTitle("Descargar Tarjeta de Cliente");
-		setUndecorated(true);
-
-		setSize(654, 252);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setLocationRelativeTo(null);
-
-		// Usamos JLayeredPane para superponer componentes
-		JLayeredPane layeredPane = new JLayeredPane();
-		layeredPane.setPreferredSize(new Dimension(900, 650));
-		setContentPane(layeredPane);
-
-		// 2. PANEL GRIS CENTRAl
-		JPanel panelCentral = new JPanel();
-		panelCentral.setLayout(null);
-		panelCentral.setBackground(Color.decode("#D9D9D9"));
-		panelCentral.setBounds(0, 0, 654, 252); // (x, y, ancho, alto)
-		layeredPane.add(panelCentral, JLayeredPane.PALETTE_LAYER);
-
-		// Logotipo
-		ImageIcon iconoOriginal = new ImageIcon(getClass().getResource("/images/Block.png"));
-		Image imagenEscalada = iconoOriginal.getImage().getScaledInstance(70, 70, Image.SCALE_SMOOTH);
-
-		JLabel iniciar = new JLabel("¿Esta seguro de hacer cambios?");
-		iniciar.setSize(285, 42);
-		iniciar.setLocation(233, 51);
-		iniciar.setHorizontalAlignment(JLabel.CENTER);
-		iniciar.setFont(new Font("Calibri", Font.BOLD, 24));
-
-		panelCentral.add(iniciar);
-
-		JButton btnCancelar = new JButton("Cancelar");
-		btnCancelar.setBackground(Color.decode("#B82F2F")); // Color de fondo (azul oscuro)
-		btnCancelar.setForeground(Color.WHITE);
-		btnCancelar.setBounds(31, 130, 183, 33);
-		btnCancelar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-
-				dispose();
-			}
-		});
-		panelCentral.add(btnCancelar);
-
-		JButton btnSi = new JButton("SI");
-		btnSi.setBackground(Color.decode("#6D91B9")); // Color de fondo (azul oscuro)
-		btnSi.setForeground(Color.WHITE);
-		btnSi.setBounds(418, 130, 183, 33);
-		btnSi.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-
-				dispose();
-			}
-		});
-		panelCentral.add(btnSi);
-
-		setVisible(true);
-	}
-
-	public void AgregarCliente() {
-
-		JTextField textField;
-		JTextField textField_1;
-		JTextField textField_2;
-		JTextField textField_3;
-		JTextField textField_4;
-		JTextField textField_5;
-		// Configuración básica de la ventana
-		setTitle("Agregar Cliente");
-		setSize(1024, 576);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setLocationRelativeTo(null);
-
-		// Usamos JLayeredPane para superponer componentes
-		JLayeredPane layeredPane = new JLayeredPane();
-		layeredPane.setPreferredSize(new Dimension(900, 650));
-		setContentPane(layeredPane);
-
-		// 2. PANEL GRIS CENTRAl
-		JPanel panelCentral = new JPanel();
-		panelCentral.setLayout(null);
-		panelCentral.setBackground(Color.decode("#F2F2F2"));
-		panelCentral.setBounds(5, 62, 998, 475); // (x, y, ancho, alto)
-		layeredPane.add(panelCentral, JLayeredPane.PALETTE_LAYER);
-
-		// Logotipo
-		ImageIcon iconoOriginal = new ImageIcon(getClass().getResource("/images/Block.png"));
-		Image imagenEscalada = iconoOriginal.getImage().getScaledInstance(70, 70, Image.SCALE_SMOOTH);
-		JLabel logo = new JLabel(new ImageIcon(imagenEscalada));
-		logo.setBounds(465, 11, 70, 70); // posicion
-		panelCentral.add(logo);
-
-		JLabel iniciar = new JLabel("AGREGAR CLIENTE");
-		iniciar.setSize(263, 42);
-		iniciar.setLocation(370, 94);
-		iniciar.setHorizontalAlignment(JLabel.CENTER);
-		iniciar.setFont(new Font("Calibri", Font.BOLD, 24));
-		panelCentral.add(iniciar);
-
-		JLabel iniciar_1 = new JLabel("Nombre:");
-		iniciar_1.setHorizontalAlignment(SwingConstants.LEFT);
-		iniciar_1.setFont(new Font("Calibri", Font.BOLD, 14));
-		iniciar_1.setBounds(84, 135, 87, 42); // Ajusta tamaño si es necesario
-		panelCentral.add(iniciar_1);
-
-		JTextField nJuego = new JTextField();
-		nJuego.setBackground(Color.decode("#D9D9D9"));
-		nJuego.setBounds(84, 163, 330, 27);
-		panelCentral.add(nJuego);
-		nJuego.setColumns(10);
-
-		JButton btnCancelar = new JButton("Cancelar");
-		btnCancelar.setBackground(Color.decode("#B82F2F")); // Color de fondo (azul oscuro)
-		btnCancelar.setForeground(Color.WHITE);
-		btnCancelar.setBounds(175, 406, 183, 33);
-		btnCancelar.addActionListener(e -> {
-			AdministradorCliente(); // Abre la segunda ventana
-			dispose(); // Cierra la ventana actual
-		});
-		panelCentral.add(btnCancelar);
-
-		JButton btnConfirmar = new JButton("Guardar");
-		btnConfirmar.setBackground(Color.decode("#263C54")); // Color de fondo (azul oscuro)
-		btnConfirmar.setForeground(Color.WHITE);
-		btnConfirmar.setBounds(533, 406, 183, 33);
-		btnConfirmar.addActionListener(e -> {
-			Confirma_5(); // Abre la segunda ventana
-			// Cierra la ventana actual
-		});
-		panelCentral.add(btnConfirmar);
-
-		JLabel iniciar_1_1 = new JLabel("Apellido materno:");
-		iniciar_1_1.setHorizontalAlignment(SwingConstants.LEFT);
-		iniciar_1_1.setFont(new Font("Calibri", Font.BOLD, 14));
-		iniciar_1_1.setBounds(84, 209, 115, 42);
-		panelCentral.add(iniciar_1_1);
-
-		textField_1 = new JTextField();
-		textField_1.setColumns(10);
-		textField_1.setBackground(new Color(217, 217, 217));
-		textField_1.setBounds(84, 236, 330, 27);
-		panelCentral.add(textField_1);
-
-		JLabel iniciar_1_1_1 = new JLabel("Telefono:");
-		iniciar_1_1_1.setHorizontalAlignment(SwingConstants.LEFT);
-		iniciar_1_1_1.setFont(new Font("Calibri", Font.BOLD, 14));
-		iniciar_1_1_1.setBounds(84, 282, 87, 42);
-		panelCentral.add(iniciar_1_1_1);
-
-		textField_2 = new JTextField();
-		textField_2.setColumns(10);
-		textField_2.setBackground(new Color(217, 217, 217));
-		textField_2.setBounds(84, 311, 330, 27);
-		panelCentral.add(textField_2);
-
-		textField_3 = new JTextField();
-		textField_3.setColumns(10);
-		textField_3.setBackground(new Color(217, 217, 217));
-		textField_3.setBounds(596, 163, 330, 27);
-		panelCentral.add(textField_3);
-
-		textField_4 = new JTextField();
-		textField_4.setColumns(10);
-		textField_4.setBackground(new Color(217, 217, 217));
-		textField_4.setBounds(596, 236, 330, 27);
-		panelCentral.add(textField_4);
-
-		textField_5 = new JTextField();
-		textField_5.setColumns(10);
-		textField_5.setBackground(new Color(217, 217, 217));
-		textField_5.setBounds(596, 311, 330, 27);
-		panelCentral.add(textField_5);
-
-		JLabel iniciar_1_2 = new JLabel("Apellido paterno:");
-		iniciar_1_2.setHorizontalAlignment(SwingConstants.LEFT);
-		iniciar_1_2.setFont(new Font("Calibri", Font.BOLD, 14));
-		iniciar_1_2.setBounds(594, 135, 122, 42);
-		panelCentral.add(iniciar_1_2);
-
-		JLabel iniciar_1_1_2 = new JLabel("Fecha de nacimiento:");
-		iniciar_1_1_2.setHorizontalAlignment(SwingConstants.LEFT);
-		iniciar_1_1_2.setFont(new Font("Calibri", Font.BOLD, 14));
-		iniciar_1_1_2.setBounds(596, 209, 136, 42);
-		panelCentral.add(iniciar_1_1_2);
-
-		JLabel iniciar_1_1_1_1 = new JLabel("Correo:");
-		iniciar_1_1_1_1.setHorizontalAlignment(SwingConstants.LEFT);
-		iniciar_1_1_1_1.setFont(new Font("Calibri", Font.BOLD, 14));
-		iniciar_1_1_1_1.setBounds(596, 282, 87, 42);
-		panelCentral.add(iniciar_1_1_1_1);
 
 		// 3. PANEL ROJO SUPERIOR (barra de título)
 		JPanel barraRoja = new JPanel();
@@ -1989,6 +1513,9 @@ public class HomeView extends JFrame {
 		btnAgregarVideojuegos.setFont(new Font("Calibri", Font.BOLD, 16));
 		btnAgregarVideojuegos.setBackground(new Color(38, 60, 84));
 		btnAgregarVideojuegos.setBounds(442, 261, 206, 100);
+		btnAgregarVideojuegos.addActionListener(e -> {
+			AgregarJuego();
+		});
 		panelCentral.add(btnAgregarVideojuegos);
 
 		JLabel lblDesdeAquPodrs = new JLabel(
@@ -2011,6 +1538,7 @@ public class HomeView extends JFrame {
 		setVisible(true);
 	}
 
+	// Frame funcional
 	public void RegistroJuegos(List juegos) {
 
 		try {
@@ -2096,7 +1624,7 @@ public class HomeView extends JFrame {
 		panelCentral.add(iniciar);
 
 		// Crear unan tabla
-		String[] columnNames = { "ID", "Nombre", "Plataforma", "Disponibilida", "Precio venta", "Precio renta" };
+		String[] columnNames = { "ID", "Nombre", "Plataforma", "Existencia", "Precio venta", "Precio renta" };
 		DefaultTableModel model = new DefaultTableModel(columnNames, 0) {
 			@Override
 			public boolean isCellEditable(int row, int column) {
@@ -2112,9 +1640,9 @@ public class HomeView extends JFrame {
 				        juego.getId(),
 				        juego.getNombre(),
 				        juego.getPlataforma(),
-				        juego.isDisponibilidad(),
-				        "$" + juego.getPrecioCompra(),
-				        "$" + juego.getPrecioranta(),
+				        juego.getExistenciasDisponibles(),
+				        "$" + juego.getPrecioVenta(),
+				        "$" + juego.getPrecioRenta(),
 				        juego.getClasificacion()
 				    };
 			model.addRow(rowData);
@@ -2124,7 +1652,7 @@ public class HomeView extends JFrame {
 		JTable table = new JTable(model);
 
 		table.getColumnModel().getColumn(0).setPreferredWidth(10);
-		table.getColumnModel().getColumn(4).setPreferredWidth(50);
+		table.getColumnModel().getColumn(3).setPreferredWidth(10);
 
 		table.setFont(new Font("Arial", Font.PLAIN, 14));
 		table.setRowHeight(25);
@@ -2136,18 +1664,6 @@ public class HomeView extends JFrame {
 		scrollPane.setBounds(26, 62, 695, 366);
 		panelCentral.add(scrollPane);
 
-//		JButton btnNewButton = new JButton("DETALLES");
-//		btnNewButton.setForeground(Color.WHITE);
-//		btnNewButton.setBackground(Color.decode("#6D91B9"));
-//		btnNewButton.addActionListener(new ActionListener() {
-//			public void actionPerformed(ActionEvent e) {
-//				DetallesJuego();
-//				dispose();
-//
-//			}
-//		});
-//		btnNewButton.setBounds(406, 439, 172, 25);
-//		panelCentral.add(btnNewButton);
 		
 		// BOTÓN EDITAR
 		JButton btnEditar = new JButton("EDITAR");
@@ -2165,13 +1681,14 @@ public class HomeView extends JFrame {
 
 		    // Obtener datos del juego seleccionado
 		    int juegoId = (int) model.getValueAt(selectedRow, 0);
-		    String nombre = (String) model.getValueAt(selectedRow, 1);
 
 		    // Cerrar esta ventana y abrir ventana de edición con los datos cargados
 		    dispose();
 		    
-		    VideogamesController vc = new VideogamesController();
-		    vc.updateVideogames(juegoId);
+		    int videogameId = (int) model.getValueAt(selectedRow, 0);
+
+			VideogamesController vc = new VideogamesController();
+		    vc.updateVideogames(videogameId);
 		    
 		});
 		panelCentral.add(btnEditar);
@@ -2179,13 +1696,50 @@ public class HomeView extends JFrame {
 		JButton btnEliminar = new JButton("ELIMINAR");
 		btnEliminar.setForeground(Color.WHITE);
 		btnEliminar.setBackground(Color.decode("#B82F2F"));
+		btnEliminar.setFont(new Font("Arial", Font.BOLD, 14));
 		btnEliminar.setBounds(187, 439, 172, 25);
+		btnEliminar.setToolTipText("Eliminar el videojuego seleccionado");
+
 		btnEliminar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				int selectedRow = table.getSelectedRow();
 
+				if (selectedRow == -1) {
+					JOptionPane.showMessageDialog(layeredPane, "Por favor seleccione un juego", "Advertencia",
+							JOptionPane.WARNING_MESSAGE);
+					return;
+				}
+
+				int confirm = JOptionPane.showConfirmDialog(layeredPane,
+						"¿Está seguro que desea eliminar este videojuego?", "Confirmar eliminación",
+						JOptionPane.YES_NO_OPTION);
+
+				if (confirm == JOptionPane.YES_OPTION) {
+					try {
+						int videogameId = (int) model.getValueAt(selectedRow, 0);
+						
+						VideoGamesModel vm = new VideoGamesModel();
+						boolean eliminado = vm.removeVideogame(videogameId);
+
+						if (eliminado) {
+							// Eliminar de la tabla
+							model.removeRow(selectedRow);
+							JOptionPane.showMessageDialog(layeredPane, "Usuario eliminado correctamente");
+						} else {
+							JOptionPane.showMessageDialog(layeredPane, "Error al eliminar el usuario", "Error",
+									JOptionPane.ERROR_MESSAGE);
+						}
+						
+					} catch (Exception ex) {
+						JOptionPane.showMessageDialog(layeredPane, "Error al eliminar el videojuego:\n" + ex.getMessage(),
+								"Error", JOptionPane.ERROR_MESSAGE);
+					}
+				}
 			}
 		});
+
 		panelCentral.add(btnEliminar);
+
 
 		JButton btnBuscar = new JButton("Buscar");
 		btnBuscar.setFont(new Font("League Spartan Light", Font.PLAIN, 14));
@@ -2209,7 +1763,7 @@ public class HomeView extends JFrame {
 	}
 
 
-	public void DetallesJuego() {
+	public void DetallesJuego(VideoGames videogames) {
 	    // Configuración de la ventana
 	    setTitle("Detalles Videojuego");
 	    setSize(1024, 576);
@@ -2237,13 +1791,13 @@ public class HomeView extends JFrame {
 	    panelCentral.add(lblTitulo);
 
 	    // Nombre del juego
-	    JLabel lblNombre = new JLabel("CONTRA");
+	    JLabel lblNombre = new JLabel(videogames.getNombre());
 	    lblNombre.setFont(new Font("Anton", Font.BOLD, 24));
 	    lblNombre.setBounds(55, 124, 135, 42);
 	    panelCentral.add(lblNombre);
 
 	    // Año
-	    JLabel lblAnio = new JLabel("1988");
+	    JLabel lblAnio = new JLabel(""+videogames.getAñoLanzamiento());
 	    lblAnio.setForeground(Color.decode("#3B3741"));
 	    lblAnio.setFont(new Font("Calibri", Font.BOLD, 18));
 	    lblAnio.setBounds(55, 161, 70, 42);
@@ -2255,7 +1809,7 @@ public class HomeView extends JFrame {
 	    lblClasificacion.setBounds(55, 198, 103, 42);
 	    panelCentral.add(lblClasificacion);
 
-	    JLabel lblClasificacionValor = new JLabel("Mayores 18");
+	    JLabel lblClasificacionValor = new JLabel(videogames.getClasificacion());
 	    lblClasificacionValor.setForeground(Color.decode("#3B3741"));
 	    lblClasificacionValor.setFont(new Font("Calibri", Font.BOLD, 18));
 	    lblClasificacionValor.setBounds(158, 198, 103, 42);
@@ -2267,7 +1821,7 @@ public class HomeView extends JFrame {
 	    lblDesarrolladores.setBounds(55, 233, 190, 42);
 	    panelCentral.add(lblDesarrolladores);
 
-	    JTextArea txtDesarrolladores = new JTextArea("Konami, Ocean Software, Hamster Corporation, Digital Eclipse, Backbone Entertainment, Paul Owens");
+	    JTextArea txtDesarrolladores = new JTextArea(videogames.getDesarrolladoPor());
 	    txtDesarrolladores.setWrapStyleWord(true);
 	    txtDesarrolladores.setLineWrap(true);
 	    txtDesarrolladores.setOpaque(false);
@@ -2283,7 +1837,7 @@ public class HomeView extends JFrame {
 	    lblGenero.setBounds(55, 333, 70, 42);
 	    panelCentral.add(lblGenero);
 
-	    JLabel lblGeneroValor = new JLabel("Disparos");
+	    JLabel lblGeneroValor = new JLabel(videogames.getGenero());
 	    lblGeneroValor.setForeground(Color.decode("#3B3741"));
 	    lblGeneroValor.setFont(new Font("Calibri", Font.BOLD, 18));
 	    lblGeneroValor.setBounds(118, 333, 70, 42);
@@ -2295,7 +1849,7 @@ public class HomeView extends JFrame {
 	    lblPlataforma.setBounds(55, 372, 97, 42);
 	    panelCentral.add(lblPlataforma);
 
-	    JLabel lblPlataformaValor = new JLabel("Nintendo");
+	    JLabel lblPlataformaValor = new JLabel(videogames.getPlataforma());
 	    lblPlataformaValor.setForeground(Color.decode("#3B3741"));
 	    lblPlataformaValor.setFont(new Font("Calibri", Font.BOLD, 18));
 	    lblPlataformaValor.setBounds(148, 372, 97, 42);
@@ -2307,7 +1861,7 @@ public class HomeView extends JFrame {
 	    lblAcercaDe.setBounds(379, 72, 97, 42);
 	    panelCentral.add(lblAcercaDe);
 
-	    JTextArea txtDescripcion = new JTextArea("Contra es un videojuego de shoot 'em up desarrollado y publicado por Konami, lanzado originalmente como un juego de arcade el 20 de febrero de 1987. En 1988 se lanzó una versión doméstica para Nintendo Entertainment System, junto con puertos para varios formatos de computadora, incluido el MSX2.");
+	    JTextArea txtDescripcion = new JTextArea(videogames.getDescripcion());
 	    txtDescripcion.setFont(new Font("Calibri Light", Font.BOLD, 20));
 	    txtDescripcion.setForeground(Color.decode("#3B3741"));
 	    txtDescripcion.setLineWrap(true);
@@ -2328,13 +1882,13 @@ public class HomeView extends JFrame {
 	    lblPrecioVenta.setBounds(664, 353, 159, 42);
 	    panelCentral.add(lblPrecioVenta);
 
-	    JLabel lblValorRenta = new JLabel("$100.00MXN");
+	    JLabel lblValorRenta = new JLabel(""+videogames.getPrecioRenta());
 	    lblValorRenta.setForeground(new Color(153, 0, 0));
 	    lblValorRenta.setFont(new Font("Calibri", Font.BOLD, 20));
 	    lblValorRenta.setBounds(824, 317, 126, 42);
 	    panelCentral.add(lblValorRenta);
 
-	    JLabel lblValorVenta = new JLabel("$800.00MX");
+	    JLabel lblValorVenta = new JLabel(""+videogames.getPrecioVenta());
 	    lblValorVenta.setForeground(new Color(153, 0, 0));
 	    lblValorVenta.setFont(new Font("Calibri", Font.BOLD, 20));
 	    lblValorVenta.setBounds(824, 353, 126, 42);
@@ -2348,6 +1902,9 @@ public class HomeView extends JFrame {
 	    btnEditar.addActionListener(new ActionListener() {
 	        public void actionPerformed(ActionEvent e) {
 //	            EditarJuego();
+	        	VideogamesController vc = new VideogamesController();
+
+			    vc.updateVideogames2(videogames.getId());
 	            dispose();
 	        }
 	    });
@@ -2356,66 +1913,6 @@ public class HomeView extends JFrame {
 	    setVisible(true);
 	}
 
-
-	public void Confirma_7() {
-		// Configuración básica de la ventana
-		setTitle("Guardar Cliente");
-		setUndecorated(true);
-
-		setSize(654, 252);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setLocationRelativeTo(null);
-
-		// Usamos JLayeredPane para superponer componentes
-		JLayeredPane layeredPane = new JLayeredPane();
-		layeredPane.setPreferredSize(new Dimension(900, 650));
-		setContentPane(layeredPane);
-
-		// 2. PANEL GRIS CENTRAl
-		JPanel panelCentral = new JPanel();
-		panelCentral.setLayout(null);
-		panelCentral.setBackground(Color.decode("#D9D9D9"));
-		panelCentral.setBounds(0, 0, 654, 252); // (x, y, ancho, alto)
-		layeredPane.add(panelCentral, JLayeredPane.PALETTE_LAYER);
-
-		// Logotipo
-		ImageIcon iconoOriginal = new ImageIcon(getClass().getResource("/images/Block.png"));
-		Image imagenEscalada = iconoOriginal.getImage().getScaledInstance(70, 70, Image.SCALE_SMOOTH);
-
-		JLabel iniciar = new JLabel("Descargar Detalles del Juego");
-		iniciar.setSize(285, 42);
-		iniciar.setLocation(233, 51);
-		iniciar.setHorizontalAlignment(JLabel.CENTER);
-		iniciar.setFont(new Font("Calibri", Font.BOLD, 24));
-		panelCentral.add(iniciar);
-
-		JButton btnCancelar = new JButton("Cancelar");
-		btnCancelar.setBackground(Color.decode("#B82F2F")); // Color de fondo (azul oscuro)
-		btnCancelar.setForeground(Color.WHITE);
-		btnCancelar.setBounds(31, 130, 183, 33);
-		btnCancelar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-
-				dispose();
-			}
-		});
-		panelCentral.add(btnCancelar);
-
-		JButton btnSi = new JButton("Si");
-		btnSi.setBackground(Color.decode("#6D91B9")); // Color de fondo (azul oscuro)
-		btnSi.setForeground(Color.WHITE);
-		btnSi.setBounds(418, 130, 183, 33);
-		btnSi.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-
-				dispose();
-
-			}
-		});
-		panelCentral.add(btnSi);
-
-		setVisible(true);
-	}
 
 	public void EditarJuego(VideoGames videogames) {
 	    
@@ -2470,7 +1967,7 @@ public class HomeView extends JFrame {
 	    lblNombre.setBounds(55, 108, 140, 42);
 	    panelCentral.add(lblNombre);
 
-	    txtNombreJuego = new JTextField(videogames.getNombre()); // Campo prellenado con el nombre actual
+	    txtNombreJuego = new JTextField(videogames.getNombre());
 	    txtNombreJuego.setBackground(Color.decode("#D9D9D9"));
 	    txtNombreJuego.setBounds(53, 142, 230, 27);
 	    panelCentral.add(txtNombreJuego);
@@ -2481,7 +1978,7 @@ public class HomeView extends JFrame {
 	    lblAnioLanzamiento.setBounds(55, 180, 132, 42);
 	    panelCentral.add(lblAnioLanzamiento);
 
-	    txtAnioLanzamiento = new JTextField();
+	    txtAnioLanzamiento = new JTextField(String.valueOf(videogames.getAñoLanzamiento()));
 	    txtAnioLanzamiento.setBackground(Color.decode("#D9D9D9"));
 	    txtAnioLanzamiento.setBounds(53, 214, 153, 27);
 	    panelCentral.add(txtAnioLanzamiento);
@@ -2492,7 +1989,7 @@ public class HomeView extends JFrame {
 	    lblGenero.setBounds(55, 259, 140, 42);
 	    panelCentral.add(lblGenero);
 
-	    txtGenero = new JTextField();
+	    txtGenero = new JTextField(videogames.getGenero());
 	    txtGenero.setBackground(Color.decode("#D9D9D9"));
 	    txtGenero.setBounds(55, 289, 188, 27);
 	    panelCentral.add(txtGenero);
@@ -2503,7 +2000,7 @@ public class HomeView extends JFrame {
 	    lblPrecioRenta.setBounds(55, 327, 140, 42);
 	    panelCentral.add(lblPrecioRenta);
 
-	    txtPrecioRenta = new JTextField(String.valueOf(videogames.getPrecioranta())); // Campo prellenado
+	    txtPrecioRenta = new JTextField(String.valueOf(videogames.getPrecioRenta())); // Campo prellenado
 	    txtPrecioRenta.setBackground(Color.decode("#D9D9D9"));
 	    txtPrecioRenta.setBounds(55, 368, 188, 27);
 	    panelCentral.add(txtPrecioRenta);
@@ -2526,7 +2023,7 @@ public class HomeView extends JFrame {
 	    panelCentral.add(lblDisponibilidad);
 
 	    // CheckBox para disponibilidad
-	    JTextField chkDisponible = new JTextField(videogames.isDisponibilidad());
+	    JTextField chkDisponible = new JTextField(""+videogames.isDisponibilidad());
 	    chkDisponible.setBackground(Color.decode("#F2F2F2"));
 	    chkDisponible.setBounds(227, 214, 120, 27);
 	    panelCentral.add(chkDisponible);
@@ -2537,7 +2034,7 @@ public class HomeView extends JFrame {
 	    lblClasificacion.setBounds(369, 180, 97, 42);
 	    panelCentral.add(lblClasificacion);
 
-	    txtClasificacion = new JTextField();
+	    txtClasificacion = new JTextField(videogames.getClasificacion());
 	    txtClasificacion.setBackground(Color.decode("#D9D9D9"));
 	    txtClasificacion.setBounds(369, 214, 134, 27);
 	    panelCentral.add(txtClasificacion);
@@ -2548,7 +2045,7 @@ public class HomeView extends JFrame {
 	    lblExistencias.setBounds(289, 252, 153, 42);
 	    panelCentral.add(lblExistencias);
 
-	    txtExistencias = new JTextField();
+	    txtExistencias = new JTextField(""+videogames.getExistenciasDisponibles());
 	    txtExistencias.setBackground(Color.decode("#D9D9D9"));
 	    txtExistencias.setBounds(288, 289, 215, 27);
 	    panelCentral.add(txtExistencias);
@@ -2559,29 +2056,29 @@ public class HomeView extends JFrame {
 	    lblPrecioVenta.setBounds(288, 327, 140, 42);
 	    panelCentral.add(lblPrecioVenta);
 
-	    txtPrecioVenta = new JTextField(String.valueOf(videogames.getPrecioCompra())); // Campo prellenado
+	    txtPrecioVenta = new JTextField(String.valueOf(videogames.getPrecioVenta())); // Campo prellenado
 	    txtPrecioVenta.setBackground(Color.decode("#D9D9D9"));
 	    txtPrecioVenta.setBounds(288, 368, 215, 27);
 	    panelCentral.add(txtPrecioVenta);
 
-	    JLabel lblDescripcion = new JLabel("Descripción:");
+	    JLabel lblDescripcion = new JLabel("Desarrollado por:");
 	    lblDescripcion.setHorizontalAlignment(SwingConstants.LEFT);
 	    lblDescripcion.setFont(new Font("Calibri", Font.BOLD, 14));
 	    lblDescripcion.setBounds(619, 108, 97, 42);
 	    panelCentral.add(lblDescripcion);
 
-	    txtDescripcion = new JTextField();
+	    txtDescripcion = new JTextField(videogames.getDesarrolladoPor());
 	    txtDescripcion.setBackground(Color.decode("#D9D9D9"));
 	    txtDescripcion.setBounds(619, 142, 343, 77);
 	    panelCentral.add(txtDescripcion);
 
-	    JLabel lblAcercaDe = new JLabel("Acerca de:");
+	    JLabel lblAcercaDe = new JLabel("Decripcion: ");
 	    lblAcercaDe.setHorizontalAlignment(SwingConstants.CENTER);
 	    lblAcercaDe.setFont(new Font("Calibri", Font.BOLD, 14));
 	    lblAcercaDe.setBounds(619, 220, 97, 42);
 	    panelCentral.add(lblAcercaDe);
 
-	    txtAcercaDe = new JTextField();
+	    txtAcercaDe = new JTextField(videogames.getDescripcion());
 	    txtAcercaDe.setBackground(Color.decode("#D9D9D9"));
 	    txtAcercaDe.setBounds(619, 259, 343, 136);
 	    panelCentral.add(txtAcercaDe);
@@ -2592,7 +2089,7 @@ public class HomeView extends JFrame {
 	    btnCancelar.setForeground(Color.WHITE);
 	    btnCancelar.setBounds(175, 406, 183, 33);
 	    btnCancelar.addActionListener(e -> {
-	        DetallesJuego();
+//	        DetallesJuego();
 	        dispose();
 	    });
 	    panelCentral.add(btnCancelar);
@@ -2603,7 +2100,33 @@ public class HomeView extends JFrame {
 	    btnConfirmar.setBounds(533, 406, 183, 33);
 	    btnConfirmar.addActionListener(e -> {
 	        // Aquí iría la lógica para guardar los cambios
-	        Confirma_8();
+	    	
+//	    	String nuevoNombre = txtNombre.getText().trim();
+//			String nuevoApellidoPaterno = txtApellidoPaterno.getText().trim();
+//			String nuevoApellidoMaterno = txtApellidoMaterno.getText().trim();
+//			String nuevoTelefono = txtTelefono.getText().trim();
+//			String nuevoCorreo = txtCorreo.getText().trim();
+
+	    	String Nombre = (txtNombreJuego.getText());
+	    	String Plataforma = (txtPlataforma.getText());
+	        Integer AñoLanzamiento = (Integer.parseInt(txtAnioLanzamiento.getText()));
+	        boolean Disponibilidad = (chkDisponible.getText()) != null;
+	        String Clasificacion = (txtClasificacion.getText());
+	        String Genero = (txtGenero.getText());
+	        Integer ExistenciasDisponibles = (Integer.parseInt(txtExistencias.getText()));
+	        BigDecimal PrecioRenta = (new BigDecimal(txtPrecioRenta.getText()));
+	        BigDecimal PrecioVenta = (new BigDecimal(txtPrecioVenta.getText()));
+	        String DesarrolladoPor = (txtDescripcion.getText());
+	        String Descripcion =(txtAcercaDe.getText());
+	    	
+	        VideoGamesModel vm = new VideoGamesModel();
+	        vm.updateVideogame(videogames.getId(),	 Nombre, Plataforma, AñoLanzamiento, Disponibilidad, Clasificacion, 
+	        		Genero, ExistenciasDisponibles, PrecioRenta, 
+	        		PrecioVenta, DesarrolladoPor, Descripcion);
+	        
+	        JOptionPane.showMessageDialog(this, "Cambios guardados exitosamente");
+
+	    	
 	    });
 	    panelCentral.add(btnConfirmar);
 
@@ -2616,335 +2139,210 @@ public class HomeView extends JFrame {
 	    setVisible(true);
 	}
 
-	public void Confirma_8() {
-		// Configuración básica de la ventana
-		setTitle("Guardar cambios de videojuego");
-		setUndecorated(true);
-
-		setSize(654, 252);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setLocationRelativeTo(null);
-
-		// Usamos JLayeredPane para superponer componentes
-		JLayeredPane layeredPane = new JLayeredPane();
-		layeredPane.setPreferredSize(new Dimension(900, 650));
-		setContentPane(layeredPane);
-
-		// 2. PANEL GRIS CENTRAl
-		JPanel panelCentral = new JPanel();
-		panelCentral.setLayout(null);
-		panelCentral.setBackground(Color.decode("#D9D9D9"));
-		panelCentral.setBounds(0, 0, 654, 252); // (x, y, ancho, alto)
-		layeredPane.add(panelCentral, JLayeredPane.PALETTE_LAYER);
-
-		// Logotipo
-		ImageIcon iconoOriginal = new ImageIcon(getClass().getResource("/images/Block.png"));
-		Image imagenEscalada = iconoOriginal.getImage().getScaledInstance(70, 70, Image.SCALE_SMOOTH);
-
-		JLabel iniciar = new JLabel("Confirmar cambios");
-		iniciar.setSize(285, 42);
-		iniciar.setLocation(233, 51);
-		iniciar.setHorizontalAlignment(JLabel.CENTER);
-		iniciar.setFont(new Font("Calibri", Font.BOLD, 24));
-		panelCentral.add(iniciar);
-
-		JButton btnCancelar = new JButton("Cancelar");
-		btnCancelar.setBackground(Color.decode("#B82F2F")); // Color de fondo (azul oscuro)
-		btnCancelar.setForeground(Color.WHITE);
-		btnCancelar.setBounds(31, 130, 183, 33);
-		btnCancelar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-
-				dispose();
-			}
-		});
-		panelCentral.add(btnCancelar);
-
-		JButton btnSi = new JButton("Si");
-		btnSi.setBackground(Color.decode("#6D91B9")); // Color de fondo (azul oscuro)
-		btnSi.setForeground(Color.WHITE);
-		btnSi.setBounds(418, 130, 183, 33);
-		btnSi.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-
-				dispose();
-
-			}
-		});
-		panelCentral.add(btnSi);
-
-		setVisible(true);
-	}
 
 	public void AgregarJuego() {
-		JTextField textField;
-		JTextField textField_1;
-		JTextField textField_2;
-		JTextField textField_3;
-		JTextField textField_4;
-		JTextField textField_5;
-		JTextField textField_6;
-		JTextField textField_7;
-		JTextField textField_8;
-		JTextField textField_9;
-		JTextField textField_10;
-		// Configuración básica de la ventana
-		setTitle("Panel Administrador");
-		setSize(1024, 576);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setLocationRelativeTo(null);
+	    // Componentes de entrada
+	    JTextField txtNombre = new JTextField();
+	    JTextField txtPlataforma = new JTextField();
+	    JTextField txtAnioLanzamiento = new JTextField();
+	    JCheckBox chkDisponible = new JCheckBox("Disponible");
+	    JTextField txtClasificacion = new JTextField();
+	    JTextField txtGenero = new JTextField();
+	    JTextField txtExistencias = new JTextField();
+	    JTextField txtPrecioRenta = new JTextField();
+	    JTextField txtPrecioVenta = new JTextField();
+	    JTextField txtDesarrollador = new JTextField();
+	    JTextArea txtDescripcion = new JTextArea();
+	    
+	    // Configuración básica de la ventana
+	    setTitle("Agregar Videojuego");
+	    setSize(1024, 576);
+	    setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+	    setLocationRelativeTo(null);
 
-		// Usamos JLayeredPane para superponer componentes
-		JLayeredPane layeredPane = new JLayeredPane();
-		layeredPane.setPreferredSize(new Dimension(900, 650));
-		setContentPane(layeredPane);
+	    // Panel principal con capas
+	    JLayeredPane layeredPane = new JLayeredPane();
+	    layeredPane.setPreferredSize(new Dimension(1024, 576));
+	    setContentPane(layeredPane);
 
-		// 2. PANEL GRIS CENTRAl
-		JPanel panelCentral = new JPanel();
-		panelCentral.setLayout(null);
-		panelCentral.setBackground(Color.decode("#F2F2F2"));
-		panelCentral.setBounds(5, 62, 998, 475); // (x, y, ancho, alto)
-		layeredPane.add(panelCentral, JLayeredPane.PALETTE_LAYER);
+	    // Panel central gris
+	    JPanel panelCentral = new JPanel();
+	    panelCentral.setLayout(null);
+	    panelCentral.setBackground(Color.decode("#F2F2F2"));
+	    panelCentral.setBounds(5, 62, 1014, 509);
+	    layeredPane.add(panelCentral, JLayeredPane.PALETTE_LAYER);
 
-		// Logotipo
-		ImageIcon iconoOriginal = new ImageIcon(getClass().getResource("/images/Block.png"));
-		Image imagenEscalada = iconoOriginal.getImage().getScaledInstance(70, 70, Image.SCALE_SMOOTH);
-		JLabel logo = new JLabel(new ImageIcon(imagenEscalada));
-		logo.setBounds(477, 11, 70, 70); // posicion
-		panelCentral.add(logo);
+	    // Logotipo
+	    ImageIcon iconoOriginal = new ImageIcon(getClass().getResource("/images/Block.png"));
+	    Image imagenEscalada = iconoOriginal.getImage().getScaledInstance(70, 70, Image.SCALE_SMOOTH);
+	    JLabel logo = new JLabel(new ImageIcon(imagenEscalada));
+	    logo.setBounds(477, 11, 70, 70);
+	    panelCentral.add(logo);
 
-		JLabel iniciar = new JLabel("AGREGAR VIDEOJUEGOS");
-		iniciar.setSize(263, 42);
-		iniciar.setLocation(369, 78);
-		iniciar.setHorizontalAlignment(JLabel.CENTER);
-		iniciar.setFont(new Font("Calibri", Font.BOLD, 24));
-		panelCentral.add(iniciar);
+	    // Título
+	    JLabel lblTitulo = new JLabel("AGREGAR NUEVO VIDEOJUEGO");
+	    lblTitulo.setFont(new Font("Calibri", Font.BOLD, 24));
+	    lblTitulo.setBounds(350, 78, 350, 42);
+	    panelCentral.add(lblTitulo);
 
-		JLabel iniciar_1 = new JLabel("Nombre del Videojuego:");
-		iniciar_1.setHorizontalAlignment(SwingConstants.CENTER);
-		iniciar_1.setFont(new Font("Calibri", Font.BOLD, 14));
-		iniciar_1.setBounds(55, 108, 164, 42); // Ajusta tamaño si es necesario
-		panelCentral.add(iniciar_1);
+	    // Sección izquierda (Datos básicos)
+	    JLabel lblNombre = new JLabel("Nombre del Videojuego:");
+	    lblNombre.setFont(new Font("Calibri", Font.BOLD, 14));
+	    lblNombre.setBounds(55, 130, 180, 20);
+	    panelCentral.add(lblNombre);
 
-		JLabel iniciar_1_1 = new JLabel("Año de lanzamiento :");
-		iniciar_1_1.setHorizontalAlignment(SwingConstants.CENTER);
-		iniciar_1_1.setFont(new Font("Calibri", Font.BOLD, 14));
-		iniciar_1_1.setBounds(55, 180, 132, 42);
-		panelCentral.add(iniciar_1_1);
+	    txtNombre.setBounds(55, 155, 230, 25);
+	    panelCentral.add(txtNombre);
 
-		JLabel iniciar_1_1_1 = new JLabel("Género:");
-		iniciar_1_1_1.setHorizontalAlignment(SwingConstants.LEFT);
-		iniciar_1_1_1.setFont(new Font("Calibri", Font.BOLD, 14));
-		iniciar_1_1_1.setBounds(55, 259, 140, 42);
-		panelCentral.add(iniciar_1_1_1);
+	    JLabel lblAnio = new JLabel("Año de lanzamiento:");
+	    lblAnio.setFont(new Font("Calibri", Font.BOLD, 14));
+	    lblAnio.setBounds(55, 190, 180, 20);
+	    panelCentral.add(lblAnio);
 
-		JLabel iniciar_1_1_1_1 = new JLabel("Precio a renta (MXN)");
-		iniciar_1_1_1_1.setHorizontalAlignment(SwingConstants.CENTER);
-		iniciar_1_1_1_1.setFont(new Font("Calibri", Font.BOLD, 14));
-		iniciar_1_1_1_1.setBounds(55, 327, 140, 42);
-		panelCentral.add(iniciar_1_1_1_1);
+	    txtAnioLanzamiento.setBounds(55, 215, 150, 25);
+	    panelCentral.add(txtAnioLanzamiento);
 
-		JTextField nJuego = new JTextField();
-		nJuego.setBackground(Color.decode("#D9D9D9"));
-		nJuego.setBounds(53, 142, 230, 27);
-		panelCentral.add(nJuego);
-		nJuego.setColumns(10);
+	    JLabel lblGenero = new JLabel("Género:");
+	    lblGenero.setFont(new Font("Calibri", Font.BOLD, 14));
+	    lblGenero.setBounds(55, 250, 180, 20);
+	    panelCentral.add(lblGenero);
 
-		textField_1 = new JTextField();
-		textField_1.setBackground(Color.decode("#D9D9D9"));
-		textField_1.setColumns(10);
-		textField_1.setBounds(53, 214, 153, 27);
-		panelCentral.add(textField_1);
+	    txtGenero.setBounds(55, 275, 180, 25);
+	    panelCentral.add(txtGenero);
 
-		textField_2 = new JTextField();
-		textField_2.setBackground(Color.decode("#D9D9D9"));
-		textField_2.setColumns(10);
-		textField_2.setBounds(55, 289, 188, 27);
-		panelCentral.add(textField_2);
+	    JLabel lblPrecioRenta = new JLabel("Precio renta (MXN):");
+	    lblPrecioRenta.setFont(new Font("Calibri", Font.BOLD, 14));
+	    lblPrecioRenta.setBounds(55, 310, 180, 20);
+	    panelCentral.add(lblPrecioRenta);
 
-		textField_3 = new JTextField();
-		textField_3.setBackground(Color.decode("#D9D9D9"));
-		textField_3.setColumns(10);
-		textField_3.setBounds(55, 368, 188, 27);
-		panelCentral.add(textField_3);
+	    txtPrecioRenta.setBounds(55, 335, 180, 25);
+	    panelCentral.add(txtPrecioRenta);
 
-		textField_4 = new JTextField();
-		textField_4.setBackground(Color.decode("#D9D9D9"));
-		textField_4.setColumns(10);
-		textField_4.setBounds(227, 214, 120, 27);
-		panelCentral.add(textField_4);
+	    // Sección central (Detalles técnicos)
+	    JLabel lblPlataforma = new JLabel("Plataforma:");
+	    lblPlataforma.setFont(new Font("Calibri", Font.BOLD, 14));
+	    lblPlataforma.setBounds(300, 130, 180, 20);
+	    panelCentral.add(lblPlataforma);
 
-		JLabel iniciar_1_1_2 = new JLabel("Disponibilidad:");
-		iniciar_1_1_2.setHorizontalAlignment(SwingConstants.CENTER);
-		iniciar_1_1_2.setFont(new Font("Calibri", Font.BOLD, 14));
-		iniciar_1_1_2.setBounds(227, 180, 97, 42);
-		panelCentral.add(iniciar_1_1_2);
+	    txtPlataforma.setBounds(300, 155, 200, 25);
+	    panelCentral.add(txtPlataforma);
 
-		textField_5 = new JTextField();
-		textField_5.setBackground(Color.decode("#D9D9D9"));
-		textField_5.setColumns(10);
-		textField_5.setBounds(301, 142, 202, 27);
-		panelCentral.add(textField_5);
+	    JLabel lblDisponibilidad = new JLabel("Disponibilidad:");
+	    lblDisponibilidad.setFont(new Font("Calibri", Font.BOLD, 14));
+	    lblDisponibilidad.setBounds(300, 190, 180, 20);
+	    panelCentral.add(lblDisponibilidad);
 
-		textField_6 = new JTextField();
-		textField_6.setBackground(Color.decode("#D9D9D9"));
-		textField_6.setColumns(10);
-		textField_6.setBounds(369, 214, 134, 27);
-		panelCentral.add(textField_6);
+	    chkDisponible.setBounds(300, 215, 100, 25);
+	    chkDisponible.setSelected(true);
+	    panelCentral.add(chkDisponible);
 
-		textField_7 = new JTextField();
-		textField_7.setBackground(Color.decode("#D9D9D9"));
-		textField_7.setColumns(10);
-		textField_7.setBounds(288, 289, 215, 27);
-		panelCentral.add(textField_7);
+	    JLabel lblClasificacion = new JLabel("Clasificación:");
+	    lblClasificacion.setFont(new Font("Calibri", Font.BOLD, 14));
+	    lblClasificacion.setBounds(300, 250, 180, 20);
+	    panelCentral.add(lblClasificacion);
 
-		textField_8 = new JTextField();
-		textField_8.setBackground(Color.decode("#D9D9D9"));
-		textField_8.setColumns(10);
-		textField_8.setBounds(288, 368, 215, 27);
-		panelCentral.add(textField_8);
+	    txtClasificacion.setBounds(300, 275, 130, 25);
+	    panelCentral.add(txtClasificacion);
 
-		JLabel iniciar_1_1_2_1 = new JLabel("Plataforma:");
-		iniciar_1_1_2_1.setHorizontalAlignment(SwingConstants.CENTER);
-		iniciar_1_1_2_1.setFont(new Font("Calibri", Font.BOLD, 14));
-		iniciar_1_1_2_1.setBounds(301, 108, 97, 42);
-		panelCentral.add(iniciar_1_1_2_1);
+	    JLabel lblExistencias = new JLabel("Existencias disponibles:");
+	    lblExistencias.setFont(new Font("Calibri", Font.BOLD, 14));
+	    lblExistencias.setBounds(300, 310, 180, 20);
+	    panelCentral.add(lblExistencias);
 
-		JLabel iniciar_1_1_2_2 = new JLabel("Clasificación:");
-		iniciar_1_1_2_2.setHorizontalAlignment(SwingConstants.CENTER);
-		iniciar_1_1_2_2.setFont(new Font("Calibri", Font.BOLD, 14));
-		iniciar_1_1_2_2.setBounds(369, 180, 97, 42);
-		panelCentral.add(iniciar_1_1_2_2);
+	    txtExistencias.setBounds(300, 335, 200, 25);
+	    panelCentral.add(txtExistencias);
 
-		JLabel iniciar_1_1_3 = new JLabel("Existencias disponibles:");
-		iniciar_1_1_3.setHorizontalAlignment(SwingConstants.LEFT);
-		iniciar_1_1_3.setFont(new Font("Calibri", Font.BOLD, 14));
-		iniciar_1_1_3.setBounds(289, 252, 153, 42);
-		panelCentral.add(iniciar_1_1_3);
+	    JLabel lblPrecioVenta = new JLabel("Precio venta (MXN):");
+	    lblPrecioVenta.setFont(new Font("Calibri", Font.BOLD, 14));
+	    lblPrecioVenta.setBounds(300, 370, 180, 20);
+	    panelCentral.add(lblPrecioVenta);
 
-		JLabel iniciar_1_1_1_1_1 = new JLabel("Precio a venta (MXN):");
-		iniciar_1_1_1_1_1.setHorizontalAlignment(SwingConstants.CENTER);
-		iniciar_1_1_1_1_1.setFont(new Font("Calibri", Font.BOLD, 14));
-		iniciar_1_1_1_1_1.setBounds(288, 327, 140, 42);
-		panelCentral.add(iniciar_1_1_1_1_1);
+	    txtPrecioVenta.setBounds(300, 395, 200, 25);
+	    panelCentral.add(txtPrecioVenta);
 
-		textField_9 = new JTextField();
-		textField_9.setBackground(Color.decode("#D9D9D9"));
-		textField_9.setColumns(10);
-		textField_9.setBounds(619, 259, 343, 136);
-		panelCentral.add(textField_9);
+	    // Sección derecha (Información adicional)
+	    JLabel lblDesarrollador = new JLabel("Desarrollado por:");
+	    lblDesarrollador.setFont(new Font("Calibri", Font.BOLD, 14));
+	    lblDesarrollador.setBounds(550, 130, 180, 20);
+	    panelCentral.add(lblDesarrollador);
 
-		JLabel iniciar_1_1_2_2_1 = new JLabel("Acerca de:");
-		iniciar_1_1_2_2_1.setHorizontalAlignment(SwingConstants.CENTER);
-		iniciar_1_1_2_2_1.setFont(new Font("Calibri", Font.BOLD, 14));
-		iniciar_1_1_2_2_1.setBounds(619, 220, 97, 42);
-		panelCentral.add(iniciar_1_1_2_2_1);
+	    txtDesarrollador.setBounds(550, 155, 340, 25);
+	    panelCentral.add(txtDesarrollador);
 
-		JLabel iniciar_1_1_2_2_1_1 = new JLabel("Acerca de:");
-		iniciar_1_1_2_2_1_1.setHorizontalAlignment(SwingConstants.LEFT);
-		iniciar_1_1_2_2_1_1.setFont(new Font("Calibri", Font.BOLD, 14));
-		iniciar_1_1_2_2_1_1.setBounds(619, 108, 97, 42);
-		panelCentral.add(iniciar_1_1_2_2_1_1);
+	    JLabel lblDescripcion = new JLabel("Descripción:");
+	    lblDescripcion.setFont(new Font("Calibri", Font.BOLD, 14));
+	    lblDescripcion.setBounds(550, 190, 180, 20);
+	    panelCentral.add(lblDescripcion);
 
-		JButton btnCancelar = new JButton("Cancelar");
-		btnCancelar.setBackground(Color.decode("#B82F2F")); // Color de fondo (azul oscuro)
+	    txtDescripcion.setLineWrap(true);
+	    txtDescripcion.setWrapStyleWord(true);
+	    JScrollPane scrollDescripcion = new JScrollPane(txtDescripcion);
+	    scrollDescripcion.setBounds(550, 215, 340, 150);
+	    panelCentral.add(scrollDescripcion);
+
+	    // Botones
+	    JButton btnCancelar = new JButton("Cancelar");
+	    btnCancelar.setBackground(Color.decode("#B82F2F"));
 		btnCancelar.setForeground(Color.WHITE);
-		btnCancelar.setBounds(259, 417, 183, 33);
-		btnCancelar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				AdministradorJuegos();
-				dispose();
+		btnCancelar.setBounds(300, 450, 150, 30);
+		btnCancelar.addActionListener(e -> {
+			dispose();
 
-			}
+			VideogamesController vc = new VideogamesController();
+			vc.indexVideoGames();
 		});
 		panelCentral.add(btnCancelar);
 
-		JButton btnConfirmar = new JButton("Confirmar");
-		btnConfirmar.setBackground(Color.decode("#263C54")); // Color de fondo (azul oscuro)
+		JButton btnConfirmar = new JButton("Agregar Juego");
+		btnConfirmar.setBackground(Color.decode("#263C54"));
 		btnConfirmar.setForeground(Color.WHITE);
-		btnConfirmar.setBounds(561, 417, 183, 33);
-		btnConfirmar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				Confirma_9();
+		btnConfirmar.setBounds(550, 450, 150, 30);
+		btnConfirmar.addActionListener(e -> {
+			try {
 
+				String nombre = txtNombre.getText();
+				String plataforma = txtPlataforma.getText();
+				int año = Integer.parseInt(txtAnioLanzamiento.getText());
+				boolean disponibilidad = chkDisponible.isSelected();
+				String clasificacion = txtClasificacion.getText();
+				String genero = txtGenero.getText();
+				int existencias = Integer.parseInt(txtExistencias.getText());
+				BigDecimal precioRenta = new BigDecimal(txtPrecioRenta.getText());
+				BigDecimal precioVenta = new BigDecimal(txtPrecioVenta.getText());
+				String desarrollador = txtDesarrollador.getText();
+				String descripcion = txtDescripcion.getText();
+
+				VideoGamesModel modelo = new VideoGamesModel();
+				boolean exito = modelo.addVideogame(nombre, plataforma, año, disponibilidad, clasificacion, genero,
+						existencias, precioRenta, precioVenta, desarrollador, descripcion);
+
+				if (exito) {
+					JOptionPane.showMessageDialog(this, "Juego agregado exitosamente");
+					dispose();
+					VideogamesController vc = new VideogamesController();
+					vc.indexVideoGames();
+				} else {
+					JOptionPane.showMessageDialog(this, "Error al agregar el juego", "Error",
+							JOptionPane.ERROR_MESSAGE);
+				}
+			} catch (NumberFormatException ex) {
+				JOptionPane.showMessageDialog(this, "Por favor ingrese valores numéricos válidos", "Error",
+						JOptionPane.ERROR_MESSAGE);
+			} catch (Exception ex) {
+				JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 			}
 		});
 		panelCentral.add(btnConfirmar);
 
-		textField_10 = new JTextField();
-		textField_10.setColumns(10);
-		textField_10.setBackground(new Color(217, 217, 217));
-		textField_10.setBounds(619, 145, 343, 82);
-		panelCentral.add(textField_10);
+		// Barra superior roja
+		JPanel barraSuperior = new JPanel();
+		barraSuperior.setBackground(Color.decode("#B44635"));
+		barraSuperior.setBounds(0, 0, 1024, 60);
+		layeredPane.add(barraSuperior, JLayeredPane.PALETTE_LAYER);
 
-		// 3. PANEL ROJO SUPERIOR (barra de título)
-		JPanel barraRoja = new JPanel();
-		barraRoja.setBackground(Color.decode("#B44635"));
-		barraRoja.setBounds(0, 0, 1024, 60);
-		layeredPane.add(barraRoja, JLayeredPane.PALETTE_LAYER);
-
-		setVisible(true);
+	    setVisible(true);
 	}
 
-	public void Confirma_9() {
-		// Configuración básica de la ventana
-		setTitle("Guardar videojuego");
-		setUndecorated(true);
-
-		setSize(654, 252);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setLocationRelativeTo(null);
-
-		// Usamos JLayeredPane para superponer componentes
-		JLayeredPane layeredPane = new JLayeredPane();
-		layeredPane.setPreferredSize(new Dimension(900, 650));
-		setContentPane(layeredPane);
-
-		// 2. PANEL GRIS CENTRAl
-		JPanel panelCentral = new JPanel();
-		panelCentral.setLayout(null);
-		panelCentral.setBackground(Color.decode("#D9D9D9"));
-		panelCentral.setBounds(0, 0, 654, 252); // (x, y, ancho, alto)
-		layeredPane.add(panelCentral, JLayeredPane.PALETTE_LAYER);
-
-		// Logotipo
-		ImageIcon iconoOriginal = new ImageIcon(getClass().getResource("/images/Block.png"));
-		Image imagenEscalada = iconoOriginal.getImage().getScaledInstance(70, 70, Image.SCALE_SMOOTH);
-
-		JLabel iniciar = new JLabel("Guardar videojuego");
-		iniciar.setSize(285, 42);
-		iniciar.setLocation(233, 51);
-		iniciar.setHorizontalAlignment(JLabel.CENTER);
-		iniciar.setFont(new Font("Calibri", Font.BOLD, 24));
-		panelCentral.add(iniciar);
-
-		JButton btnCancelar = new JButton("Cancelar");
-		btnCancelar.setBackground(Color.decode("#B82F2F")); // Color de fondo (azul oscuro)
-		btnCancelar.setForeground(Color.WHITE);
-		btnCancelar.setBounds(31, 130, 183, 33);
-		btnCancelar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-
-				dispose();
-			}
-		});
-		panelCentral.add(btnCancelar);
-
-		JButton btnSi = new JButton("Si");
-		btnSi.setBackground(Color.decode("#6D91B9")); // Color de fondo (azul oscuro)
-		btnSi.setForeground(Color.WHITE);
-		btnSi.setBounds(418, 130, 183, 33);
-		btnSi.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-
-				dispose();
-
-			}
-		});
-		panelCentral.add(btnSi);
-
-		setVisible(true);
-	}
 
 	// Renta y Compra
 	public void AdministradorRentaCompra() {
@@ -3064,6 +2462,7 @@ public class HomeView extends JFrame {
 		setVisible(true);
 	}
 
+	
 	public void Renta() {
 		// Configuración básica de la ventana
 		setTitle("Renta");
@@ -3203,6 +2602,7 @@ public class HomeView extends JFrame {
 		}
 	}
 
+	
 	public void OperacionRentar() {
 		JTextField textField;
 		JTextField textField_1;
@@ -3377,6 +2777,7 @@ public class HomeView extends JFrame {
 		setVisible(true);
 	}
 
+	
 	public void Confirma_11() {
 		// Configuración básica de la ventana
 		setTitle("Confirma Renta");

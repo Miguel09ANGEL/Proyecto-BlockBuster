@@ -2816,8 +2816,8 @@ public class HomeView extends JFrame {
 		btnEditarPromocion.setBackground(Color.decode("#6D91B9"));
 		btnEditarPromocion.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				EditarPromociones();
 				dispose();
+				EditarPromociones();
 
 			}
 		});
@@ -2906,8 +2906,8 @@ public class HomeView extends JFrame {
 		btnCancelar.setForeground(Color.WHITE);
 		btnCancelar.setBounds(175, 406, 183, 33);
 		btnCancelar.addActionListener(e -> {
-			PromocionAutomatica(); // Abre la segunda ventana
 			dispose(); // Cierra la ventana actual
+			PromocionAutomatica(); // Abre la segunda ventana
 		});
 		panelCentral.add(btnCancelar);
 
@@ -2916,7 +2916,7 @@ public class HomeView extends JFrame {
 		btnConfirmar.setForeground(Color.WHITE);
 		btnConfirmar.setBounds(582, 406, 183, 33);
 		btnConfirmar.addActionListener(e -> {
-			Confirma_15(); // Abre la segunda ventana
+//			Confirma_15(); // Abre la segunda ventana
 			// Cierra la ventana actual
 		});
 		panelCentral.add(btnCancelar);

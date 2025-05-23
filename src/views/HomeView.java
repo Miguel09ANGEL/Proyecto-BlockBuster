@@ -80,19 +80,19 @@ public class HomeView extends JFrame {
 		JPanel panelCentral = new JPanel();
 		panelCentral.setLayout(null);
 		panelCentral.setBackground(Color.decode("#F2F2F2"));
-		panelCentral.setBounds(312, 70, 380, 475); // (x, y, ancho, alto)
+		panelCentral.setBounds(300, 70, 420, 475); // (x, y, ancho, alto)
 		layeredPane.add(panelCentral, JLayeredPane.PALETTE_LAYER);
 
 		// Logotipo
 		ImageIcon iconoOriginal = new ImageIcon(getClass().getResource("/images/Block.png"));
 		Image imagenEscalada = iconoOriginal.getImage().getScaledInstance(70, 70, Image.SCALE_SMOOTH);
 		JLabel logo = new JLabel(new ImageIcon(imagenEscalada));
-		logo.setBounds(156, 11, 70, 70); // posicion
+		logo.setBounds(176, 11, 70, 70); // posicion
 		panelCentral.add(logo);
 
 		JLabel iniciar = new JLabel("PANEL ADMINISTRADOR");
-		iniciar.setSize(250, 60);
-		iniciar.setLocation(66, 75);
+		iniciar.setSize(350, 60);
+		iniciar.setLocation(35, 75);
 		iniciar.setHorizontalAlignment(JLabel.CENTER);
 		iniciar.setFont(new Font("Calibri", Font.BOLD, 24));
 		panelCentral.add(iniciar);
@@ -100,21 +100,21 @@ public class HomeView extends JFrame {
 		JLabel correo = new JLabel("Ingresar correo:");
 		correo.setHorizontalAlignment(SwingConstants.CENTER);
 		correo.setFont(new Font("SansSerif", Font.BOLD, 20));
-		correo.setBounds(39, 146, 158, 26);
+		correo.setBounds(60, 146, 158, 26);
 		panelCentral.add(correo);
 		
 		JTextField gmail = new JTextField();
 		gmail.setBorder(BorderFactory.createLineBorder(Color.decode("#10A7DE")));
 		gmail.setBackground(Color.decode("#D9D9D9"));
 		gmail.setSize(290, 30);
-		gmail.setLocation(39, 170);
+		gmail.setLocation(60, 170);
 		gmail.setFont(new Font("Montserrat ", Font.BOLD, 15));
 		panelCentral.add(gmail);
 
 
 		JLabel contraseña = new JLabel("Contraseña:");
 		contraseña.setSize(116, 26);
-		contraseña.setLocation(39, 263);
+		contraseña.setLocation(60, 263);
 		contraseña.setHorizontalAlignment(JLabel.CENTER);
 		contraseña.setFont(new Font("SansSerif", Font.BOLD, 20));
 		panelCentral.add(contraseña);
@@ -122,7 +122,7 @@ public class HomeView extends JFrame {
 	    JPasswordField password = new JPasswordField();
 		password.setBackground(Color.decode("#D9D9D9"));
 		password.setSize(290, 30);
-		password.setLocation(39, 288);
+		password.setLocation(60, 288);
 		password.setFont(new Font("Montserrat ", Font.BOLD, 15));
 		panelCentral.add(password);
 		
@@ -130,7 +130,7 @@ public class HomeView extends JFrame {
 		acceder.setBackground(Color.decode("#263C54")); // Color de fondo (azul oscuro)
 		acceder.setForeground(Color.WHITE); // Color del texto (blanco)
 		acceder.setFont(new Font("Calibri", Font.BOLD, 15));
-		acceder.setBounds(40, 371, 289, 26);
+		acceder.setBounds(50, 371, 289, 26);
 		acceder.addActionListener(new ActionListener() {
 		    public void actionPerformed(ActionEvent e) {
 		    	
@@ -319,6 +319,16 @@ public class HomeView extends JFrame {
 		iniciar_1.setFont(new Font("Calibri", Font.BOLD, 14));
 		iniciar_1.setBounds(170, 183, 391, 83); // Ajusta tamaño si es necesario
 		panelCentral.add(iniciar_1);
+		
+		ImageIcon icono = new ImageIcon(getClass().getResource("/images/Salida.png"));
+		JButton salida = new JButton(icono);
+		salida.setBounds(650, 390,60, 60);
+		salida.addActionListener(e -> {
+			dispose(); // Cierra la ventana actual
+			 // Abre la segunda ventana
+		});
+		panelCentral.add(salida);
+
 
 		// 3. PANEL ROJO SUPERIOR (barra de título)
 		JPanel barraRoja = new JPanel();
@@ -485,6 +495,11 @@ public class HomeView extends JFrame {
 		JLayeredPane layeredPane = new JLayeredPane();
 		layeredPane.setPreferredSize(new Dimension(900, 650));
 		setContentPane(layeredPane);
+		// 3. PANEL ROJO SUPERIOR (barra de título)
+				JPanel barraRoja = new JPanel();
+				barraRoja.setBackground(Color.decode("#B44635"));
+				barraRoja.setBounds(0, 0, 1024, 60);
+				layeredPane.add(barraRoja, JLayeredPane.PALETTE_LAYER);
 
 		// 1. PANEL BLANCO (fondo completo)
 		JPanel panelIzq = new JPanel();
@@ -590,12 +605,17 @@ public class HomeView extends JFrame {
 			av.AgregarCliente();
 		});
 		panelCentral.add(btnAgregarCliente);
+		
+		ImageIcon icono = new ImageIcon(getClass().getResource("/images/Salida.png"));
+		JButton salida = new JButton(icono);
+		salida.setBounds(650, 390,60, 60);
+		salida.addActionListener(e -> {
+			dispose(); // Cierra la ventana actual
+			 // Abre la segunda ventana
+		});
+		panelCentral.add(salida);
 
-		// 3. PANEL ROJO SUPERIOR (barra de título)
-		JPanel barraRoja = new JPanel();
-		barraRoja.setBackground(Color.decode("#B44635"));
-		barraRoja.setBounds(0, 0, 1024, 60);
-		layeredPane.add(barraRoja, JLayeredPane.PALETTE_LAYER);
+		
 
 		setVisible(true);
 	}
@@ -1348,7 +1368,7 @@ public class HomeView extends JFrame {
 		iniciar.setFont(new Font("Calibri", Font.BOLD, 24));
 		panelCentral.add(iniciar);
 
-		JButton registros = new JButton("REGISTROS DE VIDEOJUEGOS");
+		JButton registros = new JButton("<html><center>REGISTROS DE VIDEOJUEGOS<html>");
 		registros.setBounds(100, 261, 206, 100);
 		panelCentral.add(registros);
 		registros.setForeground(Color.WHITE);
@@ -1362,7 +1382,7 @@ public class HomeView extends JFrame {
 			lt.indexVideoGames();
 		});
 
-		JButton btnAgregarVideojuegos = new JButton("AGREGAR VIDEOJUEGOS");
+		JButton btnAgregarVideojuegos = new JButton("<html><center>AGREGAR VIDEOJUEGOS<html>");
 		btnAgregarVideojuegos.setForeground(Color.WHITE);
 		btnAgregarVideojuegos.setFont(new Font("Calibri", Font.BOLD, 16));
 		btnAgregarVideojuegos.setBackground(new Color(38, 60, 84));
@@ -1376,11 +1396,22 @@ public class HomeView extends JFrame {
 		panelCentral.add(btnAgregarVideojuegos);
 
 		JLabel lblDesdeAquPodrs = new JLabel(
-				"Desde aquí podrás gestionar y controlar todas las \n funcionalidades de videojuegos. \n¿Qué deseas hacer hoy?\n");
+				"<html><center>Desde aquí podrás gestionar y controlar todas las funcionalidades de videojuegos. \r\n"
+				+ "¿Qué deseas hacer hoy?\r\n"
+				+ "<html>");
 		lblDesdeAquPodrs.setHorizontalAlignment(SwingConstants.CENTER);
-		lblDesdeAquPodrs.setFont(new Font("Calibri", Font.BOLD, 24));
+		lblDesdeAquPodrs.setFont(new Font("Calibri", Font.BOLD, 14));
 		lblDesdeAquPodrs.setBounds(100, 168, 464, 60);
 		panelCentral.add(lblDesdeAquPodrs);
+		
+		ImageIcon icono = new ImageIcon(getClass().getResource("/images/Salida.png"));
+		JButton salida = new JButton(icono);
+		salida.setBounds(650, 390,60, 60);
+		salida.addActionListener(e -> {
+			dispose(); // Cierra la ventana actual
+			 // Abre la segunda ventana
+		});
+		panelCentral.add(salida);
 		
 
 		// 3. PANEL ROJO SUPERIOR (barra de título)
@@ -2247,7 +2278,7 @@ public class HomeView extends JFrame {
 		iniciar.setFont(new Font("Calibri", Font.BOLD, 24));
 		panelCentral.add(iniciar);
 
-		JButton renta = new JButton("Renta");
+		JButton renta = new JButton("RENTA");
 		renta.setBounds(119, 242, 206, 100);
 		panelCentral.add(renta);
 		renta.setForeground(Color.WHITE);
@@ -2260,7 +2291,7 @@ public class HomeView extends JFrame {
 			 // Cierra la ventana actual
 		});
 
-		JButton btnCompra = new JButton("Venta");
+		JButton btnCompra = new JButton("VENTA");
 		btnCompra.setForeground(Color.WHITE);
 		btnCompra.setFont(new Font("Calibri", Font.BOLD, 16));
 		btnCompra.setBackground(new Color(38, 60, 84));
@@ -2273,11 +2304,22 @@ public class HomeView extends JFrame {
 		});
 		panelCentral.add(btnCompra);
 
-		JLabel lblAquPuedesElegir = new JLabel("Aquí puedes elegir si la consulta es renta o compra");
+		JLabel lblAquPuedesElegir = new JLabel("<html><center>Desde aquí podrás gestionar y controlar todas las funcionalides de renta y venta. \r\n"
+				+ "¿Qué deseas hacer hoy?\r\n"
+				+ "<html>");
 		lblAquPuedesElegir.setHorizontalAlignment(SwingConstants.CENTER);
-		lblAquPuedesElegir.setFont(new Font("Calibri", Font.BOLD, 24));
+		lblAquPuedesElegir.setFont(new Font("Calibri", Font.BOLD, 14));
 		lblAquPuedesElegir.setBounds(119, 154, 548, 60);
 		panelCentral.add(lblAquPuedesElegir);
+		
+		ImageIcon icono = new ImageIcon(getClass().getResource("/images/Salida.png"));
+		JButton salida = new JButton(icono);
+		salida.setBounds(650, 390,60, 60);
+		salida.addActionListener(e -> {
+			dispose(); // Cierra la ventana actual
+			 // Abre la segunda ventana
+		});
+		panelCentral.add(salida);
 
 		// 3. PANEL ROJO SUPERIOR (barra de título)
 		JPanel barraRoja = new JPanel();
@@ -2460,40 +2502,42 @@ public class HomeView extends JFrame {
 		iniciar.setFont(new Font("Calibri", Font.BOLD, 24));
 		panelCentral.add(iniciar);
 
-		JButton registros = new JButton("DEVOLUCIONES PENDIENTES");
-		registros.setBounds(34, 261, 206, 100);
-		panelCentral.add(registros);
-		registros.setForeground(Color.WHITE);
-		registros.setFont(new Font("Calibri", Font.BOLD, 16));
-		registros.setBackground(new Color(38, 60, 84));
-		registros.addActionListener(e -> {
-			DevolucionesPendientes(); // Abre la segunda ventana
+		JButton devoluciones = new JButton("<html><center>DEVOLUCIONES PENDIENTES<html>");
+		devoluciones.setBounds(34, 261, 206, 100);
+		panelCentral.add(devoluciones);
+		devoluciones.setForeground(Color.WHITE);
+		devoluciones.setFont(new Font("Calibri", Font.BOLD, 16));
+		devoluciones.setBackground(new Color(38, 60, 84));
+		devoluciones.addActionListener(e -> {
 			dispose(); // Cierra la ventana actual
+			DevolucionesPendientes(); // Abre la segunda ventana
 		});
 
-		JButton btnPromocionAutomatica = new JButton("PROMOCIÓN AUTOMATICA");
+		JButton btnPromocionAutomatica = new JButton("<html><center>PROMOCIÓN AUTOMATICA<html>");
 		btnPromocionAutomatica.setForeground(Color.WHITE);
 		btnPromocionAutomatica.setFont(new Font("Calibri", Font.BOLD, 16));
 		btnPromocionAutomatica.setBackground(new Color(38, 60, 84));
 		btnPromocionAutomatica.setBounds(266, 261, 206, 100);
 		btnPromocionAutomatica.addActionListener(e -> {
-			PromocionAutomatica(); // Abre la segunda ventana
 			dispose(); // Cierra la ventana actual
+			PromocionAutomatica(); // Abre la segunda ventana
 		});
 		panelCentral.add(btnPromocionAutomatica);
 
 		JLabel lblDesdeAquPodrs = new JLabel(
-				"Desde aquí podrás gestionar y controlar todas las \n funcionalidades de videojuegos. \n¿Qué deseas hacer hoy?\n");
+				"<html><center>Desde aqui podras gestionar y controlar todas las funcionalidades de los descuentos por clientes frecuentes, calculo de devolucion de cada cliente al igual que las promociones automaticas.\r\n"
+				+ " ¿Qué deseas hacer hoy?\r\n<html>"
+				+ "");
 		lblDesdeAquPodrs.setHorizontalAlignment(SwingConstants.CENTER);
-		lblDesdeAquPodrs.setFont(new Font("Calibri", Font.BOLD, 24));
-		lblDesdeAquPodrs.setBounds(100, 168, 464, 60);
+		lblDesdeAquPodrs.setFont(new Font("Calibri", Font.BOLD, 14));
+		lblDesdeAquPodrs.setBounds(90, 168, 494, 60);
 		panelCentral.add(lblDesdeAquPodrs);
 
-		JButton btnDescuentoPorCliente = new JButton("DESCUENTO POR CLIENTE FRECUENTE");
+		JButton btnDescuentoPorCliente = new JButton("<html><center>DESCUENTO POR CLIENTE FRECUENTE<html>");
 		btnDescuentoPorCliente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				DescuentoFrecuencia(); // Abre la segunda ventana
 				dispose();
+				DescuentoFrecuencia(); // Abre la segunda ventana
 			}
 		});
 		btnDescuentoPorCliente.setForeground(Color.WHITE);
@@ -2501,6 +2545,15 @@ public class HomeView extends JFrame {
 		btnDescuentoPorCliente.setBackground(new Color(38, 60, 84));
 		btnDescuentoPorCliente.setBounds(497, 261, 206, 100);
 		panelCentral.add(btnDescuentoPorCliente);
+		
+		ImageIcon icono = new ImageIcon(getClass().getResource("/images/Salida.png"));
+		JButton salida = new JButton(icono);
+		salida.setBounds(650, 390,60, 60);
+		salida.addActionListener(e -> {
+			dispose(); // Cierra la ventana actual
+			 // Abre la segunda ventana
+		});
+		panelCentral.add(salida);
 
 		// 3. PANEL ROJO SUPERIOR (barra de título)
 		JPanel barraRoja = new JPanel();
@@ -2536,8 +2589,8 @@ public class HomeView extends JFrame {
 		btnClientes.setForeground(Color.WHITE);
 		btnClientes.setBounds(10, 11, 237, 100);
 		btnClientes.addActionListener(e -> {
-			AdministradorCliente(); // Abre la segunda ventana
 			dispose(); // Cierra la ventana actual
+			AdministradorCliente(); // Abre la segunda ventana
 		});
 		panelIzq.add(btnClientes);
 
@@ -2548,8 +2601,8 @@ public class HomeView extends JFrame {
 		btnVideojuegos.setBounds(10, 128, 237, 100);
 		panelIzq.add(btnVideojuegos);
 		btnVideojuegos.addActionListener(e -> {
-			AdministradorJuegos(); // Abre la segunda ventana
 			dispose(); // Cierra la ventana actual
+			AdministradorJuegos(); // Abre la segunda ventana
 		});
 
 		JButton btnRentaYCompra = new JButton("RENTA Y COMPRA");
@@ -2558,8 +2611,8 @@ public class HomeView extends JFrame {
 		btnRentaYCompra.setBackground(new Color(38, 60, 84));
 		btnRentaYCompra.setBounds(10, 242, 237, 100);
 		btnRentaYCompra.addActionListener(e -> {
-			AdministradorRentaCompra(); // Abre la segunda ventana
 			dispose(); // Cierra la ventana actual
+			AdministradorRentaCompra(); // Abre la segunda ventana
 		});
 		panelIzq.add(btnRentaYCompra);
 
@@ -2569,8 +2622,8 @@ public class HomeView extends JFrame {
 		btnNuevaOperacion.setBackground(new Color(38, 60, 84));
 		btnNuevaOperacion.setBounds(10, 364, 237, 100);
 		btnNuevaOperacion.addActionListener(e -> {
-			NuevaOperacion(); // Abre la segunda ventana
 			dispose(); // Cierra la ventana actual
+			NuevaOperacion(); // Abre la segunda ventana
 		});
 		panelIzq.add(btnNuevaOperacion);
 
@@ -2660,8 +2713,8 @@ public class HomeView extends JFrame {
 		btnClientes.setForeground(Color.WHITE);
 		btnClientes.setBounds(10, 11, 237, 100);
 		btnClientes.addActionListener(e -> {
-			AdministradorCliente(); // Abre la segunda ventana
 			dispose(); // Cierra la ventana actual
+			AdministradorCliente(); // Abre la segunda ventana
 		});
 		panelIzq.add(btnClientes);
 
@@ -2672,8 +2725,8 @@ public class HomeView extends JFrame {
 		btnVideojuegos.setBounds(10, 128, 237, 100);
 		panelIzq.add(btnVideojuegos);
 		btnVideojuegos.addActionListener(e -> {
-			AdministradorJuegos(); // Abre la segunda ventana
 			dispose(); // Cierra la ventana actual
+			AdministradorJuegos(); // Abre la segunda ventana
 		});
 
 		JButton btnRentaYCompra = new JButton("RENTA Y COMPRA");
@@ -2682,8 +2735,8 @@ public class HomeView extends JFrame {
 		btnRentaYCompra.setBackground(new Color(38, 60, 84));
 		btnRentaYCompra.setBounds(10, 242, 237, 100);
 		btnRentaYCompra.addActionListener(e -> {
-			AdministradorRentaCompra(); // Abre la segunda ventana
 			dispose(); // Cierra la ventana actual
+			AdministradorRentaCompra(); // Abre la segunda ventana
 		});
 		panelIzq.add(btnRentaYCompra);
 
@@ -2693,8 +2746,8 @@ public class HomeView extends JFrame {
 		btnNuevaOperacion.setBackground(new Color(38, 60, 84));
 		btnNuevaOperacion.setBounds(10, 364, 237, 100);
 		btnNuevaOperacion.addActionListener(e -> {
-			NuevaOperacion(); // Abre la segunda ventana
 			dispose(); // Cierra la ventana actual
+			NuevaOperacion(); // Abre la segunda ventana
 		});
 		panelIzq.add(btnNuevaOperacion);
 
@@ -3146,6 +3199,10 @@ public class HomeView extends JFrame {
 		btnClientes.setBackground(Color.decode("#263C54"));
 		btnClientes.setForeground(Color.WHITE);
 		btnClientes.setBounds(10, 11, 237, 100);
+		btnClientes.addActionListener(e -> {
+			dispose(); // Cierra la ventana actual
+			AdministradorCliente(); // Abre la segunda ventana
+		});
 		panelIzq.add(btnClientes);
 
 		JButton btnVideojuegos = new JButton("VIDEOJUEGOS");
@@ -3155,8 +3212,8 @@ public class HomeView extends JFrame {
 		btnVideojuegos.setBounds(10, 128, 237, 100);
 		panelIzq.add(btnVideojuegos);
 		btnVideojuegos.addActionListener(e -> {
-			AdministradorJuegos(); // Abre la segunda ventana
 			dispose(); // Cierra la ventana actual
+			AdministradorJuegos(); // Abre la segunda ventana
 		});
 
 		JButton btnRentaYCompra = new JButton("RENTA Y COMPRA");
@@ -3164,14 +3221,22 @@ public class HomeView extends JFrame {
 		btnRentaYCompra.setFont(new Font("Calibri", Font.BOLD, 16));
 		btnRentaYCompra.setBackground(new Color(38, 60, 84));
 		btnRentaYCompra.setBounds(10, 242, 237, 100);
+		btnRentaYCompra.addActionListener(e -> {
+			dispose(); // Cierra la ventana actual
+			AdministradorRentaCompra(); // Abre la segunda ventana
+		});
 		panelIzq.add(btnRentaYCompra);
 
-		JButton btnClientes_3 = new JButton("NUEVA OPERACIÓN");
-		btnClientes_3.setForeground(Color.WHITE);
-		btnClientes_3.setFont(new Font("Calibri", Font.BOLD, 16));
-		btnClientes_3.setBackground(new Color(38, 60, 84));
-		btnClientes_3.setBounds(10, 364, 237, 100);
-		panelIzq.add(btnClientes_3);
+		JButton nuevaoperacion = new JButton("NUEVA OPERACIÓN");
+		nuevaoperacion.setForeground(Color.WHITE);
+		nuevaoperacion.setFont(new Font("Calibri", Font.BOLD, 16));
+		nuevaoperacion.setBackground(new Color(38, 60, 84));
+		nuevaoperacion.setBounds(10, 364, 237, 100);
+		nuevaoperacion.addActionListener(e -> {
+			dispose(); // Cierra la ventana actual
+			AdministradorRentaCompra(); // Abre la segunda ventana
+		});
+		panelIzq.add(nuevaoperacion);
 
 		// 2. PANEL GRIS CENTRAL
 		JPanel panelCentral = new JPanel();
@@ -3245,8 +3310,8 @@ public class HomeView extends JFrame {
 		btnEditarPromocion.setBounds(294, 428, 184, 25);
 		btnEditarPromocion.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				EditarDescuento(); // Abre la segunda ventana
 				dispose();
+				EditarDescuento(); // Abre la segunda ventana
 			}
 		});
 		panelCentral.add(btnEditarPromocion);
@@ -3333,8 +3398,8 @@ public class HomeView extends JFrame {
 		btnCancelar.setForeground(Color.WHITE);
 		btnCancelar.setBounds(175, 406, 183, 33);
 		btnCancelar.addActionListener(e -> {
-			DescuentoFrecuencia(); // Abre la segunda ventana
 			dispose(); // Cierra la ventana actual
+			DescuentoFrecuencia(); // Abre la segunda ventana
 		});
 		panelCentral.add(btnCancelar);
 
@@ -3344,9 +3409,8 @@ public class HomeView extends JFrame {
 		btnConfirmar.setBounds(582, 406, 183, 33);
 		btnConfirmar.addActionListener(e -> {
 			// Abre la segunda ventana
-			dispose(); // Cierra la ventana actual
+//			dispose(); // Cierra la ventana actual
 		});
-		panelCentral.add(btnCancelar);
 		panelCentral.add(btnConfirmar);
 
 		JLabel iniciar_1_1 = new JLabel("Mes de:");

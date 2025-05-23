@@ -1239,70 +1239,139 @@ public class AuthViews extends JFrame {
 		logo.setBounds(477, 11, 70, 70); // posicion
 		panelCentral.add(logo);
 
-		JLabel iniciar = new JLabel("DETALLES DE OPERACIÓN");
-		iniciar.setSize(263, 42);
-		iniciar.setLocation(369, 78);
-		iniciar.setHorizontalAlignment(JLabel.CENTER);
-		iniciar.setFont(new Font("Calibri", Font.BOLD, 24));
-		panelCentral.add(iniciar);
+		// Campos de entrada
+				JLabel lblNombreCliente = new JLabel("Nombre del cliente");
+				lblNombreCliente.setHorizontalAlignment(SwingConstants.LEFT);
+				lblNombreCliente.setFont(new Font("Calibri", Font.BOLD, 14));
+				lblNombreCliente.setBounds(85, 120, 160, 42);
+				panelCentral.add(lblNombreCliente);
 
-		JLabel iniciar_1 = new JLabel("Nombre del cliente");
-		iniciar_1.setHorizontalAlignment(SwingConstants.LEFT);
-		iniciar_1.setFont(new Font("Calibri", Font.BOLD, 14));
-		iniciar_1.setBounds(85, 120, 160, 42); // Ajusta tamaño si es necesario
-		panelCentral.add(iniciar_1);
+				JTextField NombreCliente = new JTextField();
+				NombreCliente.setBackground(Color.decode("#D9D9D9"));
+				NombreCliente.setBounds(85, 161, 255, 27);
+				NombreCliente.setColumns(10);
+				panelCentral.add(NombreCliente);
 
-		txtNombreCliente = new JTextField();
-		txtNombreCliente.setBackground(Color.decode("#D9D9D9"));
-		txtNombreCliente.setBounds(85, 161, 255, 27);
-		panelCentral.add(txtNombreCliente);
-		txtNombreCliente.setColumns(10);
+				JLabel lblNombreJuego = new JLabel("Nombre del Videojuego:");
+				lblNombreJuego.setHorizontalAlignment(SwingConstants.LEFT);
+				lblNombreJuego.setFont(new Font("Calibri", Font.BOLD, 14));
+				lblNombreJuego.setBounds(405, 120, 160, 42);
+				panelCentral.add(lblNombreJuego);
 
-		JButton btnCancelar = new JButton("Cancelar");
-		btnCancelar.setBackground(Color.decode("#B82F2F")); // Color de fondo (rojo)
-		btnCancelar.setForeground(Color.WHITE);
-		btnCancelar.setBounds(175, 406, 183, 33);
-		btnCancelar.addActionListener(e -> {
-			dispose(); // Cierra la ventana actual
-			UserViews renta = new UserViews();
-			renta.Renta();
-			// Abre la segunda ventana
-		});
-		panelCentral.add(btnCancelar);
+				JTextField txtNombreJuego = new JTextField();
+				txtNombreJuego.setColumns(10);
+				txtNombreJuego.setBackground(new Color(217, 217, 217));
+				txtNombreJuego.setBounds(405, 161, 263, 27);
+				panelCentral.add(txtNombreJuego);
 
-		JButton btnConfirmar = new JButton("Confirmar");
-		btnConfirmar.setBackground(Color.decode("#263C54")); // Color de fondo (azul oscuro)
-		btnConfirmar.setForeground(Color.WHITE);
-		btnConfirmar.setBounds(582, 406, 183, 33);
-		btnConfirmar.addActionListener(e -> {
-			// Acción confirmar
-			// No cierras la ventana? (puedes agregar dispose(); si quieres)
-		});
-		panelCentral.add(btnConfirmar);
+				JLabel lblCantidad = new JLabel("Cantidad:");
+				lblCantidad.setHorizontalAlignment(SwingConstants.LEFT);
+				lblCantidad.setFont(new Font("Calibri", Font.BOLD, 14));
+				lblCantidad.setBounds(697, 120, 160, 42);
+				panelCentral.add(lblCantidad);
 
-		txtNombreVideojuego = new JTextField();
-		txtNombreVideojuego.setColumns(10);
-		txtNombreVideojuego.setBackground(new Color(217, 217, 217));
-		txtNombreVideojuego.setBounds(405, 161, 263, 27);
-		panelCentral.add(txtNombreVideojuego);
+				JTextField Cantidad = new JTextField();
+				Cantidad.setColumns(10);
+				Cantidad.setBackground(new Color(217, 217, 217));
+				Cantidad.setBounds(697, 161, 165, 27);
+				panelCentral.add(Cantidad);
 
-		JLabel iniciar_1_1 = new JLabel("Nombre del Videojuego:");
-		iniciar_1_1.setHorizontalAlignment(SwingConstants.LEFT);
-		iniciar_1_1.setFont(new Font("Calibri", Font.BOLD, 14));
-		iniciar_1_1.setBounds(405, 120, 160, 42);
-		panelCentral.add(iniciar_1_1);
+				// Botones
+				JButton btnCancelar = new JButton("Cancelar");
+				btnCancelar.setBackground(Color.decode("#B82F2F"));
+				btnCancelar.setForeground(Color.WHITE);
+				btnCancelar.setBounds(175, 406, 183, 33);
+				btnCancelar.addActionListener(e -> {
+					dispose();
+					UserViews renta = new UserViews();
+					renta.Renta();
 
-		txtCantidad = new JTextField();
-		txtCantidad.setColumns(10);
-		txtCantidad.setBackground(new Color(217, 217, 217));
-		txtCantidad.setBounds(697, 161, 165, 27);
-		panelCentral.add(txtCantidad);
+				});
+				panelCentral.add(btnCancelar);
 
-		JLabel iniciar_1_1_1 = new JLabel("Cantidad:");
-		iniciar_1_1_1.setHorizontalAlignment(SwingConstants.LEFT);
-		iniciar_1_1_1.setFont(new Font("Calibri", Font.BOLD, 14));
-		iniciar_1_1_1.setBounds(697, 120, 160, 42);
-		panelCentral.add(iniciar_1_1_1);
+				JButton btnConfirmar = new JButton("Confirmar");
+				btnConfirmar.setBackground(Color.decode("#263C54"));
+				btnConfirmar.setForeground(Color.WHITE);
+				btnConfirmar.setBounds(582, 406, 183, 33);
+				btnConfirmar.addActionListener(e -> {
+					dispose();
+					DetallesRenta();
+				});
+				panelCentral.add(btnConfirmar);
+
+				// Detalles de la compra
+				JLabel lblTituloJuego = new JLabel("Nombre de videojuego");
+				lblTituloJuego.setHorizontalAlignment(SwingConstants.CENTER);
+				lblTituloJuego.setFont(new Font("Calibri", Font.BOLD, 14));
+				lblTituloJuego.setBounds(75, 215, 255, 42);
+				panelCentral.add(lblTituloJuego);
+
+				JLabel lblPrecio = new JLabel("Precio (MXN):");
+				lblPrecio.setHorizontalAlignment(SwingConstants.CENTER);
+				lblPrecio.setFont(new Font("Calibri", Font.BOLD, 14));
+				lblPrecio.setBounds(403, 215, 255, 42);
+				panelCentral.add(lblPrecio);
+
+				JLabel lblValorJuego = new JLabel("Contra");
+				lblValorJuego.setHorizontalAlignment(SwingConstants.CENTER);
+				lblValorJuego.setFont(new Font("Calibri", Font.BOLD, 14));
+				lblValorJuego.setBounds(75, 246, 255, 42);
+				panelCentral.add(lblValorJuego);
+
+				JLabel lblValorPrecio = new JLabel("$100");
+				lblValorPrecio.setHorizontalAlignment(SwingConstants.CENTER);
+				lblValorPrecio.setFont(new Font("Calibri", Font.BOLD, 14));
+				lblValorPrecio.setBounds(403, 246, 255, 42);
+				panelCentral.add(lblValorPrecio);
+
+				JLabel lblDescuento = new JLabel("Descuento:");
+				lblDescuento.setHorizontalAlignment(SwingConstants.CENTER);
+				lblDescuento.setFont(new Font("Calibri", Font.BOLD, 14));
+				lblDescuento.setBounds(75, 293, 255, 42);
+				panelCentral.add(lblDescuento);
+
+				JLabel lblValorDescuento = new JLabel("07%");
+				lblValorDescuento.setHorizontalAlignment(SwingConstants.CENTER);
+				lblValorDescuento.setFont(new Font("Calibri", Font.BOLD, 14));
+				lblValorDescuento.setBounds(75, 320, 255, 42);
+				panelCentral.add(lblValorDescuento);
+
+				JLabel lblFecha = new JLabel("Fecha:");
+				lblFecha.setHorizontalAlignment(SwingConstants.CENTER);
+				lblFecha.setFont(new Font("Calibri", Font.BOLD, 14));
+				lblFecha.setBounds(403, 293, 255, 42);
+				panelCentral.add(lblFecha);
+
+				JLabel lblValorFecha = new JLabel("15/05/2025");
+				lblValorFecha.setHorizontalAlignment(SwingConstants.CENTER);
+				lblValorFecha.setFont(new Font("Calibri", Font.BOLD, 14));
+				lblValorFecha.setBounds(403, 320, 255, 42);
+				panelCentral.add(lblValorFecha);
+
+				JLabel lblTipo = new JLabel("Tipo:");
+				lblTipo.setHorizontalAlignment(SwingConstants.CENTER);
+				lblTipo.setFont(new Font("Calibri", Font.BOLD, 14));
+				lblTipo.setBounds(687, 215, 101, 42);
+				panelCentral.add(lblTipo);
+
+				JLabel lblValorTipo = new JLabel("Renta");
+				lblValorTipo.setHorizontalAlignment(SwingConstants.CENTER);
+				lblValorTipo.setFont(new Font("Calibri", Font.BOLD, 14));
+				lblValorTipo.setBounds(687, 246, 101, 42);
+				panelCentral.add(lblValorTipo);
+				
+				JLabel devolucion = new JLabel("Fecha de devolución:");
+				devolucion.setHorizontalAlignment(SwingConstants.CENTER);
+				devolucion.setFont(new Font("Calibri", Font.BOLD, 14));
+				devolucion.setBounds(637, 293, 255, 42);
+				panelCentral.add(devolucion);
+
+				JTextField ValorDev = new JTextField("15/05/2025");
+				ValorDev.setHorizontalAlignment(SwingConstants.CENTER);
+				ValorDev.setFont(new Font("Calibri", Font.BOLD, 14));
+				ValorDev.setBackground(new Color(217, 217, 217));
+				ValorDev.setBounds(697, 320, 165, 27);
+				panelCentral.add(ValorDev);
 
 		// Resto de los JLabel sigue igual...
 

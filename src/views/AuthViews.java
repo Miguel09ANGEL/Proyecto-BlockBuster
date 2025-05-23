@@ -1255,7 +1255,7 @@ public class AuthViews extends JFrame {
 				JLabel lblNombreJuego = new JLabel("Nombre del Videojuego:");
 				lblNombreJuego.setHorizontalAlignment(SwingConstants.LEFT);
 				lblNombreJuego.setFont(new Font("Calibri", Font.BOLD, 14));
-				lblNombreJuego.setBounds(405, 120, 160, 42);
+				lblNombreJuego.setBounds(405, 120, 263, 42);
 				panelCentral.add(lblNombreJuego);
 
 				JTextField txtNombreJuego = new JTextField();
@@ -1370,7 +1370,7 @@ public class AuthViews extends JFrame {
 				ValorDev.setHorizontalAlignment(SwingConstants.CENTER);
 				ValorDev.setFont(new Font("Calibri", Font.BOLD, 14));
 				ValorDev.setBackground(new Color(217, 217, 217));
-				ValorDev.setBounds(697, 320, 165, 27);
+				ValorDev.setBounds(697, 325, 165, 27);
 				panelCentral.add(ValorDev);
 
 		// Resto de los JLabel sigue igual...
@@ -1670,7 +1670,7 @@ public class AuthViews extends JFrame {
 		JLabel lblTitulo = new JLabel("DETALLES DE OPERACIÓN");
 		lblTitulo.setSize(263, 42);
 		lblTitulo.setLocation(369, 78);
-		lblTitulo.setHorizontalAlignment(JLabel.CENTER);
+		lblTitulo.setHorizontalAlignment(JLabel.LEFT);
 		lblTitulo.setFont(new Font("Calibri", Font.BOLD, 24));
 		panelCentral.add(lblTitulo);
 

@@ -702,7 +702,7 @@ public class UserViews extends JFrame {
 		JLabel iniciar = new JLabel("DESCUENTO POR FRECUENCIA");
 		iniciar.setSize(324, 60);
 		iniciar.setLocation(26, 10);
-		iniciar.setHorizontalAlignment(JLabel.CENTER);
+		iniciar.setHorizontalAlignment(JLabel.LEFT);
 		iniciar.setFont(new Font("Calibri", Font.BOLD, 24));
 		panelCentral.add(iniciar);
 
@@ -765,8 +765,8 @@ public class UserViews extends JFrame {
 		btnEditarPromocion.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				dispose();
-				HomeView editardescuento = new HomeView(); 
-				editardescuento.EditarDescuento();
+				AuthViews editarpromociones = new AuthViews(); 
+				editarpromociones.EditarPromociones();
 				 // Abre la segunda ventana
 			}
 		});

@@ -98,9 +98,9 @@ public class HomeView extends JFrame {
 		panelCentral.add(iniciar);
 
 		JLabel correo = new JLabel("Ingresar correo:");
-		correo.setHorizontalAlignment(SwingConstants.CENTER);
+		correo.setHorizontalAlignment(SwingConstants.LEFT);
 		correo.setFont(new Font("SansSerif", Font.BOLD, 20));
-		correo.setBounds(60, 146, 158, 26);
+		correo.setBounds(60, 146, 290, 26);
 		panelCentral.add(correo);
 		
 		JTextField gmail = new JTextField();
@@ -115,7 +115,7 @@ public class HomeView extends JFrame {
 		JLabel contraseña = new JLabel("Contraseña:");
 		contraseña.setSize(116, 26);
 		contraseña.setLocation(60, 263);
-		contraseña.setHorizontalAlignment(JLabel.CENTER);
+		contraseña.setHorizontalAlignment(JLabel.LEFT);
 		contraseña.setFont(new Font("SansSerif", Font.BOLD, 20));
 		panelCentral.add(contraseña);
 
@@ -1703,6 +1703,7 @@ public class HomeView extends JFrame {
 
 	    // Clasificación
 	    JLabel lblClasificacion = new JLabel("Clasificación:");
+	    lblClasificacion.setHorizontalAlignment(JLabel.LEFT);
 	    lblClasificacion.setFont(new Font("Calibri", Font.BOLD, 18));
 	    lblClasificacion.setBounds(55, 198, 103, 42);
 	    panelCentral.add(lblClasificacion);

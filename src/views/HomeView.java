@@ -119,7 +119,6 @@ public class HomeView extends JFrame {
 		contraseña.setFont(new Font("SansSerif", Font.BOLD, 20));
 		panelCentral.add(contraseña);
 
-	
 	    JPasswordField password = new JPasswordField();
 		password.setBackground(Color.decode("#D9D9D9"));
 		password.setSize(290, 30);
@@ -127,61 +126,96 @@ public class HomeView extends JFrame {
 		password.setFont(new Font("Montserrat ", Font.BOLD, 15));
 		panelCentral.add(password);
 		
-
 		JButton acceder = new JButton("Acceder");
 		acceder.setBackground(Color.decode("#263C54")); // Color de fondo (azul oscuro)
 		acceder.setForeground(Color.WHITE); // Color del texto (blanco)
 		acceder.setFont(new Font("Calibri", Font.BOLD, 15));
-		acceder.setBounds(40, 371, 289, 26); // También puedes usar setSize + setLocation si prefieres
+		acceder.setBounds(40, 371, 289, 26);
 		acceder.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				
-				String passIngresada = new String(password.getPassword());
+		    public void actionPerformed(ActionEvent e) {
+		    	
+		    	 // para prebas comenta lo demas y decomentas esta parte de Inicio();
+//                Inicio();
 
-				
-				// Aqui se valida la contraseña
-				for (Iterator iterator = administrador.iterator(); iterator.hasNext();) {
-					Admins ob = (Admins) iterator.next();
-					
-					// se valida el correo
-					if(gmail.getText().equals(ob.getEmail())) {
-						
-						// se valida la contraseña
-						if(passIngresada.equals(ob.getContraseña())) {
-							
-							// si la contraseña conside se pasa a la ventana ininc
-							dispose();
-							Inicio(); 
-						}
-					}
-					
-					
-				}
-			
-			}
+		        // Resetear estilos
+		        gmail.setBorder(BorderFactory.createLineBorder(Color.GRAY));
+		        password.setBorder(BorderFactory.createLineBorder(Color.GRAY));
+		        
+		        String passIngresada = new String(password.getPassword());
+		        String emailIngresado = gmail.getText();
+		        
+		        boolean camposValidos = true;
+		        
+		        // Validar si el campo email está vacío
+		        if(emailIngresado.isEmpty()) {
+		            gmail.setBorder(BorderFactory.createLineBorder(Color.RED));
+		            JOptionPane.showMessageDialog(null, "Por favor ingrese su email", "Error", JOptionPane.ERROR_MESSAGE);
+		            camposValidos = false;
+		        }
+		        
+		        // Validar si el campo contraseña está vacío
+		        if(passIngresada.isEmpty()) {
+		            password.setBorder(BorderFactory.createLineBorder(Color.RED));
+		            JOptionPane.showMessageDialog(null, "Por favor ingrese su contraseña", "Error", JOptionPane.ERROR_MESSAGE);
+		            camposValidos = false;
+		        }
+		        
+		        // Si alguno de los campos está vacío, salimos del método
+		        if(!camposValidos) {
+		            return;
+		        }
+		        
+		        boolean credencialesCorrectas = false;
+		        
+		        // Aquí se valida la contraseña
+		        for (Iterator iterator = administrador.iterator(); iterator.hasNext();) {
+		            Admins ob = (Admins) iterator.next();
+		            
+		            // se valida el correo
+		            if(emailIngresado.equals(ob.getEmail())) {
+		                // se valida la contraseña
+		                if(passIngresada.equals(ob.getContraseña())) {
+		                    credencialesCorrectas = true;
+		                 
+		                    dispose();
+		                    Inicio();
+		                    break; 
+		                }
+		            }
+		        }
+		        
+		        // Si no se encontraron credenciales correctas
+		        if(!credencialesCorrectas) {
+		            JOptionPane.showMessageDialog(null, "Email o contraseña incorrectos", "Error", JOptionPane.ERROR_MESSAGE);
+		            gmail.setBorder(BorderFactory.createLineBorder(Color.RED));
+		            password.setBorder(BorderFactory.createLineBorder(Color.RED));
+		        }
+		    }
 		});
 		panelCentral.add(acceder);
 
-		JLabel lblagregarNuevoAdministrador = new JLabel("¿Agregar nuevo administrador?");
-		lblagregarNuevoAdministrador.setHorizontalAlignment(SwingConstants.CENTER);
-		lblagregarNuevoAdministrador.setFont(new Font("SansSerif", Font.BOLD, 14));
-		lblagregarNuevoAdministrador.setBounds(27, 410, 224, 26);
-		panelCentral.add(lblagregarNuevoAdministrador);
-
-		JButton btnAgregarAqui = new JButton("Agregar aqui");
-		btnAgregarAqui.setForeground(Color.BLACK);
-		btnAgregarAqui.setFont(new Font("Calibri", Font.BOLD, 15));
-		btnAgregarAqui.setBackground(Color.decode("#F2F2F2"));
-		btnAgregarAqui.setBounds(247, 414, 111, 26);
-		panelCentral.add(btnAgregarAqui);
-		btnAgregarAqui.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				dispose(); // Cierra la ventana actual
-				AuthViews codigoregistro= new AuthViews();
-				codigoregistro.CodigoRegistro();
-			}
-		});
-		panelCentral.add(btnAgregarAqui);
+		//lo de adminitrador lo haremos despues
+		
+//		JLabel lblagregarNuevoAdministrador = new JLabel("¿Agregar nuevo administrador?");
+//		lblagregarNuevoAdministrador.setHorizontalAlignment(SwingConstants.CENTER);
+//		lblagregarNuevoAdministrador.setFont(new Font("SansSerif", Font.BOLD, 14));
+//		lblagregarNuevoAdministrador.setBounds(27, 410, 224, 26);
+//		panelCentral.add(lblagregarNuevoAdministrador);
+//
+//		JButton btnAgregarAqui = new JButton("Agregar aqui");
+//		btnAgregarAqui.setForeground(Color.BLACK);
+//		btnAgregarAqui.setFont(new Font("Calibri", Font.BOLD, 15));
+//		btnAgregarAqui.setBackground(Color.decode("#F2F2F2"));
+//		btnAgregarAqui.setBounds(247, 414, 111, 26);
+//		panelCentral.add(btnAgregarAqui);
+//		btnAgregarAqui.addActionListener(new ActionListener() {
+//			public void actionPerformed(ActionEvent e) {
+//				dispose(); // Cierra la ventana actual
+//				AuthViews codigoregistro= new AuthViews();
+//				codigoregistro.CodigoRegistro();
+//			}
+//		});
+//		panelCentral.add(btnAgregarAqui);
 
 		// 3. PANEL ROJO SUPERIOR (barra de título)
 		JPanel barraRoja = new JPanel();
@@ -567,6 +601,7 @@ public class HomeView extends JFrame {
 	}
 	
 	//va en UserView//
+	//frame funcional
 	public void RegistroClientes(List usuarios) {
 
 		try {
@@ -758,7 +793,7 @@ public class HomeView extends JFrame {
 			// Obtener datos del usuario seleccionado
 			int userId = (int) model.getValueAt(selectedRow, 0);
 
-			
+			dispose();
 			UserController uc = new UserController();
 			uc.update2(userId);
 
@@ -776,7 +811,7 @@ public class HomeView extends JFrame {
 		
 	}
 
-
+	//frame funcional
 	public void DetallesCliente(User user) {
 		// Configuración básica de la ventana
 		setTitle("Detalles Cliente");
@@ -845,7 +880,7 @@ public class HomeView extends JFrame {
 		btnConfirmar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				dispose();
+//				dispose();
 				//Falta mandar a llamar datos del Cliente
 //				VideogamesController vm = new VideogamesController();
 //				vm.updateVideogames2(WIDTH);
@@ -860,7 +895,9 @@ public class HomeView extends JFrame {
 		JButton btnRegresar = new JButton("REGRESAR");
 		btnRegresar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-//				RegistroClientes();
+				UserController uc = new UserController();
+				uc.index();
+				
 				dispose();
 			}
 		});
@@ -963,6 +1000,7 @@ public class HomeView extends JFrame {
 		setVisible(true);
 	}
 
+	//frame funcional
 	public void InformacionCliente(User user) {
 		// Configuración básica de la ventana
 		setTitle("Informacion Cliente");
@@ -1515,6 +1553,7 @@ public class HomeView extends JFrame {
 		        return;
 		    }
 
+		  
 		    // Obtener datos del juego seleccionado
 		    int juegoId = (int) model.getValueAt(selectedRow, 0);
 
@@ -1958,44 +1997,160 @@ public class HomeView extends JFrame {
 	    btnCancelar.addActionListener(e -> {
 	    	dispose();
 	    	VideogamesController lt = new VideogamesController();
-			lt.indexVideoGames();
+			lt.updateVideogames(videogames.getId());
 	    	
 	    });
 	    panelCentral.add(btnCancelar);
+	    
+//	    boolean Disponibilidad = (chkDisponible.getText()) != null;
 
 	    JButton btnConfirmar = new JButton("Confirmar");
 	    btnConfirmar.setBackground(Color.decode("#263C54"));
 	    btnConfirmar.setForeground(Color.WHITE);
 	    btnConfirmar.setBounds(533, 406, 183, 33);
 	    btnConfirmar.addActionListener(e -> {
-	        // Aquí iría la lógica para guardar los cambios
-	    	
-//	    	String nuevoNombre = txtNombre.getText().trim();
-//			String nuevoApellidoPaterno = txtApellidoPaterno.getText().trim();
-//			String nuevoApellidoMaterno = txtApellidoMaterno.getText().trim();
-//			String nuevoTelefono = txtTelefono.getText().trim();
-//			String nuevoCorreo = txtCorreo.getText().trim();
+	        // Resetear todos los bordes a su estado normal
+	        txtNombreJuego.setBorder(BorderFactory.createLineBorder(Color.GRAY));
+	        txtPlataforma.setBorder(BorderFactory.createLineBorder(Color.GRAY));
+	        txtAnioLanzamiento.setBorder(BorderFactory.createLineBorder(Color.GRAY));
+	        txtClasificacion.setBorder(BorderFactory.createLineBorder(Color.GRAY));
+	        txtGenero.setBorder(BorderFactory.createLineBorder(Color.GRAY));
+	        txtExistencias.setBorder(BorderFactory.createLineBorder(Color.GRAY));
+	        txtPrecioRenta.setBorder(BorderFactory.createLineBorder(Color.GRAY));
+	        txtPrecioVenta.setBorder(BorderFactory.createLineBorder(Color.GRAY));
+	        txtDescripcion.setBorder(BorderFactory.createLineBorder(Color.GRAY));
+	        txtAcercaDe.setBorder(BorderFactory.createLineBorder(Color.GRAY));
 
-	    	String Nombre = (txtNombreJuego.getText());
-	    	String Plataforma = (txtPlataforma.getText());
-	        Integer AñoLanzamiento = (Integer.parseInt(txtAnioLanzamiento.getText()));
-	        boolean Disponibilidad = (chkDisponible.getText()) != null;
-	        String Clasificacion = (txtClasificacion.getText());
-	        String Genero = (txtGenero.getText());
-	        Integer ExistenciasDisponibles = (Integer.parseInt(txtExistencias.getText()));
-	        BigDecimal PrecioRenta = (new BigDecimal(txtPrecioRenta.getText()));
-	        BigDecimal PrecioVenta = (new BigDecimal(txtPrecioVenta.getText()));
-	        String DesarrolladoPor = (txtDescripcion.getText());
-	        String Descripcion =(txtAcercaDe.getText());
-	    	
-	        VideoGamesModel vm = new VideoGamesModel();
-	        vm.updateVideogame(videogames.getId(),	 Nombre, Plataforma, AñoLanzamiento, Disponibilidad, Clasificacion, 
-	        		Genero, ExistenciasDisponibles, PrecioRenta, 
-	        		PrecioVenta, DesarrolladoPor, Descripcion);
+	        // Validar campos vacíos
+	        boolean camposValidos = true;
+	        StringBuilder mensajeError = new StringBuilder();
+
+	        if (txtNombreJuego.getText().trim().isEmpty()) {
+	            txtNombreJuego.setBorder(BorderFactory.createLineBorder(Color.RED));
+	            mensajeError.append("• Nombre del juego es obligatorio\n");
+	            camposValidos = false;
+	        }
 	        
-	        JOptionPane.showMessageDialog(this, "Cambios guardados exitosamente");
+	        if (txtPlataforma.getText().trim().isEmpty()) {
+	            txtPlataforma.setBorder(BorderFactory.createLineBorder(Color.RED));
+	            mensajeError.append("• Plataforma es obligatoria\n");
+	            camposValidos = false;
+	        }
+	        
+	        if (txtAnioLanzamiento.getText().trim().isEmpty()) {
+	            txtAnioLanzamiento.setBorder(BorderFactory.createLineBorder(Color.RED));
+	            mensajeError.append("• Año de lanzamiento es obligatorio\n");
+	            camposValidos = false;
+	        }
+	        
+	        if (txtClasificacion.getText().trim().isEmpty()) {
+	            txtClasificacion.setBorder(BorderFactory.createLineBorder(Color.RED));
+	            mensajeError.append("• Clasificación es obligatoria\n");
+	            camposValidos = false;
+	        }
+	        
+	        if (txtGenero.getText().trim().isEmpty()) {
+	            txtGenero.setBorder(BorderFactory.createLineBorder(Color.RED));
+	            mensajeError.append("• Género es obligatorio\n");
+	            camposValidos = false;
+	        }
+	        
+	        if (txtExistencias.getText().trim().isEmpty()) {
+	            txtExistencias.setBorder(BorderFactory.createLineBorder(Color.RED));
+	            mensajeError.append("• Existencias disponibles es obligatorio\n");
+	            camposValidos = false;
+	        }
+	        
+	        if (txtPrecioRenta.getText().trim().isEmpty()) {
+	            txtPrecioRenta.setBorder(BorderFactory.createLineBorder(Color.RED));
+	            mensajeError.append("• Precio de renta es obligatorio\n");
+	            camposValidos = false;
+	        }
+	        
+	        if (txtPrecioVenta.getText().trim().isEmpty()) {
+	            txtPrecioVenta.setBorder(BorderFactory.createLineBorder(Color.RED));
+	            mensajeError.append("• Precio de venta es obligatorio\n");
+	            camposValidos = false;
+	        }
+	        
+	        if (txtDescripcion.getText().trim().isEmpty()) {
+	            txtDescripcion.setBorder(BorderFactory.createLineBorder(Color.RED));
+	            mensajeError.append("• Desarrollado por es obligatorio\n");
+	            camposValidos = false;
+	        }
+	        
+	        if (txtAcercaDe.getText().trim().isEmpty()) {
+	            txtAcercaDe.setBorder(BorderFactory.createLineBorder(Color.RED));
+	            mensajeError.append("• Descripción es obligatoria\n");
+	            camposValidos = false;
+	        }
 
-	    	
+	        // Mostrar todos los errores de campos vacíos juntos
+	        if (!camposValidos) {
+	            JOptionPane.showMessageDialog(this, "Por favor complete los siguientes campos:\n\n" + mensajeError.toString(), 
+	                                        "Campos obligatorios", JOptionPane.ERROR_MESSAGE);
+	            return;
+	        }
+
+	        try {
+	            // Validaciones numéricas
+	            Integer AñoLanzamiento = Integer.parseInt(txtAnioLanzamiento.getText().trim());
+	            Integer ExistenciasDisponibles = Integer.parseInt(txtExistencias.getText().trim());
+	            BigDecimal PrecioRenta = new BigDecimal(txtPrecioRenta.getText().trim());
+	            BigDecimal PrecioVenta = new BigDecimal(txtPrecioVenta.getText().trim());
+	            
+	            // Validaciones adicionales
+	            if (AñoLanzamiento <= 0) {
+	                txtAnioLanzamiento.setBorder(BorderFactory.createLineBorder(Color.RED));
+	                throw new NumberFormatException("El año de lanzamiento debe ser un número positivo");
+	            }
+	            
+	            if (ExistenciasDisponibles < 0) {
+	                txtExistencias.setBorder(BorderFactory.createLineBorder(Color.RED));
+	                throw new NumberFormatException("Las existencias no pueden ser negativas");
+	            }
+	            
+	            if (PrecioRenta.compareTo(BigDecimal.ZERO) <= 0) {
+	                txtPrecioRenta.setBorder(BorderFactory.createLineBorder(Color.RED));
+	                throw new NumberFormatException("El precio de renta debe ser mayor a cero");
+	            }
+	            
+	            if (PrecioVenta.compareTo(BigDecimal.ZERO) <= 0) {
+	                txtPrecioVenta.setBorder(BorderFactory.createLineBorder(Color.RED));
+	                throw new NumberFormatException("El precio de venta debe ser mayor a cero");
+	            }
+
+	            // Obtener valores validados
+	            String Nombre = txtNombreJuego.getText().trim();
+	            String Plataforma = txtPlataforma.getText().trim();
+	    	    boolean Disponibilidad = (chkDisponible.getText()) != null;
+	            String Clasificacion = txtClasificacion.getText().trim();
+	            String Genero = txtGenero.getText().trim();
+	            String DesarrolladoPor = txtDescripcion.getText().trim();
+	            String Descripcion = txtAcercaDe.getText().trim();
+
+	            // Actualizar el videojuego
+	            VideoGamesModel vm = new VideoGamesModel();
+	            boolean actualizado = vm.updateVideogame(videogames.getId(), Nombre, Plataforma, AñoLanzamiento, 
+	                    Disponibilidad, Clasificacion, Genero, ExistenciasDisponibles, 
+	                    PrecioRenta, PrecioVenta, DesarrolladoPor, Descripcion);
+	            
+	            if (actualizado) {
+	                JOptionPane.showMessageDialog(this, "Cambios guardados exitosamente");
+	                dispose();
+	                
+	                VideogamesController vc = new VideogamesController();
+	                vc.updateVideogames(videogames.getId());
+	            } else {
+	                JOptionPane.showMessageDialog(this, "Error al guardar los cambios", "Error", JOptionPane.ERROR_MESSAGE);
+	            }
+	            
+	        } catch (NumberFormatException ex) {
+	            JOptionPane.showMessageDialog(this, "Error en formato numérico: " + ex.getMessage(), "Error",
+	                    JOptionPane.ERROR_MESSAGE);
+	        } catch (Exception ex) {
+	            JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+	        }
 	    });
 	    panelCentral.add(btnConfirmar);
 

@@ -126,7 +126,7 @@ public class AuthViews extends JFrame {
 		acceder.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				dispose();
-				RegistrarAdministrador(); // Abre la segunda ventana
+//				RegistrarAdministrador(); // Abre la segunda ventana
 			}
 		});
 		panelCentral.add(acceder);
@@ -459,7 +459,7 @@ public class AuthViews extends JFrame {
 			dispose();
 			UserController us = new UserController();
 			
-			us.update(user.getId());
+			us.update2(user.getId());
 			
 		});
 		panelCentral.add(btnCancelar);
@@ -469,34 +469,85 @@ public class AuthViews extends JFrame {
 		btnConfirmar.setBackground(Color.decode("#263C54"));
 		btnConfirmar.setForeground(Color.WHITE);
 		btnConfirmar.addActionListener(e -> {
-			// Obtener valores desde los campos de texto
-			String nuevoNombre = txtNombre.getText().trim();
-			String nuevoApellidoPaterno = txtApellidoPaterno.getText().trim();
-			String nuevoApellidoMaterno = txtApellidoMaterno.getText().trim();
-			String nuevoTelefono = txtTelefono.getText().trim();
-			String nuevoCorreo = txtCorreo.getText().trim();
+		    // Resetear bordes a su estado normal
+		    txtNombre.setBorder(BorderFactory.createLineBorder(Color.GRAY));
+		    txtApellidoPaterno.setBorder(BorderFactory.createLineBorder(Color.GRAY));
+		    txtTelefono.setBorder(BorderFactory.createLineBorder(Color.GRAY));
+		    txtCorreo.setBorder(BorderFactory.createLineBorder(Color.GRAY));
+		    datePicker.setBorder(BorderFactory.createLineBorder(Color.GRAY));
+		    
+		    // Obtener valores desde los campos de texto
+		    String nuevoNombre = txtNombre.getText().trim();
+		    String nuevoApellidoPaterno = txtApellidoPaterno.getText().trim();
+		    String nuevoApellidoMaterno = txtApellidoMaterno.getText().trim();
+		    String nuevoTelefono = txtTelefono.getText().trim();
+		    String nuevoCorreo = txtCorreo.getText().trim();
 
-			java.sql.Date nuevaFechaNac = null;
-			if (model.getValue() != null) {
-				nuevaFechaNac = new java.sql.Date(model.getValue().getTime());
-			}
+		    boolean camposValidos = true;
+		    
+		    // Validar campos obligatorios
+		    if (nuevoNombre.isEmpty()) {
+		        txtNombre.setBorder(BorderFactory.createLineBorder(Color.RED));
+		        JOptionPane.showMessageDialog(panelCentral, "El nombre es obligatorio", "Error", JOptionPane.ERROR_MESSAGE);
+		        camposValidos = false;
+		        return;
+		    }
+		    
+		    if (nuevoApellidoPaterno.isEmpty()) {
+		        txtApellidoPaterno.setBorder(BorderFactory.createLineBorder(Color.RED));
+		        JOptionPane.showMessageDialog(panelCentral, "El apellido paterno es obligatorio", "Error", JOptionPane.ERROR_MESSAGE);
+		        camposValidos = false;
+		        return;
 
-			// Llamar al método del modelo para actualizar
-			UsersModel us = new UsersModel();
-			boolean actualizado = us.update(user.getId(), nuevoNombre, nuevoApellidoPaterno, nuevoApellidoMaterno,
-					nuevaFechaNac, nuevoTelefono, nuevoCorreo);
+		    }
+		    
+		    if (nuevoTelefono.isEmpty()) {
+		        txtTelefono.setBorder(BorderFactory.createLineBorder(Color.RED));
+		        JOptionPane.showMessageDialog(panelCentral, "El teléfono es obligatorio", "Error", JOptionPane.ERROR_MESSAGE);
+		        camposValidos = false;
+		        return;
 
-			if (actualizado) {
-				JOptionPane.showMessageDialog(panelCentral, "Cliente actualizado correctamente", "Éxito",
-						JOptionPane.INFORMATION_MESSAGE);
-				dispose();
-				UserController us1 = new UserController();
-				
-				us1.update(user.getId());
-			} else {
-				JOptionPane.showMessageDialog(panelCentral, "Error al actualizar el cliente", "Error",
-						JOptionPane.ERROR_MESSAGE);
-			}
+		    }
+		    
+		    if (nuevoCorreo.isEmpty()) {
+		        txtCorreo.setBorder(BorderFactory.createLineBorder(Color.RED));
+		        JOptionPane.showMessageDialog(panelCentral, "El correo electrónico es obligatorio", "Error", JOptionPane.ERROR_MESSAGE);
+		        camposValidos = false;
+		        return;
+
+		    }
+		    
+		    java.sql.Date nuevaFechaNac = null;
+		    if (model.getValue() == null) {
+		        datePicker.setBorder(BorderFactory.createLineBorder(Color.RED));
+		        JOptionPane.showMessageDialog(panelCentral, "La fecha de nacimiento es obligatoria", "Error", JOptionPane.ERROR_MESSAGE);
+		        camposValidos = false;
+		        return;
+
+		    } else {
+		        nuevaFechaNac = new java.sql.Date(model.getValue().getTime());
+		    }
+		    
+		    // Si hay campos inválidos, no continuar con la actualización
+		    if (!camposValidos) {
+		        return;
+		    }
+
+		    // Llamar al método del modelo para actualizar
+		    UsersModel us = new UsersModel();
+		    boolean actualizado = us.update(user.getId(), nuevoNombre, nuevoApellidoPaterno, nuevoApellidoMaterno,
+		            nuevaFechaNac, nuevoTelefono, nuevoCorreo);
+
+		    if (actualizado) {
+		        JOptionPane.showMessageDialog(panelCentral, "Cliente actualizado correctamente", "Éxito",
+		                JOptionPane.INFORMATION_MESSAGE);
+		        dispose();
+		        UserController us1 = new UserController();
+		        us1.update2(user.getId());
+		    } else {
+		        JOptionPane.showMessageDialog(panelCentral, "Error al actualizar el cliente", "Error",
+		                JOptionPane.ERROR_MESSAGE);
+		    }
 		});
 
 		panelCentral.add(btnConfirmar);
@@ -764,34 +815,82 @@ public class AuthViews extends JFrame {
 		btnConfirmar.setForeground(Color.WHITE);
 		btnConfirmar.setBounds(533, 406, 183, 33);
 		btnConfirmar.addActionListener(e -> {
-			// Acción para confirmar y guardar cliente
-			
-			String nombre = textFieldNombre.getText().trim();
-			String apellidoPaterno = textFieldApellidoPaterno.getText().trim();
-			String apellidoMaterno = textFieldApellidoMaterno.getText().trim();
-			String telefono = textFieldTelefono.getText().trim();
-			String correo = textFieldCorreo.getText().trim();
-			
-			java.sql.Date fechaNacimiento = null;
-			if (model.getValue() != null) {
-				fechaNacimiento = new java.sql.Date(model.getValue().getTime());
-			}
-			
-			boolean agregado = um.add(nombre, apellidoPaterno, apellidoMaterno, fechaNacimiento, telefono, correo);
+		    // Resetear bordes a su estado normal
+		    textFieldNombre.setBorder(BorderFactory.createLineBorder(Color.GRAY));
+		    textFieldApellidoPaterno.setBorder(BorderFactory.createLineBorder(Color.GRAY));
+		    textFieldTelefono.setBorder(BorderFactory.createLineBorder(Color.GRAY));
+		    textFieldCorreo.setBorder(BorderFactory.createLineBorder(Color.GRAY));
+		    datePicker.setBorder(BorderFactory.createLineBorder(Color.GRAY));
+		    
+		    // Obtener valores desde los campos de texto
+		    String nombre = textFieldNombre.getText().trim();
+		    String apellidoPaterno = textFieldApellidoPaterno.getText().trim();
+		    String apellidoMaterno = textFieldApellidoMaterno.getText().trim();
+		    String telefono = textFieldTelefono.getText().trim();
+		    String correo = textFieldCorreo.getText().trim();
+		    
+		    boolean camposValidos = true;
+		    
+		    // Validar campos obligatorios
+		    if (nombre.isEmpty()) {
+		        textFieldNombre.setBorder(BorderFactory.createLineBorder(Color.RED));
+		        JOptionPane.showMessageDialog(null, "El nombre es obligatorio", "Error", JOptionPane.ERROR_MESSAGE);
+		        camposValidos = false;
+		        return;
+		    }
+		    
+		    if (apellidoPaterno.isEmpty()) {
+		        textFieldApellidoPaterno.setBorder(BorderFactory.createLineBorder(Color.RED));
+		        JOptionPane.showMessageDialog(null, "El apellido paterno es obligatorio", "Error", JOptionPane.ERROR_MESSAGE);
+		        camposValidos = false;
+		        return;
+		    }
+		    
+		    if (telefono.isEmpty()) {
+		        textFieldTelefono.setBorder(BorderFactory.createLineBorder(Color.RED));
+		        JOptionPane.showMessageDialog(null, "El teléfono es obligatorio", "Error", JOptionPane.ERROR_MESSAGE);
+		        camposValidos = false;
+		        return;
 
-	        if (agregado) {
-	            JOptionPane.showMessageDialog(null, "Cliente agregado correctamente.");
-	            dispose(); 
-	            new HomeView().AdministradorCliente(); 
-	        } else {
-	            JOptionPane.showMessageDialog(null, "No se pudo agregar el cliente. Verifica que el correo no esté duplicado.", "Error", JOptionPane.ERROR_MESSAGE);
-	        }
-			
-			
-			
+		    }
+		    
+		    if (correo.isEmpty()) {
+		        textFieldCorreo.setBorder(BorderFactory.createLineBorder(Color.RED));
+		        JOptionPane.showMessageDialog(null, "El correo electrónico es obligatorio", "Error", JOptionPane.ERROR_MESSAGE);
+		        camposValidos = false;
+		        return;
+
+		    }
+		    
+		    java.sql.Date fechaNacimiento = null;
+		    if (model.getValue() == null) {
+		        datePicker.setBorder(BorderFactory.createLineBorder(Color.RED));
+		        JOptionPane.showMessageDialog(null, "La fecha de nacimiento es obligatoria", "Error", JOptionPane.ERROR_MESSAGE);
+		        camposValidos = false;
+		        return;
+
+		    } else {
+		        fechaNacimiento = new java.sql.Date(model.getValue().getTime());
+		    }
+		    
+		    // Si hay campos inválidos, no continuar con el guardado
+		    if (!camposValidos) {
+		        return;
+		    }
+		    
+		    // Intentar agregar el cliente
+		    boolean agregado = um.add(nombre, apellidoPaterno, apellidoMaterno, fechaNacimiento, telefono, correo);
+
+		    if (agregado) {
+		        JOptionPane.showMessageDialog(null, "Cliente agregado correctamente.");
+		        dispose(); 
+		        new HomeView().AdministradorCliente(); 
+		    } else {
+		        JOptionPane.showMessageDialog(null, "No se pudo agregar el cliente. Verifica que el correo no esté duplicado.", "Error", JOptionPane.ERROR_MESSAGE);
+		    }
 		});
+
 		panelCentral.add(btnConfirmar);
-		
 
 		// Panel rojo superior (barra de título)
 		JPanel barraRoja = new JPanel();
@@ -919,8 +1018,6 @@ public class AuthViews extends JFrame {
 	    txtExistencias.setBounds(300, 275, 200, 25);
 	    panelCentral.add(txtExistencias);
 	    
-	    
-
 	    JLabel lblPrecioVenta = new JLabel("Precio venta (MXN):");
 	    lblPrecioVenta.setFont(new Font("Calibri", Font.BOLD, 14));
 	    lblPrecioVenta.setBounds(300, 310, 180, 20);
@@ -956,9 +1053,8 @@ public class AuthViews extends JFrame {
 		btnCancelar.setBounds(300, 420, 150, 30);
 		btnCancelar.addActionListener(e -> {
 			dispose();
-
-			VideogamesController vc = new VideogamesController();
-			vc.indexVideoGames();
+			HomeView hv = new HomeView();
+			hv.AdministradorJuegos();
 		});
 		panelCentral.add(btnCancelar);
 
@@ -967,42 +1063,141 @@ public class AuthViews extends JFrame {
 		btnConfirmar.setForeground(Color.WHITE);
 		btnConfirmar.setBounds(550, 420, 150, 30);
 		btnConfirmar.addActionListener(e -> {
-			try {
+		    // Resetear todos los bordes a su estado normal
+		    txtNombre.setBorder(BorderFactory.createLineBorder(Color.GRAY));
+		    txtPlataforma.setBorder(BorderFactory.createLineBorder(Color.GRAY));
+		    txtAnioLanzamiento.setBorder(BorderFactory.createLineBorder(Color.GRAY));
+		    txtClasificacion.setBorder(BorderFactory.createLineBorder(Color.GRAY));
+		    txtGenero.setBorder(BorderFactory.createLineBorder(Color.GRAY));
+		    txtExistencias.setBorder(BorderFactory.createLineBorder(Color.GRAY));
+		    txtPrecioRenta.setBorder(BorderFactory.createLineBorder(Color.GRAY));
+		    txtPrecioVenta.setBorder(BorderFactory.createLineBorder(Color.GRAY));
+		    txtDesarrollador.setBorder(BorderFactory.createLineBorder(Color.GRAY));
+		    txtDescripcion.setBorder(BorderFactory.createLineBorder(Color.GRAY));
 
-				String nombre = txtNombre.getText();
-				String plataforma = txtPlataforma.getText();
-				int año = Integer.parseInt(txtAnioLanzamiento.getText());
-				boolean disponibilidad = chkDisponible.isSelected();
-				String clasificacion = txtClasificacion.getText();
-				String genero = txtGenero.getText();
-				int existencias = Integer.parseInt(txtExistencias.getText());
-				BigDecimal precioRenta = new BigDecimal(txtPrecioRenta.getText());
-				BigDecimal precioVenta = new BigDecimal(txtPrecioVenta.getText());
-				String desarrollador = txtDesarrollador.getText();
-				String descripcion = txtDescripcion.getText();
+		    // Validar campos vacíos
+		    StringBuilder mensajeError = new StringBuilder();
 
-				VideoGamesModel modelo = new VideoGamesModel();
-				boolean exito = modelo.addVideogame(nombre, plataforma, año, disponibilidad, clasificacion, genero,
-						existencias, precioRenta, precioVenta, desarrollador, descripcion);
+		    if (txtNombre.getText().trim().isEmpty()) {
+		        txtNombre.setBorder(BorderFactory.createLineBorder(Color.RED));
+		        mensajeError.append("Nombre es obligatorio\n");
+		        return;
+		    }
+		    
+		    if (txtPlataforma.getText().trim().isEmpty()) {
+		        txtPlataforma.setBorder(BorderFactory.createLineBorder(Color.RED));
+		        mensajeError.append("Plataforma es obligatoria\n");
+		        return;
 
-				if (exito) {
-					JOptionPane.showMessageDialog(this, "Juego agregado exitosamente");
-					dispose();
-					VideogamesController vc = new VideogamesController();
-					vc.indexVideoGames();
-				} else {
-					JOptionPane.showMessageDialog(this, "Error al agregar el juego", "Error",
-							JOptionPane.ERROR_MESSAGE);
-				}
-			} catch (NumberFormatException ex) {
-				JOptionPane.showMessageDialog(this, "Por favor ingrese valores numéricos válidos", "Error",
-						JOptionPane.ERROR_MESSAGE);
-			} catch (Exception ex) {
-				JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-			}
+		    }
+		    
+		    if (txtAnioLanzamiento.getText().trim().isEmpty()) {
+		        txtAnioLanzamiento.setBorder(BorderFactory.createLineBorder(Color.RED));
+		        mensajeError.append("Año de lanzamiento es obligatorio\n");
+		        return;
+		    }
+		    
+		    if (txtClasificacion.getText().trim().isEmpty()) {
+		        txtClasificacion.setBorder(BorderFactory.createLineBorder(Color.RED));
+		        mensajeError.append("Clasificación es obligatoria\n");
+		        return;
+		    }
+		    
+		    if (txtGenero.getText().trim().isEmpty()) {
+		        txtGenero.setBorder(BorderFactory.createLineBorder(Color.RED));
+		        mensajeError.append("Género es obligatorio\n");
+		        return;
+		    }
+		    
+		    if (txtExistencias.getText().trim().isEmpty()) {
+		        txtExistencias.setBorder(BorderFactory.createLineBorder(Color.RED));
+		        mensajeError.append("Existencias es obligatorio\n");
+		        return;
+		    }
+		    
+		    if (txtPrecioRenta.getText().trim().isEmpty()) {
+		        txtPrecioRenta.setBorder(BorderFactory.createLineBorder(Color.RED));
+		        mensajeError.append("Precio de renta es obligatorio\n");
+		        return;
+		    }
+		    
+		    if (txtPrecioVenta.getText().trim().isEmpty()) {
+		        txtPrecioVenta.setBorder(BorderFactory.createLineBorder(Color.RED));
+		        mensajeError.append("Precio de venta es obligatorio\n");
+		        return;
+		    }
+		    
+		    if (txtDesarrollador.getText().trim().isEmpty()) {
+		        txtDesarrollador.setBorder(BorderFactory.createLineBorder(Color.RED));
+		        mensajeError.append("Desarrollador es obligatorio\n");
+		        return;
+		    }
+		    
+		    if (txtDescripcion.getText().trim().isEmpty()) {
+		        txtDescripcion.setBorder(BorderFactory.createLineBorder(Color.RED));
+		        mensajeError.append("Descripción es obligatoria\n");
+		        return;
+		    }
+
+	
+
+		    try {
+		        // Validaciones numéricas
+		        int año = Integer.parseInt(txtAnioLanzamiento.getText().trim());
+		        int existencias = Integer.parseInt(txtExistencias.getText().trim());
+		        BigDecimal precioRenta = new BigDecimal(txtPrecioRenta.getText().trim());
+		        BigDecimal precioVenta = new BigDecimal(txtPrecioVenta.getText().trim());
+		        
+		        // Validaciones adicionales
+		        if (año <= 0) {
+		            txtAnioLanzamiento.setBorder(BorderFactory.createLineBorder(Color.RED));
+		            throw new NumberFormatException("El año de lanzamiento debe ser un número positivo");
+		        }
+		        
+		        if (existencias < 0) {
+		            txtExistencias.setBorder(BorderFactory.createLineBorder(Color.RED));
+		            throw new NumberFormatException("Las existencias no pueden ser negativas");
+		        }
+		        
+		        if (precioRenta.compareTo(BigDecimal.ZERO) <= 0) {
+		            txtPrecioRenta.setBorder(BorderFactory.createLineBorder(Color.RED));
+		            throw new NumberFormatException("El precio de renta debe ser mayor a cero");
+		        }
+		        
+		        if (precioVenta.compareTo(BigDecimal.ZERO) <= 0) {
+		            txtPrecioVenta.setBorder(BorderFactory.createLineBorder(Color.RED));
+		            throw new NumberFormatException("El precio de venta debe ser mayor a cero");
+		        }
+
+		        boolean disponibilidad = chkDisponible.isSelected();
+		        String nombre = txtNombre.getText().trim();
+		        String plataforma = txtPlataforma.getText().trim();
+		        String clasificacion = txtClasificacion.getText().trim();
+		        String genero = txtGenero.getText().trim();
+		        String desarrollador = txtDesarrollador.getText().trim();
+		        String descripcion = txtDescripcion.getText().trim();
+
+		        VideoGamesModel modelo = new VideoGamesModel();
+		        boolean exito = modelo.addVideogame(nombre, plataforma, año, disponibilidad, clasificacion, genero,
+		                existencias, precioRenta, precioVenta, desarrollador, descripcion);
+
+		        if (exito) {
+		            JOptionPane.showMessageDialog(this, "Juego agregado exitosamente");
+		            dispose();
+		            VideogamesController vc = new VideogamesController();
+		            vc.indexVideoGames();
+		        } else {
+		            JOptionPane.showMessageDialog(this, "Error al agregar el juego", "Error",
+		                    JOptionPane.ERROR_MESSAGE);
+		        }
+		    } catch (NumberFormatException ex) {
+		        JOptionPane.showMessageDialog(this, "Error en formato numérico: " + ex.getMessage(), "Error",
+		                JOptionPane.ERROR_MESSAGE);
+		    } catch (Exception ex) {
+		        JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+		    }
 		});
 		panelCentral.add(btnConfirmar);
-
 		// Barra superior roja
 		JPanel barraSuperior = new JPanel();
 		barraSuperior.setBackground(Color.decode("#B44635"));

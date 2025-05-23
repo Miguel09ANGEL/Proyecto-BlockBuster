@@ -21,7 +21,10 @@ public class AuthController {
 	
 	public void framePrueba() {
 //		vista.InformacionCliente();
-
+		UserController uc = new UserController(); 
+		
+		uc.index();
+//		vista.Inicio();
 //		lt.indexVideoGames();
 	}
 	

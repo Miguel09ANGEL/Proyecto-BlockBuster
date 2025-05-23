@@ -1668,7 +1668,7 @@ public class AuthViews extends JFrame {
 
 		// Título principal
 		JLabel lblTitulo = new JLabel("DETALLES DE OPERACIÓN");
-		lblTitulo.setSize(263, 42);
+		lblTitulo.setSize(273, 42);
 		lblTitulo.setLocation(369, 78);
 		lblTitulo.setHorizontalAlignment(JLabel.LEFT);
 		lblTitulo.setFont(new Font("Calibri", Font.BOLD, 24));

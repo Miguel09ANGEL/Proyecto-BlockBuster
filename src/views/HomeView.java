@@ -233,6 +233,11 @@ public class HomeView extends JFrame {
 		JLayeredPane layeredPane = new JLayeredPane();
 		layeredPane.setPreferredSize(new Dimension(900, 650));
 		setContentPane(layeredPane);
+		
+		JPanel barraRoja = new JPanel();
+		barraRoja.setBackground(Color.decode("#B44635"));
+		barraRoja.setBounds(0, 0, 1024, 60);
+		layeredPane.add(barraRoja, JLayeredPane.PALETTE_LAYER);
 
 		// 1. PANEL BLANCO (fondo completo)
 		JPanel panelIzq = new JPanel();
@@ -308,9 +313,12 @@ public class HomeView extends JFrame {
 		iniciar.setFont(new Font("Calibri", Font.BOLD, 24));
 		panelCentral.add(iniciar);
 
+//		JLabel iniciar_1 = new JLabel(
+//				"<html><div style='text-align: center;'>Desde aquí podrás gestionar y controlar todas las<br>"
+//						+ "funcionalidades de tu sitio. ¿Qué deseas hacer hoy?</div></html>");
 		JLabel iniciar_1 = new JLabel(
-				"<html><div style='text-align: center;'>Desde aquí podrás gestionar y controlar todas las<br>"
-						+ "funcionalidades de tu sitio. ¿Qué deseas hacer hoy?</div></html>");
+				"<html><center>Desde aquí podrás gestionar y controlar todas las"
+						+ "funcionalidades de tu sitio. ¿Qué deseas hacer hoy?<html>");
 		iniciar_1.setHorizontalAlignment(SwingConstants.CENTER);
 		iniciar_1.setFont(new Font("Calibri", Font.BOLD, 14));
 		iniciar_1.setBounds(170, 183, 391, 83); // Ajusta tamaño si es necesario
@@ -326,11 +334,7 @@ public class HomeView extends JFrame {
 		panelCentral.add(salida);
 
 
-		// 3. PANEL ROJO SUPERIOR (barra de título)
-		JPanel barraRoja = new JPanel();
-		barraRoja.setBackground(Color.decode("#B44635"));
-		barraRoja.setBounds(0, 0, 1024, 60);
-		layeredPane.add(barraRoja, JLayeredPane.PALETTE_LAYER);
+				
 
 		setVisible(true);
 	}
@@ -569,8 +573,8 @@ public class HomeView extends JFrame {
 		panelCentral.add(iniciar);
 
 		JLabel iniciar_1 = new JLabel(
-				"<html><div style='text-align: center;'>Desde aquí podrás gestionar y controlar todas las<br>"
-						+ "funcionalidades de los clientes. ¿Qué deseas hacer hoy?</div></html>");
+				"<html><center>Desde aquí podrás gestionar y controlar todas las"
+						+ "funcionalidades de los clientes. ¿Qué deseas hacer hoy?<html>");
 		iniciar_1.setHorizontalAlignment(SwingConstants.CENTER);
 		iniciar_1.setFont(new Font("Calibri", Font.BOLD, 14));
 		iniciar_1.setBounds(168, 147, 391, 83); // Ajusta tamaño si es necesario
@@ -1691,7 +1695,7 @@ public class HomeView extends JFrame {
 	    // Nombre del juego
 	    JLabel lblNombre = new JLabel(videogames.getNombre());
 	    lblNombre.setFont(new Font("Anton", Font.BOLD, 20));
-	    lblNombre.setBounds(55, 124, 200, 42);
+	    lblNombre.setBounds(55, 124, 250, 42);
 	    panelCentral.add(lblNombre);
 
 	    // Año
@@ -1705,13 +1709,13 @@ public class HomeView extends JFrame {
 	    JLabel lblClasificacion = new JLabel("Clasificación:");
 	    lblClasificacion.setHorizontalAlignment(JLabel.LEFT);
 	    lblClasificacion.setFont(new Font("Calibri", Font.BOLD, 18));
-	    lblClasificacion.setBounds(55, 198, 103, 42);
+	    lblClasificacion.setBounds(55, 198, 120, 42);
 	    panelCentral.add(lblClasificacion);
 
 	    JLabel lblClasificacionValor = new JLabel(videogames.getClasificacion());
 	    lblClasificacionValor.setForeground(Color.decode("#3B3741"));
 	    lblClasificacionValor.setFont(new Font("Calibri", Font.BOLD, 18));
-	    lblClasificacionValor.setBounds(158, 198, 103, 42);
+	    lblClasificacionValor.setBounds(169, 198, 103, 42);
 	    panelCentral.add(lblClasificacionValor);
 
 	    // Desarrolladores
@@ -1739,19 +1743,19 @@ public class HomeView extends JFrame {
 	    JLabel lblGeneroValor = new JLabel(videogames.getGenero());
 	    lblGeneroValor.setForeground(Color.decode("#3B3741"));
 	    lblGeneroValor.setFont(new Font("Calibri", Font.BOLD, 18));
-	    lblGeneroValor.setBounds(118, 333, 70, 42);
+	    lblGeneroValor.setBounds(130, 333, 70, 42);
 	    panelCentral.add(lblGeneroValor);
 
 	    // Plataforma
 	    JLabel lblPlataforma = new JLabel("Plataforma:");
 	    lblPlataforma.setFont(new Font("Calibri", Font.BOLD, 18));
-	    lblPlataforma.setBounds(55, 372, 97, 42);
+	    lblPlataforma.setBounds(55, 372, 110, 42);
 	    panelCentral.add(lblPlataforma);
 
 	    JLabel lblPlataformaValor = new JLabel(videogames.getPlataforma());
 	    lblPlataformaValor.setForeground(Color.decode("#3B3741"));
 	    lblPlataformaValor.setFont(new Font("Calibri", Font.BOLD, 18));
-	    lblPlataformaValor.setBounds(148, 372, 97, 42);
+	    lblPlataformaValor.setBounds(170, 372, 97, 42);
 	    panelCentral.add(lblPlataformaValor);
 
 	    // Descripción
@@ -1773,24 +1777,24 @@ public class HomeView extends JFrame {
 	    // Precios
 	    JLabel lblPrecioRenta = new JLabel("Precio por renta:");
 	    lblPrecioRenta.setFont(new Font("Calibri", Font.BOLD, 20));
-	    lblPrecioRenta.setBounds(664, 317, 150, 42);
+	    lblPrecioRenta.setBounds(640, 317, 180, 42);
 	    panelCentral.add(lblPrecioRenta);
 
 	    JLabel lblPrecioVenta = new JLabel("Precio por venta:");
 	    lblPrecioVenta.setFont(new Font("Calibri", Font.BOLD, 20));
-	    lblPrecioVenta.setBounds(664, 353, 159, 42);
+	    lblPrecioVenta.setBounds(640, 353, 180, 42);
 	    panelCentral.add(lblPrecioVenta);
 
 	    JLabel lblValorRenta = new JLabel(""+videogames.getPrecioRenta());
 	    lblValorRenta.setForeground(new Color(153, 0, 0));
 	    lblValorRenta.setFont(new Font("Calibri", Font.BOLD, 20));
-	    lblValorRenta.setBounds(824, 317, 126, 42);
+	    lblValorRenta.setBounds(820, 317, 126, 42);
 	    panelCentral.add(lblValorRenta);
 
 	    JLabel lblValorVenta = new JLabel(""+videogames.getPrecioVenta());
 	    lblValorVenta.setForeground(new Color(153, 0, 0));
 	    lblValorVenta.setFont(new Font("Calibri", Font.BOLD, 20));
-	    lblValorVenta.setBounds(824, 353, 126, 42);
+	    lblValorVenta.setBounds(820, 353, 126, 42);
 	    panelCentral.add(lblValorVenta);
 
 	    // Botón Editar
@@ -1888,9 +1892,9 @@ public class HomeView extends JFrame {
 
 	    // Etiquetas y campos del formulario
 	    JLabel lblTitulo = new JLabel("EDITAR VIDEOJUEGOS");
-	    lblTitulo.setSize(263, 42);
+	    lblTitulo.setSize(273, 42);
 	    lblTitulo.setLocation(369, 78);
-	    lblTitulo.setHorizontalAlignment(JLabel.CENTER);
+	    lblTitulo.setHorizontalAlignment(JLabel.LEFT);
 	    lblTitulo.setFont(new Font("Calibri", Font.BOLD, 24));
 	    panelCentral.add(lblTitulo);
 
@@ -1906,9 +1910,9 @@ public class HomeView extends JFrame {
 	    panelCentral.add(txtNombreJuego);
 
 	    JLabel lblAnioLanzamiento = new JLabel("Año de lanzamiento:");
-	    lblAnioLanzamiento.setHorizontalAlignment(SwingConstants.CENTER);
+	    lblAnioLanzamiento.setHorizontalAlignment(SwingConstants.LEFT);
 	    lblAnioLanzamiento.setFont(new Font("Calibri", Font.BOLD, 14));
-	    lblAnioLanzamiento.setBounds(55, 180, 132, 42);
+	    lblAnioLanzamiento.setBounds(53, 180, 153, 42);
 	    panelCentral.add(lblAnioLanzamiento);
 
 	    txtAnioLanzamiento = new JTextField(String.valueOf(videogames.getAñoLanzamiento()));
@@ -1930,7 +1934,7 @@ public class HomeView extends JFrame {
 	    JLabel lblPrecioRenta = new JLabel("Precio a renta (MXN)");
 	    lblPrecioRenta.setHorizontalAlignment(SwingConstants.CENTER);
 	    lblPrecioRenta.setFont(new Font("Calibri", Font.BOLD, 14));
-	    lblPrecioRenta.setBounds(55, 327, 140, 42);
+	    lblPrecioRenta.setBounds(55, 327, 188, 42);
 	    panelCentral.add(lblPrecioRenta);
 
 	    txtPrecioRenta = new JTextField(String.valueOf(videogames.getPrecioRenta())); // Campo prellenado
@@ -1950,9 +1954,9 @@ public class HomeView extends JFrame {
 	    panelCentral.add(txtPlataforma);
 
 	    JLabel lblDisponibilidad = new JLabel("Disponibilidad:");
-	    lblDisponibilidad.setHorizontalAlignment(SwingConstants.CENTER);
+	    lblDisponibilidad.setHorizontalAlignment(SwingConstants.LEFT);
 	    lblDisponibilidad.setFont(new Font("Calibri", Font.BOLD, 14));
-	    lblDisponibilidad.setBounds(227, 180, 97, 42);
+	    lblDisponibilidad.setBounds(227, 180, 120, 42);
 	    panelCentral.add(lblDisponibilidad);
 
 	    // CheckBox para disponibilidad
@@ -1973,9 +1977,9 @@ public class HomeView extends JFrame {
 	    panelCentral.add(txtClasificacion);
 
 	    JLabel lblExistencias = new JLabel("Existencias disponibles:");
-	    lblExistencias.setHorizontalAlignment(SwingConstants.CENTER);
+	    lblExistencias.setHorizontalAlignment(SwingConstants.LEFT);
 	    lblExistencias.setFont(new Font("Calibri", Font.BOLD, 14));
-	    lblExistencias.setBounds(289, 252, 153, 42);
+	    lblExistencias.setBounds(288, 252, 215, 42);
 	    panelCentral.add(lblExistencias);
 
 	    txtExistencias = new JTextField(""+videogames.getExistenciasDisponibles());
@@ -1984,9 +1988,9 @@ public class HomeView extends JFrame {
 	    panelCentral.add(txtExistencias);
 
 	    JLabel lblPrecioVenta = new JLabel("Precio a venta (MXN):");
-	    lblPrecioVenta.setHorizontalAlignment(SwingConstants.CENTER);
+	    lblPrecioVenta.setHorizontalAlignment(SwingConstants.LEFT);
 	    lblPrecioVenta.setFont(new Font("Calibri", Font.BOLD, 14));
-	    lblPrecioVenta.setBounds(288, 327, 140, 42);
+	    lblPrecioVenta.setBounds(288, 327, 215, 42);
 	    panelCentral.add(lblPrecioVenta);
 
 	    txtPrecioVenta = new JTextField(String.valueOf(videogames.getPrecioVenta())); // Campo prellenado
@@ -1997,7 +2001,7 @@ public class HomeView extends JFrame {
 	    JLabel lblDescripcion = new JLabel("Desarrollado por:");
 	    lblDescripcion.setHorizontalAlignment(SwingConstants.LEFT);
 	    lblDescripcion.setFont(new Font("Calibri", Font.BOLD, 14));
-	    lblDescripcion.setBounds(619, 108, 97, 42);
+	    lblDescripcion.setBounds(619, 108, 343, 42);
 	    panelCentral.add(lblDescripcion);
 
 	    txtDescripcion = new JTextField(videogames.getDesarrolladoPor());

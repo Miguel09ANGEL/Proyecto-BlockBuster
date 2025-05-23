@@ -700,7 +700,7 @@ public class UserViews extends JFrame {
 		layeredPane.add(panelCentral, JLayeredPane.PALETTE_LAYER);
 
 		JLabel iniciar = new JLabel("DESCUENTO POR FRECUENCIA");
-		iniciar.setSize(324, 60);
+		iniciar.setSize(340, 60);
 		iniciar.setLocation(26, 10);
 		iniciar.setHorizontalAlignment(JLabel.LEFT);
 		iniciar.setFont(new Font("Calibri", Font.BOLD, 24));

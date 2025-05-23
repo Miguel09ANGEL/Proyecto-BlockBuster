@@ -702,15 +702,15 @@ public class HomeView extends JFrame {
 		iniciar.setFont(new Font("Calibri", Font.BOLD, 24));
 		panelCentral.add(iniciar);
 		
-		JButton btnBuscar = new JButton("Buscar");
-		btnBuscar.setFont(new Font("League Spartan Light", Font.PLAIN, 14));
-		btnBuscar.setBounds(619, 25, 86, 25);
-		panelCentral.add(btnBuscar);
-		
-		JTextField Buscador = new JTextField();
-		Buscador.setFont(new Font("League Spartan Light", Font.PLAIN, 14));
-		Buscador.setBounds(385, 25,220, 25);
-		panelCentral.add(Buscador);
+//		JButton btnBuscar = new JButton("Buscar");
+//		btnBuscar.setFont(new Font("League Spartan Light", Font.PLAIN, 14));
+//		btnBuscar.setBounds(619, 25, 86, 25);
+//		panelCentral.add(btnBuscar);
+//		
+//		JTextField Buscador = new JTextField();
+//		Buscador.setFont(new Font("League Spartan Light", Font.PLAIN, 14));
+//		Buscador.setBounds(385, 25,220, 25);
+//		panelCentral.add(Buscador);
 
 		// Crear unan tabla
 		String[] columnNames = { "ID", "Nombre", "A. pat:", "A. mat;", "Fecha de nacimierto", "telefono", "Correo" };
@@ -1512,15 +1512,15 @@ public class HomeView extends JFrame {
 		iniciar.setFont(new Font("Calibri", Font.BOLD, 24));
 		panelCentral.add(iniciar);
 		
-		JButton btnBuscar = new JButton("Buscar");
-		btnBuscar.setFont(new Font("League Spartan Light", Font.PLAIN, 14));
-		btnBuscar.setBounds(619, 25, 86, 25);
-		panelCentral.add(btnBuscar);
-		
-		JTextField Buscador = new JTextField();
-		Buscador.setFont(new Font("League Spartan Light", Font.PLAIN, 14));
-		Buscador.setBounds(385, 25,220, 25);
-		panelCentral.add(Buscador);
+//		JButton btnBuscar = new JButton("Buscar");
+//		btnBuscar.setFont(new Font("League Spartan Light", Font.PLAIN, 14));
+//		btnBuscar.setBounds(619, 25, 86, 25);
+//		panelCentral.add(btnBuscar);
+//		
+//		JTextField Buscador = new JTextField();
+//		Buscador.setFont(new Font("League Spartan Light", Font.PLAIN, 14));
+//		Buscador.setBounds(385, 25,220, 25);
+//		panelCentral.add(Buscador);
 
 		// Crear unan tabla
 		String[] columnNames = { "ID", "Nombre", "Plataforma", "Existencia", "Precio venta", "Precio renta" };
@@ -2636,10 +2636,10 @@ public class HomeView extends JFrame {
 		iniciar.setFont(new Font("Calibri", Font.BOLD, 24));
 		panelCentral.add(iniciar);
 
-		JButton btnBuscar = new JButton("Buscar");
-		btnBuscar.setFont(new Font("League Spartan Light", Font.PLAIN, 14));
-		btnBuscar.setBounds(619, 25, 86, 25);
-		panelCentral.add(btnBuscar);
+//		JButton btnBuscar = new JButton("Buscar");
+//		btnBuscar.setFont(new Font("League Spartan Light", Font.PLAIN, 14));
+//		btnBuscar.setBounds(619, 25, 86, 25);
+//		panelCentral.add(btnBuscar);
 		// Datos de la tabla
 		Object[][] data = {
 				{ "Identificador", "Nombre", "Plataforma", "Disponibilidad", "Precio(venta)", "Precio(renta)", },
@@ -2760,10 +2760,10 @@ public class HomeView extends JFrame {
 		iniciar.setFont(new Font("Calibri", Font.BOLD, 24));
 		panelCentral.add(iniciar);
 
-		JButton btnBuscar = new JButton("Buscar");
-		btnBuscar.setFont(new Font("League Spartan Light", Font.PLAIN, 14));
-		btnBuscar.setBounds(619, 25, 86, 25);
-		panelCentral.add(btnBuscar);
+//		JButton btnBuscar = new JButton("Buscar");
+//		btnBuscar.setFont(new Font("League Spartan Light", Font.PLAIN, 14));
+//		btnBuscar.setBounds(619, 25, 86, 25);
+//		panelCentral.add(btnBuscar);
 		// Datos de la tabla
 		Object[][] data = { { "Identificador", "Nombre", "Plataforma", }, { "", "", "", }, { "", "", "", },
 				{ "", "", "", }, { "", "", "", }, { "", "", "", }, { "", "", "", }, { "", "", "", },
@@ -3247,10 +3247,10 @@ public class HomeView extends JFrame {
 		iniciar.setFont(new Font("Calibri", Font.BOLD, 24));
 		panelCentral.add(iniciar);
 
-		JButton btnBuscar = new JButton("Buscar");
-		btnBuscar.setFont(new Font("League Spartan Light", Font.PLAIN, 14));
-		btnBuscar.setBounds(619, 25, 86, 25);
-		panelCentral.add(btnBuscar);
+//		JButton btnBuscar = new JButton("Buscar");
+//		btnBuscar.setFont(new Font("League Spartan Light", Font.PLAIN, 14));
+//		btnBuscar.setBounds(619, 25, 86, 25);
+//		panelCentral.add(btnBuscar);
 
 		// Datos de la tabla
 		Object[][] data = { { "Identificador", "Nombre", "Plataforma", }, { "", "", "", }, { "", "", "", },

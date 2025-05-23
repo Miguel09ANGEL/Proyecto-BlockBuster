@@ -177,10 +177,10 @@ public class UserViews extends JFrame {
 		btnNewButton.setBounds(536, 419, 151, 30);
 		panelCentral.add(btnNewButton);
 
-		JButton btnBuscar = new JButton("Buscar");
-		btnBuscar.setFont(new Font("League Spartan Light", Font.PLAIN, 14));
-		btnBuscar.setBounds(619, 25, 86, 25);
-		panelCentral.add(btnBuscar);
+//		JButton btnBuscar = new JButton("Buscar");
+//		btnBuscar.setFont(new Font("League Spartan Light", Font.PLAIN, 14));
+//		btnBuscar.setBounds(619, 25, 86, 25);
+//		panelCentral.add(btnBuscar);
 
 		// 3. PANEL ROJO SUPERIOR (barra de título)
 		JPanel barraRoja = new JPanel();

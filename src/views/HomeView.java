@@ -176,8 +176,9 @@ public class HomeView extends JFrame {
 		panelCentral.add(btnAgregarAqui);
 		btnAgregarAqui.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				CodigoRegistro(); // Abre la segunda ventana
-				dispose();
+				dispose(); // Cierra la ventana actual
+				AuthViews codigoregistro= new AuthViews();
+				codigoregistro.CodigoRegistro();
 			}
 		});
 		panelCentral.add(btnAgregarAqui);
@@ -293,89 +294,8 @@ public class HomeView extends JFrame {
 
 		setVisible(true);
 	}
-
-	public void CodigoRegistro() {
-
-		try {
-			UIManager.setLookAndFeel(new FlatLightLaf());
-			UIManager.put("Button.arc", 15); // Esquinas redondeadas
-		} catch (Exception ex) {
-			ex.printStackTrace();
-		}
-
-		// Configuración básica de la ventana
-		setTitle("Panel Administrador");
-		setSize(1024, 576);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setLocationRelativeTo(null);
-
-		// Usamos JLayeredPane para superponer componentes
-		JLayeredPane layeredPane = new JLayeredPane();
-		layeredPane.setPreferredSize(new Dimension(900, 650));
-		setContentPane(layeredPane);
-
-		// 1. PANEL BLANCO (fondo completo)
-		JPanel fondoBlanco = new JPanel();
-		fondoBlanco.setBackground(Color.WHITE);
-		fondoBlanco.setBounds(0, 0, 1024, 576);
-		layeredPane.add(fondoBlanco, JLayeredPane.DEFAULT_LAYER);
-
-		// 2. PANEL GRIS CENTRAl
-		JPanel panelCentral = new JPanel();
-		panelCentral.setLayout(null);
-		panelCentral.setBackground(Color.decode("#F2F2F2"));
-		panelCentral.setBounds(312, 91, 380, 423); // (x, y, ancho, alto)
-		layeredPane.add(panelCentral, JLayeredPane.PALETTE_LAYER);
-
-		// Logotipo
-		ImageIcon iconoOriginal = new ImageIcon(getClass().getResource("/images/Block.png"));
-		Image imagenEscalada = iconoOriginal.getImage().getScaledInstance(70, 70, Image.SCALE_SMOOTH);
-		JLabel logo = new JLabel(new ImageIcon(imagenEscalada));
-		logo.setBounds(156, 11, 70, 70); // posicion
-		panelCentral.add(logo);
-
-		JLabel iniciar = new JLabel("PANEL ADMINISTRADOR");
-		iniciar.setSize(250, 60);
-		iniciar.setLocation(66, 75);
-		iniciar.setHorizontalAlignment(JLabel.CENTER);
-		iniciar.setFont(new Font("Calibri", Font.BOLD, 24));
-		panelCentral.add(iniciar);
-
-		JLabel correo = new JLabel("Ingresar contraseña de registro:");
-		correo.setHorizontalAlignment(SwingConstants.CENTER);
-		correo.setFont(new Font("SansSerif", Font.BOLD, 16));
-		correo.setBounds(49, 133, 250, 26);
-		panelCentral.add(correo);
-
-		JTextField password = new JTextField();
-		password.setBorder(BorderFactory.createLineBorder(Color.decode("#10A7DE")));
-		password.setBackground(Color.decode("#D9D9D9"));
-		password.setSize(290, 46);
-		password.setLocation(49, 170);
-		password.setFont(new Font("Montserrat ", Font.BOLD, 15));
-		panelCentral.add(password);
-
-		JButton acceder = new JButton("Acceder");
-		acceder.setBackground(Color.decode("#263C54")); // Color de fondo (azul oscuro)
-		acceder.setForeground(Color.WHITE); // Color del texto (blanco)
-		acceder.setFont(new Font("Calibri", Font.BOLD, 15));
-		acceder.setBounds(50, 317, 289, 26); // También puedes usar setSize + setLocation si prefieres
-		acceder.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				RegistrarAdministrador(); // Abre la segunda ventana
-				dispose();
-			}
-		});
-		panelCentral.add(acceder);
-
-		// 3. PANEL ROJO SUPERIOR (barra de título)
-		JPanel barraRoja = new JPanel();
-		barraRoja.setBackground(Color.decode("#B44635"));
-		barraRoja.setBounds(0, 0, 1024, 60);
-		layeredPane.add(barraRoja, JLayeredPane.PALETTE_LAYER);
-
-		setVisible(true);
-	}
+	
+	
 
 	public void RegistrarAdministrador() {
 		JTextField textField;
@@ -433,8 +353,9 @@ public class HomeView extends JFrame {
 		btnCancelar.setForeground(Color.WHITE);
 		btnCancelar.setBounds(164, 374, 183, 33);
 		btnCancelar.addActionListener(e -> {
-			CodigoRegistro(); // Abre la segunda ventana
 			dispose(); // Cierra la ventana actual
+			AuthViews codigoregistro= new AuthViews();
+			codigoregistro.CodigoRegistro();// Cierra la ventana actual
 		});
 		panelCentral.add(btnCancelar);
 
@@ -576,8 +497,8 @@ public class HomeView extends JFrame {
 		btnNuevaOperacion.setBackground(new Color(38, 60, 84));
 		btnNuevaOperacion.setBounds(10, 364, 237, 100);
 		btnNuevaOperacion.addActionListener(e -> {
-			AdministradorJuegos(); // Abre la segunda ventana
 			dispose(); // Cierra la ventana actual
+			NuevaOperacion(); // Abre la segunda ventana
 		});
 		panelIzq.add(btnNuevaOperacion);
 
@@ -644,7 +565,8 @@ public class HomeView extends JFrame {
 
 		setVisible(true);
 	}
-
+	
+	//va en UserView//
 	public void RegistroClientes(List usuarios) {
 
 		try {
@@ -677,8 +599,8 @@ public class HomeView extends JFrame {
 		btnClientes.setForeground(Color.WHITE);
 		btnClientes.setBounds(10, 11, 237, 100);
 		btnClientes.addActionListener(e -> {
-			AdministradorCliente(); // Abre la segunda ventana
 			dispose(); // Cierra la ventana actual
+			AdministradorCliente(); // Abre la segunda ventana
 		});
 		panelIzq.add(btnClientes);
 
@@ -689,8 +611,8 @@ public class HomeView extends JFrame {
 		btnVideojuegos.setBounds(10, 128, 237, 100);
 		panelIzq.add(btnVideojuegos);
 		btnVideojuegos.addActionListener(e -> {
-			AdministradorJuegos(); // Abre la segunda ventana
 			dispose(); // Cierra la ventana actual
+			AdministradorJuegos(); // Abre la segunda ventana
 		});
 
 		JButton btnRentaYCompra = new JButton("RENTA Y COMPRA");
@@ -699,8 +621,8 @@ public class HomeView extends JFrame {
 		btnRentaYCompra.setBackground(new Color(38, 60, 84));
 		btnRentaYCompra.setBounds(10, 242, 237, 100);
 		btnRentaYCompra.addActionListener(e -> {
-			AdministradorRentaCompra(); // Abre la segunda ventana
 			dispose(); // Cierra la ventana actual
+			AdministradorRentaCompra(); // Abre la segunda ventana
 		});
 		panelIzq.add(btnRentaYCompra);
 
@@ -710,12 +632,13 @@ public class HomeView extends JFrame {
 		btnNuevaOperacion.setBackground(new Color(38, 60, 84));
 		btnNuevaOperacion.setBounds(10, 364, 237, 100);
 		btnNuevaOperacion.addActionListener(e -> {
-			NuevaOperacion(); // Abre la segunda ventana
 			dispose(); // Cierra la ventana actual
+			NuevaOperacion(); // Abre la segunda ventana
 		});
 		panelIzq.add(btnNuevaOperacion);
 
-		// 2. PANEL GRIS CENTRAL
+		
+		//PANEL GRIS CENTRAL
 		JPanel panelCentral = new JPanel();
 		panelCentral.setLayout(null);
 		panelCentral.setBackground(Color.decode("#F2F2F2"));
@@ -728,6 +651,16 @@ public class HomeView extends JFrame {
 		iniciar.setHorizontalAlignment(JLabel.CENTER);
 		iniciar.setFont(new Font("Calibri", Font.BOLD, 24));
 		panelCentral.add(iniciar);
+		
+		JButton btnBuscar = new JButton("Buscar");
+		btnBuscar.setFont(new Font("League Spartan Light", Font.PLAIN, 14));
+		btnBuscar.setBounds(619, 25, 86, 25);
+		panelCentral.add(btnBuscar);
+		
+		JTextField Buscador = new JTextField();
+		Buscador.setFont(new Font("League Spartan Light", Font.PLAIN, 14));
+		Buscador.setBounds(385, 25,220, 25);
+		panelCentral.add(Buscador);
 
 		// Crear unan tabla
 		String[] columnNames = { "ID", "Nombre", "A. pat:", "A. mat;", "Fecha de nacimierto", "telefono", "Correo" };
@@ -805,13 +738,10 @@ public class HomeView extends JFrame {
 		});
 		panelCentral.add(btnEliminar);
 
-		JButton btnBuscar = new JButton("Buscar");
-		btnBuscar.setFont(new Font("League Spartan Light", Font.PLAIN, 14));
-		btnBuscar.setBounds(619, 25, 86, 25);
-		panelCentral.add(btnBuscar);
+		
 
 		// BOTON EDITAR PROVICIONAL, MEJORAR
-		JButton btnEditar = new JButton("Editar");
+		JButton btnEditar = new JButton("DETALLES");
 		btnEditar.setForeground(Color.WHITE);
 		btnEditar.setBackground(Color.decode("#4fadbd"));
 		btnEditar.setBounds(379, 439, 172, 25);
@@ -843,71 +773,9 @@ public class HomeView extends JFrame {
 
 		setVisible(true);
 
-		try {
-			UIManager.setLookAndFeel(new FlatLightLaf());
-			UIManager.put("Button.arc", 9); // Esquinas redondeadas
-		} catch (Exception ex) {
-			ex.printStackTrace();
-		}
+		
 	}
 
-	public void Confirma_1() {
-		// Configuración básica de la ventana
-		setTitle("Confirmar Eliminación");
-		setUndecorated(true);
-
-		setSize(654, 252);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setLocationRelativeTo(null);
-
-		// Usamos JLayeredPane para superponer componentes
-		JLayeredPane layeredPane = new JLayeredPane();
-		layeredPane.setPreferredSize(new Dimension(900, 650));
-		setContentPane(layeredPane);
-
-		// 2. PANEL GRIS CENTRAl
-		JPanel panelCentral = new JPanel();
-		panelCentral.setLayout(null);
-		panelCentral.setBackground(Color.decode("#D9D9D9"));
-		panelCentral.setBounds(0, 0, 654, 252); // (x, y, ancho, alto)
-		layeredPane.add(panelCentral, JLayeredPane.PALETTE_LAYER);
-
-		// Logotipo
-		ImageIcon iconoOriginal = new ImageIcon(getClass().getResource("/images/Block.png"));
-		Image imagenEscalada = iconoOriginal.getImage().getScaledInstance(70, 70, Image.SCALE_SMOOTH);
-
-		JLabel iniciar = new JLabel("Confirmar operación");
-		iniciar.setSize(285, 42);
-		iniciar.setLocation(233, 51);
-		iniciar.setHorizontalAlignment(JLabel.CENTER);
-		iniciar.setFont(new Font("Calibri", Font.BOLD, 24));
-
-		panelCentral.add(iniciar);
-
-		JButton btnCancelar = new JButton("Cancelar");
-		btnCancelar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-
-				dispose();
-			}
-		});
-		btnCancelar.setBackground(Color.decode("#B82F2F")); // Color de fondo (azul oscuro)
-		btnCancelar.setForeground(Color.WHITE);
-		btnCancelar.setBounds(31, 130, 183, 33);
-		panelCentral.add(btnCancelar);
-
-		JButton btnSi = new JButton("Si");
-		btnSi.setBackground(Color.decode("#6D91B9")); // Color de fondo (azul oscuro)
-		btnSi.setForeground(Color.WHITE);
-		btnSi.setBounds(418, 130, 183, 33);
-		///////////////////////////////////////
-		panelCentral.add(btnSi);
-
-		ImageIcon iconoOrigina = new ImageIcon(getClass().getResource("/images/Block.png"));
-		Image imagen = iconoOriginal.getImage().getScaledInstance(70, 70, Image.SCALE_SMOOTH);
-
-		setVisible(true);
-	}
 
 	public void DetallesCliente(User user) {
 		// Configuración básica de la ventana
@@ -940,11 +808,11 @@ public class HomeView extends JFrame {
 		iniciar.setFont(new Font("Anton", Font.BOLD, 20));
 		panelCentral.add(iniciar);
 
-		JLabel iniciar_1_1_2_1 = new JLabel("Identificador:");
-		iniciar_1_1_2_1.setHorizontalAlignment(SwingConstants.LEFT);
-		iniciar_1_1_2_1.setFont(new Font("Calibri", Font.BOLD, 18));
-		iniciar_1_1_2_1.setBounds(50, 84, 97, 42);
-		panelCentral.add(iniciar_1_1_2_1);
+		JLabel Identificador = new JLabel("Identificador:");
+		Identificador.setHorizontalAlignment(SwingConstants.LEFT);
+		Identificador.setFont(new Font("Calibri", Font.BOLD, 18));
+		Identificador.setBounds(50, 84, 110, 42);
+		panelCentral.add(Identificador);
 
 		ImageIcon iconoOrigina = new ImageIcon(getClass().getResource("/images/Block.png"));
 		Image imagen = iconoOriginal.getImage().getScaledInstance(70, 70, Image.SCALE_SMOOTH);
@@ -978,9 +846,10 @@ public class HomeView extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 
 				dispose();
+				//Falta mandar a llamar datos del Cliente
 //				VideogamesController vm = new VideogamesController();
 //				vm.updateVideogames2(WIDTH);
-//				InformacionCliente();
+//				InformacionCliente();;
 			}
 		});
 		btnConfirmar.setBackground(Color.decode("#263C54")); // Color de fondo (azul oscuro)
@@ -1301,11 +1170,11 @@ public class HomeView extends JFrame {
 		iniciar_1_3.setBounds(96, 156, 107, 42);
 		panelCentral.add(iniciar_1_3);
 
-		JLabel iniciar_1_1_2 = new JLabel("Manuel orozco vazquez");
-		iniciar_1_1_2.setHorizontalAlignment(SwingConstants.LEFT);
-		iniciar_1_1_2.setFont(new Font("Calibri", Font.BOLD, 18));
-		iniciar_1_1_2.setBounds(192, 157, 192, 42);
-		panelCentral.add(iniciar_1_1_2);
+		JLabel NombreCliente = new JLabel("Manuel orozco vazquez");
+		NombreCliente.setHorizontalAlignment(SwingConstants.LEFT);
+		NombreCliente.setFont(new Font("Calibri", Font.BOLD, 18));
+		NombreCliente.setBounds(192, 157, 192, 42);
+		panelCentral.add(NombreCliente);
 
 		JLabel iniciar_1_3_1 = new JLabel("Numero de control: ");
 		iniciar_1_3_1.setHorizontalAlignment(SwingConstants.CENTER);
@@ -1313,11 +1182,11 @@ public class HomeView extends JFrame {
 		iniciar_1_3_1.setBounds(121, 209, 161, 42);
 		panelCentral.add(iniciar_1_3_1);
 
-		JLabel iniciar_1_1_2_1 = new JLabel("00001");
-		iniciar_1_1_2_1.setHorizontalAlignment(SwingConstants.CENTER);
-		iniciar_1_1_2_1.setFont(new Font("Calibri", Font.BOLD, 18));
-		iniciar_1_1_2_1.setBounds(244, 209, 131, 42);
-		panelCentral.add(iniciar_1_1_2_1);
+		JLabel Ncontrol = new JLabel("00001");
+		Ncontrol.setHorizontalAlignment(SwingConstants.CENTER);
+		Ncontrol.setFont(new Font("Calibri", Font.BOLD, 18));
+		Ncontrol.setBounds(244, 209, 131, 42);
+		panelCentral.add(Ncontrol);
 
 		JLabel iniciar_1_3_2 = new JLabel("Correo:");
 		iniciar_1_3_2.setHorizontalAlignment(SwingConstants.CENTER);
@@ -1325,11 +1194,11 @@ public class HomeView extends JFrame {
 		iniciar_1_3_2.setBounds(123, 262, 107, 42);
 		panelCentral.add(iniciar_1_3_2);
 
-		JLabel iniciar_1_1_2_1_1 = new JLabel("mov@gmail.com");
-		iniciar_1_1_2_1_1.setHorizontalAlignment(SwingConstants.LEFT);
-		iniciar_1_1_2_1_1.setFont(new Font("Calibri", Font.BOLD, 18));
-		iniciar_1_1_2_1_1.setBounds(213, 262, 162, 42);
-		panelCentral.add(iniciar_1_1_2_1_1);
+		JLabel gmail = new JLabel("mov@gmail.com");
+		gmail.setHorizontalAlignment(SwingConstants.LEFT);
+		gmail.setFont(new Font("Calibri", Font.BOLD, 18));
+		gmail.setBounds(213, 262, 162, 42);
+		panelCentral.add(gmail);
 
 		// 3. PANEL ROJO SUPERIOR (barra de título)
 		JPanel barraRoja = new JPanel();
@@ -1340,66 +1209,7 @@ public class HomeView extends JFrame {
 		setVisible(true);
 	}
 
-	public void Confirma_5() {
-		// Configuración básica de la ventana
-		setTitle("Guardar Cliente");
-		setUndecorated(true);
-
-		setSize(654, 252);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setLocationRelativeTo(null);
-
-		// Usamos JLayeredPane para superponer componentes
-		JLayeredPane layeredPane = new JLayeredPane();
-		layeredPane.setPreferredSize(new Dimension(900, 650));
-		setContentPane(layeredPane);
-
-		// 2. PANEL GRIS CENTRAl
-		JPanel panelCentral = new JPanel();
-		panelCentral.setLayout(null);
-		panelCentral.setBackground(Color.decode("#D9D9D9"));
-		panelCentral.setBounds(0, 0, 654, 252); // (x, y, ancho, alto)
-		layeredPane.add(panelCentral, JLayeredPane.PALETTE_LAYER);
-
-		// Logotipo
-		ImageIcon iconoOriginal = new ImageIcon(getClass().getResource("/images/Block.png"));
-		Image imagenEscalada = iconoOriginal.getImage().getScaledInstance(70, 70, Image.SCALE_SMOOTH);
-
-		JLabel iniciar = new JLabel("Guardar cliente");
-		iniciar.setSize(285, 42);
-		iniciar.setLocation(233, 51);
-		iniciar.setHorizontalAlignment(JLabel.CENTER);
-		iniciar.setFont(new Font("Calibri", Font.BOLD, 24));
-		panelCentral.add(iniciar);
-
-		JButton btnCancelar = new JButton("Cancelar");
-		btnCancelar.setBackground(Color.decode("#B82F2F")); // Color de fondo (azul oscuro)
-		btnCancelar.setForeground(Color.WHITE);
-		btnCancelar.setBounds(31, 130, 183, 33);
-		btnCancelar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-
-				dispose();
-			}
-		});
-		panelCentral.add(btnCancelar);
-
-		JButton btnSi = new JButton("Si");
-		btnSi.setBackground(Color.decode("#6D91B9")); // Color de fondo (azul oscuro)
-		btnSi.setForeground(Color.WHITE);
-		btnSi.setBounds(418, 130, 183, 33);
-		btnSi.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-
-				dispose();
-
-			}
-		});
-		panelCentral.add(btnSi);
-
-		setVisible(true);
-	}
-
+	
 	// VideoJuegos
 	public void AdministradorJuegos() {
 
@@ -1434,8 +1244,8 @@ public class HomeView extends JFrame {
 		btnClientes.setBounds(10, 11, 237, 100); // x, y, ancho, alto
 		btnClientes.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				AdministradorCliente(); // Abre la segunda ventana
 				dispose();
+				AdministradorCliente(); // Abre la segunda ventana
 			}
 		});
 		panelIzq.add(btnClientes);
@@ -1445,6 +1255,12 @@ public class HomeView extends JFrame {
 		btnVideojuegos.setFont(new Font("Calibri", Font.BOLD, 16));
 		btnVideojuegos.setBackground(new Color(38, 60, 84));
 		btnVideojuegos.setBounds(10, 128, 237, 100);
+		btnVideojuegos.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+				AdministradorJuegos(); // Abre la segunda ventana
+			}
+		});
 		panelIzq.add(btnVideojuegos);
 
 		JButton btnRentaYCompra = new JButton("RENTA Y COMPRA");
@@ -1454,8 +1270,8 @@ public class HomeView extends JFrame {
 		btnRentaYCompra.setBounds(10, 242, 237, 100);
 		btnRentaYCompra.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				AdministradorRentaCompra(); // Abre la segunda ventana
 				dispose();
+				AdministradorRentaCompra(); // Abre la segunda ventana
 			}
 		});
 		panelIzq.add(btnRentaYCompra);
@@ -1467,8 +1283,8 @@ public class HomeView extends JFrame {
 		btnNuevaOperacion.setBounds(10, 364, 237, 100);
 		btnNuevaOperacion.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				NuevaOperacion(); // Abre la segunda ventana
 				dispose();
+				NuevaOperacion(); // Abre la segunda ventana
 			}
 		});
 		panelIzq.add(btnNuevaOperacion);
@@ -1514,7 +1330,10 @@ public class HomeView extends JFrame {
 		btnAgregarVideojuegos.setBackground(new Color(38, 60, 84));
 		btnAgregarVideojuegos.setBounds(442, 261, 206, 100);
 		btnAgregarVideojuegos.addActionListener(e -> {
-			AgregarJuego();
+			dispose();
+			AuthViews agregarjuego= new AuthViews(); 
+			agregarjuego.AgregarJuego();
+			
 		});
 		panelCentral.add(btnAgregarVideojuegos);
 
@@ -1524,10 +1343,7 @@ public class HomeView extends JFrame {
 		lblDesdeAquPodrs.setFont(new Font("Calibri", Font.BOLD, 24));
 		lblDesdeAquPodrs.setBounds(100, 168, 464, 60);
 		panelCentral.add(lblDesdeAquPodrs);
-		btnAgregarVideojuegos.addActionListener(e -> {
-			AgregarJuego(); // Abre la segunda ventana
-			dispose(); // Cierra la ventana actual
-		});
+		
 
 		// 3. PANEL ROJO SUPERIOR (barra de título)
 		JPanel barraRoja = new JPanel();
@@ -1538,7 +1354,8 @@ public class HomeView extends JFrame {
 		setVisible(true);
 	}
 
-	// Frame funcional
+	// Frame Funcional
+	//Necesito mover este frame a UserViews pero afecta a Videogames Controller
 	public void RegistroJuegos(List juegos) {
 
 		try {
@@ -1571,8 +1388,10 @@ public class HomeView extends JFrame {
 		btnClientes.setForeground(Color.WHITE);
 		btnClientes.setBounds(10, 11, 237, 100);
 		btnClientes.addActionListener(e -> {
-			AdministradorCliente(); // Abre la segunda ventana
 			dispose(); // Cierra la ventana actual
+			HomeView administradorcliente= new HomeView(); 
+			administradorcliente.AdministradorCliente();
+			; // Cierra la ventana actual
 		});
 		panelIzq.add(btnClientes);
 
@@ -1583,8 +1402,10 @@ public class HomeView extends JFrame {
 		btnVideojuegos.setBounds(10, 128, 237, 100);
 		panelIzq.add(btnVideojuegos);
 		btnVideojuegos.addActionListener(e -> {
-			AdministradorJuegos(); // Abre la segunda ventana
 			dispose(); // Cierra la ventana actual
+			HomeView administradorjuego= new HomeView(); 
+			administradorjuego.AdministradorJuegos();
+			 // Cierra la ventana actual
 		});
 
 		JButton btnRentaYCompra = new JButton("RENTA Y COMPRA");
@@ -1594,8 +1415,10 @@ public class HomeView extends JFrame {
 		btnRentaYCompra.setBounds(10, 242, 237, 100);
 		panelIzq.add(btnRentaYCompra);
 		btnRentaYCompra.addActionListener(e -> {
-			AdministradorRentaCompra(); // Abre la segunda ventana
 			dispose(); // Cierra la ventana actual
+			HomeView administradorRentaCompra= new HomeView(); 
+			administradorRentaCompra.AdministradorRentaCompra();
+			 // Cierra la ventana actual
 		});
 
 		JButton btnClientes_3 = new JButton("NUEVA OPERACIÓN");
@@ -1605,8 +1428,10 @@ public class HomeView extends JFrame {
 		btnClientes_3.setBounds(10, 364, 237, 100);
 		panelIzq.add(btnClientes_3);
 		btnClientes_3.addActionListener(e -> {
-			NuevaOperacion(); // Abre la segunda ventana
 			dispose(); // Cierra la ventana actual
+			HomeView nuevaoperacion= new HomeView(); 
+			nuevaoperacion.NuevaOperacion();
+			// Cierra la ventana actual
 		});
 
 		// 2. PANEL GRIS CENTRAL
@@ -1622,6 +1447,16 @@ public class HomeView extends JFrame {
 		iniciar.setHorizontalAlignment(JLabel.CENTER);
 		iniciar.setFont(new Font("Calibri", Font.BOLD, 24));
 		panelCentral.add(iniciar);
+		
+		JButton btnBuscar = new JButton("Buscar");
+		btnBuscar.setFont(new Font("League Spartan Light", Font.PLAIN, 14));
+		btnBuscar.setBounds(619, 25, 86, 25);
+		panelCentral.add(btnBuscar);
+		
+		JTextField Buscador = new JTextField();
+		Buscador.setFont(new Font("League Spartan Light", Font.PLAIN, 14));
+		Buscador.setBounds(385, 25,220, 25);
+		panelCentral.add(Buscador);
 
 		// Crear unan tabla
 		String[] columnNames = { "ID", "Nombre", "Plataforma", "Existencia", "Precio venta", "Precio renta" };
@@ -1666,10 +1501,11 @@ public class HomeView extends JFrame {
 
 		
 		// BOTÓN EDITAR
-		JButton btnEditar = new JButton("EDITAR");
+		JButton btnEditar = new JButton("DETALLES	");
 		btnEditar.setForeground(Color.WHITE);
 		btnEditar.setBackground(Color.decode("#4fadbd"));
-		btnEditar.setBounds(26, 439, 172, 25);
+		btnEditar.setFont(new Font("Arial", Font.BOLD, 14));
+		btnEditar.setBounds(400, 439, 172, 25);
 		btnEditar.addActionListener(e -> {
 		    int selectedRow = table.getSelectedRow();
 		    
@@ -1741,10 +1577,7 @@ public class HomeView extends JFrame {
 		panelCentral.add(btnEliminar);
 
 
-		JButton btnBuscar = new JButton("Buscar");
-		btnBuscar.setFont(new Font("League Spartan Light", Font.PLAIN, 14));
-		btnBuscar.setBounds(619, 25, 86, 25);
-		panelCentral.add(btnBuscar);
+		
 
 		// 3. PANEL ROJO SUPERIOR (barra de título)
 		JPanel barraRoja = new JPanel();
@@ -1792,15 +1625,15 @@ public class HomeView extends JFrame {
 
 	    // Nombre del juego
 	    JLabel lblNombre = new JLabel(videogames.getNombre());
-	    lblNombre.setFont(new Font("Anton", Font.BOLD, 24));
-	    lblNombre.setBounds(55, 124, 135, 42);
+	    lblNombre.setFont(new Font("Anton", Font.BOLD, 20));
+	    lblNombre.setBounds(55, 124, 200, 42);
 	    panelCentral.add(lblNombre);
 
 	    // Año
 	    JLabel lblAnio = new JLabel(""+videogames.getAñoLanzamiento());
 	    lblAnio.setForeground(Color.decode("#3B3741"));
 	    lblAnio.setFont(new Font("Calibri", Font.BOLD, 18));
-	    lblAnio.setBounds(55, 161, 70, 42);
+	    lblAnio.setBounds(100, 161, 70, 42);
 	    panelCentral.add(lblAnio);
 
 	    // Clasificación
@@ -1898,7 +1731,7 @@ public class HomeView extends JFrame {
 	    JButton btnEditar = new JButton("Editar");
 	    btnEditar.setBackground(Color.decode("#6D91B9"));
 	    btnEditar.setForeground(Color.WHITE);
-	    btnEditar.setBounds(850, 420, 100, 35); // Ajusta posición si es necesario
+	    btnEditar.setBounds(394, 417, 183, 33); // Ajusta posición si es necesario
 	    btnEditar.addActionListener(new ActionListener() {
 	        public void actionPerformed(ActionEvent e) {
 //	            EditarJuego();
@@ -1907,8 +1740,42 @@ public class HomeView extends JFrame {
 			    vc.updateVideogames2(videogames.getId());
 	            dispose();
 	        }
+	        
 	    });
 	    panelCentral.add(btnEditar);
+	    
+	    JButton btnDescargarPDF = new JButton("Descargar (PDF)");
+		btnDescargarPDF.setBackground(Color.decode("#263C54"));
+		btnDescargarPDF.setForeground(Color.WHITE);
+		btnDescargarPDF.setBounds(605, 417, 183, 33);
+		panelCentral.add(btnDescargarPDF);
+		btnDescargarPDF.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+
+			}
+		});
+
+		JButton btnRegresar = new JButton("Regresar");
+		btnRegresar.setForeground(Color.WHITE);
+		btnRegresar.setBackground(new Color(184, 47, 47));
+		btnRegresar.setBounds(175, 417, 183, 33);
+		panelCentral.add(btnRegresar);
+		btnRegresar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+				VideogamesController vc = new VideogamesController();
+
+				vc.indexVideoGames();
+
+			}
+		});
+
+		// 3. PANEL ROJO SUPERIOR (barra de título)
+		JPanel barraRoja = new JPanel();
+		barraRoja.setBackground(Color.decode("#B44635"));
+		barraRoja.setBounds(0, 0, 1024, 60);
+		layeredPane.add(barraRoja, JLayeredPane.PALETTE_LAYER);
+
 
 	    setVisible(true);
 	}
@@ -2089,8 +1956,10 @@ public class HomeView extends JFrame {
 	    btnCancelar.setForeground(Color.WHITE);
 	    btnCancelar.setBounds(175, 406, 183, 33);
 	    btnCancelar.addActionListener(e -> {
-//	        DetallesJuego();
-	        dispose();
+	    	dispose();
+	    	VideogamesController lt = new VideogamesController();
+			lt.indexVideoGames();
+	    	
 	    });
 	    panelCentral.add(btnCancelar);
 
@@ -2140,208 +2009,6 @@ public class HomeView extends JFrame {
 	}
 
 
-	public void AgregarJuego() {
-	    // Componentes de entrada
-	    JTextField txtNombre = new JTextField();
-	    JTextField txtPlataforma = new JTextField();
-	    JTextField txtAnioLanzamiento = new JTextField();
-	    JCheckBox chkDisponible = new JCheckBox("Disponible");
-	    JTextField txtClasificacion = new JTextField();
-	    JTextField txtGenero = new JTextField();
-	    JTextField txtExistencias = new JTextField();
-	    JTextField txtPrecioRenta = new JTextField();
-	    JTextField txtPrecioVenta = new JTextField();
-	    JTextField txtDesarrollador = new JTextField();
-	    JTextArea txtDescripcion = new JTextArea();
-	    
-	    // Configuración básica de la ventana
-	    setTitle("Agregar Videojuego");
-	    setSize(1024, 576);
-	    setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-	    setLocationRelativeTo(null);
-
-	    // Panel principal con capas
-	    JLayeredPane layeredPane = new JLayeredPane();
-	    layeredPane.setPreferredSize(new Dimension(1024, 576));
-	    setContentPane(layeredPane);
-
-	    // Panel central gris
-	    JPanel panelCentral = new JPanel();
-	    panelCentral.setLayout(null);
-	    panelCentral.setBackground(Color.decode("#F2F2F2"));
-	    panelCentral.setBounds(5, 62, 1014, 509);
-	    layeredPane.add(panelCentral, JLayeredPane.PALETTE_LAYER);
-
-	    // Logotipo
-	    ImageIcon iconoOriginal = new ImageIcon(getClass().getResource("/images/Block.png"));
-	    Image imagenEscalada = iconoOriginal.getImage().getScaledInstance(70, 70, Image.SCALE_SMOOTH);
-	    JLabel logo = new JLabel(new ImageIcon(imagenEscalada));
-	    logo.setBounds(477, 11, 70, 70);
-	    panelCentral.add(logo);
-
-	    // Título
-	    JLabel lblTitulo = new JLabel("AGREGAR NUEVO VIDEOJUEGO");
-	    lblTitulo.setFont(new Font("Calibri", Font.BOLD, 24));
-	    lblTitulo.setBounds(350, 78, 350, 42);
-	    panelCentral.add(lblTitulo);
-
-	    // Sección izquierda (Datos básicos)
-	    JLabel lblNombre = new JLabel("Nombre del Videojuego:");
-	    lblNombre.setFont(new Font("Calibri", Font.BOLD, 14));
-	    lblNombre.setBounds(55, 130, 180, 20);
-	    panelCentral.add(lblNombre);
-
-	    txtNombre.setBounds(55, 155, 230, 25);
-	    panelCentral.add(txtNombre);
-
-	    JLabel lblAnio = new JLabel("Año de lanzamiento:");
-	    lblAnio.setFont(new Font("Calibri", Font.BOLD, 14));
-	    lblAnio.setBounds(55, 190, 180, 20);
-	    panelCentral.add(lblAnio);
-
-	    txtAnioLanzamiento.setBounds(55, 215, 150, 25);
-	    panelCentral.add(txtAnioLanzamiento);
-
-	    JLabel lblGenero = new JLabel("Género:");
-	    lblGenero.setFont(new Font("Calibri", Font.BOLD, 14));
-	    lblGenero.setBounds(55, 250, 180, 20);
-	    panelCentral.add(lblGenero);
-
-	    txtGenero.setBounds(55, 275, 180, 25);
-	    panelCentral.add(txtGenero);
-
-	    JLabel lblPrecioRenta = new JLabel("Precio renta (MXN):");
-	    lblPrecioRenta.setFont(new Font("Calibri", Font.BOLD, 14));
-	    lblPrecioRenta.setBounds(55, 310, 180, 20);
-	    panelCentral.add(lblPrecioRenta);
-
-	    txtPrecioRenta.setBounds(55, 335, 180, 25);
-	    panelCentral.add(txtPrecioRenta);
-
-	    // Sección central (Detalles técnicos)
-	    JLabel lblPlataforma = new JLabel("Plataforma:");
-	    lblPlataforma.setFont(new Font("Calibri", Font.BOLD, 14));
-	    lblPlataforma.setBounds(300, 130, 180, 20);
-	    panelCentral.add(lblPlataforma);
-
-	    txtPlataforma.setBounds(300, 155, 200, 25);
-	    panelCentral.add(txtPlataforma);
-
-	    JLabel lblDisponibilidad = new JLabel("Disponibilidad:");
-	    lblDisponibilidad.setFont(new Font("Calibri", Font.BOLD, 14));
-	    lblDisponibilidad.setBounds(300, 190, 180, 20);
-	    panelCentral.add(lblDisponibilidad);
-
-	    chkDisponible.setBounds(300, 215, 100, 25);
-	    chkDisponible.setSelected(true);
-	    panelCentral.add(chkDisponible);
-
-	    JLabel lblClasificacion = new JLabel("Clasificación:");
-	    lblClasificacion.setFont(new Font("Calibri", Font.BOLD, 14));
-	    lblClasificacion.setBounds(300, 250, 180, 20);
-	    panelCentral.add(lblClasificacion);
-
-	    txtClasificacion.setBounds(300, 275, 130, 25);
-	    panelCentral.add(txtClasificacion);
-
-	    JLabel lblExistencias = new JLabel("Existencias disponibles:");
-	    lblExistencias.setFont(new Font("Calibri", Font.BOLD, 14));
-	    lblExistencias.setBounds(300, 310, 180, 20);
-	    panelCentral.add(lblExistencias);
-
-	    txtExistencias.setBounds(300, 335, 200, 25);
-	    panelCentral.add(txtExistencias);
-
-	    JLabel lblPrecioVenta = new JLabel("Precio venta (MXN):");
-	    lblPrecioVenta.setFont(new Font("Calibri", Font.BOLD, 14));
-	    lblPrecioVenta.setBounds(300, 370, 180, 20);
-	    panelCentral.add(lblPrecioVenta);
-
-	    txtPrecioVenta.setBounds(300, 395, 200, 25);
-	    panelCentral.add(txtPrecioVenta);
-
-	    // Sección derecha (Información adicional)
-	    JLabel lblDesarrollador = new JLabel("Desarrollado por:");
-	    lblDesarrollador.setFont(new Font("Calibri", Font.BOLD, 14));
-	    lblDesarrollador.setBounds(550, 130, 180, 20);
-	    panelCentral.add(lblDesarrollador);
-
-	    txtDesarrollador.setBounds(550, 155, 340, 25);
-	    panelCentral.add(txtDesarrollador);
-
-	    JLabel lblDescripcion = new JLabel("Descripción:");
-	    lblDescripcion.setFont(new Font("Calibri", Font.BOLD, 14));
-	    lblDescripcion.setBounds(550, 190, 180, 20);
-	    panelCentral.add(lblDescripcion);
-
-	    txtDescripcion.setLineWrap(true);
-	    txtDescripcion.setWrapStyleWord(true);
-	    JScrollPane scrollDescripcion = new JScrollPane(txtDescripcion);
-	    scrollDescripcion.setBounds(550, 215, 340, 150);
-	    panelCentral.add(scrollDescripcion);
-
-	    // Botones
-	    JButton btnCancelar = new JButton("Cancelar");
-	    btnCancelar.setBackground(Color.decode("#B82F2F"));
-		btnCancelar.setForeground(Color.WHITE);
-		btnCancelar.setBounds(300, 450, 150, 30);
-		btnCancelar.addActionListener(e -> {
-			dispose();
-
-			VideogamesController vc = new VideogamesController();
-			vc.indexVideoGames();
-		});
-		panelCentral.add(btnCancelar);
-
-		JButton btnConfirmar = new JButton("Agregar Juego");
-		btnConfirmar.setBackground(Color.decode("#263C54"));
-		btnConfirmar.setForeground(Color.WHITE);
-		btnConfirmar.setBounds(550, 450, 150, 30);
-		btnConfirmar.addActionListener(e -> {
-			try {
-
-				String nombre = txtNombre.getText();
-				String plataforma = txtPlataforma.getText();
-				int año = Integer.parseInt(txtAnioLanzamiento.getText());
-				boolean disponibilidad = chkDisponible.isSelected();
-				String clasificacion = txtClasificacion.getText();
-				String genero = txtGenero.getText();
-				int existencias = Integer.parseInt(txtExistencias.getText());
-				BigDecimal precioRenta = new BigDecimal(txtPrecioRenta.getText());
-				BigDecimal precioVenta = new BigDecimal(txtPrecioVenta.getText());
-				String desarrollador = txtDesarrollador.getText();
-				String descripcion = txtDescripcion.getText();
-
-				VideoGamesModel modelo = new VideoGamesModel();
-				boolean exito = modelo.addVideogame(nombre, plataforma, año, disponibilidad, clasificacion, genero,
-						existencias, precioRenta, precioVenta, desarrollador, descripcion);
-
-				if (exito) {
-					JOptionPane.showMessageDialog(this, "Juego agregado exitosamente");
-					dispose();
-					VideogamesController vc = new VideogamesController();
-					vc.indexVideoGames();
-				} else {
-					JOptionPane.showMessageDialog(this, "Error al agregar el juego", "Error",
-							JOptionPane.ERROR_MESSAGE);
-				}
-			} catch (NumberFormatException ex) {
-				JOptionPane.showMessageDialog(this, "Por favor ingrese valores numéricos válidos", "Error",
-						JOptionPane.ERROR_MESSAGE);
-			} catch (Exception ex) {
-				JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-			}
-		});
-		panelCentral.add(btnConfirmar);
-
-		// Barra superior roja
-		JPanel barraSuperior = new JPanel();
-		barraSuperior.setBackground(Color.decode("#B44635"));
-		barraSuperior.setBounds(0, 0, 1024, 60);
-		layeredPane.add(barraSuperior, JLayeredPane.PALETTE_LAYER);
-
-	    setVisible(true);
-	}
 
 
 	// Renta y Compra
@@ -2370,8 +2037,8 @@ public class HomeView extends JFrame {
 		btnClientes.setForeground(Color.WHITE);
 		btnClientes.setBounds(10, 11, 237, 100); // x, y, ancho, alto
 		btnClientes.addActionListener(e -> {
-			AdministradorCliente(); // Abre la segunda ventana
 			dispose(); // Cierra la ventana actual
+			AdministradorCliente(); // Abre la segunda ventana
 		});
 		panelIzq.add(btnClientes);
 
@@ -2381,8 +2048,8 @@ public class HomeView extends JFrame {
 		btnVideojuegos.setBackground(new Color(38, 60, 84));
 		btnVideojuegos.setBounds(10, 128, 237, 100);
 		btnVideojuegos.addActionListener(e -> {
-			AdministradorJuegos(); // Abre la segunda ventana
 			dispose(); // Cierra la ventana actual
+			AdministradorJuegos(); // Abre la segunda ventana
 		});
 		panelIzq.add(btnVideojuegos);
 
@@ -2399,8 +2066,8 @@ public class HomeView extends JFrame {
 		btnNuevaOperacion.setBackground(new Color(38, 60, 84));
 		btnNuevaOperacion.setBounds(10, 364, 237, 100);
 		btnNuevaOperacion.addActionListener(e -> {
-			NuevaOperacion(); // Abre la segunda ventana
 			dispose(); // Cierra la ventana actual
+			NuevaOperacion(); // Abre la segunda ventana
 		});
 		panelIzq.add(btnNuevaOperacion);
 
@@ -2425,15 +2092,17 @@ public class HomeView extends JFrame {
 		iniciar.setFont(new Font("Calibri", Font.BOLD, 24));
 		panelCentral.add(iniciar);
 
-		JButton registros = new JButton("Renta");
-		registros.setBounds(119, 242, 206, 100);
-		panelCentral.add(registros);
-		registros.setForeground(Color.WHITE);
-		registros.setFont(new Font("Calibri", Font.BOLD, 16));
-		registros.setBackground(new Color(38, 60, 84));
-		registros.addActionListener(e -> {
-			Renta(); // Abre la segunda ventana
-			dispose(); // Cierra la ventana actual
+		JButton renta = new JButton("Renta");
+		renta.setBounds(119, 242, 206, 100);
+		panelCentral.add(renta);
+		renta.setForeground(Color.WHITE);
+		renta.setFont(new Font("Calibri", Font.BOLD, 16));
+		renta.setBackground(new Color(38, 60, 84));
+		renta.addActionListener(e -> {
+			dispose(); // Abre la segunda ventana
+			UserViews rentaa= new UserViews(); 
+			rentaa.Renta();
+			 // Cierra la ventana actual
 		});
 
 		JButton btnCompra = new JButton("Venta");
@@ -2442,8 +2111,10 @@ public class HomeView extends JFrame {
 		btnCompra.setBackground(new Color(38, 60, 84));
 		btnCompra.setBounds(425, 242, 206, 100);
 		btnCompra.addActionListener(e -> {
-			Compra(); // Abre la segunda ventana
 			dispose(); // Cierra la ventana actual
+			 // Abre la segunda ventana
+			UserViews compra= new UserViews(); 
+			compra.Compra();// Abre la segunda ventana
 		});
 		panelCentral.add(btnCompra);
 
@@ -2463,628 +2134,11 @@ public class HomeView extends JFrame {
 	}
 
 	
-	public void Renta() {
-		// Configuración básica de la ventana
-		setTitle("Renta");
-		setSize(1024, 576);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setLocationRelativeTo(null);
-
-		// Usamos JLayeredPane para superponer componentes
-		JLayeredPane layeredPane = new JLayeredPane();
-		layeredPane.setPreferredSize(new Dimension(900, 650));
-		setContentPane(layeredPane);
-
-		// 1. PANEL BLANCO (fondo completo)
-		JPanel panelIzq = new JPanel();
-		panelIzq.setLayout(null);
-		panelIzq.setBackground(Color.decode("#FFFFFF"));
-		panelIzq.setBounds(10, 62, 257, 475);
-		layeredPane.add(panelIzq, JLayeredPane.PALETTE_LAYER);
-
-		JButton btnClientes = new JButton("CLIENTES");
-		btnClientes.setFont(new Font("Calibri", Font.BOLD, 16));
-		btnClientes.setBackground(Color.decode("#263C54"));
-		btnClientes.setForeground(Color.WHITE);
-		btnClientes.setBounds(10, 11, 237, 100);
-		btnClientes.addActionListener(e -> {
-			AdministradorCliente(); // Abre la segunda ventana
-			dispose(); // Cierra la ventana actual
-		});
-		panelIzq.add(btnClientes);
-
-		JButton btnVideojuegos = new JButton("VIDEOJUEGOS");
-		btnVideojuegos.setForeground(Color.WHITE);
-		btnVideojuegos.setFont(new Font("Calibri", Font.BOLD, 16));
-		btnVideojuegos.setBackground(new Color(38, 60, 84));
-		btnVideojuegos.setBounds(10, 128, 237, 100);
-		panelIzq.add(btnVideojuegos);
-		btnVideojuegos.addActionListener(e -> {
-			AdministradorJuegos(); // Abre la segunda ventana
-			dispose(); // Cierra la ventana actual
-		});
-
-		JButton btnRentaYCompra = new JButton("RENTA Y COMPRA");
-		btnRentaYCompra.setForeground(Color.WHITE);
-		btnRentaYCompra.setFont(new Font("Calibri", Font.BOLD, 16));
-		btnRentaYCompra.setBackground(new Color(38, 60, 84));
-		btnRentaYCompra.setBounds(10, 242, 237, 100);
-		btnRentaYCompra.addActionListener(e -> {
-			AdministradorRentaCompra(); // Abre la segunda ventana
-			dispose(); // Cierra la ventana actual
-		});
-		panelIzq.add(btnRentaYCompra);
-
-		JButton btnNuevaOperacion = new JButton("NUEVA OPERACIÓN");
-		btnNuevaOperacion.setForeground(Color.WHITE);
-		btnNuevaOperacion.setFont(new Font("Calibri", Font.BOLD, 16));
-		btnNuevaOperacion.setBackground(new Color(38, 60, 84));
-		btnNuevaOperacion.setBounds(10, 364, 237, 100);
-		btnNuevaOperacion.addActionListener(e -> {
-			NuevaOperacion(); // Abre la segunda ventana
-			dispose(); // Cierra la ventana actual
-		});
-		panelIzq.add(btnNuevaOperacion);
-
-		// 2. PANEL GRIS CENTRAL
-		JPanel panelCentral = new JPanel();
-		panelCentral.setLayout(null);
-		panelCentral.setBackground(Color.decode("#F2F2F2"));
-		panelCentral.setBounds(277, 62, 731, 475);
-		layeredPane.add(panelCentral, JLayeredPane.PALETTE_LAYER);
-
-		JLabel iniciar = new JLabel("RENTA");
-		iniciar.setSize(236, 60);
-		iniciar.setLocation(143, 11);
-		iniciar.setHorizontalAlignment(JLabel.CENTER);
-		iniciar.setFont(new Font("Calibri", Font.BOLD, 24));
-		panelCentral.add(iniciar);
-
-		// Datos de la tabla
-		Object[][] data = {
-				{ "Identificador", "Nombre", "Plataforma", "Disponibilidad", "Precio(venta)", "Precio(renta)", },
-				{ "000001", "Contra", "Nintendo", "5", "$800", "$100" },
-				{ "000002", "God of War", "Play Station", "25", "$850", "$250" },
-				{ "000003", "Halo", "Xbox", "32", "$890", "$640" }, { "000004", "Fornite", "Pc", "40", "$900", "$700" },
-				{ "000005", "Pokemon", "Mixto", "41", "$950", "$720" },
-				{ "000006", "ARK: Survival", "Mixto", "30", "$990", "$720" },
-
-		};
-
-		DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
-		centerRenderer.setHorizontalAlignment(JLabel.CENTER);
-
-		// Tabla
-		JTable table = new JTable(data, new String[] { "", "", "", "", "", "", });
-		panelCentral.add(table);
-		table.setFont(new Font("Segoe UI", Font.PLAIN, 16));
-		table.setBounds(26, 62, 695, 346);
-		table.setBorder(BorderFactory.createLineBorder(new Color(204, 204, 204)));
-		table.setShowGrid(true);
-		table.setGridColor(new Color(204, 204, 204));
-		table.setTableHeader(null);
-		table.setDefaultRenderer(Object.class, centerRenderer);
-		table.setRowHeight(40);
-		table.setShowHorizontalLines(true);
-		table.setShowVerticalLines(true);
-
-		JButton btnNewButton = new JButton("RENTAR");
-		btnNewButton.setForeground(Color.WHITE);
-		btnNewButton.setBackground(Color.decode("#6D91B9"));
-		btnNewButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				OperacionRentar();
-				dispose();
-
-			}
-		});
-		btnNewButton.setBounds(536, 419, 151, 30);
-		panelCentral.add(btnNewButton);
-
-		JButton btnBuscar = new JButton("Buscar");
-		btnBuscar.setFont(new Font("League Spartan Light", Font.PLAIN, 14));
-		btnBuscar.setBounds(619, 25, 86, 25);
-		panelCentral.add(btnBuscar);
-
-		// 3. PANEL ROJO SUPERIOR (barra de título)
-		JPanel barraRoja = new JPanel();
-		barraRoja.setBackground(Color.decode("#B44635"));
-		barraRoja.setBounds(0, 0, 1024, 60);
-		layeredPane.add(barraRoja, JLayeredPane.PALETTE_LAYER);
-
-		setVisible(true);
-
-		try {
-			UIManager.setLookAndFeel(new FlatLightLaf());
-			UIManager.put("Button.arc", 9); // Esquinas redondeadas
-		} catch (Exception ex) {
-			ex.printStackTrace();
-		}
-	}
 
 	
-	public void OperacionRentar() {
-		JTextField textField;
-		JTextField textField_1;
-		JTextField textField_2;
-		// Configuración básica de la ventana
-		setTitle("Operación Rentar");
-		setSize(1024, 576);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setLocationRelativeTo(null);
-
-		// Usamos JLayeredPane para superponer componentes
-		JLayeredPane layeredPane = new JLayeredPane();
-		layeredPane.setPreferredSize(new Dimension(900, 650));
-		setContentPane(layeredPane);
-
-		// 2. PANEL GRIS CENTRAl
-		JPanel panelCentral = new JPanel();
-		panelCentral.setLayout(null);
-		panelCentral.setBackground(Color.decode("#F2F2F2"));
-		panelCentral.setBounds(5, 62, 998, 475); // (x, y, ancho, alto)
-		layeredPane.add(panelCentral, JLayeredPane.PALETTE_LAYER);
-
-		// Logotipo
-		ImageIcon iconoOriginal = new ImageIcon(getClass().getResource("/images/Block.png"));
-		Image imagenEscalada = iconoOriginal.getImage().getScaledInstance(70, 70, Image.SCALE_SMOOTH);
-		JLabel logo = new JLabel(new ImageIcon(imagenEscalada));
-		logo.setBounds(477, 11, 70, 70); // posicion
-		panelCentral.add(logo);
-
-		JLabel iniciar = new JLabel("DETALLES DE OPERACIÓN");
-		iniciar.setSize(263, 42);
-		iniciar.setLocation(369, 78);
-		iniciar.setHorizontalAlignment(JLabel.CENTER);
-		iniciar.setFont(new Font("Calibri", Font.BOLD, 24));
-		panelCentral.add(iniciar);
-
-		JLabel iniciar_1 = new JLabel("Nombre del cliente");
-		iniciar_1.setHorizontalAlignment(SwingConstants.LEFT);
-		iniciar_1.setFont(new Font("Calibri", Font.BOLD, 14));
-		iniciar_1.setBounds(85, 120, 160, 42); // Ajusta tamaño si es necesario
-		panelCentral.add(iniciar_1);
-
-		JTextField nJuego = new JTextField();
-		nJuego.setBackground(Color.decode("#D9D9D9"));
-		nJuego.setBounds(85, 161, 255, 27);
-		panelCentral.add(nJuego);
-		nJuego.setColumns(10);
-
-		JButton btnCancelar = new JButton("Cancelar");
-		btnCancelar.setBackground(Color.decode("#B82F2F")); // Color de fondo (azul oscuro)
-		btnCancelar.setForeground(Color.WHITE);
-		btnCancelar.setBounds(175, 406, 183, 33);
-		btnCancelar.addActionListener(e -> {
-			Renta(); // Abre la segunda ventana
-			dispose(); // Cierra la ventana actual
-		});
-		panelCentral.add(btnCancelar);
-
-		JButton btnConfirmar = new JButton("Confirmar");
-		btnConfirmar.setBackground(Color.decode("#263C54")); // Color de fondo (azul oscuro)
-		btnConfirmar.setForeground(Color.WHITE);
-		btnConfirmar.setBounds(582, 406, 183, 33);
-		btnConfirmar.addActionListener(e -> {
-			Confirma_11(); // Abre la segunda ventana
-			// Cierra la ventana actual
-		});
-		panelCentral.add(btnCancelar);
-		panelCentral.add(btnConfirmar);
-
-		textField_1 = new JTextField();
-		textField_1.setColumns(10);
-		textField_1.setBackground(new Color(217, 217, 217));
-		textField_1.setBounds(405, 161, 263, 27);
-		panelCentral.add(textField_1);
-
-		JLabel iniciar_1_1 = new JLabel("Nombre del Videojuego:");
-		iniciar_1_1.setHorizontalAlignment(SwingConstants.LEFT);
-		iniciar_1_1.setFont(new Font("Calibri", Font.BOLD, 14));
-		iniciar_1_1.setBounds(405, 120, 160, 42);
-		panelCentral.add(iniciar_1_1);
-
-		textField_2 = new JTextField();
-		textField_2.setColumns(10);
-		textField_2.setBackground(new Color(217, 217, 217));
-		textField_2.setBounds(697, 161, 165, 27);
-		panelCentral.add(textField_2);
-
-		JLabel iniciar_1_1_1 = new JLabel("Cantidad:");
-		iniciar_1_1_1.setHorizontalAlignment(SwingConstants.LEFT);
-		iniciar_1_1_1.setFont(new Font("Calibri", Font.BOLD, 14));
-		iniciar_1_1_1.setBounds(697, 120, 160, 42);
-		panelCentral.add(iniciar_1_1_1);
-
-		JLabel iniciar_1_2 = new JLabel("Nombre de videojuego");
-		iniciar_1_2.setHorizontalAlignment(SwingConstants.CENTER);
-		iniciar_1_2.setFont(new Font("Calibri", Font.BOLD, 14));
-		iniciar_1_2.setBounds(75, 215, 255, 42);
-		panelCentral.add(iniciar_1_2);
-
-		JLabel iniciar_1_2_1 = new JLabel("Precio (MXN):");
-		iniciar_1_2_1.setHorizontalAlignment(SwingConstants.CENTER);
-		iniciar_1_2_1.setFont(new Font("Calibri", Font.BOLD, 14));
-		iniciar_1_2_1.setBounds(403, 215, 255, 42);
-		panelCentral.add(iniciar_1_2_1);
-
-		JLabel iniciar_1_2_2 = new JLabel("Contra");
-		iniciar_1_2_2.setHorizontalAlignment(SwingConstants.CENTER);
-		iniciar_1_2_2.setFont(new Font("Calibri", Font.BOLD, 14));
-		iniciar_1_2_2.setBounds(75, 246, 255, 42);
-		panelCentral.add(iniciar_1_2_2);
-
-		JLabel iniciar_1_2_1_1 = new JLabel("$100");
-		iniciar_1_2_1_1.setHorizontalAlignment(SwingConstants.CENTER);
-		iniciar_1_2_1_1.setFont(new Font("Calibri", Font.BOLD, 14));
-		iniciar_1_2_1_1.setBounds(403, 246, 255, 42);
-		panelCentral.add(iniciar_1_2_1_1);
-
-		JLabel iniciar_1_2_3 = new JLabel("Descuento:");
-		iniciar_1_2_3.setHorizontalAlignment(SwingConstants.CENTER);
-		iniciar_1_2_3.setFont(new Font("Calibri", Font.BOLD, 14));
-		iniciar_1_2_3.setBounds(75, 293, 255, 42);
-		panelCentral.add(iniciar_1_2_3);
-
-		JLabel iniciar_1_2_2_1 = new JLabel("07%");
-		iniciar_1_2_2_1.setHorizontalAlignment(SwingConstants.CENTER);
-		iniciar_1_2_2_1.setFont(new Font("Calibri", Font.BOLD, 14));
-		iniciar_1_2_2_1.setBounds(75, 320, 255, 42);
-		panelCentral.add(iniciar_1_2_2_1);
-
-		JLabel iniciar_1_2_1_2 = new JLabel("Fecha:");
-		iniciar_1_2_1_2.setHorizontalAlignment(SwingConstants.CENTER);
-		iniciar_1_2_1_2.setFont(new Font("Calibri", Font.BOLD, 14));
-		iniciar_1_2_1_2.setBounds(403, 293, 255, 42);
-		panelCentral.add(iniciar_1_2_1_2);
-
-		JLabel iniciar_1_2_1_1_1 = new JLabel("15/05/2025");
-		iniciar_1_2_1_1_1.setHorizontalAlignment(SwingConstants.CENTER);
-		iniciar_1_2_1_1_1.setFont(new Font("Calibri", Font.BOLD, 14));
-		iniciar_1_2_1_1_1.setBounds(403, 320, 255, 42);
-		panelCentral.add(iniciar_1_2_1_1_1);
-
-		JLabel iniciar_1_2_1_3 = new JLabel("Tipo:");
-		iniciar_1_2_1_3.setHorizontalAlignment(SwingConstants.CENTER);
-		iniciar_1_2_1_3.setFont(new Font("Calibri", Font.BOLD, 14));
-		iniciar_1_2_1_3.setBounds(687, 215, 101, 42);
-		panelCentral.add(iniciar_1_2_1_3);
-
-		JLabel iniciar_1_2_1_1_2 = new JLabel("Renta");
-		iniciar_1_2_1_1_2.setHorizontalAlignment(SwingConstants.CENTER);
-		iniciar_1_2_1_1_2.setFont(new Font("Calibri", Font.BOLD, 14));
-		iniciar_1_2_1_1_2.setBounds(687, 246, 101, 42);
-		panelCentral.add(iniciar_1_2_1_1_2);
-
-		JLabel iniciar_1_2_1_2_1 = new JLabel("Fecha de devolución:");
-		iniciar_1_2_1_2_1.setHorizontalAlignment(SwingConstants.CENTER);
-		iniciar_1_2_1_2_1.setFont(new Font("Calibri", Font.BOLD, 14));
-		iniciar_1_2_1_2_1.setBounds(643, 293, 201, 42);
-		panelCentral.add(iniciar_1_2_1_2_1);
-
-		JLabel iniciar_1_2_1_1_1_1 = new JLabel("15/06/2025");
-		iniciar_1_2_1_1_1_1.setHorizontalAlignment(SwingConstants.CENTER);
-		iniciar_1_2_1_1_1_1.setFont(new Font("Calibri", Font.BOLD, 14));
-		iniciar_1_2_1_1_1_1.setBounds(672, 320, 143, 42);
-		panelCentral.add(iniciar_1_2_1_1_1_1);
-
-		// 3. PANEL ROJO SUPERIOR (barra de título)
-		JPanel barraRoja = new JPanel();
-		barraRoja.setBackground(Color.decode("#B44635"));
-		barraRoja.setBounds(0, 0, 1024, 60);
-		layeredPane.add(barraRoja, JLayeredPane.PALETTE_LAYER);
-
-		setVisible(true);
-	}
 
 	
-	public void Confirma_11() {
-		// Configuración básica de la ventana
-		setTitle("Confirma Renta");
-		setUndecorated(true);
 
-		setSize(654, 252);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setLocationRelativeTo(null);
-
-		// Usamos JLayeredPane para superponer componentes
-		JLayeredPane layeredPane = new JLayeredPane();
-		layeredPane.setPreferredSize(new Dimension(900, 650));
-		setContentPane(layeredPane);
-
-		// 2. PANEL GRIS CENTRAl
-		JPanel panelCentral = new JPanel();
-		panelCentral.setLayout(null);
-		panelCentral.setBackground(Color.decode("#D9D9D9"));
-		panelCentral.setBounds(0, 0, 654, 252); // (x, y, ancho, alto)
-		layeredPane.add(panelCentral, JLayeredPane.PALETTE_LAYER);
-
-		// Logotipo
-		ImageIcon iconoOriginal = new ImageIcon(getClass().getResource("/images/Block.png"));
-		Image imagenEscalada = iconoOriginal.getImage().getScaledInstance(70, 70, Image.SCALE_SMOOTH);
-
-		JLabel iniciar = new JLabel("Confirmar Operacion");
-		iniciar.setSize(285, 42);
-		iniciar.setLocation(233, 51);
-		iniciar.setHorizontalAlignment(JLabel.CENTER);
-		iniciar.setFont(new Font("Calibri", Font.BOLD, 24));
-		panelCentral.add(iniciar);
-
-		JButton btnCancelar = new JButton("Cancelar");
-		btnCancelar.setBackground(Color.decode("#B82F2F")); // Color de fondo (azul oscuro)
-		btnCancelar.setForeground(Color.WHITE);
-		btnCancelar.setBounds(31, 130, 183, 33);
-		btnCancelar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-
-				dispose();
-			}
-		});
-		panelCentral.add(btnCancelar);
-
-		JButton btnSi = new JButton("Si");
-		btnSi.setBackground(Color.decode("#6D91B9")); // Color de fondo (azul oscuro)
-		btnSi.setForeground(Color.WHITE);
-		btnSi.setBounds(418, 130, 183, 33);
-		btnSi.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				DetallesRenta();
-				dispose();
-
-			}
-		});
-		panelCentral.add(btnSi);
-
-		setVisible(true);
-	}
-
-	public void DetallesRenta() {
-		// Configuración básica de la ventana
-		setTitle("Detalles VideoJuego Rentado");
-		setSize(1024, 576);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setLocationRelativeTo(null);
-
-		// Usamos JLayeredPane para superponer componentes
-		JLayeredPane layeredPane = new JLayeredPane();
-		layeredPane.setPreferredSize(new Dimension(900, 650));
-		setContentPane(layeredPane);
-
-		// 2. PANEL GRIS CENTRAl
-		JPanel panelCentral = new JPanel();
-		panelCentral.setLayout(null);
-		panelCentral.setBackground(Color.decode("#D9D9D9"));
-		panelCentral.setBounds(5, 62, 998, 475); // (x, y, ancho, alto)
-		layeredPane.add(panelCentral, JLayeredPane.PALETTE_LAYER);
-
-		// Logotipo
-		ImageIcon iconoOriginal = new ImageIcon(getClass().getResource("/images/contra.png"));
-		Image imagenEscalada = iconoOriginal.getImage().getScaledInstance(100, 70, Image.SCALE_SMOOTH);
-
-		JLabel iniciar = new JLabel("DETALLES DE VIDEOJUEGO");
-		iniciar.setSize(285, 42);
-		iniciar.setLocation(442, 32);
-		iniciar.setHorizontalAlignment(JLabel.CENTER);
-		iniciar.setFont(new Font("Calibri", Font.BOLD, 24));
-		panelCentral.add(iniciar);
-
-		JLabel iniciar_1_1_2_1 = new JLabel("Miguel Garcia");
-		iniciar_1_1_2_1.setHorizontalAlignment(SwingConstants.CENTER);
-		iniciar_1_1_2_1.setFont(new Font("Calibri", Font.BOLD, 18));
-		iniciar_1_1_2_1.setBounds(226, 102, 112, 42);
-		panelCentral.add(iniciar_1_1_2_1);
-
-		JButton btnCancelar = new JButton("REGRESAR");
-		btnCancelar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				Renta();
-				dispose();
-			}
-		});
-		btnCancelar.setBackground(Color.decode("#B82F2F")); // Color de fondo (azul oscuro)
-		btnCancelar.setForeground(Color.WHITE);
-		btnCancelar.setBounds(185, 406, 183, 33);
-		panelCentral.add(btnCancelar);
-
-		JButton btnConfirmar = new JButton("Descargar (PDF)");
-		btnConfirmar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-
-				Confirma_12();
-
-			}
-		});
-		btnConfirmar.setBackground(Color.decode("#263C54")); // Color de fondo (azul oscuro)
-		btnConfirmar.setForeground(Color.WHITE);
-		btnConfirmar.setBounds(614, 406, 183, 33);
-		panelCentral.add(btnConfirmar);
-
-		ImageIcon iconoOrigina = new ImageIcon(getClass().getResource("/images/Contra.png"));
-		Image imagen = iconoOriginal.getImage().getScaledInstance(180, 120, Image.SCALE_SMOOTH);
-		JLabel logo = new JLabel(new ImageIcon(imagen));
-		logo.setBounds(32, 32, 184, 112); // posicion
-		panelCentral.add(logo);
-
-		JLabel lblContra = new JLabel("CONTRA");
-		lblContra.setHorizontalAlignment(SwingConstants.LEFT);
-		lblContra.setFont(new Font("Calibri", Font.BOLD, 24));
-		lblContra.setBounds(32, 141, 135, 42);
-		panelCentral.add(lblContra);
-
-		JLabel iniciar_1_1_1_1_2_2_1 = new JLabel("$108.00 MXN");
-		iniciar_1_1_1_1_2_2_1.setForeground(new Color(153, 0, 0));
-		iniciar_1_1_1_1_2_2_1.setHorizontalAlignment(SwingConstants.LEFT);
-		iniciar_1_1_1_1_2_2_1.setFont(new Font("Calibri", Font.BOLD, 18));
-		iniciar_1_1_1_1_2_2_1.setBounds(719, 359, 126, 42);
-		panelCentral.add(iniciar_1_1_1_1_2_2_1);
-
-		JTextArea txtrTotalivaIncluidoEn = new JTextArea("Total(IVA incluído, en caso de ser aplicable):");
-		txtrTotalivaIncluidoEn.setWrapStyleWord(true);
-		txtrTotalivaIncluidoEn.setOpaque(false);
-		txtrTotalivaIncluidoEn.setLineWrap(true);
-		txtrTotalivaIncluidoEn.setFont(new Font("Calibri", Font.BOLD, 20));
-		txtrTotalivaIncluidoEn.setEditable(false);
-		txtrTotalivaIncluidoEn.setBounds(628, 341, 298, 54);
-		panelCentral.add(txtrTotalivaIncluidoEn);
-
-		JLabel iniciar_1_1_2 = new JLabel("Cliente:");
-		iniciar_1_1_2.setHorizontalAlignment(SwingConstants.LEFT);
-		iniciar_1_1_2.setFont(new Font("Calibri", Font.BOLD, 18));
-		iniciar_1_1_2.setBounds(256, 85, 70, 42);
-		panelCentral.add(iniciar_1_1_2);
-
-		JLabel iniciar_1_1_2_2 = new JLabel("Correo:");
-		iniciar_1_1_2_2.setHorizontalAlignment(SwingConstants.LEFT);
-		iniciar_1_1_2_2.setFont(new Font("Calibri", Font.BOLD, 18));
-		iniciar_1_1_2_2.setBounds(503, 85, 70, 42);
-		panelCentral.add(iniciar_1_1_2_2);
-
-		JLabel iniciar_1_1_2_1_1 = new JLabel("mga@gmail.com");
-		iniciar_1_1_2_1_1.setHorizontalAlignment(SwingConstants.CENTER);
-		iniciar_1_1_2_1_1.setFont(new Font("Calibri", Font.BOLD, 18));
-		iniciar_1_1_2_1_1.setBounds(466, 102, 149, 42);
-		panelCentral.add(iniciar_1_1_2_1_1);
-
-		JLabel iniciar_1_1_2_2_1_1 = new JLabel("Fecha de renta:");
-		iniciar_1_1_2_2_1_1.setHorizontalAlignment(SwingConstants.LEFT);
-		iniciar_1_1_2_2_1_1.setFont(new Font("Calibri", Font.BOLD, 18));
-		iniciar_1_1_2_2_1_1.setBounds(426, 204, 126, 42);
-		panelCentral.add(iniciar_1_1_2_2_1_1);
-
-		JLabel iniciar_1_1_2_2_1_1_1 = new JLabel("Límite de devolución");
-		iniciar_1_1_2_2_1_1_1.setHorizontalAlignment(SwingConstants.LEFT);
-		iniciar_1_1_2_2_1_1_1.setFont(new Font("Calibri", Font.BOLD, 18));
-		iniciar_1_1_2_2_1_1_1.setBounds(407, 285, 157, 42);
-		panelCentral.add(iniciar_1_1_2_2_1_1_1);
-
-		JLabel iniciar_1_1_2_2_1_2 = new JLabel("Información de pago");
-		iniciar_1_1_2_2_1_2.setHorizontalAlignment(SwingConstants.LEFT);
-		iniciar_1_1_2_2_1_2.setFont(new Font("Calibri", Font.BOLD, 18));
-		iniciar_1_1_2_2_1_2.setBounds(700, 141, 167, 42);
-		panelCentral.add(iniciar_1_1_2_2_1_2);
-
-		JLabel iniciar_1_1_2_2_2 = new JLabel("Tipo:");
-		iniciar_1_1_2_2_2.setHorizontalAlignment(SwingConstants.CENTER);
-		iniciar_1_1_2_2_2.setFont(new Font("Calibri", Font.BOLD, 18));
-		iniciar_1_1_2_2_2.setBounds(772, 85, 70, 42);
-		panelCentral.add(iniciar_1_1_2_2_2);
-
-		JLabel iniciar_1_1_2_1_1_3 = new JLabel("Renta");
-		iniciar_1_1_2_1_1_3.setHorizontalAlignment(SwingConstants.CENTER);
-		iniciar_1_1_2_1_1_3.setFont(new Font("Calibri", Font.BOLD, 18));
-		iniciar_1_1_2_1_1_3.setBounds(755, 102, 112, 42);
-		panelCentral.add(iniciar_1_1_2_1_1_3);
-
-		JLabel iniciar_1_1_2_2_1_3 = new JLabel("Clasificación:");
-		iniciar_1_1_2_2_1_3.setHorizontalAlignment(SwingConstants.LEFT);
-		iniciar_1_1_2_2_1_3.setFont(new Font("Calibri", Font.BOLD, 18));
-		iniciar_1_1_2_2_1_3.setBounds(188, 204, 112, 42);
-		panelCentral.add(iniciar_1_1_2_2_1_3);
-
-		JLabel iniciar_1_1_2_1_2 = new JLabel("E");
-		iniciar_1_1_2_1_2.setHorizontalAlignment(SwingConstants.CENTER);
-		iniciar_1_1_2_1_2.setFont(new Font("Calibri", Font.BOLD, 18));
-		iniciar_1_1_2_1_2.setBounds(185, 232, 97, 42);
-		panelCentral.add(iniciar_1_1_2_1_2);
-
-		JLabel iniciar_1_1_2_2_1_4 = new JLabel("Distribuidores:");
-		iniciar_1_1_2_2_1_4.setHorizontalAlignment(SwingConstants.LEFT);
-		iniciar_1_1_2_2_1_4.setFont(new Font("Calibri", Font.BOLD, 18));
-		iniciar_1_1_2_2_1_4.setBounds(188, 285, 112, 42);
-		panelCentral.add(iniciar_1_1_2_2_1_4);
-
-		JLabel iniciar_1_1_2_1_3 = new JLabel("Konami");
-		iniciar_1_1_2_1_3.setHorizontalAlignment(SwingConstants.CENTER);
-		iniciar_1_1_2_1_3.setFont(new Font("Calibri", Font.BOLD, 18));
-		iniciar_1_1_2_1_3.setBounds(198, 309, 97, 42);
-		panelCentral.add(iniciar_1_1_2_1_3);
-
-		JLabel iniciar_1_1_2_1_2_1 = new JLabel("15/02/2025");
-		iniciar_1_1_2_1_2_1.setHorizontalAlignment(SwingConstants.CENTER);
-		iniciar_1_1_2_1_2_1.setFont(new Font("Calibri", Font.BOLD, 18));
-		iniciar_1_1_2_1_2_1.setBounds(436, 232, 97, 42);
-		panelCentral.add(iniciar_1_1_2_1_2_1);
-
-		JLabel iniciar_1_1_2_1_3_1 = new JLabel("15/03/2025");
-		iniciar_1_1_2_1_3_1.setHorizontalAlignment(SwingConstants.CENTER);
-		iniciar_1_1_2_1_3_1.setFont(new Font("Calibri", Font.BOLD, 18));
-		iniciar_1_1_2_1_3_1.setBounds(436, 309, 97, 42);
-		panelCentral.add(iniciar_1_1_2_1_3_1);
-
-		JLabel iniciar_1_1_2_1_4 = new JLabel("Cantidad:");
-		iniciar_1_1_2_1_4.setHorizontalAlignment(SwingConstants.LEFT);
-		iniciar_1_1_2_1_4.setFont(new Font("Calibri", Font.BOLD, 14));
-		iniciar_1_1_2_1_4.setBounds(700, 174, 57, 42);
-		panelCentral.add(iniciar_1_1_2_1_4);
-
-		JLabel iniciar_1_1_2_1_4_1 = new JLabel("Producto:");
-		iniciar_1_1_2_1_4_1.setHorizontalAlignment(SwingConstants.LEFT);
-		iniciar_1_1_2_1_4_1.setFont(new Font("Calibri", Font.BOLD, 14));
-		iniciar_1_1_2_1_4_1.setBounds(700, 205, 70, 42);
-		panelCentral.add(iniciar_1_1_2_1_4_1);
-
-		JLabel iniciar_1_1_2_1_4_1_1 = new JLabel("IVA:");
-		iniciar_1_1_2_1_4_1_1.setHorizontalAlignment(SwingConstants.LEFT);
-		iniciar_1_1_2_1_4_1_1.setFont(new Font("Calibri", Font.BOLD, 14));
-		iniciar_1_1_2_1_4_1_1.setBounds(700, 232, 57, 42);
-		panelCentral.add(iniciar_1_1_2_1_4_1_1);
-
-		JLabel iniciar_1_1_2_1_4_1_2 = new JLabel("Subtotal:");
-		iniciar_1_1_2_1_4_1_2.setHorizontalAlignment(SwingConstants.LEFT);
-		iniciar_1_1_2_1_4_1_2.setFont(new Font("Calibri", Font.BOLD, 14));
-		iniciar_1_1_2_1_4_1_2.setBounds(700, 258, 57, 42);
-		panelCentral.add(iniciar_1_1_2_1_4_1_2);
-
-		JLabel iniciar_1_1_2_1_4_1_2_1 = new JLabel("Descuento:");
-		iniciar_1_1_2_1_4_1_2_1.setHorizontalAlignment(SwingConstants.LEFT);
-		iniciar_1_1_2_1_4_1_2_1.setFont(new Font("Calibri", Font.BOLD, 14));
-		iniciar_1_1_2_1_4_1_2_1.setBounds(700, 285, 70, 42);
-		panelCentral.add(iniciar_1_1_2_1_4_1_2_1);
-
-		JLabel iniciar_1_1_2_1_4_2 = new JLabel("1");
-		iniciar_1_1_2_1_4_2.setHorizontalAlignment(SwingConstants.LEFT);
-		iniciar_1_1_2_1_4_2.setFont(new Font("Calibri", Font.BOLD, 14));
-		iniciar_1_1_2_1_4_2.setBounds(760, 174, 57, 42);
-		panelCentral.add(iniciar_1_1_2_1_4_2);
-
-		JLabel iniciar_1_1_2_1_4_2_1 = new JLabel("100.00 MXN");
-		iniciar_1_1_2_1_4_2_1.setHorizontalAlignment(SwingConstants.LEFT);
-		iniciar_1_1_2_1_4_2_1.setFont(new Font("Calibri", Font.BOLD, 14));
-		iniciar_1_1_2_1_4_2_1.setBounds(760, 204, 85, 42);
-		panelCentral.add(iniciar_1_1_2_1_4_2_1);
-
-		JLabel iniciar_1_1_2_1_4_2_2 = new JLabel("$8");
-		iniciar_1_1_2_1_4_2_2.setHorizontalAlignment(SwingConstants.LEFT);
-		iniciar_1_1_2_1_4_2_2.setFont(new Font("Calibri", Font.BOLD, 14));
-		iniciar_1_1_2_1_4_2_2.setBounds(728, 232, 57, 42);
-		panelCentral.add(iniciar_1_1_2_1_4_2_2);
-
-		JLabel iniciar_1_1_2_1_4_2_3 = new JLabel("$108.00 MXN");
-		iniciar_1_1_2_1_4_2_3.setHorizontalAlignment(SwingConstants.LEFT);
-		iniciar_1_1_2_1_4_2_3.setFont(new Font("Calibri", Font.BOLD, 14));
-		iniciar_1_1_2_1_4_2_3.setBounds(760, 258, 78, 42);
-		panelCentral.add(iniciar_1_1_2_1_4_2_3);
-
-		JLabel iniciar_1_1_2_1_4_2_4 = new JLabel("7%");
-		iniciar_1_1_2_1_4_2_4.setHorizontalAlignment(SwingConstants.LEFT);
-		iniciar_1_1_2_1_4_2_4.setFont(new Font("Calibri", Font.BOLD, 14));
-		iniciar_1_1_2_1_4_2_4.setBounds(770, 285, 57, 42);
-		panelCentral.add(iniciar_1_1_2_1_4_2_4);
-
-		JLabel iniciar_1_1_2_1_4_3 = new JLabel("1987");
-		iniciar_1_1_2_1_4_3.setHorizontalAlignment(SwingConstants.LEFT);
-		iniciar_1_1_2_1_4_3.setFont(new Font("Calibri", Font.BOLD, 18));
-		iniciar_1_1_2_1_4_3.setBounds(42, 174, 57, 42);
-		panelCentral.add(iniciar_1_1_2_1_4_3);
-
-		// 3. PANEL ROJO SUPERIOR (barra de título)
-		JPanel barraRoja = new JPanel();
-		barraRoja.setBackground(Color.decode("#B44635"));
-		barraRoja.setBounds(0, 0, 1024, 60);
-		layeredPane.add(barraRoja, JLayeredPane.PALETTE_LAYER);
-
-		setVisible(true);
-	}
 
 	public void Confirma_12() {
 		// Configuración básica de la ventana
@@ -3146,659 +2200,10 @@ public class HomeView extends JFrame {
 		setVisible(true);
 	}
 
-	public void Compra() {
-		// Configuración básica de la ventana
-		setTitle("Compra");
-		setSize(1024, 576);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setLocationRelativeTo(null);
+	
 
-		// Usamos JLayeredPane para superponer componentes
-		JLayeredPane layeredPane = new JLayeredPane();
-		layeredPane.setPreferredSize(new Dimension(900, 650));
-		setContentPane(layeredPane);
 
-		// 1. PANEL BLANCO (fondo completo)
-		JPanel panelIzq = new JPanel();
-		panelIzq.setLayout(null);
-		panelIzq.setBackground(Color.decode("#FFFFFF"));
-		panelIzq.setBounds(10, 62, 257, 475);
-		layeredPane.add(panelIzq, JLayeredPane.PALETTE_LAYER);
 
-		JButton btnClientes = new JButton("CLIENTES");
-		btnClientes.setFont(new Font("Calibri", Font.BOLD, 16));
-		btnClientes.setBackground(Color.decode("#263C54"));
-		btnClientes.setForeground(Color.WHITE);
-		btnClientes.setBounds(10, 11, 237, 100);
-		btnClientes.addActionListener(e -> {
-			AdministradorCliente(); // Abre la segunda ventana
-			dispose(); // Cierra la ventana actual
-		});
-		panelIzq.add(btnClientes);
-
-		JButton btnVideojuegos = new JButton("VIDEOJUEGOS");
-		btnVideojuegos.setForeground(Color.WHITE);
-		btnVideojuegos.setFont(new Font("Calibri", Font.BOLD, 16));
-		btnVideojuegos.setBackground(new Color(38, 60, 84));
-		btnVideojuegos.setBounds(10, 128, 237, 100);
-		panelIzq.add(btnVideojuegos);
-		btnVideojuegos.addActionListener(e -> {
-			AdministradorJuegos(); // Abre la segunda ventana
-			dispose(); // Cierra la ventana actual
-		});
-
-		JButton btnRentaYCompra = new JButton("RENTA Y COMPRA");
-		btnRentaYCompra.setForeground(Color.WHITE);
-		btnRentaYCompra.setFont(new Font("Calibri", Font.BOLD, 16));
-		btnRentaYCompra.setBackground(new Color(38, 60, 84));
-		btnRentaYCompra.setBounds(10, 242, 237, 100);
-		btnRentaYCompra.addActionListener(e -> {
-			AdministradorRentaCompra(); // Abre la segunda ventana
-			dispose(); // Cierra la ventana actual
-		});
-		panelIzq.add(btnRentaYCompra);
-
-		JButton btnNuevaOperacion = new JButton("NUEVA OPERACIÓN");
-		btnNuevaOperacion.setForeground(Color.WHITE);
-		btnNuevaOperacion.setFont(new Font("Calibri", Font.BOLD, 16));
-		btnNuevaOperacion.setBackground(new Color(38, 60, 84));
-		btnNuevaOperacion.setBounds(10, 364, 237, 100);
-		btnNuevaOperacion.addActionListener(e -> {
-			NuevaOperacion(); // Abre la segunda ventana
-			dispose(); // Cierra la ventana actual
-		});
-		panelIzq.add(btnNuevaOperacion);
-
-		// 2. PANEL GRIS CENTRAL
-		JPanel panelCentral = new JPanel();
-		panelCentral.setLayout(null);
-		panelCentral.setBackground(Color.decode("#F2F2F2"));
-		panelCentral.setBounds(277, 62, 731, 475);
-		layeredPane.add(panelCentral, JLayeredPane.PALETTE_LAYER);
-
-		JLabel iniciar = new JLabel("VENTA");
-		iniciar.setSize(236, 60);
-		iniciar.setLocation(143, 11);
-		iniciar.setHorizontalAlignment(JLabel.CENTER);
-		iniciar.setFont(new Font("Calibri", Font.BOLD, 24));
-		panelCentral.add(iniciar);
-
-		JButton btnBuscar = new JButton("Buscar");
-		btnBuscar.setFont(new Font("League Spartan Light", Font.PLAIN, 14));
-		btnBuscar.setBounds(619, 25, 86, 25);
-		panelCentral.add(btnBuscar);
-		// Datos de la tabla
-		Object[][] data = {
-				{ "Identificador", "Nombre", "Plataforma", "Disponibilidad", "Precio(venta)", "Precio(renta)", },
-				{ "000001", "Contra", "Nintendo", "5", "$800", "$100" },
-				{ "000002", "God of War", "Play Station", "25", "$850", "$250" },
-				{ "000003", "Halo", "Xbox", "32", "$890", "$640" }, { "000004", "Fornite", "Pc", "40", "$900", "$700" },
-				{ "000005", "Pokemon", "Mixto", "41", "$950", "$720" },
-				{ "000006", "ARK: Survival", "Mixto", "30", "$990", "$720" },
-
-		};
-
-		DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
-		centerRenderer.setHorizontalAlignment(JLabel.CENTER);
-
-		// Tabla
-		JTable table = new JTable(data, new String[] { "", "", "", "", "", "", });
-		panelCentral.add(table);
-		table.setFont(new Font("Segoe UI", Font.PLAIN, 16));
-		table.setBounds(26, 62, 695, 346);
-		table.setBorder(BorderFactory.createLineBorder(new Color(204, 204, 204)));
-		table.setShowGrid(true);
-		table.setGridColor(new Color(204, 204, 204));
-		table.setTableHeader(null);
-		table.setDefaultRenderer(Object.class, centerRenderer);
-		table.setRowHeight(40);
-		table.setShowHorizontalLines(true);
-		table.setShowVerticalLines(true);
-
-		JButton btnNewButton = new JButton("Comprar");
-		btnNewButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				OperacionComprar();
-				dispose();
-
-			}
-		});
-		btnNewButton.setBounds(528, 439, 143, 25);
-		panelCentral.add(btnNewButton);
-
-		// 3. PANEL ROJO SUPERIOR (barra de título)
-		JPanel barraRoja = new JPanel();
-		barraRoja.setBackground(Color.decode("#B44635"));
-		barraRoja.setBounds(0, 0, 1024, 60);
-		layeredPane.add(barraRoja, JLayeredPane.PALETTE_LAYER);
-
-		setVisible(true);
-
-		try {
-			UIManager.setLookAndFeel(new FlatLightLaf());
-			UIManager.put("Button.arc", 9); // Esquinas redondeadas
-		} catch (Exception ex) {
-			ex.printStackTrace();
-		}
-	}
-
-	public void OperacionComprar() {
-		JTextField textField;
-		JTextField textField_1;
-		JTextField textField_2;
-		// Configuración básica de la ventana
-		setTitle("Detalles de operación Comprar");
-		setSize(1024, 576);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setLocationRelativeTo(null);
-
-		// Usamos JLayeredPane para superponer componentes
-		JLayeredPane layeredPane = new JLayeredPane();
-		layeredPane.setPreferredSize(new Dimension(900, 650));
-		setContentPane(layeredPane);
-
-		// 2. PANEL GRIS CENTRAl
-		JPanel panelCentral = new JPanel();
-		panelCentral.setLayout(null);
-		panelCentral.setBackground(Color.decode("#F2F2F2"));
-		panelCentral.setBounds(5, 62, 998, 475); // (x, y, ancho, alto)
-		layeredPane.add(panelCentral, JLayeredPane.PALETTE_LAYER);
-
-		// Logotipo
-		ImageIcon iconoOriginal = new ImageIcon(getClass().getResource("/images/Block.png"));
-		Image imagenEscalada = iconoOriginal.getImage().getScaledInstance(70, 70, Image.SCALE_SMOOTH);
-		JLabel logo = new JLabel(new ImageIcon(imagenEscalada));
-		logo.setBounds(477, 11, 70, 70); // posicion
-		panelCentral.add(logo);
-
-		JLabel iniciar = new JLabel("DETALLES DE OPERACIÓN");
-		iniciar.setSize(263, 42);
-		iniciar.setLocation(369, 78);
-		iniciar.setHorizontalAlignment(JLabel.CENTER);
-		iniciar.setFont(new Font("Calibri", Font.BOLD, 24));
-		panelCentral.add(iniciar);
-
-		JLabel iniciar_1 = new JLabel("Nombre del cliente");
-		iniciar_1.setHorizontalAlignment(SwingConstants.LEFT);
-		iniciar_1.setFont(new Font("Calibri", Font.BOLD, 14));
-		iniciar_1.setBounds(85, 120, 160, 42); // Ajusta tamaño si es necesario
-		panelCentral.add(iniciar_1);
-
-		JTextField nJuego = new JTextField();
-		nJuego.setBackground(Color.decode("#D9D9D9"));
-		nJuego.setBounds(85, 161, 255, 27);
-		panelCentral.add(nJuego);
-		nJuego.setColumns(10);
-
-		JButton btnCancelar = new JButton("Cancelar");
-		btnCancelar.setBackground(Color.decode("#B82F2F")); // Color de fondo (azul oscuro)
-		btnCancelar.setForeground(Color.WHITE);
-		btnCancelar.setBounds(175, 406, 183, 33);
-		btnCancelar.addActionListener(e -> {
-			Compra(); // Abre la segunda ventana
-			dispose(); // Cierra la ventana actual
-		});
-		panelCentral.add(btnCancelar);
-
-		JButton btnConfirmar = new JButton("Confirmar");
-		btnConfirmar.setBackground(Color.decode("#263C54")); // Color de fondo (azul oscuro)
-		btnConfirmar.setForeground(Color.WHITE);
-		btnConfirmar.setBounds(582, 406, 183, 33);
-		btnConfirmar.addActionListener(e -> {
-			Confirma_13(); // Abre la segunda ventana
-			// Cierra la ventana actual
-		});
-		panelCentral.add(btnCancelar);
-		panelCentral.add(btnConfirmar);
-
-		textField_1 = new JTextField();
-		textField_1.setColumns(10);
-		textField_1.setBackground(new Color(217, 217, 217));
-		textField_1.setBounds(405, 161, 263, 27);
-		panelCentral.add(textField_1);
-
-		JLabel iniciar_1_1 = new JLabel("Nombre del Videojuego:");
-		iniciar_1_1.setHorizontalAlignment(SwingConstants.LEFT);
-		iniciar_1_1.setFont(new Font("Calibri", Font.BOLD, 14));
-		iniciar_1_1.setBounds(405, 120, 160, 42);
-		panelCentral.add(iniciar_1_1);
-
-		textField_2 = new JTextField();
-		textField_2.setColumns(10);
-		textField_2.setBackground(new Color(217, 217, 217));
-		textField_2.setBounds(697, 161, 165, 27);
-		panelCentral.add(textField_2);
-
-		JLabel iniciar_1_1_1 = new JLabel("Cantidad:");
-		iniciar_1_1_1.setHorizontalAlignment(SwingConstants.LEFT);
-		iniciar_1_1_1.setFont(new Font("Calibri", Font.BOLD, 14));
-		iniciar_1_1_1.setBounds(697, 120, 160, 42);
-		panelCentral.add(iniciar_1_1_1);
-
-		JLabel iniciar_1_2 = new JLabel("Nombre de videojuego");
-		iniciar_1_2.setHorizontalAlignment(SwingConstants.CENTER);
-		iniciar_1_2.setFont(new Font("Calibri", Font.BOLD, 14));
-		iniciar_1_2.setBounds(75, 215, 255, 42);
-		panelCentral.add(iniciar_1_2);
-
-		JLabel iniciar_1_2_1 = new JLabel("Precio (MXN):");
-		iniciar_1_2_1.setHorizontalAlignment(SwingConstants.CENTER);
-		iniciar_1_2_1.setFont(new Font("Calibri", Font.BOLD, 14));
-		iniciar_1_2_1.setBounds(403, 215, 255, 42);
-		panelCentral.add(iniciar_1_2_1);
-
-		JLabel iniciar_1_2_2 = new JLabel("Contra");
-		iniciar_1_2_2.setHorizontalAlignment(SwingConstants.CENTER);
-		iniciar_1_2_2.setFont(new Font("Calibri", Font.BOLD, 14));
-		iniciar_1_2_2.setBounds(75, 246, 255, 42);
-		panelCentral.add(iniciar_1_2_2);
-
-		JLabel iniciar_1_2_1_1 = new JLabel("$100");
-		iniciar_1_2_1_1.setHorizontalAlignment(SwingConstants.CENTER);
-		iniciar_1_2_1_1.setFont(new Font("Calibri", Font.BOLD, 14));
-		iniciar_1_2_1_1.setBounds(403, 246, 255, 42);
-		panelCentral.add(iniciar_1_2_1_1);
-
-		JLabel iniciar_1_2_3 = new JLabel("Descuento:");
-		iniciar_1_2_3.setHorizontalAlignment(SwingConstants.CENTER);
-		iniciar_1_2_3.setFont(new Font("Calibri", Font.BOLD, 14));
-		iniciar_1_2_3.setBounds(75, 293, 255, 42);
-		panelCentral.add(iniciar_1_2_3);
-
-		JLabel iniciar_1_2_2_1 = new JLabel("07%");
-		iniciar_1_2_2_1.setHorizontalAlignment(SwingConstants.CENTER);
-		iniciar_1_2_2_1.setFont(new Font("Calibri", Font.BOLD, 14));
-		iniciar_1_2_2_1.setBounds(75, 320, 255, 42);
-		panelCentral.add(iniciar_1_2_2_1);
-
-		JLabel iniciar_1_2_1_2 = new JLabel("Fecha:");
-		iniciar_1_2_1_2.setHorizontalAlignment(SwingConstants.CENTER);
-		iniciar_1_2_1_2.setFont(new Font("Calibri", Font.BOLD, 14));
-		iniciar_1_2_1_2.setBounds(403, 293, 255, 42);
-		panelCentral.add(iniciar_1_2_1_2);
-
-		JLabel iniciar_1_2_1_1_1 = new JLabel("15/05/2025");
-		iniciar_1_2_1_1_1.setHorizontalAlignment(SwingConstants.CENTER);
-		iniciar_1_2_1_1_1.setFont(new Font("Calibri", Font.BOLD, 14));
-		iniciar_1_2_1_1_1.setBounds(403, 320, 255, 42);
-		panelCentral.add(iniciar_1_2_1_1_1);
-
-		JLabel iniciar_1_2_1_3 = new JLabel("Tipo:");
-		iniciar_1_2_1_3.setHorizontalAlignment(SwingConstants.CENTER);
-		iniciar_1_2_1_3.setFont(new Font("Calibri", Font.BOLD, 14));
-		iniciar_1_2_1_3.setBounds(687, 215, 101, 42);
-		panelCentral.add(iniciar_1_2_1_3);
-
-		JLabel iniciar_1_2_1_1_2 = new JLabel("Venta");
-		iniciar_1_2_1_1_2.setHorizontalAlignment(SwingConstants.CENTER);
-		iniciar_1_2_1_1_2.setFont(new Font("Calibri", Font.BOLD, 14));
-		iniciar_1_2_1_1_2.setBounds(687, 246, 101, 42);
-		panelCentral.add(iniciar_1_2_1_1_2);
-
-		// 3. PANEL ROJO SUPERIOR (barra de título)
-		JPanel barraRoja = new JPanel();
-		barraRoja.setBackground(Color.decode("#B44635"));
-		barraRoja.setBounds(0, 0, 1024, 60);
-		layeredPane.add(barraRoja, JLayeredPane.PALETTE_LAYER);
-
-		setVisible(true);
-	}
-
-	public void Confirma_13() {
-		// Configuración básica de la ventana
-		setTitle("Confirma Eliminar Juego");
-		setUndecorated(true);
-
-		setSize(654, 252);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setLocationRelativeTo(null);
-
-		// Usamos JLayeredPane para superponer componentes
-		JLayeredPane layeredPane = new JLayeredPane();
-		layeredPane.setPreferredSize(new Dimension(900, 650));
-		setContentPane(layeredPane);
-
-		// 2. PANEL GRIS CENTRAl
-		JPanel panelCentral = new JPanel();
-		panelCentral.setLayout(null);
-		panelCentral.setBackground(Color.decode("#D9D9D9"));
-		panelCentral.setBounds(0, 0, 654, 252); // (x, y, ancho, alto)
-		layeredPane.add(panelCentral, JLayeredPane.PALETTE_LAYER);
-
-		// Logotipo
-		ImageIcon iconoOriginal = new ImageIcon(getClass().getResource("/images/Block.png"));
-		Image imagenEscalada = iconoOriginal.getImage().getScaledInstance(70, 70, Image.SCALE_SMOOTH);
-
-		JLabel iniciar = new JLabel("Confirmar operación");
-		iniciar.setSize(285, 42);
-		iniciar.setLocation(233, 51);
-		iniciar.setHorizontalAlignment(JLabel.CENTER);
-		iniciar.setFont(new Font("Calibri", Font.BOLD, 24));
-		panelCentral.add(iniciar);
-
-		JButton btnCancelar = new JButton("Cancelar");
-		btnCancelar.setBackground(Color.decode("#B82F2F")); // Color de fondo (azul oscuro)
-		btnCancelar.setForeground(Color.WHITE);
-		btnCancelar.setBounds(31, 130, 183, 33);
-		btnCancelar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-
-				dispose();
-			}
-		});
-		panelCentral.add(btnCancelar);
-
-		JButton btnSi = new JButton("Si");
-		btnSi.setBackground(Color.decode("#6D91B9")); // Color de fondo (azul oscuro)
-		btnSi.setForeground(Color.WHITE);
-		btnSi.setBounds(418, 130, 183, 33);
-		btnSi.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				DetallesCompra();
-				dispose();
-
-			}
-		});
-		panelCentral.add(btnSi);
-
-		setVisible(true);
-	}
-
-	public void DetallesCompra() {
-		// Configuración básica de la ventana
-		setTitle("Detalles de Compra");
-		setSize(1024, 576);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setLocationRelativeTo(null);
-
-		// Usamos JLayeredPane para superponer componentes
-		JLayeredPane layeredPane = new JLayeredPane();
-		layeredPane.setPreferredSize(new Dimension(900, 650));
-		setContentPane(layeredPane);
-
-		// 2. PANEL GRIS CENTRAl
-		JPanel panelCentral = new JPanel();
-		panelCentral.setLayout(null);
-		panelCentral.setBackground(Color.decode("#D9D9D9"));
-		panelCentral.setBounds(5, 62, 998, 475); // (x, y, ancho, alto)
-		layeredPane.add(panelCentral, JLayeredPane.PALETTE_LAYER);
-
-		// Logotipo
-		ImageIcon iconoOriginal = new ImageIcon(getClass().getResource("/images/contra.png"));
-		Image imagenEscalada = iconoOriginal.getImage().getScaledInstance(100, 70, Image.SCALE_SMOOTH);
-
-		JLabel iniciar = new JLabel("DETALLES DE VIDEOJUEGO");
-		iniciar.setSize(285, 42);
-		iniciar.setLocation(442, 32);
-		iniciar.setHorizontalAlignment(JLabel.CENTER);
-		iniciar.setFont(new Font("Calibri", Font.BOLD, 24));
-		panelCentral.add(iniciar);
-
-		JLabel iniciar_1_1_2_1 = new JLabel("Miguel Garcia");
-		iniciar_1_1_2_1.setHorizontalAlignment(SwingConstants.CENTER);
-		iniciar_1_1_2_1.setFont(new Font("Calibri", Font.BOLD, 18));
-		iniciar_1_1_2_1.setBounds(226, 102, 112, 42);
-		panelCentral.add(iniciar_1_1_2_1);
-
-		JButton btnCancelar = new JButton("REGRESAR");
-		btnCancelar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				Compra();
-				dispose();
-			}
-		});
-		btnCancelar.setBackground(Color.decode("#B82F2F")); // Color de fondo (azul oscuro)
-		btnCancelar.setForeground(Color.WHITE);
-		btnCancelar.setBounds(185, 406, 183, 33);
-		panelCentral.add(btnCancelar);
-
-		JButton btnConfirmar = new JButton("Descargar (PDF)");
-		btnConfirmar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-
-				Confirma_14();
-
-			}
-		});
-		btnConfirmar.setBackground(Color.decode("#263C54")); // Color de fondo (azul oscuro)
-		btnConfirmar.setForeground(Color.WHITE);
-		btnConfirmar.setBounds(614, 406, 183, 33);
-		panelCentral.add(btnConfirmar);
-
-		ImageIcon iconoOrigina = new ImageIcon(getClass().getResource("/images/Contra.png"));
-		Image imagen = iconoOriginal.getImage().getScaledInstance(180, 120, Image.SCALE_SMOOTH);
-		JLabel logo = new JLabel(new ImageIcon(imagen));
-		logo.setBounds(32, 32, 184, 112); // posicion
-		panelCentral.add(logo);
-
-		JLabel lblContra = new JLabel("CONTRA");
-		lblContra.setHorizontalAlignment(SwingConstants.LEFT);
-		lblContra.setFont(new Font("Calibri", Font.BOLD, 24));
-		lblContra.setBounds(32, 141, 135, 42);
-		panelCentral.add(lblContra);
-
-		JLabel iniciar_1_1_1_1_2_2_1 = new JLabel("$800.00 MXN");
-		iniciar_1_1_1_1_2_2_1.setForeground(new Color(153, 0, 0));
-		iniciar_1_1_1_1_2_2_1.setHorizontalAlignment(SwingConstants.LEFT);
-		iniciar_1_1_1_1_2_2_1.setFont(new Font("Calibri", Font.BOLD, 18));
-		iniciar_1_1_1_1_2_2_1.setBounds(719, 359, 126, 42);
-		panelCentral.add(iniciar_1_1_1_1_2_2_1);
-
-		JTextArea txtrTotalivaIncluidoEn = new JTextArea("Total(IVA incluído, en caso de ser aplicable):");
-		txtrTotalivaIncluidoEn.setWrapStyleWord(true);
-		txtrTotalivaIncluidoEn.setOpaque(false);
-		txtrTotalivaIncluidoEn.setLineWrap(true);
-		txtrTotalivaIncluidoEn.setFont(new Font("Calibri", Font.BOLD, 20));
-		txtrTotalivaIncluidoEn.setEditable(false);
-		txtrTotalivaIncluidoEn.setBounds(628, 341, 298, 54);
-		panelCentral.add(txtrTotalivaIncluidoEn);
-
-		JLabel iniciar_1_1_2 = new JLabel("Cliente:");
-		iniciar_1_1_2.setHorizontalAlignment(SwingConstants.LEFT);
-		iniciar_1_1_2.setFont(new Font("Calibri", Font.BOLD, 18));
-		iniciar_1_1_2.setBounds(256, 85, 70, 42);
-		panelCentral.add(iniciar_1_1_2);
-
-		JLabel iniciar_1_1_2_2 = new JLabel("Correo:");
-		iniciar_1_1_2_2.setHorizontalAlignment(SwingConstants.LEFT);
-		iniciar_1_1_2_2.setFont(new Font("Calibri", Font.BOLD, 18));
-		iniciar_1_1_2_2.setBounds(503, 85, 70, 42);
-		panelCentral.add(iniciar_1_1_2_2);
-
-		JLabel iniciar_1_1_2_1_1 = new JLabel("mga@gmail.com");
-		iniciar_1_1_2_1_1.setHorizontalAlignment(SwingConstants.CENTER);
-		iniciar_1_1_2_1_1.setFont(new Font("Calibri", Font.BOLD, 18));
-		iniciar_1_1_2_1_1.setBounds(466, 102, 149, 42);
-		panelCentral.add(iniciar_1_1_2_1_1);
-
-		JLabel iniciar_1_1_2_2_1_1 = new JLabel("Fecha de compra:");
-		iniciar_1_1_2_2_1_1.setHorizontalAlignment(SwingConstants.LEFT);
-		iniciar_1_1_2_2_1_1.setFont(new Font("Calibri", Font.BOLD, 18));
-		iniciar_1_1_2_2_1_1.setBounds(426, 204, 147, 42);
-		panelCentral.add(iniciar_1_1_2_2_1_1);
-
-		JLabel iniciar_1_1_2_2_1_2 = new JLabel("Información de pago");
-		iniciar_1_1_2_2_1_2.setHorizontalAlignment(SwingConstants.LEFT);
-		iniciar_1_1_2_2_1_2.setFont(new Font("Calibri", Font.BOLD, 18));
-		iniciar_1_1_2_2_1_2.setBounds(700, 141, 167, 42);
-		panelCentral.add(iniciar_1_1_2_2_1_2);
-
-		JLabel iniciar_1_1_2_2_2 = new JLabel("Tipo:");
-		iniciar_1_1_2_2_2.setHorizontalAlignment(SwingConstants.CENTER);
-		iniciar_1_1_2_2_2.setFont(new Font("Calibri", Font.BOLD, 18));
-		iniciar_1_1_2_2_2.setBounds(772, 85, 70, 42);
-		panelCentral.add(iniciar_1_1_2_2_2);
-
-		JLabel iniciar_1_1_2_1_1_3 = new JLabel("Renta");
-		iniciar_1_1_2_1_1_3.setHorizontalAlignment(SwingConstants.CENTER);
-		iniciar_1_1_2_1_1_3.setFont(new Font("Calibri", Font.BOLD, 18));
-		iniciar_1_1_2_1_1_3.setBounds(755, 102, 112, 42);
-		panelCentral.add(iniciar_1_1_2_1_1_3);
-
-		JLabel iniciar_1_1_2_2_1_3 = new JLabel("Clasificación:");
-		iniciar_1_1_2_2_1_3.setHorizontalAlignment(SwingConstants.LEFT);
-		iniciar_1_1_2_2_1_3.setFont(new Font("Calibri", Font.BOLD, 18));
-		iniciar_1_1_2_2_1_3.setBounds(188, 204, 112, 42);
-		panelCentral.add(iniciar_1_1_2_2_1_3);
-
-		JLabel iniciar_1_1_2_1_2 = new JLabel("E");
-		iniciar_1_1_2_1_2.setHorizontalAlignment(SwingConstants.CENTER);
-		iniciar_1_1_2_1_2.setFont(new Font("Calibri", Font.BOLD, 18));
-		iniciar_1_1_2_1_2.setBounds(185, 232, 97, 42);
-		panelCentral.add(iniciar_1_1_2_1_2);
-
-		JLabel iniciar_1_1_2_2_1_4 = new JLabel("Distribuidores:");
-		iniciar_1_1_2_2_1_4.setHorizontalAlignment(SwingConstants.LEFT);
-		iniciar_1_1_2_2_1_4.setFont(new Font("Calibri", Font.BOLD, 18));
-		iniciar_1_1_2_2_1_4.setBounds(188, 285, 112, 42);
-		panelCentral.add(iniciar_1_1_2_2_1_4);
-
-		JLabel iniciar_1_1_2_1_3 = new JLabel("Konami");
-		iniciar_1_1_2_1_3.setHorizontalAlignment(SwingConstants.CENTER);
-		iniciar_1_1_2_1_3.setFont(new Font("Calibri", Font.BOLD, 18));
-		iniciar_1_1_2_1_3.setBounds(198, 309, 97, 42);
-		panelCentral.add(iniciar_1_1_2_1_3);
-
-		JLabel iniciar_1_1_2_1_2_1 = new JLabel("15/02/2025");
-		iniciar_1_1_2_1_2_1.setHorizontalAlignment(SwingConstants.CENTER);
-		iniciar_1_1_2_1_2_1.setFont(new Font("Calibri", Font.BOLD, 18));
-		iniciar_1_1_2_1_2_1.setBounds(436, 232, 97, 42);
-		panelCentral.add(iniciar_1_1_2_1_2_1);
-
-		JLabel iniciar_1_1_2_1_4 = new JLabel("Cantidad:");
-		iniciar_1_1_2_1_4.setHorizontalAlignment(SwingConstants.LEFT);
-		iniciar_1_1_2_1_4.setFont(new Font("Calibri", Font.BOLD, 14));
-		iniciar_1_1_2_1_4.setBounds(700, 174, 57, 42);
-		panelCentral.add(iniciar_1_1_2_1_4);
-
-		JLabel iniciar_1_1_2_1_4_1 = new JLabel("Producto:");
-		iniciar_1_1_2_1_4_1.setHorizontalAlignment(SwingConstants.LEFT);
-		iniciar_1_1_2_1_4_1.setFont(new Font("Calibri", Font.BOLD, 14));
-		iniciar_1_1_2_1_4_1.setBounds(700, 205, 70, 42);
-		panelCentral.add(iniciar_1_1_2_1_4_1);
-
-		JLabel iniciar_1_1_2_1_4_1_1 = new JLabel("IVA:");
-		iniciar_1_1_2_1_4_1_1.setHorizontalAlignment(SwingConstants.LEFT);
-		iniciar_1_1_2_1_4_1_1.setFont(new Font("Calibri", Font.BOLD, 14));
-		iniciar_1_1_2_1_4_1_1.setBounds(700, 232, 57, 42);
-		panelCentral.add(iniciar_1_1_2_1_4_1_1);
-
-		JLabel iniciar_1_1_2_1_4_1_2 = new JLabel("Subtotal:");
-		iniciar_1_1_2_1_4_1_2.setHorizontalAlignment(SwingConstants.LEFT);
-		iniciar_1_1_2_1_4_1_2.setFont(new Font("Calibri", Font.BOLD, 14));
-		iniciar_1_1_2_1_4_1_2.setBounds(700, 258, 57, 42);
-		panelCentral.add(iniciar_1_1_2_1_4_1_2);
-
-		JLabel iniciar_1_1_2_1_4_1_2_1 = new JLabel("Descuento:");
-		iniciar_1_1_2_1_4_1_2_1.setHorizontalAlignment(SwingConstants.LEFT);
-		iniciar_1_1_2_1_4_1_2_1.setFont(new Font("Calibri", Font.BOLD, 14));
-		iniciar_1_1_2_1_4_1_2_1.setBounds(700, 285, 70, 42);
-		panelCentral.add(iniciar_1_1_2_1_4_1_2_1);
-
-		JLabel iniciar_1_1_2_1_4_2 = new JLabel("1");
-		iniciar_1_1_2_1_4_2.setHorizontalAlignment(SwingConstants.LEFT);
-		iniciar_1_1_2_1_4_2.setFont(new Font("Calibri", Font.BOLD, 14));
-		iniciar_1_1_2_1_4_2.setBounds(760, 174, 57, 42);
-		panelCentral.add(iniciar_1_1_2_1_4_2);
-
-		JLabel iniciar_1_1_2_1_4_2_1 = new JLabel("100.00 MXN");
-		iniciar_1_1_2_1_4_2_1.setHorizontalAlignment(SwingConstants.LEFT);
-		iniciar_1_1_2_1_4_2_1.setFont(new Font("Calibri", Font.BOLD, 14));
-		iniciar_1_1_2_1_4_2_1.setBounds(760, 204, 85, 42);
-		panelCentral.add(iniciar_1_1_2_1_4_2_1);
-
-		JLabel iniciar_1_1_2_1_4_2_2 = new JLabel("$8");
-		iniciar_1_1_2_1_4_2_2.setHorizontalAlignment(SwingConstants.LEFT);
-		iniciar_1_1_2_1_4_2_2.setFont(new Font("Calibri", Font.BOLD, 14));
-		iniciar_1_1_2_1_4_2_2.setBounds(728, 232, 57, 42);
-		panelCentral.add(iniciar_1_1_2_1_4_2_2);
-
-		JLabel iniciar_1_1_2_1_4_2_3 = new JLabel("$108.00 MXN");
-		iniciar_1_1_2_1_4_2_3.setHorizontalAlignment(SwingConstants.LEFT);
-		iniciar_1_1_2_1_4_2_3.setFont(new Font("Calibri", Font.BOLD, 14));
-		iniciar_1_1_2_1_4_2_3.setBounds(760, 258, 78, 42);
-		panelCentral.add(iniciar_1_1_2_1_4_2_3);
-
-		JLabel iniciar_1_1_2_1_4_2_4 = new JLabel("7%");
-		iniciar_1_1_2_1_4_2_4.setHorizontalAlignment(SwingConstants.LEFT);
-		iniciar_1_1_2_1_4_2_4.setFont(new Font("Calibri", Font.BOLD, 14));
-		iniciar_1_1_2_1_4_2_4.setBounds(770, 285, 57, 42);
-		panelCentral.add(iniciar_1_1_2_1_4_2_4);
-
-		JLabel iniciar_1_1_2_1_4_3 = new JLabel("1987");
-		iniciar_1_1_2_1_4_3.setHorizontalAlignment(SwingConstants.LEFT);
-		iniciar_1_1_2_1_4_3.setFont(new Font("Calibri", Font.BOLD, 18));
-		iniciar_1_1_2_1_4_3.setBounds(42, 174, 57, 42);
-		panelCentral.add(iniciar_1_1_2_1_4_3);
-
-		// 3. PANEL ROJO SUPERIOR (barra de título)
-		JPanel barraRoja = new JPanel();
-		barraRoja.setBackground(Color.decode("#B44635"));
-		barraRoja.setBounds(0, 0, 1024, 60);
-		layeredPane.add(barraRoja, JLayeredPane.PALETTE_LAYER);
-
-		setVisible(true);
-	}
-
-	public void Confirma_14() {
-		// Configuración básica de la ventana
-		setTitle("Confirma Eliminar Juego");
-		setUndecorated(true);
-
-		setSize(654, 252);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setLocationRelativeTo(null);
-
-		// Usamos JLayeredPane para superponer componentes
-		JLayeredPane layeredPane = new JLayeredPane();
-		layeredPane.setPreferredSize(new Dimension(900, 650));
-		setContentPane(layeredPane);
-
-		// 2. PANEL GRIS CENTRAl
-		JPanel panelCentral = new JPanel();
-		panelCentral.setLayout(null);
-		panelCentral.setBackground(Color.decode("#D9D9D9"));
-		panelCentral.setBounds(0, 0, 654, 252); // (x, y, ancho, alto)
-		layeredPane.add(panelCentral, JLayeredPane.PALETTE_LAYER);
-
-		// Logotipo
-		ImageIcon iconoOriginal = new ImageIcon(getClass().getResource("/images/Block.png"));
-		Image imagenEscalada = iconoOriginal.getImage().getScaledInstance(70, 70, Image.SCALE_SMOOTH);
-
-		JLabel iniciar = new JLabel("Confirmar operación");
-		iniciar.setSize(285, 42);
-		iniciar.setLocation(233, 51);
-		iniciar.setHorizontalAlignment(JLabel.CENTER);
-		iniciar.setFont(new Font("Calibri", Font.BOLD, 24));
-		panelCentral.add(iniciar);
-
-		JButton btnCancelar = new JButton("Cancelar");
-		btnCancelar.setBackground(Color.decode("#B82F2F")); // Color de fondo (azul oscuro)
-		btnCancelar.setForeground(Color.WHITE);
-		btnCancelar.setBounds(31, 130, 183, 33);
-		btnCancelar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-
-				dispose();
-			}
-		});
-		panelCentral.add(btnCancelar);
-
-		JButton btnSi = new JButton("Si");
-		btnSi.setBackground(Color.decode("#6D91B9")); // Color de fondo (azul oscuro)
-		btnSi.setForeground(Color.WHITE);
-		btnSi.setBounds(418, 130, 183, 33);
-		btnSi.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-
-				dispose();
-
-			}
-		});
-		panelCentral.add(btnSi);
-
-		setVisible(true);
-	}
 
 	// Nueva Operacion
 	public void NuevaOperacion() {
@@ -3834,8 +2239,8 @@ public class HomeView extends JFrame {
 		btnClientes.setBounds(10, 11, 237, 100); // x, y, ancho, alto
 		btnClientes.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				AdministradorCliente(); // Abre la segunda ventana
 				dispose();
+				AdministradorCliente(); // Abre la segunda ventana
 			}
 		});
 		panelIzq.add(btnClientes);
@@ -3847,8 +2252,8 @@ public class HomeView extends JFrame {
 		btnVideojuegos.setBounds(10, 128, 237, 100);
 		btnVideojuegos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				AdministradorJuegos(); // Abre la segunda ventana
 				dispose();
+				AdministradorJuegos(); // Abre la segunda ventana
 			}
 		});
 		panelIzq.add(btnVideojuegos);
@@ -3860,8 +2265,8 @@ public class HomeView extends JFrame {
 		btnRentaYCompra.setBounds(10, 242, 237, 100);
 		btnRentaYCompra.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				AdministradorRentaCompra(); // Abre la segunda ventana
 				dispose();
+				AdministradorRentaCompra(); // Abre la segunda ventana
 			}
 		});
 		panelIzq.add(btnRentaYCompra);
@@ -3873,8 +2278,8 @@ public class HomeView extends JFrame {
 		btnNuevaOperacion.setBounds(10, 364, 237, 100);
 		btnNuevaOperacion.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				NuevaOperacion(); // Abre la segunda ventana
 				dispose();
+				NuevaOperacion(); // Abre la segunda ventana
 			}
 		});
 		panelIzq.add(btnNuevaOperacion);

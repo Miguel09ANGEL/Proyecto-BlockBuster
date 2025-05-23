@@ -20,6 +20,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -32,6 +33,7 @@ import controller.VideogamesController;
 import models.User;
 import models.UsersModel;
 import models.VideoGames;
+import models.VideoGamesModel;
 
 public class UserViews extends JFrame {
 
@@ -39,12 +41,231 @@ public class UserViews extends JFrame {
 		// TODO Auto-generated constructor stub
 	}
 	//Clientes
-	
+	public void RegistroClientes(List usuarios) {
+
+		try {
+			UIManager.setLookAndFeel(new FlatLightLaf());
+			UIManager.put("Button.arc", 15); // Esquinas redondeadas
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+		// Configuración básica de la ventana
+		setTitle("Registro de Clientes");
+		setSize(1024, 576);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setLocationRelativeTo(null);
+		
+		
+		// Usamos JLayeredPane para superponer componentes
+		JLayeredPane layeredPane = new JLayeredPane();
+		layeredPane.setPreferredSize(new Dimension(900, 650));
+		setContentPane(layeredPane);
+
+		// 1. PANEL BLANCO (fondo completo)
+		JPanel panelIzq = new JPanel();
+		panelIzq.setLayout(null);
+		panelIzq.setBackground(Color.decode("#FFFFFF"));
+		panelIzq.setBounds(10, 62, 257, 475);
+		layeredPane.add(panelIzq, JLayeredPane.PALETTE_LAYER);
+
+		JButton btnClientes = new JButton("CLIENTES");
+		btnClientes.setFont(new Font("Calibri", Font.BOLD, 16));
+		btnClientes.setBackground(Color.decode("#263C54"));
+		btnClientes.setForeground(Color.WHITE);
+		btnClientes.setBounds(10, 11, 237, 100);
+		btnClientes.addActionListener(e -> {
+			dispose(); // Cierra la ventana actual
+			HomeView administradorcliente= new HomeView(); 
+			administradorcliente.AdministradorCliente(); // Cierra la ventana actual
+		});
+		panelIzq.add(btnClientes);
+
+		JButton btnVideojuegos = new JButton("VIDEOJUEGOS");
+		btnVideojuegos.setForeground(Color.WHITE);
+		btnVideojuegos.setFont(new Font("Calibri", Font.BOLD, 16));
+		btnVideojuegos.setBackground(new Color(38, 60, 84));
+		btnVideojuegos.setBounds(10, 128, 237, 100);
+		panelIzq.add(btnVideojuegos);
+		btnVideojuegos.addActionListener(e -> {
+			dispose(); // Cierra la ventana actual
+			HomeView administradorjuego= new HomeView(); 
+			administradorjuego.AdministradorJuegos(); // Cierra la ventana actual
+		});
+
+		JButton btnRentaYCompra = new JButton("RENTA Y COMPRA");
+		btnRentaYCompra.setForeground(Color.WHITE);
+		btnRentaYCompra.setFont(new Font("Calibri", Font.BOLD, 16));
+		btnRentaYCompra.setBackground(new Color(38, 60, 84));
+		btnRentaYCompra.setBounds(10, 242, 237, 100);
+		btnRentaYCompra.addActionListener(e -> {
+			dispose(); // Cierra la ventana actual
+			HomeView administradorrentacompra= new HomeView(); 
+			administradorrentacompra.AdministradorRentaCompra();
+			 // Cierra la ventana actual
+		});
+		panelIzq.add(btnRentaYCompra);
+
+		JButton btnNuevaOperacion = new JButton("NUEVA OPERACIÓN");
+		btnNuevaOperacion.setForeground(Color.WHITE);
+		btnNuevaOperacion.setFont(new Font("Calibri", Font.BOLD, 16));
+		btnNuevaOperacion.setBackground(new Color(38, 60, 84));
+		btnNuevaOperacion.setBounds(10, 364, 237, 100);
+		btnNuevaOperacion.addActionListener(e -> {
+			dispose(); // Cierra la ventana actual
+			HomeView nuevaoperacion= new HomeView(); 
+			nuevaoperacion.NuevaOperacion();
+			// Cierra la ventana actual
+		});
+		panelIzq.add(btnNuevaOperacion);
+
+		// 2. PANEL GRIS CENTRAL
+		JPanel panelCentral = new JPanel();
+		panelCentral.setLayout(null);
+		panelCentral.setBackground(Color.decode("#F2F2F2"));
+		panelCentral.setBounds(277, 62, 731, 475);
+		layeredPane.add(panelCentral, JLayeredPane.PALETTE_LAYER);
+
+		JLabel iniciar = new JLabel("REGISTRO DE CLIENTES");
+		iniciar.setSize(236, 60);
+		iniciar.setLocation(143, 11);
+		iniciar.setHorizontalAlignment(JLabel.CENTER);
+		iniciar.setFont(new Font("Calibri", Font.BOLD, 24));
+		panelCentral.add(iniciar);
+		
+		
+		JButton btnBuscar = new JButton("BUSCAR");
+		btnBuscar.setFont(new Font("League Spartan Light", Font.PLAIN, 14));
+		btnBuscar.setBounds(619, 25, 86, 25);
+		panelCentral.add(btnBuscar);
+		
+		
+
+		// Crear unan tabla
+		String[] columnNames = { "ID", "Nombre", "A. pat:", "A. mat;", "Fecha de nacimierto", "telefono", "Correo" };
+		DefaultTableModel model = new DefaultTableModel(columnNames, 0) {
+			@Override
+			public boolean isCellEditable(int row, int column) {
+				return false; // Hacer que la tabla no sea editable
+			}
+		};
+
+		// Llenar la tabla con datos
+		for (Iterator iterator = usuarios.iterator(); iterator.hasNext();) {
+			User usuario = (User) iterator.next();
+			Object[] rowData = { usuario.getId(), usuario.getNombre(), usuario.getApellidoPaterno(),
+					usuario.getApellidoMaterno(), usuario.getFechaNacimiento(), usuario.getTelefono(),
+					usuario.getCorreo() };
+			model.addRow(rowData);
+		}
+
+		// se crea la tabla
+		JTable table = new JTable(model);
+
+		table.getColumnModel().getColumn(0).setPreferredWidth(10);
+		table.getColumnModel().getColumn(4).setPreferredWidth(50);
+
+		table.setFont(new Font("Arial", Font.PLAIN, 14));
+		table.setRowHeight(25);
+		table.getTableHeader().setFont(new Font("Arial", Font.BOLD, 14));
+		table.setAutoCreateRowSorter(true); // ordenar por columnas
+
+		// Agregar la tabla a un JScrollPane
+		JScrollPane scrollPane = new JScrollPane(table);
+		scrollPane.setBounds(26, 62, 695, 366);
+		panelCentral.add(scrollPane);
+
+		JButton btnEliminar = new JButton("ELIMINAR");
+		btnEliminar.setForeground(Color.WHITE);
+		btnEliminar.setBackground(Color.decode("#B82F2F"));
+		btnEliminar.setBounds(187, 439, 172, 25);
+		btnEliminar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+
+				int selectedRow = table.getSelectedRow();
+
+				if (selectedRow == -1) {
+					JOptionPane.showMessageDialog(layeredPane, "Por favor seleccione un usuario", "Advertencia",
+							JOptionPane.WARNING_MESSAGE);
+					return;
+				}
+
+				// Confirmamos eliminacion
+				int confirm = JOptionPane.showConfirmDialog(layeredPane,
+						"¿Está seguro que desea eliminar este usuario?", "Confirmar eliminación",
+						JOptionPane.YES_NO_OPTION);
+
+				if (confirm == JOptionPane.YES_OPTION) {
+					// Obtener ID del usuario seleccionado
+					int userId = (int) model.getValueAt(selectedRow, 0);
+
+					// Eliminamos de la base de datos
+					UsersModel um = new UsersModel();
+					boolean eliminado = um.remove(userId);
+
+					if (eliminado) {
+						// Eliminar de la tabla
+						model.removeRow(selectedRow);
+						JOptionPane.showMessageDialog(layeredPane, "Usuario eliminado correctamente");
+					} else {
+						JOptionPane.showMessageDialog(layeredPane, "Error al eliminar el usuario", "Error",
+								JOptionPane.ERROR_MESSAGE);
+					}
+				}
+
+			}
+		});
+		panelCentral.add(btnEliminar);
+
+		
+
+		// BOTON EDITAR PROVICIONAL, MEJORAR
+		JButton btnEditar = new JButton("DETALLES");
+		btnEditar.setForeground(Color.WHITE);
+		btnEditar.setBackground(Color.decode("#4fadbd"));
+		btnEditar.setBounds(379, 439, 172, 25);
+		btnEditar.addActionListener(e -> {
+
+			int selectedRow = table.getSelectedRow();
+
+			if (selectedRow == -1) {
+				JOptionPane.showMessageDialog(layeredPane, "Por favor seleccione un usuario", "Advertencia",
+						JOptionPane.WARNING_MESSAGE);
+				return;
+			}
+
+			// Obtener datos del usuario seleccionado
+			int userId = (int) model.getValueAt(selectedRow, 0);
+
+			
+			UserController uc = new UserController();
+			uc.update2(userId);
+
+		});
+		panelCentral.add(btnEditar);
+
+		// 3. PANEL ROJO SUPERIOR (barra de título)
+		JPanel barraRoja = new JPanel();
+		barraRoja.setBackground(Color.decode("#B44635"));
+		barraRoja.setBounds(0, 0, 1024, 60);
+		layeredPane.add(barraRoja, JLayeredPane.PALETTE_LAYER);
+
+		setVisible(true);
+
+		try {
+			UIManager.setLookAndFeel(new FlatLightLaf());
+			UIManager.put("Button.arc", 9); // Esquinas redondeadas
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+	}
+
 	//	Avanzar desde Aqui y luego a Home View
-	// frame funcional
+	// Videojuegos
+
 
 	
 	//Renta y Compra
+	
 	public void Renta() {
 		// Configuración básica de la ventana
 		setTitle("Renta");
@@ -164,7 +385,7 @@ public class UserViews extends JFrame {
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				dispose();
-				HomeView operacionrentar= new HomeView(); 
+				AuthViews operacionrentar= new AuthViews(); 
 				operacionrentar.OperacionRentar();
 				
 
@@ -221,8 +442,7 @@ public class UserViews extends JFrame {
 		btnClientes.addActionListener(e -> {
 			dispose(); // Cierra la ventana actual
 			HomeView administradorcliente= new HomeView(); 
-			administradorcliente.AdministradorCliente();
-			 // Abre la segunda ventana
+			administradorcliente.AdministradorCliente(); // Cierra la ventana actual
 		});
 		panelIzq.add(btnClientes);
 
@@ -235,8 +455,7 @@ public class UserViews extends JFrame {
 		btnVideojuegos.addActionListener(e -> {
 			dispose(); // Cierra la ventana actual
 			HomeView administradorjuegos= new HomeView(); 
-			administradorjuegos.AdministradorJuegos();
-			 // Abre la segunda ventana
+			administradorjuegos.AdministradorJuegos();// Cierra la ventana actual
 		});
 
 		JButton btnRentaYCompra = new JButton("RENTA Y COMPRA");
@@ -247,7 +466,7 @@ public class UserViews extends JFrame {
 		btnRentaYCompra.addActionListener(e -> {
 			dispose(); // Cierra la ventana actual
 			HomeView administradorrentacompra= new HomeView(); 
-			administradorrentacompra.AdministradorRentaCompra(); // Abre la segunda ventana
+			administradorrentacompra.AdministradorRentaCompra(); // Cierra la ventana actual
 		});
 		panelIzq.add(btnRentaYCompra);
 
@@ -259,8 +478,7 @@ public class UserViews extends JFrame {
 		btnNuevaOperacion.addActionListener(e -> {
 			dispose(); // Cierra la ventana actual
 			HomeView nuevaoperacion= new HomeView(); 
-			nuevaoperacion.NuevaOperacion();
-			// Abre la segunda ventana
+			nuevaoperacion.NuevaOperacion(); // Cierra la ventana actual
 		});
 		panelIzq.add(btnNuevaOperacion);
 
@@ -310,18 +528,18 @@ public class UserViews extends JFrame {
 		table.setShowHorizontalLines(true);
 		table.setShowVerticalLines(true);
 
-		JButton btnNewButton = new JButton("Comprar");
-		btnNewButton.addActionListener(new ActionListener() {
+		JButton comprar = new JButton("Comprar");
+		comprar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				dispose();
-				HomeView operacioncomprar= new HomeView(); 
+				AuthViews operacioncomprar= new AuthViews(); 
 				operacioncomprar.OperacionComprar();
 				
 
 			}
 		});
-		btnNewButton.setBounds(528, 439, 143, 25);
-		panelCentral.add(btnNewButton);
+		comprar.setBounds(528, 439, 143, 25);
+		panelCentral.add(comprar);
 
 		// 3. PANEL ROJO SUPERIOR (barra de título)
 		JPanel barraRoja = new JPanel();

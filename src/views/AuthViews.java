@@ -6,6 +6,7 @@ import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -14,6 +15,7 @@ import java.util.Properties;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JFormattedTextField;
 import javax.swing.JFormattedTextField.AbstractFormatter;
 import javax.swing.JFrame;
@@ -21,6 +23,7 @@ import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
@@ -38,6 +41,7 @@ import controller.VideogamesController;
 import models.User;
 import models.UsersModel;
 import models.VideoGames;
+import models.VideoGamesModel;
 
 public class AuthViews extends JFrame {
 	
@@ -456,6 +460,7 @@ public class AuthViews extends JFrame {
 			UserController us = new UserController();
 			
 			us.update(user.getId());
+			
 		});
 		panelCentral.add(btnCancelar);
 
@@ -798,621 +803,213 @@ public class AuthViews extends JFrame {
 	}
 
 //	Juegos
-	public void DetallesJuego() {
-		// Configuración básica de la ventana
-		setTitle("Detalles Videojuego");
-		setSize(1024, 576);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setLocationRelativeTo(null);
 
-		// Usamos JLayeredPane para superponer componentes
-		JLayeredPane layeredPane = new JLayeredPane();
-		layeredPane.setPreferredSize(new Dimension(900, 650));
-		setContentPane(layeredPane);
-
-		// 2. PANEL GRIS CENTRAL
-		JPanel panelCentral = new JPanel();
-		panelCentral.setLayout(null);
-		panelCentral.setBackground(Color.decode("#D9D9D9"));
-		panelCentral.setBounds(5, 62, 998, 475); // (x, y, ancho, alto)
-		layeredPane.add(panelCentral, JLayeredPane.PALETTE_LAYER);
-
-		// Título principal
-		JLabel lblTitulo = new JLabel("DETALLES DE VIDEOJUEGO");
-		lblTitulo.setForeground(Color.decode("#263C54"));
-		lblTitulo.setSize(331, 42);
-		lblTitulo.setLocation(394, 11);
-		lblTitulo.setHorizontalAlignment(JLabel.CENTER);
-		lblTitulo.setFont(new Font("Anton", Font.BOLD, 20));
-		panelCentral.add(lblTitulo);
-
-		// Año
-		JLabel lblAnio = new JLabel("1988");
-		lblAnio.setForeground(Color.decode("#3B3741"));
-		lblAnio.setHorizontalAlignment(SwingConstants.LEFT);
-		lblAnio.setFont(new Font("Calibri", Font.BOLD, 18));
-		lblAnio.setBounds(55, 161, 70, 42);
-		panelCentral.add(lblAnio);
-
-		// Etiqueta "Acerca de:"
-		JLabel lblAcercaDe = new JLabel("Acerca de:");
-		lblAcercaDe.setHorizontalAlignment(SwingConstants.LEFT);
-		lblAcercaDe.setFont(new Font("Calibri", Font.BOLD, 18));
-		lblAcercaDe.setBounds(379, 72, 97, 42);
-		panelCentral.add(lblAcercaDe);
-
-		// Descripción (JTextArea)
-		JTextArea descripcion = new JTextArea(
-				"Contra es un videojuego de shoot 'em up desarrollado y publicado por Konami, lanzado originalmente como un juego de arcade el 20 de febrero de 1987. En 1988 se lanzó una versión doméstica para Nintendo Entertainment System, junto con puertos para varios formatos de computadora, incluido el MSX2.");
-		descripcion.setFont(new Font("Calibri Light", Font.BOLD, 20));
-		descripcion.setForeground(Color.decode("#3B3741"));
-		descripcion.setLineWrap(true);
-		descripcion.setWrapStyleWord(true);
-		descripcion.setEditable(false);
-		descripcion.setOpaque(false);
-		descripcion.setBounds(379, 108, 567, 145);
-		panelCentral.add(descripcion);
-
-		// Nombre del juego
-		JLabel lblNombreJuego = new JLabel("CONTRA");
-		lblNombreJuego.setHorizontalAlignment(SwingConstants.LEFT);
-		lblNombreJuego.setFont(new Font("Anton", Font.BOLD, 24));
-		lblNombreJuego.setBounds(55, 124, 135, 42);
-		panelCentral.add(lblNombreJuego);
-
-		// Etiqueta "Clasificación:"
-		JLabel lblClasificacionTitulo = new JLabel("Clasificación:");
-		lblClasificacionTitulo.setHorizontalAlignment(SwingConstants.LEFT);
-		lblClasificacionTitulo.setFont(new Font("Calibri", Font.BOLD, 18));
-		lblClasificacionTitulo.setBounds(55, 198, 103, 42);
-		panelCentral.add(lblClasificacionTitulo);
-
-		// Valor de clasificación
-		JLabel lblClasificacionValor = new JLabel("Mayores 18");
-		lblClasificacionValor.setForeground(Color.decode("#3B3741"));
-		lblClasificacionValor.setHorizontalAlignment(SwingConstants.LEFT);
-		lblClasificacionValor.setFont(new Font("Calibri", Font.BOLD, 18));
-		lblClasificacionValor.setBounds(158, 198, 103, 42);
-		panelCentral.add(lblClasificacionValor);
-
-		// Etiqueta "Desarrolladores:"
-		JLabel lblDesarrolladoresTitulo = new JLabel("Desarrolladores:");
-		lblDesarrolladoresTitulo.setHorizontalAlignment(SwingConstants.LEFT);
-		lblDesarrolladoresTitulo.setFont(new Font("Calibri", Font.BOLD, 18));
-		lblDesarrolladoresTitulo.setBounds(55, 233, 190, 42);
-		panelCentral.add(lblDesarrolladoresTitulo);
-
-		// Nombres desarrolladores (JTextArea)
-		JTextArea txtDesarrolladores = new JTextArea(
-				"Konami,  Ocean Software, Hamster Corporation, Digital Eclipse, Backbone Entertainment, Paul Owens");
-		txtDesarrolladores.setWrapStyleWord(true);
-		txtDesarrolladores.setForeground(Color.decode("#3B3741"));
-		txtDesarrolladores.setOpaque(false);
-		txtDesarrolladores.setLineWrap(true);
-		txtDesarrolladores.setFont(new Font("Calibri Light", Font.BOLD, 16));
-		txtDesarrolladores.setEditable(false);
-		txtDesarrolladores.setBounds(55, 265, 318, 70);
-		panelCentral.add(txtDesarrolladores);
-
-		// Etiqueta "Género:"
-		JLabel lblGeneroTitulo = new JLabel("Género:");
-		lblGeneroTitulo.setHorizontalAlignment(SwingConstants.LEFT);
-		lblGeneroTitulo.setFont(new Font("Calibri", Font.BOLD, 18));
-		lblGeneroTitulo.setBounds(55, 333, 70, 42);
-		panelCentral.add(lblGeneroTitulo);
-
-		// Valor género
-		JLabel lblGeneroValor = new JLabel("Disparos");
-		lblGeneroValor.setForeground(Color.decode("#3B3741"));
-		lblGeneroValor.setHorizontalAlignment(SwingConstants.LEFT);
-		lblGeneroValor.setFont(new Font("Calibri", Font.BOLD, 18));
-		lblGeneroValor.setBounds(118, 333, 70, 42);
-		panelCentral.add(lblGeneroValor);
-
-		// Etiqueta "Plataforma:"
-		JLabel lblPlataformaTitulo = new JLabel("Plataforma:");
-		lblPlataformaTitulo.setHorizontalAlignment(SwingConstants.LEFT);
-		lblPlataformaTitulo.setFont(new Font("Calibri", Font.BOLD, 18));
-		lblPlataformaTitulo.setBounds(55, 372, 97, 42);
-		panelCentral.add(lblPlataformaTitulo);
-
-		// Valor plataforma
-		JLabel lblPlataformaValor = new JLabel("Nintendo");
-		lblPlataformaValor.setForeground(Color.decode("#3B3741"));
-		lblPlataformaValor.setHorizontalAlignment(SwingConstants.LEFT);
-		lblPlataformaValor.setFont(new Font("Calibri", Font.BOLD, 18));
-		lblPlataformaValor.setBounds(148, 372, 97, 42);
-		panelCentral.add(lblPlataformaValor);
-
-		// Etiqueta "Precio por renta:"
-		JLabel lblPrecioRentaTitulo = new JLabel("Precio por renta:");
-		lblPrecioRentaTitulo.setHorizontalAlignment(SwingConstants.LEFT);
-		lblPrecioRentaTitulo.setFont(new Font("Calibri", Font.BOLD, 20));
-		lblPrecioRentaTitulo.setBounds(664, 317, 150, 42);
-		panelCentral.add(lblPrecioRentaTitulo);
-
-		// Valor precio renta
-		JLabel lblPrecioRentaValor = new JLabel("$100.00MXN");
-		lblPrecioRentaValor.setForeground(new Color(153, 0, 0));
-		lblPrecioRentaValor.setHorizontalAlignment(SwingConstants.LEFT);
-		lblPrecioRentaValor.setFont(new Font("Calibri", Font.BOLD, 20));
-		lblPrecioRentaValor.setBounds(824, 317, 126, 42);
-		panelCentral.add(lblPrecioRentaValor);
-
-		// Etiqueta "Precio por venta:"
-		JLabel lblPrecioVentaTitulo = new JLabel("Precio por venta:");
-		lblPrecioVentaTitulo.setHorizontalAlignment(SwingConstants.LEFT);
-		lblPrecioVentaTitulo.setFont(new Font("Calibri", Font.BOLD, 20));
-		lblPrecioVentaTitulo.setBounds(664, 353, 159, 42);
-		panelCentral.add(lblPrecioVentaTitulo);
-
-		// Valor precio venta
-		JLabel lblPrecioVentaValor = new JLabel("$800.00MX");
-		lblPrecioVentaValor.setForeground(new Color(153, 0, 0));
-		lblPrecioVentaValor.setHorizontalAlignment(SwingConstants.LEFT);
-		lblPrecioVentaValor.setFont(new Font("Calibri", Font.BOLD, 20));
-		lblPrecioVentaValor.setBounds(824, 353, 126, 42);
-		panelCentral.add(lblPrecioVentaValor);
-
-		// Botones
-		JButton btnEditar = new JButton("Editar");
-		btnEditar.setBackground(Color.decode("#6D91B9"));
-		btnEditar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				dispose();
-				EditarJuego();
-
-			}
-		});
-		btnEditar.setForeground(Color.WHITE);
-		btnEditar.setBounds(394, 417, 183, 33);
-		panelCentral.add(btnEditar);
-
-		JButton btnDescargarPDF = new JButton("Descargar (PDF)");
-		btnDescargarPDF.setBackground(Color.decode("#263C54"));
-		btnDescargarPDF.setForeground(Color.WHITE);
-		btnDescargarPDF.setBounds(605, 417, 183, 33);
-		panelCentral.add(btnDescargarPDF);
-		btnDescargarPDF.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-
-			}
-		});
-
-		JButton btnRegresar = new JButton("Regresar");
-		btnRegresar.setForeground(Color.WHITE);
-		btnRegresar.setBackground(new Color(184, 47, 47));
-		btnRegresar.setBounds(175, 417, 183, 33);
-		panelCentral.add(btnRegresar);
-		btnRegresar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				dispose();
-				VideogamesController vc = new VideogamesController();
-
-				vc.indexVideoGames();
-
-			}
-		});
-
-		// 3. PANEL ROJO SUPERIOR (barra de título)
-		JPanel barraRoja = new JPanel();
-		barraRoja.setBackground(Color.decode("#B44635"));
-		barraRoja.setBounds(0, 0, 1024, 60);
-		layeredPane.add(barraRoja, JLayeredPane.PALETTE_LAYER);
-
-		setVisible(true);
-	}
-
-	public void EditarJuego() {
-		// Configuración básica de la ventana
-		setTitle("Editar Juego");
-		setSize(1024, 576);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setLocationRelativeTo(null);
-
-		// Usamos JLayeredPane para superponer componentes
-		JLayeredPane layeredPane = new JLayeredPane();
-		layeredPane.setPreferredSize(new Dimension(900, 650));
-		setContentPane(layeredPane);
-
-		// Panel gris central
-		JPanel panelCentral = new JPanel();
-		panelCentral.setLayout(null);
-		panelCentral.setBackground(Color.decode("#F2F2F2"));
-		panelCentral.setBounds(5, 62, 998, 475);
-		layeredPane.add(panelCentral, JLayeredPane.PALETTE_LAYER);
-
-		// Logotipo
-		ImageIcon iconoOriginal = new ImageIcon(getClass().getResource("/images/Block.png"));
-		Image imagenEscalada = iconoOriginal.getImage().getScaledInstance(70, 70, Image.SCALE_SMOOTH);
-		JLabel logo = new JLabel(new ImageIcon(imagenEscalada));
-		logo.setBounds(477, 11, 70, 70);
-		panelCentral.add(logo);
-
-		// Título principal
-		JLabel lblTitulo = new JLabel("EDITAR VIDEOJUEGOS");
-		lblTitulo.setSize(263, 42);
-		lblTitulo.setLocation(369, 78);
-		lblTitulo.setHorizontalAlignment(JLabel.CENTER);
-		lblTitulo.setFont(new Font("Calibri", Font.BOLD, 24));
-		panelCentral.add(lblTitulo);
-
-		// Labels y campos de texto
-
-		JLabel lblNombreJuego = new JLabel("Nombre del Videojuego:");
-		lblNombreJuego.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNombreJuego.setFont(new Font("Calibri", Font.BOLD, 14));
-		lblNombreJuego.setBounds(55, 108, 140, 42);
-		panelCentral.add(lblNombreJuego);
-
-		JTextField txtNombreJuego = new JTextField();
-		txtNombreJuego.setBackground(Color.decode("#D9D9D9"));
-		txtNombreJuego.setBounds(53, 142, 230, 27);
-		txtNombreJuego.setColumns(10);
-		panelCentral.add(txtNombreJuego);
-
-		JLabel lblAnioLanzamiento = new JLabel("Año de lanzamiento:");
-		lblAnioLanzamiento.setHorizontalAlignment(SwingConstants.CENTER);
-		lblAnioLanzamiento.setFont(new Font("Calibri", Font.BOLD, 14));
-		lblAnioLanzamiento.setBounds(55, 180, 132, 42);
-		panelCentral.add(lblAnioLanzamiento);
-
-		JTextField txtAnioLanzamiento = new JTextField();
-		txtAnioLanzamiento.setBackground(Color.decode("#D9D9D9"));
-		txtAnioLanzamiento.setColumns(10);
-		txtAnioLanzamiento.setBounds(53, 214, 153, 27);
-		panelCentral.add(txtAnioLanzamiento);
-
-		JLabel lblDisponibilidad = new JLabel("Disponibilidad:");
-		lblDisponibilidad.setHorizontalAlignment(SwingConstants.CENTER);
-		lblDisponibilidad.setFont(new Font("Calibri", Font.BOLD, 14));
-		lblDisponibilidad.setBounds(227, 180, 97, 42);
-		panelCentral.add(lblDisponibilidad);
-
-		JTextField txtDisponibilidad = new JTextField();
-		txtDisponibilidad.setBackground(Color.decode("#D9D9D9"));
-		txtDisponibilidad.setColumns(10);
-		txtDisponibilidad.setBounds(227, 214, 120, 27);
-		panelCentral.add(txtDisponibilidad);
-
-		JLabel lblGenero = new JLabel("Género:");
-		lblGenero.setHorizontalAlignment(SwingConstants.LEFT);
-		lblGenero.setFont(new Font("Calibri", Font.BOLD, 14));
-		lblGenero.setBounds(55, 259, 140, 42);
-		panelCentral.add(lblGenero);
-
-		JTextField txtGenero = new JTextField();
-		txtGenero.setBackground(Color.decode("#D9D9D9"));
-		txtGenero.setColumns(10);
-		txtGenero.setBounds(55, 289, 188, 27);
-		panelCentral.add(txtGenero);
-
-		JLabel lblExistencias = new JLabel("Existencias disponibles:");
-		lblExistencias.setHorizontalAlignment(SwingConstants.CENTER);
-		lblExistencias.setFont(new Font("Calibri", Font.BOLD, 14));
-		lblExistencias.setBounds(289, 252, 153, 42);
-		panelCentral.add(lblExistencias);
-
-		JTextField txtExistencias = new JTextField();
-		txtExistencias.setBackground(Color.decode("#D9D9D9"));
-		txtExistencias.setColumns(10);
-		txtExistencias.setBounds(288, 289, 215, 27);
-		panelCentral.add(txtExistencias);
-
-		JLabel lblPrecioRenta = new JLabel("Precio a renta (MXN):");
-		lblPrecioRenta.setHorizontalAlignment(SwingConstants.CENTER);
-		lblPrecioRenta.setFont(new Font("Calibri", Font.BOLD, 14));
-		lblPrecioRenta.setBounds(55, 327, 140, 42);
-		panelCentral.add(lblPrecioRenta);
-
-		JTextField txtPrecioRenta = new JTextField();
-		txtPrecioRenta.setBackground(Color.decode("#D9D9D9"));
-		txtPrecioRenta.setColumns(10);
-		txtPrecioRenta.setBounds(55, 368, 188, 27);
-		panelCentral.add(txtPrecioRenta);
-
-		JLabel lblPrecioVenta = new JLabel("Precio a venta (MXN):");
-		lblPrecioVenta.setHorizontalAlignment(SwingConstants.CENTER);
-		lblPrecioVenta.setFont(new Font("Calibri", Font.BOLD, 14));
-		lblPrecioVenta.setBounds(288, 327, 140, 42);
-		panelCentral.add(lblPrecioVenta);
-
-		JTextField txtPrecioVenta = new JTextField();
-		txtPrecioVenta.setBackground(Color.decode("#D9D9D9"));
-		txtPrecioVenta.setColumns(10);
-		txtPrecioVenta.setBounds(288, 368, 215, 27);
-		panelCentral.add(txtPrecioVenta);
-
-		JLabel lblPlataforma = new JLabel("Plataforma:");
-		lblPlataforma.setHorizontalAlignment(SwingConstants.CENTER);
-		lblPlataforma.setFont(new Font("Calibri", Font.BOLD, 14));
-		lblPlataforma.setBounds(301, 108, 97, 42);
-		panelCentral.add(lblPlataforma);
-
-		JTextField txtPlataforma = new JTextField();
-		txtPlataforma.setBackground(Color.decode("#D9D9D9"));
-		txtPlataforma.setColumns(10);
-		txtPlataforma.setBounds(301, 142, 202, 27);
-		panelCentral.add(txtPlataforma);
-
-		JLabel lblClasificacion = new JLabel("Clasificación:");
-		lblClasificacion.setHorizontalAlignment(SwingConstants.CENTER);
-		lblClasificacion.setFont(new Font("Calibri", Font.BOLD, 14));
-		lblClasificacion.setBounds(369, 180, 97, 42);
-		panelCentral.add(lblClasificacion);
-
-		JTextField txtClasificacion = new JTextField();
-		txtClasificacion.setBackground(Color.decode("#D9D9D9"));
-		txtClasificacion.setColumns(10);
-		txtClasificacion.setBounds(369, 214, 134, 27);
-		panelCentral.add(txtClasificacion);
-
-		JLabel lblAcercaDeTitulo = new JLabel("Acerca de:");
-		lblAcercaDeTitulo.setHorizontalAlignment(SwingConstants.LEFT);
-		lblAcercaDeTitulo.setFont(new Font("Calibri", Font.BOLD, 14));
-		lblAcercaDeTitulo.setBounds(619, 108, 97, 42);
-		panelCentral.add(lblAcercaDeTitulo);
-
-		JTextField txtAcercaDeBreve = new JTextField();
-		txtAcercaDeBreve.setColumns(10);
-		txtAcercaDeBreve.setBackground(Color.decode("#D9D9D9"));
-		txtAcercaDeBreve.setBounds(619, 142, 343, 77);
-		panelCentral.add(txtAcercaDeBreve);
-
-		JLabel lblAcercaDeDetalle = new JLabel("Acerca de:");
-		lblAcercaDeDetalle.setHorizontalAlignment(SwingConstants.CENTER);
-		lblAcercaDeDetalle.setFont(new Font("Calibri", Font.BOLD, 14));
-		lblAcercaDeDetalle.setBounds(619, 220, 97, 42);
-		panelCentral.add(lblAcercaDeDetalle);
-
-		JTextField txtAcercaDeDetalle = new JTextField();
-		txtAcercaDeDetalle.setBackground(Color.decode("#D9D9D9"));
-		txtAcercaDeDetalle.setColumns(10);
-		txtAcercaDeDetalle.setBounds(619, 259, 343, 136);
-		panelCentral.add(txtAcercaDeDetalle);
-
-		// Botones
-		JButton btnCancelar = new JButton("Cancelar");
-		btnCancelar.setBackground(Color.decode("#B82F2F"));
-		btnCancelar.setForeground(Color.WHITE);
-		btnCancelar.setBounds(175, 406, 183, 33);
-		btnCancelar.addActionListener(e -> {
-			DetallesJuego(); // Abre la segunda ventana
-			dispose(); // Cierra la ventana actual
-		});
-		panelCentral.add(btnCancelar);
-
-		JButton btnConfirmar = new JButton("Confirmar");
-		btnConfirmar.setBackground(Color.decode("#263C54"));
-		btnConfirmar.setForeground(Color.WHITE);
-		btnConfirmar.setBounds(533, 406, 183, 33);
-		btnConfirmar.addActionListener(e -> {
-			// Acción de confirmar
-		});
-		panelCentral.add(btnConfirmar);
-
-		// Panel rojo superior (barra de título)
-		JPanel barraRoja = new JPanel();
-		barraRoja.setBackground(Color.decode("#B44635"));
-		barraRoja.setBounds(0, 0, 1024, 60);
-		layeredPane.add(barraRoja, JLayeredPane.PALETTE_LAYER);
-
-		setVisible(true);
-	}
 
 	public void AgregarJuego() {
-		// Campos de texto
-		JTextField txtNombreJuego;
-		JTextField txtAnoLanzamiento;
-		JTextField txtGenero;
-		JTextField txtPrecioRenta;
-		JTextField txtDisponibilidad;
-		JTextField txtPlataforma;
-		JTextField txtClasificacion;
-		JTextField txtExistencias;
-		JTextField txtPrecioVenta;
-		JTextField txtAcercaDeGrande;
-		JTextField txtAcercaDePequeno;
+	    // Componentes de entrada
+	    JTextField txtNombre = new JTextField();
+	    JTextField txtPlataforma = new JTextField();
+	    JTextField txtAnioLanzamiento = new JTextField();
+	    JCheckBox chkDisponible = new JCheckBox("Disponible");
+	    JTextField txtClasificacion = new JTextField();
+	    JTextField txtGenero = new JTextField();
+	    JTextField txtExistencias = new JTextField();
+	    JTextField txtPrecioRenta = new JTextField();
+	    JTextField txtPrecioVenta = new JTextField();
+	    JTextField txtDesarrollador = new JTextField();
+	    JTextArea txtDescripcion = new JTextArea();
+	    
+	    // Configuración básica de la ventana
+	    setTitle("Agregar Videojuego");
+	    setSize(1024, 576);
+	    setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+	    setLocationRelativeTo(null);
 
-		// Configuración básica de la ventana
-		setTitle("Panel Administrador");
-		setSize(1024, 576);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setLocationRelativeTo(null);
+	    // Panel principal con capas
+	    JLayeredPane layeredPane = new JLayeredPane();
+	    layeredPane.setPreferredSize(new Dimension(1024, 576));
+	    setContentPane(layeredPane);
 
-		// Usamos JLayeredPane para superponer componentes
-		JLayeredPane layeredPane = new JLayeredPane();
-		layeredPane.setPreferredSize(new Dimension(900, 650));
-		setContentPane(layeredPane);
+	    // Panel central gris
+	    JPanel panelCentral = new JPanel();
+	    panelCentral.setLayout(null);
+	    panelCentral.setBackground(Color.decode("#F2F2F2"));
+	    panelCentral.setBounds(5, 62, 1014, 509);
+	    layeredPane.add(panelCentral, JLayeredPane.PALETTE_LAYER);
 
-		// 2. PANEL GRIS CENTRAL
-		JPanel panelCentral = new JPanel();
-		panelCentral.setLayout(null);
-		panelCentral.setBackground(Color.decode("#F2F2F2"));
-		panelCentral.setBounds(5, 62, 998, 475);
-		layeredPane.add(panelCentral, JLayeredPane.PALETTE_LAYER);
+	    // Logotipo
+	    ImageIcon iconoOriginal = new ImageIcon(getClass().getResource("/images/Block.png"));
+	    Image imagenEscalada = iconoOriginal.getImage().getScaledInstance(70, 70, Image.SCALE_SMOOTH);
+	    JLabel logo = new JLabel(new ImageIcon(imagenEscalada));
+	    logo.setBounds(477, 11, 70, 70);
+	    panelCentral.add(logo);
 
-		// Logotipo
-		ImageIcon iconoOriginal = new ImageIcon(getClass().getResource("/images/Block.png"));
-		Image imagenEscalada = iconoOriginal.getImage().getScaledInstance(70, 70, Image.SCALE_SMOOTH);
-		JLabel logo = new JLabel(new ImageIcon(imagenEscalada));
-		logo.setBounds(477, 11, 70, 70);
-		panelCentral.add(logo);
+	    // Título
+	    JLabel lblTitulo = new JLabel("AGREGAR NUEVO VIDEOJUEGO");
+	    lblTitulo.setFont(new Font("Calibri", Font.BOLD, 24));
+	    lblTitulo.setBounds(350, 78, 350, 42);
+	    panelCentral.add(lblTitulo);
 
-		// Título
-		JLabel lblTitulo = new JLabel("AGREGAR VIDEOJUEGOS");
-		lblTitulo.setSize(263, 42);
-		lblTitulo.setLocation(369, 78);
-		lblTitulo.setHorizontalAlignment(JLabel.CENTER);
-		lblTitulo.setFont(new Font("Calibri", Font.BOLD, 24));
-		panelCentral.add(lblTitulo);
+	    // Sección izquierda (Datos básicos)
+	    JLabel lblNombre = new JLabel("Nombre del Videojuego:");
+	    lblNombre.setFont(new Font("Calibri", Font.BOLD, 14));
+	    lblNombre.setBounds(55, 130, 180, 20);
+	    panelCentral.add(lblNombre);
 
-		// Labels y campos de texto
-		JLabel lblNombreJuego = new JLabel("Nombre del Videojuego:");
-		lblNombreJuego.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNombreJuego.setFont(new Font("Calibri", Font.BOLD, 14));
-		lblNombreJuego.setBounds(55, 108, 164, 42);
-		panelCentral.add(lblNombreJuego);
+	    txtNombre.setBounds(55, 155, 230, 25);
+	    panelCentral.add(txtNombre);
+	    
+	    JLabel lblPrecioRenta = new JLabel("Precio renta (MXN):");
+	    lblPrecioRenta.setFont(new Font("Calibri", Font.BOLD, 14));
+	    lblPrecioRenta.setBounds(55, 310, 180, 20);
+	    panelCentral.add(lblPrecioRenta);
 
-		txtNombreJuego = new JTextField();
-		txtNombreJuego.setBackground(Color.decode("#D9D9D9"));
-		txtNombreJuego.setBounds(53, 142, 230, 27);
-		txtNombreJuego.setColumns(10);
-		panelCentral.add(txtNombreJuego);
+	    txtPrecioRenta.setBounds(55, 335, 180, 25);
+	    panelCentral.add(txtPrecioRenta);
 
-		JLabel lblAnoLanzamiento = new JLabel("Año de lanzamiento :");
-		lblAnoLanzamiento.setHorizontalAlignment(SwingConstants.CENTER);
-		lblAnoLanzamiento.setFont(new Font("Calibri", Font.BOLD, 14));
-		lblAnoLanzamiento.setBounds(55, 180, 132, 42);
-		panelCentral.add(lblAnoLanzamiento);
 
-		txtAnoLanzamiento = new JTextField();
-		txtAnoLanzamiento.setBackground(Color.decode("#D9D9D9"));
-		txtAnoLanzamiento.setColumns(10);
-		txtAnoLanzamiento.setBounds(53, 214, 153, 27);
-		panelCentral.add(txtAnoLanzamiento);
+	    // Sección central (Detalles técnicos)
+	    JLabel lblPlataforma = new JLabel("Plataforma:");
+	    lblPlataforma.setFont(new Font("Calibri", Font.BOLD, 14));
+	    lblPlataforma.setBounds(300, 130, 180, 20);
+	    panelCentral.add(lblPlataforma);
 
-		JLabel lblDisponibilidad = new JLabel("Disponibilidad:");
-		lblDisponibilidad.setHorizontalAlignment(SwingConstants.CENTER);
-		lblDisponibilidad.setFont(new Font("Calibri", Font.BOLD, 14));
-		lblDisponibilidad.setBounds(227, 180, 97, 42);
-		panelCentral.add(lblDisponibilidad);
+	    txtPlataforma.setBounds(300, 155, 200, 25);
+	    panelCentral.add(txtPlataforma);
+	    
+	    JLabel lblAnio = new JLabel("Año de lanzamiento:");
+	    lblAnio.setFont(new Font("Calibri", Font.BOLD, 14));
+	    lblAnio.setBounds(55, 190, 180, 20);
+	    panelCentral.add(lblAnio);
 
-		txtDisponibilidad = new JTextField();
-		txtDisponibilidad.setBackground(Color.decode("#D9D9D9"));
-		txtDisponibilidad.setColumns(10);
-		txtDisponibilidad.setBounds(227, 214, 120, 27);
-		panelCentral.add(txtDisponibilidad);
+	    txtAnioLanzamiento.setBounds(55, 215, 150, 25);
+	    panelCentral.add(txtAnioLanzamiento);
 
-		JLabel lblGenero = new JLabel("Género:");
-		lblGenero.setHorizontalAlignment(SwingConstants.LEFT);
-		lblGenero.setFont(new Font("Calibri", Font.BOLD, 14));
-		lblGenero.setBounds(55, 259, 140, 42);
-		panelCentral.add(lblGenero);
+	    JLabel lblDisponibilidad = new JLabel("Disponibilidad:");
+	    lblDisponibilidad.setFont(new Font("Calibri", Font.BOLD, 14));
+	    lblDisponibilidad.setBounds(250, 190, 180, 20);
+	    panelCentral.add(lblDisponibilidad);
 
-		txtGenero = new JTextField();
-		txtGenero.setBackground(Color.decode("#D9D9D9"));
-		txtGenero.setColumns(10);
-		txtGenero.setBounds(55, 289, 188, 27);
-		panelCentral.add(txtGenero);
+	    chkDisponible.setBounds(250, 215, 100, 25);
+	    chkDisponible.setSelected(true);
+	    panelCentral.add(chkDisponible);
 
-		JLabel lblExistencias = new JLabel("Existencias disponibles:");
-		lblExistencias.setHorizontalAlignment(SwingConstants.LEFT);
-		lblExistencias.setFont(new Font("Calibri", Font.BOLD, 14));
-		lblExistencias.setBounds(289, 252, 153, 42);
-		panelCentral.add(lblExistencias);
+	    JLabel lblClasificacion = new JLabel("Clasificación:");
+	    lblClasificacion.setFont(new Font("Calibri", Font.BOLD, 14));
+	    lblClasificacion.setBounds(390, 190, 180, 20);
+	    panelCentral.add(lblClasificacion);
 
-		txtExistencias = new JTextField();
-		txtExistencias.setBackground(Color.decode("#D9D9D9"));
-		txtExistencias.setColumns(10);
-		txtExistencias.setBounds(288, 289, 215, 27);
-		panelCentral.add(txtExistencias);
+	    txtClasificacion.setBounds(390, 215, 130, 25);
+	    panelCentral.add(txtClasificacion);
+	    
+	    JLabel lblGenero = new JLabel("Género:");
+	    lblGenero.setFont(new Font("Calibri", Font.BOLD, 14));
+	    lblGenero.setBounds(55, 250, 180, 20);
+	    panelCentral.add(lblGenero);
 
-		JLabel lblPrecioRenta = new JLabel("Precio a renta (MXN)");
-		lblPrecioRenta.setHorizontalAlignment(SwingConstants.CENTER);
-		lblPrecioRenta.setFont(new Font("Calibri", Font.BOLD, 14));
-		lblPrecioRenta.setBounds(55, 327, 140, 42);
-		panelCentral.add(lblPrecioRenta);
+	    txtGenero.setBounds(55, 275, 180, 25);
+	    panelCentral.add(txtGenero);
 
-		txtPrecioRenta = new JTextField();
-		txtPrecioRenta.setBackground(Color.decode("#D9D9D9"));
-		txtPrecioRenta.setColumns(10);
-		txtPrecioRenta.setBounds(55, 368, 188, 27);
-		panelCentral.add(txtPrecioRenta);
 
-		JLabel lblPrecioVenta = new JLabel("Precio a venta (MXN):");
-		lblPrecioVenta.setHorizontalAlignment(SwingConstants.CENTER);
-		lblPrecioVenta.setFont(new Font("Calibri", Font.BOLD, 14));
-		lblPrecioVenta.setBounds(288, 327, 140, 42);
-		panelCentral.add(lblPrecioVenta);
+	    JLabel lblExistencias = new JLabel("Existencias disponibles:");
+	    lblExistencias.setFont(new Font("Calibri", Font.BOLD, 14));
+	    lblExistencias.setBounds(300, 250, 180, 20);
+	    panelCentral.add(lblExistencias);
 
-		txtPrecioVenta = new JTextField();
-		txtPrecioVenta.setBackground(Color.decode("#D9D9D9"));
-		txtPrecioVenta.setColumns(10);
-		txtPrecioVenta.setBounds(288, 368, 215, 27);
-		panelCentral.add(txtPrecioVenta);
+	    txtExistencias.setBounds(300, 275, 200, 25);
+	    panelCentral.add(txtExistencias);
+	    
+	    
 
-		JLabel lblPlataforma = new JLabel("Plataforma:");
-		lblPlataforma.setHorizontalAlignment(SwingConstants.CENTER);
-		lblPlataforma.setFont(new Font("Calibri", Font.BOLD, 14));
-		lblPlataforma.setBounds(301, 108, 97, 42);
-		panelCentral.add(lblPlataforma);
+	    JLabel lblPrecioVenta = new JLabel("Precio venta (MXN):");
+	    lblPrecioVenta.setFont(new Font("Calibri", Font.BOLD, 14));
+	    lblPrecioVenta.setBounds(300, 310, 180, 20);
+	    panelCentral.add(lblPrecioVenta);
 
-		txtPlataforma = new JTextField();
-		txtPlataforma.setBackground(Color.decode("#D9D9D9"));
-		txtPlataforma.setColumns(10);
-		txtPlataforma.setBounds(301, 142, 202, 27);
-		panelCentral.add(txtPlataforma);
+	    txtPrecioVenta.setBounds(300, 335, 200, 25);
+	    panelCentral.add(txtPrecioVenta);
 
-		JLabel lblClasificacion = new JLabel("Clasificación:");
-		lblClasificacion.setHorizontalAlignment(SwingConstants.CENTER);
-		lblClasificacion.setFont(new Font("Calibri", Font.BOLD, 14));
-		lblClasificacion.setBounds(369, 180, 97, 42);
-		panelCentral.add(lblClasificacion);
+	    // Sección derecha (Información adicional)
+	    JLabel lblDesarrollador = new JLabel("Desarrollado por:");
+	    lblDesarrollador.setFont(new Font("Calibri", Font.BOLD, 14));
+	    lblDesarrollador.setBounds(550, 130, 180, 20);
+	    panelCentral.add(lblDesarrollador);
 
-		txtClasificacion = new JTextField();
-		txtClasificacion.setBackground(Color.decode("#D9D9D9"));
-		txtClasificacion.setColumns(10);
-		txtClasificacion.setBounds(369, 214, 134, 27);
-		panelCentral.add(txtClasificacion);
+	    txtDesarrollador.setBounds(550, 155, 340, 25);
+	    panelCentral.add(txtDesarrollador);
 
-		JLabel lblAcercaDePequeno = new JLabel("Acerca de:");
-		lblAcercaDePequeno.setHorizontalAlignment(SwingConstants.LEFT);
-		lblAcercaDePequeno.setFont(new Font("Calibri", Font.BOLD, 14));
-		lblAcercaDePequeno.setBounds(619, 108, 97, 42);
-		panelCentral.add(lblAcercaDePequeno);
+	    JLabel lblDescripcion = new JLabel("Descripción:");
+	    lblDescripcion.setFont(new Font("Calibri", Font.BOLD, 14));
+	    lblDescripcion.setBounds(550, 190, 180, 20);
+	    panelCentral.add(lblDescripcion);
 
-		txtAcercaDePequeno = new JTextField();
-		txtAcercaDePequeno.setBackground(new Color(217, 217, 217));
-		txtAcercaDePequeno.setColumns(10);
-		txtAcercaDePequeno.setBounds(619, 145, 343, 82);
-		panelCentral.add(txtAcercaDePequeno);
+	    txtDescripcion.setLineWrap(true);
+	    txtDescripcion.setWrapStyleWord(true);
+	    JScrollPane scrollDescripcion = new JScrollPane(txtDescripcion);
+	    scrollDescripcion.setBounds(550, 215, 340, 150);
+	    panelCentral.add(scrollDescripcion);
 
-		JLabel lblAcercaDeGrande = new JLabel("Acerca de:");
-		lblAcercaDeGrande.setHorizontalAlignment(SwingConstants.CENTER);
-		lblAcercaDeGrande.setFont(new Font("Calibri", Font.BOLD, 14));
-		lblAcercaDeGrande.setBounds(619, 220, 97, 42);
-		panelCentral.add(lblAcercaDeGrande);
-
-		txtAcercaDeGrande = new JTextField();
-		txtAcercaDeGrande.setBackground(Color.decode("#D9D9D9"));
-		txtAcercaDeGrande.setColumns(10);
-		txtAcercaDeGrande.setBounds(619, 259, 343, 136);
-		panelCentral.add(txtAcercaDeGrande);
-
-		// Botones
-		JButton btnCancelar = new JButton("Cancelar");
-		btnCancelar.setBackground(Color.decode("#B82F2F"));
+	    // Botones
+	    JButton btnCancelar = new JButton("Cancelar");
+	    btnCancelar.setBackground(Color.decode("#B82F2F"));
 		btnCancelar.setForeground(Color.WHITE);
-		btnCancelar.setBounds(259, 417, 183, 33);
-		btnCancelar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				dispose();
-				HomeView administradorjuegos = new HomeView();
-				administradorjuegos.AdministradorJuegos();
+		btnCancelar.setBounds(300, 420, 150, 30);
+		btnCancelar.addActionListener(e -> {
+			dispose();
 
-			}
+			VideogamesController vc = new VideogamesController();
+			vc.indexVideoGames();
 		});
 		panelCentral.add(btnCancelar);
 
-		JButton btnConfirmar = new JButton("Confirmar");
+		JButton btnConfirmar = new JButton("Agregar Juego");
 		btnConfirmar.setBackground(Color.decode("#263C54"));
 		btnConfirmar.setForeground(Color.WHITE);
-		btnConfirmar.setBounds(561, 417, 183, 33);
-		btnConfirmar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+		btnConfirmar.setBounds(550, 420, 150, 30);
+		btnConfirmar.addActionListener(e -> {
+			try {
 
+				String nombre = txtNombre.getText();
+				String plataforma = txtPlataforma.getText();
+				int año = Integer.parseInt(txtAnioLanzamiento.getText());
+				boolean disponibilidad = chkDisponible.isSelected();
+				String clasificacion = txtClasificacion.getText();
+				String genero = txtGenero.getText();
+				int existencias = Integer.parseInt(txtExistencias.getText());
+				BigDecimal precioRenta = new BigDecimal(txtPrecioRenta.getText());
+				BigDecimal precioVenta = new BigDecimal(txtPrecioVenta.getText());
+				String desarrollador = txtDesarrollador.getText();
+				String descripcion = txtDescripcion.getText();
+
+				VideoGamesModel modelo = new VideoGamesModel();
+				boolean exito = modelo.addVideogame(nombre, plataforma, año, disponibilidad, clasificacion, genero,
+						existencias, precioRenta, precioVenta, desarrollador, descripcion);
+
+				if (exito) {
+					JOptionPane.showMessageDialog(this, "Juego agregado exitosamente");
+					dispose();
+					VideogamesController vc = new VideogamesController();
+					vc.indexVideoGames();
+				} else {
+					JOptionPane.showMessageDialog(this, "Error al agregar el juego", "Error",
+							JOptionPane.ERROR_MESSAGE);
+				}
+			} catch (NumberFormatException ex) {
+				JOptionPane.showMessageDialog(this, "Por favor ingrese valores numéricos válidos", "Error",
+						JOptionPane.ERROR_MESSAGE);
+			} catch (Exception ex) {
+				JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 			}
 		});
 		panelCentral.add(btnConfirmar);
 
-		// 3. PANEL ROJO SUPERIOR (barra de título)
-		JPanel barraRoja = new JPanel();
-		barraRoja.setBackground(Color.decode("#B44635"));
-		barraRoja.setBounds(0, 0, 1024, 60);
-		layeredPane.add(barraRoja, JLayeredPane.PALETTE_LAYER);
+		// Barra superior roja
+		JPanel barraSuperior = new JPanel();
+		barraSuperior.setBackground(Color.decode("#B44635"));
+		barraSuperior.setBounds(0, 0, 1024, 60);
+		layeredPane.add(barraSuperior, JLayeredPane.PALETTE_LAYER);
 
-		setVisible(true);
+	    setVisible(true);
 	}
 
 //	Renta y Compra
@@ -1868,7 +1465,7 @@ public class AuthViews extends JFrame {
 		btnConfirmar.setForeground(Color.WHITE);
 		btnConfirmar.setBounds(582, 406, 183, 33);
 		btnConfirmar.addActionListener(e -> {
-
+			DetallesCompra();
 		});
 		panelCentral.add(btnConfirmar);
 

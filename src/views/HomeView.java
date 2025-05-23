@@ -135,7 +135,8 @@ public class HomeView extends JFrame {
 		    public void actionPerformed(ActionEvent e) {
 		    	
 		    	 // para prebas comenta lo demas y decomentas esta parte de Inicio();
-//                Inicio();
+//		    	dispose();
+//              Inicio();
 
 		        // Resetear estilos
 		        gmail.setBorder(BorderFactory.createLineBorder(Color.GRAY));
@@ -143,27 +144,22 @@ public class HomeView extends JFrame {
 		        
 		        String passIngresada = new String(password.getPassword());
 		        String emailIngresado = gmail.getText();
-		        
-		        boolean camposValidos = true;
-		        
+		        		        
 		        // Validar si el campo email está vacío
 		        if(emailIngresado.isEmpty()) {
-		            gmail.setBorder(BorderFactory.createLineBorder(Color.RED));
+		            gmail.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
 		            JOptionPane.showMessageDialog(null, "Por favor ingrese su email", "Error", JOptionPane.ERROR_MESSAGE);
-		            camposValidos = false;
+		            return;
 		        }
 		        
 		        // Validar si el campo contraseña está vacío
 		        if(passIngresada.isEmpty()) {
-		            password.setBorder(BorderFactory.createLineBorder(Color.RED));
+		            password.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
 		            JOptionPane.showMessageDialog(null, "Por favor ingrese su contraseña", "Error", JOptionPane.ERROR_MESSAGE);
-		            camposValidos = false;
-		        }
-		        
-		        // Si alguno de los campos está vacío, salimos del método
-		        if(!camposValidos) {
 		            return;
 		        }
+		        
+		    
 		        
 		        boolean credencialesCorrectas = false;
 		        
@@ -611,7 +607,6 @@ public class HomeView extends JFrame {
 		salida.setBounds(650, 390,60, 60);
 		salida.addActionListener(e -> {
 			dispose(); // Cierra la ventana actual
-			 // Abre la segunda ventana
 		});
 		panelCentral.add(salida);
 

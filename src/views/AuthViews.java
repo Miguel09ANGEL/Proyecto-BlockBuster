@@ -1075,71 +1075,79 @@ public class AuthViews extends JFrame {
 		    txtDesarrollador.setBorder(BorderFactory.createLineBorder(Color.GRAY));
 		    txtDescripcion.setBorder(BorderFactory.createLineBorder(Color.GRAY));
 
-		    // Validar campos vacíos
 		    StringBuilder mensajeError = new StringBuilder();
 
-		    if (txtNombre.getText().trim().isEmpty()) {
-		        txtNombre.setBorder(BorderFactory.createLineBorder(Color.RED));
-		        mensajeError.append("Nombre es obligatorio\n");
-		        return;
-		    }
-		    
-		    if (txtPlataforma.getText().trim().isEmpty()) {
-		        txtPlataforma.setBorder(BorderFactory.createLineBorder(Color.RED));
-		        mensajeError.append("Plataforma es obligatoria\n");
-		        return;
+		 // Validaciones, cada mensaje dentro del if correspondiente
+		 if (txtNombre.getText().trim().isEmpty()) {
+		     txtNombre.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
+		     mensajeError.append("• Nombre es obligatorio.\n");
+		     JOptionPane.showMessageDialog(null, mensajeError.toString(), "Campos obligatorios", JOptionPane.ERROR_MESSAGE);
+		     return;
+		 }
 
-		    }
-		    
-		    if (txtAnioLanzamiento.getText().trim().isEmpty()) {
-		        txtAnioLanzamiento.setBorder(BorderFactory.createLineBorder(Color.RED));
-		        mensajeError.append("Año de lanzamiento es obligatorio\n");
-		        return;
-		    }
-		    
-		    if (txtClasificacion.getText().trim().isEmpty()) {
-		        txtClasificacion.setBorder(BorderFactory.createLineBorder(Color.RED));
-		        mensajeError.append("Clasificación es obligatoria\n");
-		        return;
-		    }
-		    
-		    if (txtGenero.getText().trim().isEmpty()) {
-		        txtGenero.setBorder(BorderFactory.createLineBorder(Color.RED));
-		        mensajeError.append("Género es obligatorio\n");
-		        return;
-		    }
-		    
-		    if (txtExistencias.getText().trim().isEmpty()) {
-		        txtExistencias.setBorder(BorderFactory.createLineBorder(Color.RED));
-		        mensajeError.append("Existencias es obligatorio\n");
-		        return;
-		    }
-		    
-		    if (txtPrecioRenta.getText().trim().isEmpty()) {
-		        txtPrecioRenta.setBorder(BorderFactory.createLineBorder(Color.RED));
-		        mensajeError.append("Precio de renta es obligatorio\n");
-		        return;
-		    }
-		    
-		    if (txtPrecioVenta.getText().trim().isEmpty()) {
-		        txtPrecioVenta.setBorder(BorderFactory.createLineBorder(Color.RED));
-		        mensajeError.append("Precio de venta es obligatorio\n");
-		        return;
-		    }
-		    
-		    if (txtDesarrollador.getText().trim().isEmpty()) {
-		        txtDesarrollador.setBorder(BorderFactory.createLineBorder(Color.RED));
-		        mensajeError.append("Desarrollador es obligatorio\n");
-		        return;
-		    }
-		    
-		    if (txtDescripcion.getText().trim().isEmpty()) {
-		        txtDescripcion.setBorder(BorderFactory.createLineBorder(Color.RED));
-		        mensajeError.append("Descripción es obligatoria\n");
-		        return;
-		    }
+		 if (txtPlataforma.getText().trim().isEmpty()) {
+		     txtPlataforma.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
+		     mensajeError.append("• Plataforma es obligatoria.\n");
+		     JOptionPane.showMessageDialog(null, mensajeError.toString(), "Campos obligatorios", JOptionPane.ERROR_MESSAGE);
+		     return;
+		 }
 
-	
+		 if (txtAnioLanzamiento.getText().trim().isEmpty()) {
+		     txtAnioLanzamiento.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
+		     mensajeError.append("• Año de lanzamiento es obligatorio.\n");
+		     JOptionPane.showMessageDialog(null, mensajeError.toString(), "Campos obligatorios", JOptionPane.ERROR_MESSAGE);
+		     return;
+		 }
+
+		 if (txtClasificacion.getText().trim().isEmpty()) {
+		     txtClasificacion.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
+		     mensajeError.append("• Clasificación es obligatoria.\n");
+		     JOptionPane.showMessageDialog(null, mensajeError.toString(), "Campos obligatorios", JOptionPane.ERROR_MESSAGE);
+		     return;
+		 }
+
+		 if (txtGenero.getText().trim().isEmpty()) {
+		     txtGenero.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
+		     mensajeError.append("• Género es obligatorio.\n");
+		     JOptionPane.showMessageDialog(null, mensajeError.toString(), "Campos obligatorios", JOptionPane.ERROR_MESSAGE);
+		     return;
+		 }
+
+		 if (txtExistencias.getText().trim().isEmpty()) {
+		     txtExistencias.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
+		     mensajeError.append("• Existencias es obligatorio.\n");
+		     JOptionPane.showMessageDialog(null, mensajeError.toString(), "Campos obligatorios", JOptionPane.ERROR_MESSAGE);
+		     return;
+		 }
+
+		 if (txtPrecioRenta.getText().trim().isEmpty()) {
+		     txtPrecioRenta.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
+		     mensajeError.append("• Precio de renta es obligatorio.\n");
+		     JOptionPane.showMessageDialog(null, mensajeError.toString(), "Campos obligatorios", JOptionPane.ERROR_MESSAGE);
+		     return;
+		 }
+
+		 if (txtPrecioVenta.getText().trim().isEmpty()) {
+		     txtPrecioVenta.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
+		     mensajeError.append("• Precio de venta es obligatorio.\n");
+		     JOptionPane.showMessageDialog(null, mensajeError.toString(), "Campos obligatorios", JOptionPane.ERROR_MESSAGE);
+		     return;
+		 }
+
+		 if (txtDesarrollador.getText().trim().isEmpty()) {
+		     txtDesarrollador.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
+		     mensajeError.append("• Desarrollador es obligatorio.\n");
+		     JOptionPane.showMessageDialog(null, mensajeError.toString(), "Campos obligatorios", JOptionPane.ERROR_MESSAGE);
+		     return;
+		 }
+
+		 if (txtDescripcion.getText().trim().isEmpty()) {
+		     txtDescripcion.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
+		     mensajeError.append("• Descripción es obligatoria.\n");
+		     JOptionPane.showMessageDialog(null, mensajeError.toString(), "Campos obligatorios", JOptionPane.ERROR_MESSAGE);
+		     return;
+		 }
+
 
 		    try {
 		        // Validaciones numéricas

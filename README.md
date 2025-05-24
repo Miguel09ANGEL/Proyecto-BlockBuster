@@ -36,19 +36,22 @@ Cada usuario puede ver un historial detallado de sus transacciones anteriores.
  
 ## 📸 Capturas
 
-![Panel Administrador 23_05_2025 02_41_08 a  m](https://github.com/user-attachments/assets/ab1bac6a-207d-4203-b4dd-234accd39004)
-
-![Panel Cliente 23_05_2025 02_44_06 a  m](https://github.com/user-attachments/assets/194f01d1-0d04-46af-97e3-c6693a8daabe)
-
-![Registro de Clientes 23_05_2025 02_45_17 a  m](https://github.com/user-attachments/assets/f0962bc2-c077-4e81-8ab4-d7cb8ded5fe9)
-
-![Administrador Juegos 23_05_2025 02_44_30 a  m](https://github.com/user-attachments/assets/8a67be91-634a-42b5-bb74-7d70edf533ce)
-
-![Administrador Renta y Compra 23_05_2025 02_44_41 a  m](https://github.com/user-attachments/assets/a7221d36-2191-4423-86ad-6412cde25cee)
-
-![Nueva Operación 23_05_2025 02_44_50 a  m](https://github.com/user-attachments/assets/fb08a70a-777d-48ff-a76b-df6b6df7549a)
+<img src="https://github.com/user-attachments/assets/ab1bac6a-207d-4203-b4dd-234accd39004" alt="Panel Administrador 23_05_2025" width="400">
 
 
+<img src="https://github.com/user-attachments/assets/194f01d1-0d04-46af-97e3-c6693a8daabe" alt="Panel Cliente 23_05_2025 02_44_06 a  m" width="400">
+
+
+<img src="https://github.com/user-attachments/assets/f0962bc2-c077-4e81-8ab4-d7cb8ded5fe9" alt="Registro de Clientes 23_05_2025 02_45_17 a  m" width="400">
+
+
+<img src="(https://github.com/user-attachments/assets/8a67be91-634a-42b5-bb74-7d70edf533ce" alt="Administrador Juegos 23_05_2025 02_44_30 a  m" width="400">
+
+
+<img src="https://github.com/user-attachments/assets/a7221d36-2191-4423-86ad-6412cde25cee" alt="Administrador Renta y Compra 23_05_2025 02_44_41 a  m" width="400">
+
+
+<img src="https://github.com/user-attachments/assets/fb08a70a-777d-48ff-a76b-df6b6df7549a" alt="Nueva Operación 23_05_2025 02_44_50 a  m" width="400">
 
 ##
 ## Logo

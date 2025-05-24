@@ -42,6 +42,7 @@ import com.formdev.flatlaf.json.ParseException;
 import controller.UserController;
 import controller.VideogamesController;
 import models.Admins;
+import models.AuthModel;
 import models.User;
 import models.UsersModel;
 import models.VideoGames;
@@ -104,7 +105,7 @@ public class AuthViews extends JFrame {
 		iniciar.setFont(new Font("Calibri", Font.BOLD, 24));
 		panelCentral.add(iniciar);
 
-		JLabel correo = new JLabel("Ingresar correo:");
+		JLabel correo = new JLabel("Ingresar su usuario:");
 		correo.setHorizontalAlignment(SwingConstants.LEFT);
 		correo.setFont(new Font("SansSerif", Font.BOLD, 20));
 		correo.setBounds(60, 146, 290, 26);
@@ -140,62 +141,42 @@ public class AuthViews extends JFrame {
 		acceder.setBounds(50, 371, 289, 26);
 		acceder.addActionListener(new ActionListener() {
 		    public void actionPerformed(ActionEvent e) {
-		    	
-		    	 // para prebas comenta lo demas y decomentas esta parte de Inicio();
-//		    	dispose();
-//              Inicio();
-
 		        // Resetear estilos
 		        gmail.setBorder(BorderFactory.createLineBorder(Color.GRAY));
 		        password.setBorder(BorderFactory.createLineBorder(Color.GRAY));
-		        
-		        String passIngresada = new String(password.getPassword());
+
 		        String emailIngresado = gmail.getText();
-		        		        
-		        // Validar si el campo email está vacío
+		        String passIngresada = new String(password.getPassword());
+
+		        // Validaciones
 		        if(emailIngresado.isEmpty()) {
 		            gmail.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
 		            JOptionPane.showMessageDialog(null, "Por favor ingrese su email", "Error", JOptionPane.ERROR_MESSAGE);
 		            return;
 		        }
-		        
-		        // Validar si el campo contraseña está vacío
+
 		        if(passIngresada.isEmpty()) {
 		            password.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
 		            JOptionPane.showMessageDialog(null, "Por favor ingrese su contraseña", "Error", JOptionPane.ERROR_MESSAGE);
 		            return;
 		        }
-		        
-		    
-		        
-		        boolean credencialesCorrectas = false;
-		        
-		        // Aquí se valida la contraseña
-		        for (Iterator iterator = administrador.iterator(); iterator.hasNext();) {
-		            Admins ob = (Admins) iterator.next();
-		            
-		            // se valida el correo
-		            if(emailIngresado.equals(ob.getEmail())) {
-		                // se valida la contraseña
-		                if(passIngresada.equals(ob.getContraseña())) {
-		                    credencialesCorrectas = true;
-		                 
-		                    dispose();
-		                    HomeView hv = new HomeView();
-		                    hv.Inicio();
-		                    break; 
-		                }
-		            }
-		        }
-		        
-		        // Si no se encontraron credenciales correctas
-		        if(!credencialesCorrectas) {
+
+		        // Autenticación
+		        AuthModel auth = new AuthModel();
+		        Admins admin = auth.autenticar(emailIngresado, passIngresada);
+
+		        if(admin != null) {
+		            dispose();
+		            HomeView hv = new HomeView();
+		            hv.Inicio(); // Inicia la vista principal
+		        } else {
 		            JOptionPane.showMessageDialog(null, "Email o contraseña incorrectos", "Error", JOptionPane.ERROR_MESSAGE);
 		            gmail.setBorder(BorderFactory.createLineBorder(Color.RED));
 		            password.setBorder(BorderFactory.createLineBorder(Color.RED));
 		        }
 		    }
 		});
+
 		panelCentral.add(acceder);
 
 		//lo de adminitrador lo haremos despues

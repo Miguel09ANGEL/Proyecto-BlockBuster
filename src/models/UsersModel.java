@@ -12,13 +12,13 @@ public class UsersModel {
 
 	private List<User> usuarios = new ArrayList<>();
 
-//	String url = "jdbc:mysql://sql.freedb.tech:3306/freedb_Base_de_datos_renta?useSSL=false";
-//	String usuario = "freedb_G_user";
-//	String contraseña = "%eeFW9csb4$?Dcj";
-//	
-	String url = "jdbc:mysql://127.0.0.1:3306/base_de_datos_renta";
-	String usuario = "root";
-	String contraseña = "8163264gA?¡";
+	String url = "jdbc:mysql://sql.freedb.tech:3306/freedb_Base_de_datos_renta?useSSL=false";
+	String usuario = "freedb_G_user";
+	String contraseña = "%eeFW9csb4$?Dcj";
+	
+//	String url = "jdbc:mysql://127.0.0.1:3306/base_de_datos_renta";
+//	String usuario = "root";
+//	String contraseña = "";
 
 	public UsersModel() {
 		// TODO Auto-generated constructor stub
@@ -100,7 +100,8 @@ public class UsersModel {
 
 	}
 
-	public boolean add(String name, String apellidoPaterno, String apellidoMaterno,java.util.Date fechaNacimiento,String telefono, String correo) {
+	public boolean add(String name, String apellidoPaterno, 
+			String apellidoMaterno,java.util.Date fechaNacimiento,String telefono, String correo) {
 		
 	    String query = "INSERT INTO users (nombre, apellido_paterno, apellido_materno, fecha_nacimiento, telefono, correo) "
 	    		+ "VALUES ('"+name+"', '"+apellidoPaterno+"', '"+apellidoMaterno+"', '"+fechaNacimiento+"', '"+telefono+"', '"+correo+"')";
@@ -195,7 +196,8 @@ public class UsersModel {
 				System.out.println("");
 
 				
-				myUser = new User(id, nombre, apellidoPaterno, apellidoMaterno, fechaNacimiento, telefono, correo, null, null);
+				myUser = new User(id, nombre, apellidoPaterno, apellidoMaterno,
+						fechaNacimiento, telefono, correo, null, null);
 			}
 
 			rs.close();

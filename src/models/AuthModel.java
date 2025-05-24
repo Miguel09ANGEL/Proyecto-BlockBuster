@@ -11,13 +11,13 @@ public class AuthModel {
 
 	private List<Admins> administrador = new ArrayList<>();
 
-//	String url = "jdbc:mysql://sql.freedb.tech:3306/freedb_Base_de_datos_renta?useSSL=false";
-//	String usuario = "freedb_G_user";
-//	String contraseña = "%eeFW9csb4$?Dcj";
+	String url = "jdbc:mysql://sql.freedb.tech:3306/freedb_Base_de_datos_renta?useSSL=false";
+	String usuario = "freedb_G_user";
+	String contraseña = "%eeFW9csb4$?Dcj";
 	
-	String url = "jdbc:mysql://127.0.0.1:3306/base_de_datos_renta";
-	String usuario = "root";
-	String contraseña = "8163264gA?¡";
+//	String url = "jdbc:mysql://127.0.0.1:3306/base_de_datos_renta";
+//	String usuario = "root";
+//	String contraseña = "";
 	
 	public List getAll() {
 
@@ -57,5 +57,27 @@ public class AuthModel {
 
 		return administrador;
 	}
+	
+	public Admins autenticar(String email, String contrasena) {
+		String query = "SELECT * FROM administradores WHERE correo = '" + email + "' AND contrasena = '" + contrasena + "'";
+	    
+	    try (Connection conn = DriverManager.getConnection(url, usuario, this.contraseña);
+	         Statement stmt = conn.createStatement();
+	         ResultSet rs = stmt.executeQuery(query)) {
+	        
+	        if (rs.next()) {
+	            int id = rs.getInt("id");
+	            String correo = rs.getString("correo");
+	            String pass = rs.getString("contrasena");
+	            return new Admins(id, correo, pass); 
+	        }
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+
+	    return null; // No se encontró el admin
+	}
+	
+
 	
 }

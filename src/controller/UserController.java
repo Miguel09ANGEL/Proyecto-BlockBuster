@@ -7,17 +7,16 @@ import models.User;
 import models.UsersModel;
 import views.AuthViews;
 import views.HomeView;
+import views.UserViews;
 
 public class UserController {
 
-	private HomeView vista;
-	private AuthViews vista2;
+	private UserViews vista;
 	private List<User> usuarios = new ArrayList<>();
 
 	public UserController() {
 
-		vista = new HomeView();
-		vista2 = new AuthViews();
+		vista = new UserViews();
 	}
 
 	public void index() {
@@ -36,7 +35,7 @@ public class UserController {
 
 		User myUser = um.get(id);
 
-		vista2.EditarCliente(myUser);
+		vista.EditarCliente(myUser);
 
 	}
 

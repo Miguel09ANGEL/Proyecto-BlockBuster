@@ -1,31 +1,45 @@
 package controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import models.Admins;
+import models.AdminsModel;
+import models.AuthModel;
+import views.AuthViews;
 import views.HomeView;
 
 public class AuthController {
 	
-	private HomeView vista;
+	private AuthViews vista;
+	private List<Admins> administrador = new ArrayList<>();
+
+
 	private AdminsController vista2;
-	VideogamesController lt = new VideogamesController();
 
 	public AuthController() { 
 		
-		vista = new HomeView();
+		vista = new AuthViews();
 		vista2 = new AdminsController();
 	}
 	
 	public void login() {
+
+		AuthModel am = new AuthModel();
+
+		administrador = am.getAll();
+
+		vista.login(administrador);;
+
+	}
+	
+	public void indexAdmins() {
 		
 		vista2.indexAdmins();;
 	}
 	
 	public void framePrueba() {
-//		vista.InformacionCliente();
-//		UserController uc = new UserController(); 
-		
-//		 uc.index();
-//		vista.Inicio();
-//		lt.indexVideoGames();
+
 	}
 	
 	

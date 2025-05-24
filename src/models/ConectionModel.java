@@ -7,10 +7,13 @@ import java.sql.Statement;
 
 public class ConectionModel {
 
-	String url = "jdbc:mysql://sql.freedb.tech:3306/freedb_Base_de_datos_renta?useSSL=false";
-	String usuario = "freedb_G_user";
-	String contraseña = "%eeFW9csb4$?Dcj";
+//	String url = "jdbc:mysql://sql.freedb.tech:3306/freedb_Base_de_datos_renta?useSSL=false";
+//	String usuario = "freedb_G_user";
+//	String contraseña = "%eeFW9csb4$?Dcj";
 
+	String url = "jdbc:mysql://127.0.0.1:3306/base_de_datos_renta";
+	String usuario = "root";
+	String contraseña = "8163264gA?¡";
 
 	public ConectionModel() {
 		String query = "select * from users";
@@ -18,7 +21,7 @@ public class ConectionModel {
 		Statement stmt = null;
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
-			conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/test", "root", "8163264gA?¡");
+			conn = DriverManager.getConnection(url, usuario, contraseña);
 			stmt = conn.createStatement();
 			ResultSet rs = stmt.executeQuery(query);
 			while (rs.next()) {

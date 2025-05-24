@@ -15,13 +15,13 @@ public class AdminsModel {
 	}
 	private List<Admins> administrador = new ArrayList<>();
 
-	String url = "jdbc:mysql://sql.freedb.tech:3306/freedb_Base_de_datos_renta?useSSL=false";
-	String usuario = "freedb_G_user";
-	String contraseña = "%eeFW9csb4$?Dcj";
+//	String url = "jdbc:mysql://sql.freedb.tech:3306/freedb_Base_de_datos_renta?useSSL=false";
+//	String usuario = "freedb_G_user";
+//	String contraseña = "%eeFW9csb4$?Dcj";
 	
-//	String url = "jdbc:mysql://127.0.0.1:3306/base_de_datos_renta";
-//	String usuario = "root";
-//	String contraseña = "8163264gA?¡";
+	String url = "jdbc:mysql://127.0.0.1:3306/base_de_datos_renta";
+	String usuario = "root";
+	String contraseña = "8163264gA?¡";
 	
 	public List getAll() {
 

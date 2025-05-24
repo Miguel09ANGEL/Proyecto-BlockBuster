@@ -12,11 +12,11 @@ import views.HomeView;
 
 public class AdminsController {
 
-	private HomeView vista;
+	private AuthViews vista;
 	private List<Admins> administrador = new ArrayList<>();
 	public AdminsController() {
 
-		vista = new HomeView();
+		vista = new AuthViews();
 	}
 
 	public void indexAdmins() {
@@ -25,7 +25,7 @@ public class AdminsController {
 
 		administrador = am.getAll();
 
-		vista.PanelAdministrador(administrador);;
+		vista.login(administrador);;
 
 	}
 }

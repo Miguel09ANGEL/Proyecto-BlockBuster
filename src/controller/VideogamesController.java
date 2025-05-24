@@ -8,16 +8,17 @@ import models.UsersModel;
 import models.VideoGames;
 import models.VideoGamesModel;
 import views.HomeView;
+import views.VideogamesView;
 
 public class VideogamesController {
 
-	private HomeView vista;
+	private VideogamesView vista;
 
 	private List<VideoGames> videogames = new ArrayList<>();
 
 	public VideogamesController() {
 
-		vista = new HomeView();
+		vista = new VideogamesView();
 
 	}
 

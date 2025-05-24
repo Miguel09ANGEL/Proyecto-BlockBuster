@@ -113,7 +113,7 @@ public class HomeView extends JFrame {
 
 
 		JLabel contraseña = new JLabel("Contraseña:");
-		contraseña.setSize(116, 26);
+		contraseña.setSize(290, 26);
 		contraseña.setLocation(60, 263);
 		contraseña.setHorizontalAlignment(JLabel.LEFT);
 		contraseña.setFont(new Font("SansSerif", Font.BOLD, 20));

@@ -60,7 +60,7 @@ Cada usuario puede ver un historial detallado de sus transacciones anteriores.
 ## 🚀 Tecnologías Utilizadas
 
 - **Java SE 22**
-- **jdatepicker-1.3.4.jar**
+- **jdatepicker** (Calendario despegable)
 - **Eclipse IDE**
 - **Java Swing** (interfaz gráfica)
 - **MySQL** (base de datos)

@@ -46,13 +46,12 @@ public class UsersModel {
 				Date fechaNacimiento = rs.getDate(5);
 				String telefono = rs.getString(6);
 				String correo = rs.getString(7);
-
-				System.out.println("empId:" + id);
-				System.out.println("firstName:" + nombre);
+				Date fechaRegistro = rs.getDate(8);
+				
 
 				System.out.println("");
 
-				usuarios.add(new User(id, nombre, apellidoPaterno, apellidoMaterno, fechaNacimiento, telefono, correo, null, null));
+				usuarios.add(new User(id, nombre, apellidoPaterno, apellidoMaterno, fechaNacimiento, telefono, correo, fechaRegistro, null));
 			}
 
 			rs.close();
@@ -189,6 +188,8 @@ public class UsersModel {
 				Date fechaNacimiento = rs.getDate(5);
 				String telefono = rs.getString(6);
 				String correo = rs.getString(7);
+				Date fechaRegistro = rs.getDate(8);
+
 
 				System.out.println("empId:" + id);
 				System.out.println("firstName:" + nombre);
@@ -197,7 +198,7 @@ public class UsersModel {
 
 				
 				myUser = new User(id, nombre, apellidoPaterno, apellidoMaterno,
-						fechaNacimiento, telefono, correo, null, null);
+						fechaNacimiento, telefono, correo, fechaRegistro, null);
 			}
 
 			rs.close();

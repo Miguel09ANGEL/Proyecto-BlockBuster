@@ -48,5 +48,16 @@ public class UserController {
 		vista.DetallesCliente(myUser);
 
 	}
+	
+	public void update3(int id) {
+		
+		UsersModel um = new UsersModel();
+
+		User myUser = um.get(id);
+
+		vista.InformacionCliente(myUser);
+
+		
+	}
 
 }

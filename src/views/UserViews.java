@@ -6,6 +6,11 @@ import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.FileNotFoundException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Iterator;
@@ -29,6 +34,7 @@ import javax.swing.UIManager;
 import javax.swing.JFormattedTextField.AbstractFormatter;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.JFileChooser;
 
 import org.jdatepicker.impl.JDatePanelImpl;
 import org.jdatepicker.impl.JDatePickerImpl;
@@ -36,6 +42,11 @@ import org.jdatepicker.impl.UtilDateModel;
 
 import com.formdev.flatlaf.FlatLightLaf;
 import com.formdev.flatlaf.json.ParseException;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.PdfAcroForm;
+import com.itextpdf.text.pdf.PdfWriter;
 
 import controller.UserController;
 import controller.VideogamesController;
@@ -307,9 +318,10 @@ public class UserViews extends JFrame {
 
 			// se crea la tabla
 			JTable table = new JTable(model);
-
-			table.getColumnModel().getColumn(0).setPreferredWidth(10);
-			table.getColumnModel().getColumn(4).setPreferredWidth(50);
+			
+			table.getColumnModel().getColumn(0).setPreferredWidth(10); // aqui redusco id
+			table.getColumnModel().getColumn(2).setPreferredWidth(50); // aqui se reduce paellido paterno
+			table.getColumnModel().getColumn(3).setPreferredWidth(50); // here i reduce midle name
 
 			table.setFont(new Font("Arial", Font.PLAIN, 14));
 			table.setRowHeight(25);
@@ -453,7 +465,7 @@ public class UserViews extends JFrame {
 			btnEditar.setBackground(Color.decode("#6D91B9"));
 			btnEditar.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					
+
 					UserController uc = new UserController();
 					uc.update(user.getId());
 //					EditarCliente();
@@ -468,12 +480,9 @@ public class UserViews extends JFrame {
 			JButton btnConfirmar = new JButton("INFORMACION (PDF)");
 			btnConfirmar.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-
-//					dispose();
-					//Falta mandar a llamar datos del Cliente
-//					VideogamesController vm = new VideogamesController();
-//					vm.updateVideogames2(WIDTH);
-//					InformacionCliente();;
+					dispose();
+					UserController uc = new UserController();
+					uc.update3(user.getId());
 				}
 			});
 			btnConfirmar.setBackground(Color.decode("#263C54")); // Color de fondo (azul oscuro)
@@ -486,7 +495,7 @@ public class UserViews extends JFrame {
 				public void actionPerformed(ActionEvent e) {
 					UserController uc = new UserController();
 					uc.index();
-					
+
 					dispose();
 				}
 			});
@@ -605,14 +614,14 @@ public class UserViews extends JFrame {
 			JPanel panelCentral = new JPanel();
 			panelCentral.setLayout(null);
 			panelCentral.setBackground(Color.decode("#D9D9D9"));
-			panelCentral.setBounds(32, 62, 951, 475); // (x, y, ancho, alto)
+			panelCentral.setBounds(32, 62, 951, 475); 
 			layeredPane.add(panelCentral, JLayeredPane.PALETTE_LAYER);
 
 			// Logotipo
 			ImageIcon iconoOriginal = new ImageIcon(getClass().getResource("/images/Block.png"));
 			Image imagenEscalada = iconoOriginal.getImage().getScaledInstance(70, 70, Image.SCALE_SMOOTH);
 			JLabel logo = new JLabel(new ImageIcon(imagenEscalada));
-			logo.setBounds(450, 11, 70, 70); // posicion
+			logo.setBounds(450, 11, 70, 70); 
 			panelCentral.add(logo);
 
 			JLabel iniciar = new JLabel("INFORMACIÓN CLIENTE");
@@ -629,22 +638,52 @@ public class UserViews extends JFrame {
 			panelCentral.add(iniciar_1);
 
 			JButton btnCancelar = new JButton("Cancelar");
-			btnCancelar.setBackground(Color.decode("#B82F2F")); // Color de fondo (azul oscuro)
+			btnCancelar.setBackground(Color.decode("#B82F2F")); 
 			btnCancelar.setForeground(Color.WHITE);
 			btnCancelar.setBounds(103, 406, 183, 33);
 			btnCancelar.addActionListener(e -> {
-//				DetallesCliente(); // Abre la segunda ventana
 				dispose(); // Cierra la ventana actual
+				UserController uc = new UserController();
+				uc.update2(user.getId());
 			});
 			panelCentral.add(btnCancelar);
 
 			JButton btnConfirmar = new JButton("DESCARGAR PDF");
-			btnConfirmar.setBackground(Color.decode("#263C54")); // Color de fondo (azul oscuro)
+			btnConfirmar.setBackground(Color.decode("#263C54")); 
 			btnConfirmar.setForeground(Color.WHITE);
 			btnConfirmar.setBounds(621, 406, 183, 33);
 			btnConfirmar.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 
+					JFileChooser fileChooser = new JFileChooser();
+					fileChooser.setDialogTitle("Guardar archivo PDF");
+
+					
+					fileChooser.setSelectedFile(new File("Informacion_Cliente_" + user.getNombre() + ".pdf"));
+
+					int userSelection = fileChooser.showSaveDialog(null);
+
+					if (userSelection == JFileChooser.APPROVE_OPTION) {
+						File fileToSave = fileChooser.getSelectedFile();
+						Document document = new Document();
+
+						try {
+							PdfWriter.getInstance(document, new FileOutputStream(fileToSave));
+							document.open();
+							document.add(new Paragraph("DETALLES DEL CLIENTE\n\n"));
+							document.add(new Paragraph("ID: " + user.getId()));
+							document.add(new Paragraph("Nombre: " + user.getNombre() + " " + user.getApellidoPaterno()+" "+ user.getApellidoMaterno()));
+							document.add(new Paragraph("Correo: " + user.getCorreo()));
+							document.add(new Paragraph("Teléfono: " + user.getTelefono()));
+
+							JOptionPane.showMessageDialog(null, "PDF guardado exitosamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+						} catch (FileNotFoundException | DocumentException ex) {
+							ex.printStackTrace();
+							JOptionPane.showMessageDialog(null, "Error al guardar el PDF:\n" + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+						} finally {
+							document.close();
+						}
+					}
 				}
 			});
 			panelCentral.add(btnConfirmar);
@@ -660,7 +699,7 @@ public class UserViews extends JFrame {
 			});
 			panelCentral.add(btnCredencialpdf);
 
-			JLabel iniciar_1_1 = new JLabel("Manuel orozco vazquez");
+			JLabel iniciar_1_1 = new JLabel(user.getNombre()+" "+user.getApellidoPaterno());
 			iniciar_1_1.setHorizontalAlignment(SwingConstants.CENTER);
 			iniciar_1_1.setFont(new Font("Calibri", Font.BOLD, 14));
 			iniciar_1_1.setBounds(58, 177, 141, 42);
@@ -672,7 +711,7 @@ public class UserViews extends JFrame {
 			iniciar_1_2.setBounds(84, 262, 87, 42);
 			panelCentral.add(iniciar_1_2);
 
-			JLabel iniciar_1_1_1 = new JLabel("mov@gmail.com");
+			JLabel iniciar_1_1_1 = new JLabel(user.getCorreo());
 			iniciar_1_1_1.setHorizontalAlignment(SwingConstants.CENTER);
 			iniciar_1_1_1.setFont(new Font("Calibri", Font.BOLD, 14));
 			iniciar_1_1_1.setBounds(58, 287, 141, 42);
@@ -684,7 +723,7 @@ public class UserViews extends JFrame {
 			iniciar_1_3.setBounds(384, 150, 183, 42);
 			panelCentral.add(iniciar_1_3);
 
-			JLabel iniciar_1_1_2 = new JLabel("12/06/25");
+			JLabel iniciar_1_1_2 = new JLabel(""+user.getFechaNacimiento());
 			iniciar_1_1_2.setHorizontalAlignment(SwingConstants.CENTER);
 			iniciar_1_1_2.setFont(new Font("Calibri", Font.BOLD, 14));
 			iniciar_1_1_2.setBounds(394, 177, 141, 42);
@@ -696,7 +735,7 @@ public class UserViews extends JFrame {
 			iniciar_1_2_1.setBounds(397, 262, 170, 42);
 			panelCentral.add(iniciar_1_2_1);
 
-			JLabel iniciar_1_1_1_1 = new JLabel("00001");
+			JLabel iniciar_1_1_1_1 = new JLabel(""+user.getId());
 			iniciar_1_1_1_1.setHorizontalAlignment(SwingConstants.CENTER);
 			iniciar_1_1_1_1.setFont(new Font("Calibri", Font.BOLD, 14));
 			iniciar_1_1_1_1.setBounds(394, 287, 141, 42);
@@ -708,7 +747,7 @@ public class UserViews extends JFrame {
 			iniciar_1_3_1.setBounds(695, 150, 177, 42);
 			panelCentral.add(iniciar_1_3_1);
 
-			JLabel iniciar_1_1_2_1 = new JLabel("6120000000");
+			JLabel iniciar_1_1_2_1 = new JLabel(user.getTelefono());
 			iniciar_1_1_2_1.setHorizontalAlignment(SwingConstants.CENTER);
 			iniciar_1_1_2_1.setFont(new Font("Calibri", Font.BOLD, 14));
 			iniciar_1_1_2_1.setBounds(709, 177, 141, 42);
@@ -720,7 +759,7 @@ public class UserViews extends JFrame {
 			iniciar_1_2_1_1.setBounds(709, 262, 163, 42);
 			panelCentral.add(iniciar_1_2_1_1);
 
-			JLabel iniciar_1_1_1_1_1 = new JLabel(" 14-05-2025");
+			JLabel iniciar_1_1_1_1_1 = new JLabel(""+user.getCreatedAt());
 			iniciar_1_1_1_1_1.setHorizontalAlignment(SwingConstants.CENTER);
 			iniciar_1_1_1_1_1.setFont(new Font("Calibri", Font.BOLD, 14));
 			iniciar_1_1_1_1_1.setBounds(709, 287, 141, 42);

@@ -13,12 +13,12 @@ public class UsersModel {
 	private List<User> usuarios = new ArrayList<>();
 
 	String url = "jdbc:mysql://sql.freedb.tech:3306/freedb_Base_de_datos_renta?useSSL=false";
-	String usuario = "freedb_G_user";
-	String contraseña = "%eeFW9csb4$?Dcj";
+	String user = "freedb_G_user";
+	String password = "%eeFW9csb4$?Dcj";
 	
 //	String url = "jdbc:mysql://127.0.0.1:3306/base_de_datos_renta";
-//	String usuario = "root";
-//	String contraseña = "";
+//	String user = "root";
+//	String password = "";
 
 	public UsersModel() {
 		// TODO Auto-generated constructor stub
@@ -26,14 +26,14 @@ public class UsersModel {
 
 	public List getAll() {
 
-		String query = "select * from users";
+		String query = "select * from customers";
 
 		Connection conn = null;
 		Statement stmt = null;
 
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
-			conn = DriverManager.getConnection(url, usuario, contraseña);
+            conn = DriverManager.getConnection(url, user, password);
 			stmt = conn.createStatement();
 			ResultSet rs = stmt.executeQuery(query);
 
@@ -74,12 +74,12 @@ public class UsersModel {
 
 	public boolean remove(int id) {
 
-		String query = "DELETE FROM users WHERE id = " + id;
+		String query = "DELETE FROM users customers id = " + id;
 		Connection conn = null;
 		Statement stmt = null;
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
-			conn = DriverManager.getConnection(url, usuario, contraseña);
+            conn = DriverManager.getConnection(url, user, password);
 			stmt = conn.createStatement();
 
 			stmt.executeUpdate(query);
@@ -103,14 +103,14 @@ public class UsersModel {
 	public boolean add(String name, String apellidoPaterno, 
 			String apellidoMaterno,java.util.Date fechaNacimiento,String telefono, String correo) {
 		
-	    String query = "INSERT INTO users (nombre, apellido_paterno, apellido_materno, fecha_nacimiento, telefono, correo) "
+	    String query = "INSERT INTO customers (first_name, last_name, middle_name, date_of_birth, phone, email) "
 	    		+ "VALUES ('"+name+"', '"+apellidoPaterno+"', '"+apellidoMaterno+"', '"+fechaNacimiento+"', '"+telefono+"', '"+correo+"')";
 
 		Connection conn = null;
 		Statement stmt = null;
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
-			conn = DriverManager.getConnection(url, usuario, contraseña);
+            conn = DriverManager.getConnection(url, user, password);
 			stmt = conn.createStatement();
 
 			stmt.executeUpdate(query);
@@ -133,20 +133,20 @@ public class UsersModel {
 
 	public boolean update(int id, String nombre, String apellidoP, String apellidoM, Date fechaNacimiento, String telefono, String correo) {
 
-		String query = "UPDATE users SET " +
-                "nombre = '" + nombre + "', " +
-                "apellido_paterno = '" + apellidoP + "', " +
-                "apellido_materno = " + (apellidoM != null ? "'" + apellidoM + "'" : "NULL") + ", " +
-                "fecha_nacimiento = '"+ fechaNacimiento + "', " +
-                "telefono = " + (telefono != null ? "'" + telefono + "'" : "NULL") + ", " +
-                "correo = '" + correo + "' " +
+		String query = "UPDATE customers SET " +
+                "first_name = '" + nombre + "', " +
+                "last_name = '" + apellidoP + "', " +
+                "middle_name = " + (apellidoM != null ? "'" + apellidoM + "'" : "NULL") + ", " +
+                "date_of_birth = '"+ fechaNacimiento + "', " +
+                "phone = " + (telefono != null ? "'" + telefono + "'" : "NULL") + ", " +
+                "email = '" + correo + "' " +
                 "WHERE id = " + id;
 
 		Connection conn = null;
 		Statement stmt = null;
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
-			conn = DriverManager.getConnection(url, usuario, contraseña);
+            conn = DriverManager.getConnection(url, user, password);
 			stmt = conn.createStatement();
 
 			stmt.executeUpdate(query);
@@ -169,7 +169,7 @@ public class UsersModel {
 	
 	public User get(int id) {
 
-		String query = "select * from users WHERE id = " + id;
+		String query = "select * from customers WHERE id = " + id;
 
 		Connection conn = null;
 		Statement stmt = null;
@@ -177,7 +177,7 @@ public class UsersModel {
 		User myUser = null;
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
-			conn = DriverManager.getConnection(url, usuario, contraseña);
+            conn = DriverManager.getConnection(url, user, password);
 			stmt = conn.createStatement();
 			ResultSet rs = stmt.executeQuery(query);
 

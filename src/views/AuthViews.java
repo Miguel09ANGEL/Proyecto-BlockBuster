@@ -105,19 +105,19 @@ public class AuthViews extends JFrame {
 		iniciar.setFont(new Font("Calibri", Font.BOLD, 24));
 		panelCentral.add(iniciar);
 
-		JLabel correo = new JLabel("Ingresar su usuario:");
-		correo.setHorizontalAlignment(SwingConstants.LEFT);
-		correo.setFont(new Font("SansSerif", Font.BOLD, 20));
-		correo.setBounds(60, 146, 290, 26);
-		panelCentral.add(correo);
+		JLabel first_name = new JLabel("Ingresar su primer nombre:");
+		first_name.setHorizontalAlignment(SwingConstants.LEFT);
+		first_name.setFont(new Font("SansSerif", Font.BOLD, 20));
+		first_name.setBounds(60, 146, 290, 26);
+		panelCentral.add(first_name);
 		
-		JTextField gmail = new JTextField();
-		gmail.setBorder(BorderFactory.createLineBorder(Color.decode("#10A7DE")));
-		gmail.setBackground(Color.decode("#D9D9D9"));
-		gmail.setSize(290, 30);
-		gmail.setLocation(60, 170);
-		gmail.setFont(new Font("Montserrat ", Font.BOLD, 15));
-		panelCentral.add(gmail);
+		JTextField first_name_fld = new JTextField();
+		first_name_fld.setBorder(BorderFactory.createLineBorder(Color.decode("#10A7DE")));
+		first_name_fld.setBackground(Color.decode("#D9D9D9"));
+		first_name_fld.setSize(290, 30);
+		first_name_fld.setLocation(60, 170);
+		first_name_fld.setFont(new Font("Montserrat ", Font.BOLD, 15));
+		panelCentral.add(first_name_fld);
 
 
 		JLabel contraseña = new JLabel("Contraseña:");
@@ -142,15 +142,15 @@ public class AuthViews extends JFrame {
 		acceder.addActionListener(new ActionListener() {
 		    public void actionPerformed(ActionEvent e) {
 		        // Resetear estilos
-		        gmail.setBorder(BorderFactory.createLineBorder(Color.GRAY));
+		    	first_name_fld.setBorder(BorderFactory.createLineBorder(Color.GRAY));
 		        password.setBorder(BorderFactory.createLineBorder(Color.GRAY));
 
-		        String emailIngresado = gmail.getText();
+		        String emailIngresado = first_name_fld.getText();
 		        String passIngresada = new String(password.getPassword());
 
 		        // Validaciones
 		        if(emailIngresado.isEmpty()) {
-		            gmail.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
+		        	first_name_fld.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
 		            JOptionPane.showMessageDialog(null, "Por favor ingrese su email", "Error", JOptionPane.ERROR_MESSAGE);
 		            return;
 		        }
@@ -163,7 +163,7 @@ public class AuthViews extends JFrame {
 
 		        // Autenticación
 		        AuthModel auth = new AuthModel();
-		        Admins admin = auth.autenticar(emailIngresado, passIngresada);
+		        Admins admin = auth.authenticate(emailIngresado, passIngresada);
 
 		        if(admin != null) {
 		            dispose();
@@ -171,8 +171,8 @@ public class AuthViews extends JFrame {
 		            hv.Inicio(); // Inicia la vista principal
 		        } else {
 		            JOptionPane.showMessageDialog(null, "Email o contraseña incorrectos", "Error", JOptionPane.ERROR_MESSAGE);
-		            gmail.setBorder(BorderFactory.createLineBorder(Color.RED));
-		            password.setBorder(BorderFactory.createLineBorder(Color.RED));
+		            first_name_fld.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
+		            password.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
 		        }
 		    }
 		});

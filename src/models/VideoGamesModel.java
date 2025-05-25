@@ -14,12 +14,13 @@ public class VideoGamesModel {
 	private List<VideoGames> videogames = new ArrayList<>();
 
 	String url = "jdbc:mysql://sql.freedb.tech:3306/freedb_Base_de_datos_renta?useSSL=false";
-	String usuario = "freedb_G_user";
-	String contraseña = "%eeFW9csb4$?Dcj";
+	String user = "freedb_G_user";
+	String password = "%eeFW9csb4$?Dcj";
 	
 //	String url = "jdbc:mysql://127.0.0.1:3306/base_de_datos_renta";
-//	String usuario = "root";
-//	String contraseña = "";
+//	String user = "root";
+//	String password = "";
+
 
 	public VideoGamesModel() {
 		// TODO Auto-generated constructor stub
@@ -27,14 +28,14 @@ public class VideoGamesModel {
 
 	public List getAllVideogames() {
 
-		String query = "SELECT * FROM videojuegos";
+		String query = "SELECT * FROM video_games";
 
 		Connection conn = null;
 		Statement stmt = null;
 
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
-			conn = DriverManager.getConnection(url, usuario, contraseña);
+            conn = DriverManager.getConnection(url, user, password);
 			stmt = conn.createStatement();
 			ResultSet rs = stmt.executeQuery(query);
 
@@ -77,12 +78,12 @@ public class VideoGamesModel {
 
 	public boolean removeVideogame(int id) {
 
-		String query = "DELETE FROM videojuegos WHERE id = " + id;
+		String query = "DELETE FROM video_games WHERE id = " + id;
 		Connection conn = null;
 		Statement stmt = null;
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
-			conn = DriverManager.getConnection(url, usuario, contraseña);
+            conn = DriverManager.getConnection(url, user, password);
 			stmt = conn.createStatement();
 
 			stmt.executeUpdate(query);
@@ -105,7 +106,7 @@ public class VideoGamesModel {
 
 	public VideoGames getVideojuegos(int id) {
 
-		String query = "select * from videojuegos WHERE id = " + id;
+		String query = "select * from video_games WHERE id = " + id;
 
 		Connection conn = null;
 		Statement stmt = null;
@@ -113,7 +114,7 @@ public class VideoGamesModel {
 		VideoGames myVideogame = null;
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
-			conn = DriverManager.getConnection(url, usuario, contraseña);
+            conn = DriverManager.getConnection(url, user, password);
 			stmt = conn.createStatement();
 			ResultSet rs = stmt.executeQuery(query);
 
@@ -162,12 +163,12 @@ public class VideoGamesModel {
 			String clasificacion, String genero, int existencias, BigDecimal precioRenta, BigDecimal precioVenta,
 			String desarrolladoPor, String descripcion) {
 
-		String query = "UPDATE videojuegos SET " + "nombre = '" + nombre + "', " + "plataforma = '" + plataforma + "', "
-				+ "año_lanzamiento = " + añoLanzamiento + ", " + "disponibilidad = " + disponibilidad + ", "
-				+ "clasificacion = '" + clasificacion + "', " + "genero = '" + genero + "', "
-				+ "existencias_disponibles = " + existencias + ", " + "precio_renta = " + precioRenta + ", "
-				+ "precio_venta = " + precioVenta + ", " + "desarrollado_por = '" + desarrolladoPor + "', "
-				+ "descripcion = " + (descripcion != null ? "'" + descripcion + "'" : "NULL") + " " + "WHERE id = "
+		String query = "UPDATE video_games SET " + "name = '" + nombre + "', " + "platform = '" + plataforma + "', "
+				+ "release_year = " + añoLanzamiento + ", " + "is_available = " + disponibilidad + ", "
+				+ "classification = '" + clasificacion + "', " + "genre = '" + genero + "', "
+				+ "available_stock = " + existencias + ", " + "rent_price = " + precioRenta + ", "
+				+ "sale_price = " + precioVenta + ", " + "developed_by = '" + desarrolladoPor + "', "
+				+ "description = " + (descripcion != null ? "'" + descripcion + "'" : "NULL") + " " + "WHERE id = "
 				+ id;
 
 		Connection conn = null;
@@ -175,7 +176,7 @@ public class VideoGamesModel {
 
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
-			conn = DriverManager.getConnection(url, usuario, contraseña);
+            conn = DriverManager.getConnection(url, user, password);
 			stmt = conn.createStatement();
 
 			int rowsAffected = stmt.executeUpdate(query);
@@ -201,9 +202,9 @@ public class VideoGamesModel {
 				String clasificacion, String genero, int existencias, BigDecimal precioRenta, BigDecimal precioVenta,
 				String desarrolladoPor, String descripcion) {
 	
-			String query = "INSERT INTO videojuegos (nombre, plataforma, año_lanzamiento, "
-					+ "disponibilidad, clasificacion, genero, existencias_disponibles, "
-					+ "precio_renta, precio_venta, desarrollado_por, descripcion) " + "VALUES ('" + nombre + "', '"
+			String query = "INSERT INTO video_games (name, platform, release_year, "
+					+ "is_available, classification, genre, available_stock, "
+					+ "rent_price, sale_price, developed_by, description) " + "VALUES ('" + nombre + "', '"
 					+ plataforma + "', " + añoLanzamiento + ", " + disponibilidad  + ", '" + clasificacion + "', '"
 					+ genero + "', " + existencias + ", " + precioRenta + ", " + precioVenta + ", '" + desarrolladoPor
 					+ "', '" + descripcion + "')";
@@ -213,7 +214,7 @@ public class VideoGamesModel {
 	
 			try {
 				Class.forName("com.mysql.cj.jdbc.Driver");
-				conn = DriverManager.getConnection(url, usuario, contraseña);
+	            conn = DriverManager.getConnection(url, user, password);
 				stmt = conn.createStatement();
 	
 				int rowsAffected = stmt.executeUpdate(query);

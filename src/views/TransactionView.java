@@ -536,16 +536,6 @@ public class TransactionView extends JFrame {
 		});
 		panelCentral.add(btnCancelar);
 
-		JButton btnConfirmar = new JButton("Confirmar");
-		btnConfirmar.setBackground(Color.decode("#263C54"));
-		btnConfirmar.setForeground(Color.WHITE);
-		btnConfirmar.setBounds(582, 406, 183, 33);
-		btnConfirmar.addActionListener(e -> {
-			dispose();
-			DetallesRenta();
-		});
-		panelCentral.add(btnConfirmar);
-
 		// Detalles de la compra
 		JLabel lblTituloJuego = new JLabel("Nombre de videojuego");
 		lblTituloJuego.setHorizontalAlignment(SwingConstants.CENTER);
@@ -643,6 +633,16 @@ public class TransactionView extends JFrame {
 		barraRoja.setBackground(Color.decode("#B44635"));
 		barraRoja.setBounds(0, 0, 1024, 60);
 		layeredPane.add(barraRoja, JLayeredPane.PALETTE_LAYER);
+		
+		JButton btnConfirmar = new JButton("Confirmar");
+		btnConfirmar.setBackground(Color.decode("#263C54"));
+		btnConfirmar.setForeground(Color.WHITE);
+		btnConfirmar.setBounds(582, 406, 183, 33);
+		btnConfirmar.addActionListener(e -> {
+			dispose();
+			DetallesRenta();
+		});
+		panelCentral.add(btnConfirmar);
 
 		setVisible(true);
 	}
@@ -1072,7 +1072,7 @@ public class TransactionView extends JFrame {
 		layeredPane.add(panelCentral, JLayeredPane.PALETTE_LAYER);
 
 		// Logotipo
-		ImageIcon iconoOriginal = new ImageIcon(getClass().getResource("/images/contra.png"));
+		ImageIcon iconoOriginal = new ImageIcon(getClass().getResource("/images/Contra.png"));
 		Image imagenEscalada = iconoOriginal.getImage().getScaledInstance(100, 70, Image.SCALE_SMOOTH);
 
 		// Título principal

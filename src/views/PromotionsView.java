@@ -4,8 +4,10 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Image;
+import java.awt.List;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Iterator;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -14,14 +16,18 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
 
 import com.formdev.flatlaf.FlatLightLaf;
 
+import controller.PromotionsController;
+import models.Promotions;
 import models.User;
 
 public class PromotionsView extends JFrame{
@@ -147,7 +153,8 @@ public class PromotionsView extends JFrame{
 		btnPromocionAutomatica.setBounds(266, 261, 206, 100);
 		btnPromocionAutomatica.addActionListener(e -> {
 			dispose(); // Cierra la ventana actual
-			PromocionAutomatica(); // Abre la segunda ventana
+			PromotionsController pc = new PromotionsController();
+			pc.indexPromocion();// Abre la segunda ventana
 		});
 		panelCentral.add(btnPromocionAutomatica);
 
@@ -320,7 +327,7 @@ public class PromotionsView extends JFrame{
 		}
 	}
 
-	public void PromocionAutomatica() {
+	public void PromocionAutomatica(java.util.List<Promotions> promocion) {
 		// Configuración básica de la ventana
 		setTitle("Promocion Automatica");
 		setSize(1024, 576);
@@ -427,28 +434,41 @@ public class PromotionsView extends JFrame{
 		table.setShowHorizontalLines(true);
 		table.setShowVerticalLines(true);
 
-		// Promociones
-		Object[][] promociones = { { "En la Compra de:", "Descuentos por frecuencia", }, { "", "", }, { "", "", },
-				{ "", "", }, { "", "", }, { "", "", }, { "", "", }, { "", "", },
-
-		};
 
 		DefaultTableCellRenderer centerRendere = new DefaultTableCellRenderer();
 		centerRendere.setHorizontalAlignment(JLabel.CENTER);
+		
+		// Crear unan tabla
+		String[] columnNames = { "En la compra de:", "Promociones por compra" };
+		DefaultTableModel model = new DefaultTableModel(columnNames, 0) {
+			@Override
+			public boolean isCellEditable(int row, int column) {
+				return false; // Hacer que la tabla no sea editable
+			}
+		};
 
-		// Tabla
-		JTable tabla = new JTable(promociones, new String[] { "", "", });
-		panelCentral.add(tabla);
-		tabla.setFont(new Font("Segoe UI", Font.PLAIN, 16));
-		tabla.setBounds(406, 61, 315, 356);
-		tabla.setBorder(BorderFactory.createLineBorder(new Color(204, 204, 204)));
-		tabla.setShowGrid(true);
-		tabla.setGridColor(new Color(204, 204, 204));
-		tabla.setTableHeader(null);
-		tabla.setDefaultRenderer(Object.class, centerRendere);
-		tabla.setRowHeight(35);
-		tabla.setShowHorizontalLines(true);
-		tabla.setShowVerticalLines(true);
+		// Llenar la tabla con datos
+		for (Iterator iterator = promocion.iterator(); iterator.hasNext();) {
+			Promotions usuario = (Promotions) iterator.next();
+			Object[] rowData = {usuario.getCompraCantida()+" $", usuario.getPromocionCompra()+" %" };
+			model.addRow(rowData);
+		}
+
+		// se crea la tabla
+		JTable table2 = new JTable(model);
+		table2.setFont(new Font("Arial", Font.PLAIN, 14));
+		table2.setRowHeight(25);
+		table2.getTableHeader().setFont(new Font("Arial", Font.BOLD, 14));
+		table2.setAutoCreateRowSorter(true); // ordenar por columnas
+		
+		for (int i = 0; i < table2.getColumnCount(); i++) {
+		    table2.getColumnModel().getColumn(i).setCellRenderer(centerRendere);
+		}
+
+		// Agregar la tabla a un JScrollPane
+		JScrollPane scrollPane = new JScrollPane(table2);
+		scrollPane.setBounds(406, 61, 315, 356);
+		panelCentral.add(scrollPane);
 
 		JButton btnEditarPromocion = new JButton("EDITAR PROMOCIÓN");
 		btnEditarPromocion.setForeground(Color.WHITE);
@@ -546,7 +566,9 @@ public class PromotionsView extends JFrame{
 		btnCancelar.setBounds(175, 406, 183, 33);
 		btnCancelar.addActionListener(e -> {
 			dispose(); // Cierra la ventana actual
-			PromocionAutomatica(); // Abre la segunda ventana
+			PromotionsController pc = new PromotionsController();
+			pc.indexPromocion();// Abre la segunda ventana(); 
+			
 		});
 		panelCentral.add(btnCancelar);
 

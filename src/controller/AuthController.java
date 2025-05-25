@@ -7,6 +7,7 @@ import models.Admins;
 import models.AuthModel;
 import views.AuthViews;
 import views.HomeView;
+import views.TransactionView;
 
 public class AuthController {
 	
@@ -27,6 +28,13 @@ public class AuthController {
 
 		vista.login(administrador);;
 
+	}
+	
+	public void framePrueba() {
+		
+		TransactionView tv = new TransactionView();
+		
+		tv.OperacionRentar();
 	}
 	
 

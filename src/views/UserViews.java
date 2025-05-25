@@ -1119,7 +1119,6 @@ public class UserViews extends JFrame {
 			lblFechaNacimiento.setFont(new Font("Calibri", Font.BOLD, 14));
 			lblFechaNacimiento.setBounds(596, 209, 136, 42);
 			panelCentral.add(lblFechaNacimiento);
-
 			
 			UtilDateModel model = new UtilDateModel();
 

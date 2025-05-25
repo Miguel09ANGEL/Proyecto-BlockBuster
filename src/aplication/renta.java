@@ -8,10 +8,10 @@ public class renta {
 		// TODO Auto-generated method stub
 		
 		AuthController app = new AuthController();
-		app.login();
+//		app.login();
 		
 		
-//		app.framePrueba();
+		app.framePrueba();
 
 	}
 

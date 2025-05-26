@@ -144,9 +144,7 @@ public class HomeView extends JFrame {
 		iniciar.setFont(new Font("Calibri", Font.BOLD, 24));
 		panelCentral.add(iniciar);
 
-//		JLabel iniciar_1 = new JLabel(
-//				"<html><div style='text-align: center;'>Desde aquí podrás gestionar y controlar todas las<br>"
-//						+ "funcionalidades de tu sitio. ¿Qué deseas hacer hoy?</div></html>");
+
 		JLabel iniciar_1 = new JLabel(
 				"<html><center>Desde aquí podrás gestionar y controlar todas las"
 						+ "funcionalidades de tu sitio. ¿Qué deseas hacer hoy?<html>");

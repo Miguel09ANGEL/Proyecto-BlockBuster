@@ -796,7 +796,6 @@ public class UserViews extends JFrame {
 
 		}
 
-//		Clientes
 		public void EditarCliente(User user) {
 			// Campos de texto renombrados con sentido
 			JTextField txtNombre;
@@ -1276,6 +1275,103 @@ public class UserViews extends JFrame {
 			panelCentral.add(btnConfirmar);
 
 			// Panel rojo superior (barra de título)
+			JPanel barraRoja = new JPanel();
+			barraRoja.setBackground(Color.decode("#B44635"));
+			barraRoja.setBounds(0, 0, 1024, 60);
+			layeredPane.add(barraRoja, JLayeredPane.PALETTE_LAYER);
+
+			setVisible(true);
+		}
+		
+		public void TarjetaCliente() {
+			// Configuración básica de la ventana
+			setTitle("Tarjeta Cliente");
+			setSize(1024, 576);
+			setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			setLocationRelativeTo(null);
+
+			// Usamos JLayeredPane para superponer componentes
+			JLayeredPane layeredPane = new JLayeredPane();
+			layeredPane.setPreferredSize(new Dimension(900, 650));
+			setContentPane(layeredPane);
+
+			// 2. PANEL GRIS CENTRAL
+			JPanel panelCentral = new JPanel();
+			panelCentral.setLayout(null);
+			panelCentral.setBackground(Color.decode("#D9D9D9"));
+			panelCentral.setBounds(270, 71, 486, 460); // (x, y, ancho, alto)
+			layeredPane.add(panelCentral, JLayeredPane.PALETTE_LAYER);
+
+			// Logotipo
+			ImageIcon iconoOriginal = new ImageIcon(getClass().getResource("/images/Block.png"));
+			Image imagenEscalada = iconoOriginal.getImage().getScaledInstance(70, 70, Image.SCALE_SMOOTH);
+			JLabel logo = new JLabel(new ImageIcon(imagenEscalada));
+			logo.setBounds(213, 23, 70, 70); // posición
+			panelCentral.add(logo);
+
+			JLabel lblTitulo = new JLabel("INFORMACIÓN CLIENTE");
+			lblTitulo.setSize(263, 42);
+			lblTitulo.setLocation(121, 104);
+			lblTitulo.setHorizontalAlignment(JLabel.CENTER);
+			lblTitulo.setFont(new Font("Calibri", Font.BOLD, 24));
+			panelCentral.add(lblTitulo);
+
+			JButton btnCancelar = new JButton("Regresar");
+			btnCancelar.setBackground(Color.decode("#B82F2F")); // Color rojo
+			btnCancelar.setForeground(Color.WHITE);
+			btnCancelar.setBounds(47, 406, 183, 33);
+			btnCancelar.addActionListener(e -> {
+//				InformacionCliente(); // Abre la ventana anterior
+				dispose(); // Cierra la ventana actual
+			});
+			panelCentral.add(btnCancelar);
+
+			JButton btnDescargarPDF = new JButton("Descargar PDF");
+			btnDescargarPDF.setBackground(Color.decode("#263C54")); // Color azul oscuro
+			btnDescargarPDF.setForeground(Color.WHITE);
+			btnDescargarPDF.setBounds(281, 406, 183, 33);
+			btnDescargarPDF.addActionListener(e -> {
+				// Confirmar_4(); // Aquí va la lógica para descargar PDF
+			});
+			panelCentral.add(btnDescargarPDF);
+
+			JLabel lblNombre = new JLabel("Nombre:");
+			lblNombre.setHorizontalAlignment(SwingConstants.CENTER);
+			lblNombre.setFont(new Font("Calibri", Font.BOLD, 18));
+			lblNombre.setBounds(96, 156, 107, 42);
+			panelCentral.add(lblNombre);
+
+			JLabel lblNombreValor = new JLabel("Manuel orozco vazquez");
+			lblNombreValor.setHorizontalAlignment(SwingConstants.LEFT);
+			lblNombreValor.setFont(new Font("Calibri", Font.BOLD, 18));
+			lblNombreValor.setBounds(192, 157, 192, 42);
+			panelCentral.add(lblNombreValor);
+
+			JLabel lblNumeroControl = new JLabel("Numero de control:");
+			lblNumeroControl.setHorizontalAlignment(SwingConstants.CENTER);
+			lblNumeroControl.setFont(new Font("Calibri", Font.BOLD, 18));
+			lblNumeroControl.setBounds(121, 209, 161, 42);
+			panelCentral.add(lblNumeroControl);
+
+			JLabel lblNumeroControlValor = new JLabel("00001");
+			lblNumeroControlValor.setHorizontalAlignment(SwingConstants.CENTER);
+			lblNumeroControlValor.setFont(new Font("Calibri", Font.BOLD, 18));
+			lblNumeroControlValor.setBounds(244, 209, 131, 42);
+			panelCentral.add(lblNumeroControlValor);
+
+			JLabel lblCorreo = new JLabel("Correo:");
+			lblCorreo.setHorizontalAlignment(SwingConstants.CENTER);
+			lblCorreo.setFont(new Font("Calibri", Font.BOLD, 18));
+			lblCorreo.setBounds(123, 262, 107, 42);
+			panelCentral.add(lblCorreo);
+
+			JLabel lblCorreoValor = new JLabel("mov@gmail.com");
+			lblCorreoValor.setHorizontalAlignment(SwingConstants.LEFT);
+			lblCorreoValor.setFont(new Font("Calibri", Font.BOLD, 18));
+			lblCorreoValor.setBounds(213, 262, 162, 42);
+			panelCentral.add(lblCorreoValor);
+
+			// 3. PANEL ROJO SUPERIOR (barra de título)
 			JPanel barraRoja = new JPanel();
 			barraRoja.setBackground(Color.decode("#B44635"));
 			barraRoja.setBounds(0, 0, 1024, 60);

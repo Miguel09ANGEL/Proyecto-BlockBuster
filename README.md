@@ -64,6 +64,7 @@ Cada usuario puede ver un historial detallado de sus transacciones anteriores.
 - **Eclipse IDE**
 - **Java Swing** (interfaz gráfica)
 - **MySQL** (base de datos)
+- **IText Core** (Creacion del pdf)
 
 ##
 

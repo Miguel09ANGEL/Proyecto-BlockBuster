@@ -476,7 +476,9 @@ public class PromotionsView extends JFrame{
 		btnEditarPromocion.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				dispose();
-				EditarPromociones();
+				
+				// aqui invocas a PromotionsController y llamas a indexPromocion2
+				// para que llame a editar promociones
 
 			}
 		});
@@ -499,23 +501,8 @@ public class PromotionsView extends JFrame{
 		}
 	}
 
-	public void EditarPromociones() {
-		JTextField textField;
-		JTextField textField_1;
-		JTextField textField_2;
-		JTextField textField_3;
-		JTextField textField_4;
-		JTextField textField_5;
-		JTextField textField_6;
-		JTextField textField_7;
-		JTextField textField_8;
-		JTextField textField_9;
-		JTextField textField_10;
-		JTextField textField_11;
-		JTextField textField_12;
-		JTextField textField_13;
-		JTextField textField_14;
-		JTextField textField_15;
+	public void EditarPromociones(java.util.List<Promotions> promocion) {
+		
 		// Configuración básica de la ventana
 		setTitle("Editar Promociones");
 		setSize(1024, 576);
@@ -548,18 +535,6 @@ public class PromotionsView extends JFrame{
 		iniciar.setFont(new Font("Calibri", Font.BOLD, 24));
 		panelCentral.add(iniciar);
 
-		JLabel iniciar_1 = new JLabel("Compra de:");
-		iniciar_1.setHorizontalAlignment(SwingConstants.LEFT);
-		iniciar_1.setFont(new Font("Calibri", Font.BOLD, 14));
-		iniciar_1.setBounds(85, 120, 160, 42); // Ajusta tamaño si es necesario
-		panelCentral.add(iniciar_1);
-
-		JTextField nJuego = new JTextField();
-		nJuego.setBackground(Color.decode("#D9D9D9"));
-		nJuego.setBounds(85, 147, 189, 27);
-		panelCentral.add(nJuego);
-		nJuego.setColumns(10);
-
 		JButton btnCancelar = new JButton("Cancelar");
 		btnCancelar.setBackground(Color.decode("#B82F2F")); // Color de fondo (azul oscuro)
 		btnCancelar.setForeground(Color.WHITE);
@@ -571,197 +546,72 @@ public class PromotionsView extends JFrame{
 			
 		});
 		panelCentral.add(btnCancelar);
+		
+		// se declara el arreglo de textFields (16 campos en total)
+		JTextField[] campos = new JTextField[16];
 
+		// Coordenadas X para cada columna
+		int[] xPos = {85, 306, 530, 749}; // columnas
+		int[] yPos = {147, 207, 273, 339}; // filas
+
+		// Crear los campos dinámicamente
+		int index = 0;
+		for (int fila = 0; fila < 4; fila++) {
+		    for (int col = 0; col < 4; col++) {
+		    	
+		        campos[index] = new JTextField();
+		        campos[index].setColumns(10);
+		        campos[index].setBackground(new Color(217, 217, 217));
+		        campos[index].setBounds(xPos[col], yPos[fila], 189, 27);
+		        panelCentral.add(campos[index]);
+		        index++;
+		    }
+		}
+		
+		// por aqui tiene que ir el for que llama las compras y promociones
+		// AQUUI¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡
+		// AQUUI¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡
+		// AQUUI¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡
+
+		// Nombres de las etiquetas
+		String[] nombresEtiquetas = {
+		    "Compra de:", "Promoción de:", "Compra de:", "Promoción de:",
+		    "Compra de:", "Promoción de:", "Compra de:", "Promoción de:",
+		    "Compra de:", "Promoción de:", "Compra de:", "Promoción de:",
+		    "Compra de:", "Promoción de:", "Compra de:", "Promoción de:",
+		    };
+
+		// Arreglo para guardar las etiquetas por si quieres usarlas después
+		JLabel[] etiquetas = new JLabel[16];
+
+		// Coordenadas X para cada columna
+		int[] xPos2 = {85, 306, 530, 749}; // columnas
+		int[] yPos2 = {123, 183, 249, 315}; // filas
+
+		int index2 = 0;
+		for (int fila = 0; fila < 4; fila++) {
+		    for (int col = 0; col < 4; col++) {
+		        etiquetas[index2] = new JLabel(nombresEtiquetas[index2]);
+		        etiquetas[index2].setFont(new Font("Tahoma", Font.PLAIN, 14));
+		        etiquetas[index2].setBounds(xPos2[col], yPos2[fila], 150, 14);
+		        panelCentral.add(etiquetas[index2]);
+		        index2++;
+		    }
+		}
+		
+		
 		JButton btnConfirmar = new JButton("ACTUALIZAR");
 		btnConfirmar.setBackground(Color.decode("#686868")); // Color de fondo (azul oscuro)
 		btnConfirmar.setForeground(Color.WHITE);
 		btnConfirmar.setBounds(582, 406, 183, 33);
 		btnConfirmar.addActionListener(e -> {
-//			Confirma_15(); // Abre la segunda ventana
-			// Cierra la ventana actual
+//			aqui mandas a llamar al metodo updatePromotion(promo.getId(), compraCantida, promocionCompra);
+			//que ese encuentra en la clase PromotionsModel, eso lo vas hacer con un for
+			//faltan mensaje de seguridad de esta seguro de realizar los cambios
+			// y otro de cambios guaradados exitosamente
 		});
-		panelCentral.add(btnCancelar);
 		panelCentral.add(btnConfirmar);
 
-		JLabel iniciar_1_1 = new JLabel("Compra de:");
-		iniciar_1_1.setHorizontalAlignment(SwingConstants.LEFT);
-		iniciar_1_1.setFont(new Font("Calibri", Font.BOLD, 14));
-		iniciar_1_1.setBounds(85, 181, 160, 42);
-		panelCentral.add(iniciar_1_1);
-
-		textField_1 = new JTextField();
-		textField_1.setColumns(10);
-		textField_1.setBackground(new Color(217, 217, 217));
-		textField_1.setBounds(85, 207, 189, 27);
-		panelCentral.add(textField_1);
-
-		JLabel iniciar_1_1_1 = new JLabel("Compra de:");
-		iniciar_1_1_1.setHorizontalAlignment(SwingConstants.LEFT);
-		iniciar_1_1_1.setFont(new Font("Calibri", Font.BOLD, 14));
-		iniciar_1_1_1.setBounds(85, 246, 160, 42);
-		panelCentral.add(iniciar_1_1_1);
-
-		textField_2 = new JTextField();
-		textField_2.setColumns(10);
-		textField_2.setBackground(new Color(217, 217, 217));
-		textField_2.setBounds(85, 273, 189, 27);
-		panelCentral.add(textField_2);
-
-		JLabel iniciar_1_1_1_1 = new JLabel("Compra de:");
-		iniciar_1_1_1_1.setHorizontalAlignment(SwingConstants.LEFT);
-		iniciar_1_1_1_1.setFont(new Font("Calibri", Font.BOLD, 14));
-		iniciar_1_1_1_1.setBounds(85, 313, 160, 42);
-		panelCentral.add(iniciar_1_1_1_1);
-
-		textField_3 = new JTextField();
-		textField_3.setColumns(10);
-		textField_3.setBackground(new Color(217, 217, 217));
-		textField_3.setBounds(85, 339, 189, 27);
-		panelCentral.add(textField_3);
-
-		textField_4 = new JTextField();
-		textField_4.setColumns(10);
-		textField_4.setBackground(new Color(217, 217, 217));
-		textField_4.setBounds(306, 150, 189, 27);
-		panelCentral.add(textField_4);
-
-		textField_5 = new JTextField();
-		textField_5.setColumns(10);
-		textField_5.setBackground(new Color(217, 217, 217));
-		textField_5.setBounds(306, 210, 189, 27);
-		panelCentral.add(textField_5);
-
-		textField_6 = new JTextField();
-		textField_6.setColumns(10);
-		textField_6.setBackground(new Color(217, 217, 217));
-		textField_6.setBounds(306, 276, 189, 27);
-		panelCentral.add(textField_6);
-
-		textField_7 = new JTextField();
-		textField_7.setColumns(10);
-		textField_7.setBackground(new Color(217, 217, 217));
-		textField_7.setBounds(306, 342, 189, 27);
-		panelCentral.add(textField_7);
-
-		textField_8 = new JTextField();
-		textField_8.setColumns(10);
-		textField_8.setBackground(new Color(217, 217, 217));
-		textField_8.setBounds(530, 150, 189, 27);
-		panelCentral.add(textField_8);
-
-		textField_9 = new JTextField();
-		textField_9.setColumns(10);
-		textField_9.setBackground(new Color(217, 217, 217));
-		textField_9.setBounds(530, 210, 189, 27);
-		panelCentral.add(textField_9);
-
-		textField_10 = new JTextField();
-		textField_10.setColumns(10);
-		textField_10.setBackground(new Color(217, 217, 217));
-		textField_10.setBounds(530, 276, 189, 27);
-		panelCentral.add(textField_10);
-
-		textField_11 = new JTextField();
-		textField_11.setColumns(10);
-		textField_11.setBackground(new Color(217, 217, 217));
-		textField_11.setBounds(530, 342, 189, 27);
-		panelCentral.add(textField_11);
-
-		textField_12 = new JTextField();
-		textField_12.setColumns(10);
-		textField_12.setBackground(new Color(217, 217, 217));
-		textField_12.setBounds(749, 150, 189, 27);
-		panelCentral.add(textField_12);
-
-		textField_13 = new JTextField();
-		textField_13.setColumns(10);
-		textField_13.setBackground(new Color(217, 217, 217));
-		textField_13.setBounds(749, 210, 189, 27);
-		panelCentral.add(textField_13);
-
-		textField_14 = new JTextField();
-		textField_14.setColumns(10);
-		textField_14.setBackground(new Color(217, 217, 217));
-		textField_14.setBounds(749, 276, 189, 27);
-		panelCentral.add(textField_14);
-
-		textField_15 = new JTextField();
-		textField_15.setColumns(10);
-		textField_15.setBackground(new Color(217, 217, 217));
-		textField_15.setBounds(749, 342, 189, 27);
-		panelCentral.add(textField_15);
-
-		JLabel iniciar_1_2 = new JLabel("Promocion de:");
-		iniciar_1_2.setHorizontalAlignment(SwingConstants.LEFT);
-		iniciar_1_2.setFont(new Font("Calibri", Font.BOLD, 14));
-		iniciar_1_2.setBounds(306, 120, 160, 42);
-		panelCentral.add(iniciar_1_2);
-
-		JLabel iniciar_1_1_2 = new JLabel("Promocion de:");
-		iniciar_1_1_2.setHorizontalAlignment(SwingConstants.LEFT);
-		iniciar_1_1_2.setFont(new Font("Calibri", Font.BOLD, 14));
-		iniciar_1_1_2.setBounds(306, 181, 160, 42);
-		panelCentral.add(iniciar_1_1_2);
-
-		JLabel iniciar_1_1_1_2 = new JLabel("Promocion de:");
-		iniciar_1_1_1_2.setHorizontalAlignment(SwingConstants.LEFT);
-		iniciar_1_1_1_2.setFont(new Font("Calibri", Font.BOLD, 14));
-		iniciar_1_1_1_2.setBounds(306, 246, 160, 42);
-		panelCentral.add(iniciar_1_1_1_2);
-
-		JLabel iniciar_1_1_1_1_1 = new JLabel("Promocion de:");
-		iniciar_1_1_1_1_1.setHorizontalAlignment(SwingConstants.LEFT);
-		iniciar_1_1_1_1_1.setFont(new Font("Calibri", Font.BOLD, 14));
-		iniciar_1_1_1_1_1.setBounds(306, 313, 160, 42);
-		panelCentral.add(iniciar_1_1_1_1_1);
-
-		JLabel iniciar_1_2_1 = new JLabel("Compra de:");
-		iniciar_1_2_1.setHorizontalAlignment(SwingConstants.LEFT);
-		iniciar_1_2_1.setFont(new Font("Calibri", Font.BOLD, 14));
-		iniciar_1_2_1.setBounds(530, 120, 160, 42);
-		panelCentral.add(iniciar_1_2_1);
-
-		JLabel iniciar_1_2_1_1 = new JLabel("Promocion de:");
-		iniciar_1_2_1_1.setHorizontalAlignment(SwingConstants.LEFT);
-		iniciar_1_2_1_1.setFont(new Font("Calibri", Font.BOLD, 14));
-		iniciar_1_2_1_1.setBounds(749, 120, 160, 42);
-		panelCentral.add(iniciar_1_2_1_1);
-
-		JLabel iniciar_1_1_2_1 = new JLabel("Compra de:");
-		iniciar_1_1_2_1.setHorizontalAlignment(SwingConstants.LEFT);
-		iniciar_1_1_2_1.setFont(new Font("Calibri", Font.BOLD, 14));
-		iniciar_1_1_2_1.setBounds(530, 181, 160, 42);
-		panelCentral.add(iniciar_1_1_2_1);
-
-		JLabel iniciar_1_1_2_2 = new JLabel("Promocion de:");
-		iniciar_1_1_2_2.setHorizontalAlignment(SwingConstants.LEFT);
-		iniciar_1_1_2_2.setFont(new Font("Calibri", Font.BOLD, 14));
-		iniciar_1_1_2_2.setBounds(749, 181, 160, 42);
-		panelCentral.add(iniciar_1_1_2_2);
-
-		JLabel iniciar_1_1_1_2_1 = new JLabel("Compra de:");
-		iniciar_1_1_1_2_1.setHorizontalAlignment(SwingConstants.LEFT);
-		iniciar_1_1_1_2_1.setFont(new Font("Calibri", Font.BOLD, 14));
-		iniciar_1_1_1_2_1.setBounds(530, 246, 160, 42);
-		panelCentral.add(iniciar_1_1_1_2_1);
-
-		JLabel iniciar_1_1_1_2_1_1 = new JLabel("Promocion de:");
-		iniciar_1_1_1_2_1_1.setHorizontalAlignment(SwingConstants.LEFT);
-		iniciar_1_1_1_2_1_1.setFont(new Font("Calibri", Font.BOLD, 14));
-		iniciar_1_1_1_2_1_1.setBounds(749, 246, 160, 42);
-		panelCentral.add(iniciar_1_1_1_2_1_1);
-
-		JLabel iniciar_1_1_1_1_1_1 = new JLabel("Compra de:");
-		iniciar_1_1_1_1_1_1.setHorizontalAlignment(SwingConstants.LEFT);
-		iniciar_1_1_1_1_1_1.setFont(new Font("Calibri", Font.BOLD, 14));
-		iniciar_1_1_1_1_1_1.setBounds(530, 313, 160, 42);
-		panelCentral.add(iniciar_1_1_1_1_1_1);
-
-		JLabel iniciar_1_1_1_1_1_2 = new JLabel("Promocion de:");
-		iniciar_1_1_1_1_1_2.setHorizontalAlignment(SwingConstants.LEFT);
-		iniciar_1_1_1_1_1_2.setFont(new Font("Calibri", Font.BOLD, 14));
-		iniciar_1_1_1_1_1_2.setBounds(749, 313, 160, 42);
-		panelCentral.add(iniciar_1_1_1_1_1_2);
 
 		// 3. PANEL ROJO SUPERIOR (barra de título)
 		JPanel barraRoja = new JPanel();

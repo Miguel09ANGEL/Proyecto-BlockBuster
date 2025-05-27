@@ -60,5 +60,35 @@ public class PromotionsModel {
 
 		return promocion;
 	}
+	
+	public boolean updatePromotion(int id, BigDecimal compraCantida, BigDecimal promocionCompra) {
+	    String query = "UPDATE promotions SET " +
+	            "compra_cantida = " + compraCantida + ", " +
+	            "promocion_compra = " + promocionCompra + " " +
+	            "WHERE id = " + id;
 
+	    Connection conn = null;
+	    Statement stmt = null;
+	    try {
+	        Class.forName("com.mysql.cj.jdbc.Driver");
+	        conn = DriverManager.getConnection(url, user, password);
+	        stmt = conn.createStatement();
+
+	        int rowsAffected = stmt.executeUpdate(query);
+
+	        return rowsAffected > 0;
+
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    } finally {
+	        try {
+	            if (stmt != null) stmt.close();
+	            if (conn != null) conn.close();
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	        }
+	    }
+
+	    return false;
+	}
 }

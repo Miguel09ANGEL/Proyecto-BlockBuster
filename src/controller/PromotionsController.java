@@ -27,4 +27,14 @@ public class PromotionsController {
 		
 	}
 	
+//	public void indexPromocion2() {
+//		
+//		PromotionsModel pm = new PromotionsModel();
+//		
+//		promocion = pm.getAllPromotions();
+//		
+//		vista.EditarPromociones(promocion);
+//		
+//	}
+	
 }

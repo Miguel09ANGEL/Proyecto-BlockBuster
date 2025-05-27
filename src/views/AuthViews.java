@@ -119,7 +119,6 @@ public class AuthViews extends JFrame {
 		first_name_fld.setFont(new Font("Montserrat ", Font.BOLD, 15));
 		panelCentral.add(first_name_fld);
 
-
 		JLabel contraseña = new JLabel("Contraseña:");
 		contraseña.setSize(290, 26);
 		contraseña.setLocation(60, 263);

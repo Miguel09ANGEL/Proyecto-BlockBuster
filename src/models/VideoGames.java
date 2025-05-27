@@ -16,6 +16,7 @@ public class VideoGames {
     private BigDecimal precioVenta;
     private String desarrolladoPor;
     private String descripcion;
+    
     private Date createdAt;
     private Date updatedAt;
 

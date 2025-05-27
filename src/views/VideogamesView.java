@@ -6,6 +6,9 @@ import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.math.BigDecimal;
 import java.util.Iterator;
 import java.util.List;
@@ -14,6 +17,7 @@ import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
@@ -28,6 +32,10 @@ import javax.swing.UIManager;
 import javax.swing.table.DefaultTableModel;
 
 import com.formdev.flatlaf.FlatLightLaf;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.PdfWriter;
 
 import controller.VideogamesController;
 import models.VideoGames;
@@ -346,7 +354,6 @@ public class VideogamesView extends JFrame {
 		                JOptionPane.WARNING_MESSAGE);
 		        return;
 		    }
-
 		  
 		    // Obtener datos del juego seleccionado
 		    int juegoId = (int) model.getValueAt(selectedRow, 0);
@@ -568,25 +575,66 @@ public class VideogamesView extends JFrame {
 	    btnEditar.addActionListener(new ActionListener() {
 	        public void actionPerformed(ActionEvent e) {
 //	            EditarJuego();
+	        	dispose();
 	        	VideogamesController vc = new VideogamesController();
-
 			    vc.updateVideogames2(videogames.getId());
-	            dispose();
 	        }
 	        
 	    });
 	    panelCentral.add(btnEditar);
 	    
 	    JButton btnDescargarPDF = new JButton("Descargar (PDF)");
-		btnDescargarPDF.setBackground(Color.decode("#263C54"));
-		btnDescargarPDF.setForeground(Color.WHITE);
-		btnDescargarPDF.setBounds(605, 417, 183, 33);
-		panelCentral.add(btnDescargarPDF);
-		btnDescargarPDF.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+	    btnDescargarPDF.setBackground(Color.decode("#263C54"));
+	    btnDescargarPDF.setForeground(Color.WHITE);
+	    btnDescargarPDF.setBounds(605, 417, 183, 33);
+	    panelCentral.add(btnDescargarPDF);
 
-			}
-		});
+	    btnDescargarPDF.addActionListener(new ActionListener() {
+	        public void actionPerformed(ActionEvent e) {
+	            JFileChooser fileChooser = new JFileChooser();
+	            fileChooser.setDialogTitle("Guardar archivo PDF");
+
+	            fileChooser.setSelectedFile(new File("Detalles_Videojuego_" + videogames.getNombre() + ".pdf"));
+
+	            int userSelection = fileChooser.showSaveDialog(null);
+
+	            if (userSelection == JFileChooser.APPROVE_OPTION) {
+	                File fileToSave = fileChooser.getSelectedFile();
+	                Document document = new Document();
+
+	                try {
+	                    PdfWriter.getInstance(document, new FileOutputStream(fileToSave));
+	                    document.open();
+
+	                    Paragraph titulo = new Paragraph("DETALLES DEL VIDEOJUEGO\n\n");
+	                    document.add(titulo);
+
+	                    document.add(new Paragraph("Nombre: " + videogames.getNombre()));
+	                    document.add(new Paragraph("Año de lanzamiento: " + videogames.getAñoLanzamiento()));
+	                    document.add(new Paragraph("Clasificación: " + videogames.getClasificacion()));
+	                    document.add(new Paragraph("Desarrolladores: " + videogames.getDesarrolladoPor()));
+	                    document.add(new Paragraph("Género: " + videogames.getGenero()));
+	                    document.add(new Paragraph("Plataforma: " + videogames.getPlataforma()));
+
+	                    document.add(new Paragraph("\nAcerca del juego:"));
+	                    document.add(new Paragraph(videogames.getDescripcion()));
+
+	                    document.add(new Paragraph("\nPrecio por renta: $" + videogames.getPrecioRenta()));
+	                    document.add(new Paragraph("Precio por venta: $" + videogames.getPrecioVenta()));
+
+	                    JOptionPane.showMessageDialog(null, "PDF guardado exitosamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+	                } catch (FileNotFoundException | DocumentException ex) {
+	                    ex.printStackTrace();
+	                    JOptionPane.showMessageDialog(null, "Error al guardar el PDF:\n" + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+	                } finally {
+	                    document.close();
+	                }
+	            }
+	        }
+	    });
+
+		panelCentral.add(btnDescargarPDF);
+
 
 		JButton btnRegresar = new JButton("Regresar");
 		btnRegresar.setForeground(Color.WHITE);

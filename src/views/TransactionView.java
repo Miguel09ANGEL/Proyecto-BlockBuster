@@ -40,6 +40,7 @@ import views.UserViews.DateLabelFormatter;
 public class TransactionView extends JFrame {
 
 	public void AdministradorRentaCompra() {
+		
 		// Configuración básica de la ventana
 		setTitle("Administrador Renta y Compra");
 		setSize(1024, 576);
@@ -224,6 +225,7 @@ public class TransactionView extends JFrame {
 		btnRentaYCompra.setBounds(10, 242, 237, 100);
 		btnRentaYCompra.addActionListener(e -> {
 			dispose(); // Cierra la ventana actual
+			
 			AdministradorRentaCompra();
 			// Abre la segunda ventana
 		});
@@ -500,17 +502,17 @@ public class TransactionView extends JFrame {
 		NombreCliente.setColumns(10);
 		panelCentral.add(NombreCliente);
 
-		JLabel lblNombreJuego = new JLabel("Nombre del Videojuego:");
-		lblNombreJuego.setHorizontalAlignment(SwingConstants.LEFT);
-		lblNombreJuego.setFont(new Font("Calibri", Font.BOLD, 14));
-		lblNombreJuego.setBounds(405, 120, 263, 42);
-		panelCentral.add(lblNombreJuego);
+		JLabel lblemail = new JLabel("Correo del cliente:");
+		lblemail.setHorizontalAlignment(SwingConstants.LEFT);
+		lblemail.setFont(new Font("Calibri", Font.BOLD, 14));
+		lblemail.setBounds(405, 120, 263, 42);
+		panelCentral.add(lblemail);
 
-		JTextField txtNombreJuego = new JTextField();
-		txtNombreJuego.setColumns(10);
-		txtNombreJuego.setBackground(new Color(217, 217, 217));
-		txtNombreJuego.setBounds(405, 161, 263, 27);
-		panelCentral.add(txtNombreJuego);
+		JTextField txtemail = new JTextField();
+		txtemail.setColumns(10);
+		txtemail.setBackground(new Color(217, 217, 217));
+		txtemail.setBounds(405, 161, 263, 27);
+		panelCentral.add(txtemail);
 
 		JLabel lblCantidad = new JLabel("Cantidad:");
 		lblCantidad.setHorizontalAlignment(SwingConstants.LEFT);
@@ -694,11 +696,11 @@ public class TransactionView extends JFrame {
 		txtNombreCliente.setColumns(10);
 		panelCentral.add(txtNombreCliente);
 
-		JLabel lblNombreJuego = new JLabel("Nombre del Videojuego:");
-		lblNombreJuego.setHorizontalAlignment(SwingConstants.LEFT);
-		lblNombreJuego.setFont(new Font("Calibri", Font.BOLD, 14));
-		lblNombreJuego.setBounds(405, 120, 160, 42);
-		panelCentral.add(lblNombreJuego);
+		JLabel lblemail = new JLabel("Correo electronico:");
+		lblemail.setHorizontalAlignment(SwingConstants.LEFT);
+		lblemail.setFont(new Font("Calibri", Font.BOLD, 14));
+		lblemail.setBounds(405, 120, 160, 42);
+		panelCentral.add(lblemail);
 
 		JTextField txtNombreJuego = new JTextField();
 		txtNombreJuego.setColumns(10);

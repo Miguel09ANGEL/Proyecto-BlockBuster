@@ -63,8 +63,8 @@ public class PromotionsModel {
 	
 	public boolean updatePromotion(int id, BigDecimal compraCantida, BigDecimal promocionCompra) {
 	    String query = "UPDATE promotions SET " +
-	            "compra_cantida = " + compraCantida + ", " +
-	            "promocion_compra = " + promocionCompra + " " +
+	            "purchase_amount = " + compraCantida + ", " +
+	            "frequency_discount = " + promocionCompra + " " +
 	            "WHERE id = " + id;
 
 	    Connection conn = null;

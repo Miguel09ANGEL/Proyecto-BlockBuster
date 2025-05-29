@@ -573,8 +573,8 @@ public class PromotionsView extends JFrame{
 		
 		for (int i = 0; i < promocion.size() && i < 8; i++) {
 			Promotions p = promocion.get(i);
-			campos[i * 2].setText(String.valueOf(p.getCompraCantida()));
-			campos[i * 2 + 1].setText(String.valueOf(p.getPromocionCompra()));
+			campos[i * 2].setText(String.valueOf(p.getCompraCantida()+"$"));
+			campos[i * 2 + 1].setText(String.valueOf(p.getPromocionCompra()+"%"));
 			}
 
 		// Nombres de las etiquetas
@@ -621,7 +621,9 @@ public class PromotionsView extends JFrame{
 			                BigDecimal promocionCompra = new BigDecimal(campos[i*2+1].getText());
 
 			                Promotions promo = promocion.get(i);
-			                boolean resultado = updatePromotion(promo.getId(), compraCantida, promocionCompra);
+			          
+			                PromotionsModel pm = new PromotionsModel();
+			                boolean resultado = pm.updatePromotion(promo.getId(), compraCantida, promocionCompra);
 			                
 			                
 			            } catch (NumberFormatException ex) {
@@ -634,6 +636,8 @@ public class PromotionsView extends JFrame{
 			            }
 			        }
 			        JOptionPane.showMessageDialog(layeredPane, "Actualización completada", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+			        PromotionsController pc = new PromotionsController();
+			        pc.indexPromocion();
 			    }
 	        }
 		});
@@ -649,10 +653,6 @@ public class PromotionsView extends JFrame{
 		setVisible(true);
 	}
 
-	private boolean updatePromotion(int id, BigDecimal compraCantida, BigDecimal promocionCompra) {
-		// TODO Auto-generated method stub
-		return false;
-	}
 
 
 	public void DescuentoFrecuencia() {

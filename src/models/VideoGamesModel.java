@@ -160,13 +160,12 @@ public class VideoGamesModel {
 	}
 
 	public boolean updateVideogame(int id, String nombre, String plataforma, int añoLanzamiento, boolean disponibilidad,
-			String clasificacion, String genero, int existencias, BigDecimal precioRenta, BigDecimal precioVenta,
+			String clasificacion, int existencias, BigDecimal precioRenta, BigDecimal precioVenta,
 			String desarrolladoPor, String descripcion) {
 
 		String query = "UPDATE video_games SET " + "name = '" + nombre + "', " + "platform = '" + plataforma + "', "
 				+ "release_year = " + añoLanzamiento + ", " + "is_available = " + disponibilidad + ", "
-				+ "classification = '" + clasificacion + "', " + "genre = '" + genero + "', "
-				+ "available_stock = " + existencias + ", " + "rent_price = " + precioRenta + ", "
+				+ "classification = '" + clasificacion + "', " + "available_stock = " + existencias + ", " + "rent_price = " + precioRenta + ", "
 				+ "sale_price = " + precioVenta + ", " + "developed_by = '" + desarrolladoPor + "', "
 				+ "description = " + (descripcion != null ? "'" + descripcion + "'" : "NULL") + " " + "WHERE id = "
 				+ id;

@@ -553,7 +553,7 @@ public class UserViews extends JFrame {
 			JLabel iniciar_1_1_2_1_1 = new JLabel("Nombre:");
 			iniciar_1_1_2_1_1.setHorizontalAlignment(SwingConstants.LEFT);
 			iniciar_1_1_2_1_1.setFont(new Font("Calibri", Font.BOLD, 18));
-			iniciar_1_1_2_1_1.setBounds(230, 84, 97, 42);
+			iniciar_1_1_2_1_1.setBounds(240, 84, 97, 42);
 			panelCentral.add(iniciar_1_1_2_1_1);
 
 			JLabel iniciar_1_1_1_3_1 = new JLabel(user.getNombre() + " " + user.getApellidoPaterno());
@@ -566,14 +566,14 @@ public class UserViews extends JFrame {
 			JLabel iniciar_1_1_2_1_1_1 = new JLabel("Correo:");
 			iniciar_1_1_2_1_1_1.setHorizontalAlignment(SwingConstants.LEFT);
 			iniciar_1_1_2_1_1_1.setFont(new Font("Calibri", Font.BOLD, 18));
-			iniciar_1_1_2_1_1_1.setBounds(480, 85, 97, 42);
+			iniciar_1_1_2_1_1_1.setBounds(490, 85, 97, 42);
 			panelCentral.add(iniciar_1_1_2_1_1_1);
 
 			JLabel iniciar_1_1_1_3_1_1 = new JLabel(user.getCorreo());
 			iniciar_1_1_1_3_1_1.setHorizontalAlignment(SwingConstants.CENTER);
 			iniciar_1_1_1_3_1_1.setForeground(new Color(59, 55, 65));
 			iniciar_1_1_1_3_1_1.setFont(new Font("Calibri", Font.BOLD, 18));
-			iniciar_1_1_1_3_1_1.setBounds(443, 109, 145, 42);
+			iniciar_1_1_1_3_1_1.setBounds(410, 109, 250, 42);
 			panelCentral.add(iniciar_1_1_1_3_1_1);
 
 			JLabel iniciar_1_1_2_1_1_1_1 = new JLabel("Telefono:");

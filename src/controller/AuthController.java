@@ -30,12 +30,12 @@ public class AuthController {
 
 	}
 	
-	public void framePrueba() {
-		
-		TransactionView tv = new TransactionView();
-		
-		tv.OperacionRentar();
-	}
+//	public void framePrueba() {
+//		
+//		TransactionView tv = new TransactionView();
+//		
+//		tv.OperacionRentar();
+//	}
 	
 
 }

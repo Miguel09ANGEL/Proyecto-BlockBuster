@@ -209,12 +209,7 @@ public class AuthViews extends JFrame {
 
 		setVisible(true);
 	}
-	
-	
-	
-	
 
-	
 
 // estos paneles estan pendientes
 	public void CodigoRegistro() {

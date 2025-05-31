@@ -10,6 +10,8 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Properties;
 
 import javax.swing.BorderFactory;
@@ -19,7 +21,9 @@ import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
@@ -27,6 +31,7 @@ import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.JFormattedTextField.AbstractFormatter;
 import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
 
 import org.jdatepicker.impl.JDatePanelImpl;
 import org.jdatepicker.impl.JDatePickerImpl;
@@ -35,6 +40,10 @@ import org.jdatepicker.impl.UtilDateModel;
 import com.formdev.flatlaf.FlatLightLaf;
 import com.formdev.flatlaf.json.ParseException;
 
+import controller.AuthController;
+import controller.TransactionController;
+import controller.VideogamesController;
+import models.VideoGames;
 import views.UserViews.DateLabelFormatter;
 
 public class TransactionView extends JFrame {
@@ -130,9 +139,10 @@ public class TransactionView extends JFrame {
 		renta.setFont(new Font("Calibri", Font.BOLD, 16));
 		renta.setBackground(new Color(38, 60, 84));
 		renta.addActionListener(e -> {
-			dispose(); // Abre la segunda ventana
-			Renta();
-			// Cierra la ventana actual
+			dispose();  // Cierra la ventana actual
+			TransactionController tc = new TransactionController();
+			tc.indexRenta(); // Abre la segunda ventana
+			
 		});
 
 		JButton btnCompra = new JButton("VENTA");
@@ -142,8 +152,8 @@ public class TransactionView extends JFrame {
 		btnCompra.setBounds(425, 242, 206, 100);
 		btnCompra.addActionListener(e -> {
 			dispose(); // Cierra la ventana actual
-			// Abre la segunda ventana
-			Compra();// Abre la segunda ventana
+			TransactionController tc = new TransactionController();
+			tc.indexCompra();// Abre la segunda ventana
 		});
 		panelCentral.add(btnCompra);
 
@@ -173,154 +183,194 @@ public class TransactionView extends JFrame {
 		setVisible(true);
 	}
 
-	public void Renta() {
-		// Configuración básica de la ventana
-		setTitle("Renta");
-		setSize(1024, 576);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setLocationRelativeTo(null);
+	public void Renta(List<VideoGames> videoGamesList) {
+	    // Configuración básica de la ventana
+	    setTitle("Renta de Videojuegos");
+	    setSize(1024, 576);
+	    setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+	    setLocationRelativeTo(null);
 
-		// Usamos JLayeredPane para superponer componentes
-		JLayeredPane layeredPane = new JLayeredPane();
-		layeredPane.setPreferredSize(new Dimension(900, 650));
-		setContentPane(layeredPane);
+	    // Usamos JLayeredPane para superponer componentes
+	    JLayeredPane layeredPane = new JLayeredPane();
+	    layeredPane.setPreferredSize(new Dimension(1024, 576));
+	    setContentPane(layeredPane);
 
-		// 1. PANEL BLANCO (fondo completo)
-		JPanel panelIzq = new JPanel();
-		panelIzq.setLayout(null);
-		panelIzq.setBackground(Color.decode("#FFFFFF"));
-		panelIzq.setBounds(10, 62, 257, 475);
-		layeredPane.add(panelIzq, JLayeredPane.PALETTE_LAYER);
+	    // Panel izquierdo (menú)
+	    JPanel panelIzq = new JPanel();
+	    panelIzq.setLayout(null);
+	    panelIzq.setBackground(Color.decode("#FFFFFF"));
+	    panelIzq.setBounds(10, 62, 257, 475);
+	    layeredPane.add(panelIzq, JLayeredPane.PALETTE_LAYER);
 
-		JButton btnClientes = new JButton("CLIENTES");
-		btnClientes.setFont(new Font("Calibri", Font.BOLD, 16));
-		btnClientes.setBackground(Color.decode("#263C54"));
-		btnClientes.setForeground(Color.WHITE);
-		btnClientes.setBounds(10, 11, 237, 100);
-		btnClientes.addActionListener(e -> {
-			dispose(); // Cierra la ventana actual
-			UserViews uv = new UserViews();
-			uv.AdministradorCliente();
-			// Abre la segunda ventana
-		});
-		panelIzq.add(btnClientes);
+	    // Botones del menú lateral
+	    JButton btnClientes = new JButton("CLIENTES");
+	    btnClientes.setFont(new Font("Calibri", Font.BOLD, 16));
+	    btnClientes.setBackground(Color.decode("#263C54"));
+	    btnClientes.setForeground(Color.WHITE);
+	    btnClientes.setBounds(10, 11, 237, 100);
+	    btnClientes.addActionListener(e -> {
+	        dispose();
+	        UserViews uv = new UserViews();
+	        uv.AdministradorCliente();
+	    });
+	    panelIzq.add(btnClientes);
 
-		JButton btnVideojuegos = new JButton("VIDEOJUEGOS");
-		btnVideojuegos.setForeground(Color.WHITE);
-		btnVideojuegos.setFont(new Font("Calibri", Font.BOLD, 16));
-		btnVideojuegos.setBackground(new Color(38, 60, 84));
-		btnVideojuegos.setBounds(10, 128, 237, 100);
-		panelIzq.add(btnVideojuegos);
-		btnVideojuegos.addActionListener(e -> {
-			dispose(); // Cierra la ventana actual
-			VideogamesView vv = new VideogamesView();
-			vv.AdministradorJuegos();
-			// Abre la segunda ventana
-		});
+	    JButton btnVideojuegos = new JButton("VIDEOJUEGOS");
+	    btnVideojuegos.setForeground(Color.WHITE);
+	    btnVideojuegos.setFont(new Font("Calibri", Font.BOLD, 16));
+	    btnVideojuegos.setBackground(new Color(38, 60, 84));
+	    btnVideojuegos.setBounds(10, 128, 237, 100);
+	    btnVideojuegos.addActionListener(e -> {
+	        dispose();
+	        VideogamesView vv = new VideogamesView();
+	        vv.AdministradorJuegos();
+	    });
+	    panelIzq.add(btnVideojuegos);
 
-		JButton btnRentaYCompra = new JButton("RENTA Y COMPRA");
-		btnRentaYCompra.setForeground(Color.WHITE);
-		btnRentaYCompra.setFont(new Font("Calibri", Font.BOLD, 16));
-		btnRentaYCompra.setBackground(new Color(38, 60, 84));
-		btnRentaYCompra.setBounds(10, 242, 237, 100);
-		btnRentaYCompra.addActionListener(e -> {
-			dispose(); // Cierra la ventana actual
-			
-			AdministradorRentaCompra();
-			// Abre la segunda ventana
-		});
-		panelIzq.add(btnRentaYCompra);
+	    JButton btnRentaYCompra = new JButton("RENTA Y COMPRA");
+	    btnRentaYCompra.setForeground(Color.WHITE);
+	    btnRentaYCompra.setFont(new Font("Calibri", Font.BOLD, 16));
+	    btnRentaYCompra.setBackground(new Color(38, 60, 84));
+	    btnRentaYCompra.setBounds(10, 242, 237, 100);
+	    btnRentaYCompra.addActionListener(e -> {
+	        dispose();
+	        AdministradorRentaCompra();
+	    });
+	    panelIzq.add(btnRentaYCompra);
 
-		JButton btnNuevaOperacion = new JButton("NUEVA OPERACIÓN");
-		btnNuevaOperacion.setForeground(Color.WHITE);
-		btnNuevaOperacion.setFont(new Font("Calibri", Font.BOLD, 16));
-		btnNuevaOperacion.setBackground(new Color(38, 60, 84));
-		btnNuevaOperacion.setBounds(10, 364, 237, 100);
-		btnNuevaOperacion.addActionListener(e -> {
-			dispose(); // Cierra la ventana actual
-			PromotionsView pv = new PromotionsView();
-			pv.NuevaOperacion();
-			// Abre la segunda ventana
-		});
-		panelIzq.add(btnNuevaOperacion);
+	    JButton btnNuevaOperacion = new JButton("NUEVA OPERACIÓN");
+	    btnNuevaOperacion.setForeground(Color.WHITE);
+	    btnNuevaOperacion.setFont(new Font("Calibri", Font.BOLD, 16));
+	    btnNuevaOperacion.setBackground(new Color(38, 60, 84));
+	    btnNuevaOperacion.setBounds(10, 364, 237, 100);
+	    btnNuevaOperacion.addActionListener(e -> {
+	        dispose();
+	        PromotionsView pv = new PromotionsView();
+	        pv.NuevaOperacion();
+	    });
+	    panelIzq.add(btnNuevaOperacion);
 
-		// 2. PANEL GRIS CENTRAL
-		JPanel panelCentral = new JPanel();
-		panelCentral.setLayout(null);
-		panelCentral.setBackground(Color.decode("#F2F2F2"));
-		panelCentral.setBounds(277, 62, 731, 475);
-		layeredPane.add(panelCentral, JLayeredPane.PALETTE_LAYER);
+	    // Panel central (contenido principal)
+	    JPanel panelCentral = new JPanel();
+	    panelCentral.setLayout(null);
+	    panelCentral.setBackground(Color.decode("#F2F2F2"));
+	    panelCentral.setBounds(277, 62, 731, 475);
+	    layeredPane.add(panelCentral, JLayeredPane.PALETTE_LAYER);
 
-		JLabel iniciar = new JLabel("RENTA");
-		iniciar.setSize(236, 60);
-		iniciar.setLocation(143, 11);
-		iniciar.setHorizontalAlignment(JLabel.CENTER);
-		iniciar.setFont(new Font("Calibri", Font.BOLD, 24));
-		panelCentral.add(iniciar);
+	    // Título
+	    JLabel lblTitulo = new JLabel("SELECCIONAR VIDEOJUEGO PARA RENTA");
+	    lblTitulo.setFont(new Font("Calibri", Font.BOLD, 20));
+	    lblTitulo.setBounds(150, 11, 450, 42);
+	    panelCentral.add(lblTitulo);
 
-		// Datos de la tabla
-		Object[][] data = {
-				{ "Identificador", "Nombre", "Plataforma", "Disponibilidad", "Precio(venta)", "Precio(renta)", },
-				{ "000001", "Contra", "Nintendo", "5", "$800", "$100" },
-				{ "000002", "God of War", "Play Station", "25", "$850", "$250" },
-				{ "000003", "Halo", "Xbox", "32", "$890", "$640" }, { "000004", "Fornite", "Pc", "40", "$900", "$700" },
-				{ "000005", "Pokemon", "Mixto", "41", "$950", "$720" },
-				{ "000006", "ARK: Survival", "Mixto", "30", "$990", "$720" },
+	    // Modelo de tabla con columnas
+	    String[] columnNames = { "ID", "Nombre", "Plataforma", "Existencias", "Precio Renta", "Clasificación" };
+	    DefaultTableModel model = new DefaultTableModel(columnNames, 0) {
+	        @Override
+	        public boolean isCellEditable(int row, int column) {
+	            return false; // Hacer que la tabla no sea editable
+	        }
+	    };
 
-		};
+	    // Llenar la tabla con datos de videojuegos
+	    for (VideoGames juego : videoGamesList) {
+	        Object[] rowData = {
+	            juego.getId(),
+	            juego.getNombre(),
+	            juego.getPlataforma(),
+	            juego.getExistenciasDisponibles(),
+	            "$" + juego.getPrecioRenta(),
+	            juego.getClasificacion()
+	        };
+	        model.addRow(rowData);
+	    }
 
-		DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
-		centerRenderer.setHorizontalAlignment(JLabel.CENTER);
+	    // Crear la tabla con el modelo
+	    JTable table = new JTable(model);
+	    
+	    // Configurar apariencia de la tabla
+	    table.setFont(new Font("Arial", Font.PLAIN, 14));
+	    table.setRowHeight(25);
+	    table.getTableHeader().setFont(new Font("Arial", Font.BOLD, 14));
+	    table.setAutoCreateRowSorter(true); // Permitir ordenar por columnas
+	    
+	    // Ajustar anchos de columnas
+	    table.getColumnModel().getColumn(0).setPreferredWidth(30);  // ID
+	    table.getColumnModel().getColumn(1).setPreferredWidth(200); // Nombre
+	    table.getColumnModel().getColumn(2).setPreferredWidth(100); // Plataforma
+	    table.getColumnModel().getColumn(3).setPreferredWidth(80);  // Existencias
+	    table.getColumnModel().getColumn(4).setPreferredWidth(80);  // Precio Renta
 
-		// Tabla
-		JTable table = new JTable(data, new String[] { "", "", "", "", "", "", });
-		panelCentral.add(table);
-		table.setFont(new Font("Segoe UI", Font.PLAIN, 16));
-		table.setBounds(26, 62, 695, 346);
-		table.setBorder(BorderFactory.createLineBorder(new Color(204, 204, 204)));
-		table.setShowGrid(true);
-		table.setGridColor(new Color(204, 204, 204));
-		table.setTableHeader(null);
-		table.setDefaultRenderer(Object.class, centerRenderer);
-		table.setRowHeight(40);
-		table.setShowHorizontalLines(true);
-		table.setShowVerticalLines(true);
+	    // Agregar la tabla a un JScrollPane
+	    JScrollPane scrollPane = new JScrollPane(table);
+	    scrollPane.setBounds(26, 62, 680, 350);
+	    panelCentral.add(scrollPane);
 
-		JButton btnNewButton = new JButton("RENTAR");
-		btnNewButton.setForeground(Color.WHITE);
-		btnNewButton.setBackground(Color.decode("#6D91B9"));
-		btnNewButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				dispose();
-				OperacionRentar();
+	    // Botón para rentar
+	    JButton btnRentar = new JButton("RENTAR");
+	    btnRentar.setForeground(Color.WHITE);
+	    btnRentar.setBackground(Color.decode("#6D91B9"));
+	    btnRentar.setFont(new Font("Arial", Font.BOLD, 14));
+	    btnRentar.setBounds(534, 420, 172, 30);
+	    btnRentar.addActionListener(e -> {
+	        int selectedRow = table.getSelectedRow();
+	        
+	        if (selectedRow == -1) {
+	            JOptionPane.showMessageDialog(layeredPane, "Por favor seleccione un videojuego", 
+	                "Advertencia", JOptionPane.WARNING_MESSAGE);
+	            return;
+	        }
+	        
+	        int juegoId = (int) model.getValueAt(selectedRow, 0);
+	        String nombreJuego = (String) model.getValueAt(selectedRow, 1);
+	        
+	        // Verificar existencias
+	        int existencias = (int) model.getValueAt(selectedRow, 3);
+	        if (existencias <= 0) {
+	            JOptionPane.showMessageDialog(layeredPane, 
+	                "No hay existencias disponibles de " + nombreJuego, 
+	                "Error", JOptionPane.ERROR_MESSAGE);
+	            return;
+	        }
+	        
+	        // Obtener el videojuego seleccionado
+	        VideoGames juegoSeleccionado = null;
+	        for (VideoGames juego : videoGamesList) {
+	            if (juego.getId() == juegoId) {
+	                juegoSeleccionado = juego;
+	                break;
+	            }
+	        }
+	        
+	        if (juegoSeleccionado != null) {
+	            dispose();
+	            OperacionRentar(juegoSeleccionado);
+	        }
+	    });
+	    panelCentral.add(btnRentar);
 
-			}
-		});
-		btnNewButton.setBounds(536, 419, 151, 30);
-		panelCentral.add(btnNewButton);
+	    // Botón para cancelar/regresar
+	    JButton btnCancelar = new JButton("CANCELAR");
+	    btnCancelar.setForeground(Color.WHITE);
+	    btnCancelar.setBackground(Color.decode("#B82F2F"));
+	    btnCancelar.setFont(new Font("Arial", Font.BOLD, 14));
+	    btnCancelar.setBounds(26, 420, 172, 30);
+	    btnCancelar.addActionListener(e -> {
+	        dispose();
+	        AdministradorRentaCompra();
+	    });
+	    panelCentral.add(btnCancelar);
 
-//		JButton btnBuscar = new JButton("Buscar");
-//		btnBuscar.setFont(new Font("League Spartan Light", Font.PLAIN, 14));
-//		btnBuscar.setBounds(619, 25, 86, 25);
-//		panelCentral.add(btnBuscar);
+	    // Barra superior roja
+	    JPanel barraRoja = new JPanel();
+	    barraRoja.setBackground(Color.decode("#B44635"));
+	    barraRoja.setBounds(0, 0, 1024, 60);
+	    layeredPane.add(barraRoja, JLayeredPane.PALETTE_LAYER);
 
-		// 3. PANEL ROJO SUPERIOR (barra de título)
-		JPanel barraRoja = new JPanel();
-		barraRoja.setBackground(Color.decode("#B44635"));
-		barraRoja.setBounds(0, 0, 1024, 60);
-		layeredPane.add(barraRoja, JLayeredPane.PALETTE_LAYER);
-
-		setVisible(true);
-
-		try {
-			UIManager.setLookAndFeel(new FlatLightLaf());
-			UIManager.put("Button.arc", 9); // Esquinas redondeadas
-		} catch (Exception ex) {
-			ex.printStackTrace();
-		}
+	    setVisible(true);
 	}
 
-	public void Compra() {
+	public void Compra(List<VideoGames> videoGamesList) {
 		// Configuración básica de la ventana
 		setTitle("Compra");
 		setSize(1024, 576);
@@ -393,54 +443,108 @@ public class TransactionView extends JFrame {
 		panelCentral.setBounds(277, 62, 731, 475);
 		layeredPane.add(panelCentral, JLayeredPane.PALETTE_LAYER);
 
-		JLabel iniciar = new JLabel("VENTA");
-		iniciar.setSize(236, 60);
-		iniciar.setLocation(143, 11);
-		iniciar.setHorizontalAlignment(JLabel.CENTER);
-		iniciar.setFont(new Font("Calibri", Font.BOLD, 24));
-		panelCentral.add(iniciar);
+		// Título
+	    JLabel lblTitulo = new JLabel("SELECCIONAR VIDEOJUEGO PARA VENDER");
+	    lblTitulo.setFont(new Font("Calibri", Font.BOLD, 20));
+	    lblTitulo.setBounds(150, 11, 450, 42);
+	    panelCentral.add(lblTitulo);
 
-		JButton btnBuscar = new JButton("Buscar");
-		btnBuscar.setFont(new Font("League Spartan Light", Font.PLAIN, 14));
-		btnBuscar.setBounds(619, 25, 86, 25);
-		panelCentral.add(btnBuscar);
-		// Datos de la tabla
-		Object[][] data = {
-				{ "Identificador", "Nombre", "Plataforma", "Disponibilidad", "Precio(venta)", "Precio(renta)", },
-				{ "000001", "Contra", "Nintendo", "5", "$800", "$100" },
-				{ "000002", "God of War", "Play Station", "25", "$850", "$250" },
-				{ "000003", "Halo", "Xbox", "32", "$890", "$640" }, { "000004", "Fornite", "Pc", "40", "$900", "$700" },
-				{ "000005", "Pokemon", "Mixto", "41", "$950", "$720" },
-				{ "000006", "ARK: Survival", "Mixto", "30", "$990", "$720" },
+	    // Modelo de tabla con columnas
+	    String[] columnNames = { "ID", "Nombre", "Plataforma", "Existencias", "Precio Venta", "Clasificación" };
+	    DefaultTableModel model = new DefaultTableModel(columnNames, 0) {
+	        @Override
+	        public boolean isCellEditable(int row, int column) {
+	            return false; // Hacer que la tabla no sea editable
+	        }
+	    };
 
-		};
+	    // Llenar la tabla con datos de videojuegos
+	    for (VideoGames juego : videoGamesList) {
+	        Object[] rowData = {
+	            juego.getId(),
+	            juego.getNombre(),
+	            juego.getPlataforma(),
+	            juego.getExistenciasDisponibles(),
+	            "$" + juego.getPrecioVenta(),
+	            juego.getClasificacion()
+	        };
+	        model.addRow(rowData);
+	    }
 
-		DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
-		centerRenderer.setHorizontalAlignment(JLabel.CENTER);
+	    // Crear la tabla con el modelo
+	    JTable table = new JTable(model);
+	    
+	    // Configurar apariencia de la tabla
+	    table.setFont(new Font("Arial", Font.PLAIN, 14));
+	    table.setRowHeight(25);
+	    table.getTableHeader().setFont(new Font("Arial", Font.BOLD, 14));
+	    table.setAutoCreateRowSorter(true); // Permitir ordenar por columnas
+	    
+	    // Ajustar anchos de columnas
+	    table.getColumnModel().getColumn(0).setPreferredWidth(30);  // ID
+	    table.getColumnModel().getColumn(1).setPreferredWidth(200); // Nombre
+	    table.getColumnModel().getColumn(2).setPreferredWidth(100); // Plataforma
+	    table.getColumnModel().getColumn(3).setPreferredWidth(80);  // Existencias
+	    table.getColumnModel().getColumn(4).setPreferredWidth(80);  // Precio Venta
 
-		// Tabla
-		JTable table = new JTable(data, new String[] { "", "", "", "", "", "", });
-		panelCentral.add(table);
-		table.setFont(new Font("Segoe UI", Font.PLAIN, 16));
-		table.setBounds(26, 62, 695, 346);
-		table.setBorder(BorderFactory.createLineBorder(new Color(204, 204, 204)));
-		table.setShowGrid(true);
-		table.setGridColor(new Color(204, 204, 204));
-		table.setTableHeader(null);
-		table.setDefaultRenderer(Object.class, centerRenderer);
-		table.setRowHeight(40);
-		table.setShowHorizontalLines(true);
-		table.setShowVerticalLines(true);
+	    // Agregar la tabla a un JScrollPane
+	    JScrollPane scrollPane = new JScrollPane(table);
+	    scrollPane.setBounds(26, 62, 680, 350);
+	    panelCentral.add(scrollPane);
 
-		JButton comprar = new JButton("Comprar");
-		comprar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				dispose();
-				OperacionComprar();
-			}
-		});
-		comprar.setBounds(528, 439, 143, 25);
-		panelCentral.add(comprar);
+	    JButton btnVender = new JButton("VENDER");
+	    btnVender.setForeground(Color.WHITE);
+	    btnVender.setBackground(Color.decode("#6D91B9"));
+	    btnVender.setFont(new Font("Arial", Font.BOLD, 14));
+	    btnVender.setBounds(534, 420, 172, 30);
+	    btnVender.addActionListener(e -> {
+	        int selectedRow = table.getSelectedRow();
+	        
+	        if (selectedRow == -1) {
+	            JOptionPane.showMessageDialog(layeredPane, "Por favor seleccione un videojuego", 
+	                "Advertencia", JOptionPane.WARNING_MESSAGE);
+	            return;
+	        }
+	        
+	        int juegoId = (int) model.getValueAt(selectedRow, 0);
+	        String nombreJuego = (String) model.getValueAt(selectedRow, 1);
+	        
+	        // Verificar existencias
+	        int existencias = (int) model.getValueAt(selectedRow, 3);
+	        if (existencias <= 0) {
+	            JOptionPane.showMessageDialog(layeredPane, 
+	                "No hay existencias disponibles de " + nombreJuego, 
+	                "Error", JOptionPane.ERROR_MESSAGE);
+	            return;
+	        }
+	        
+	        // Obtener el videojuego seleccionado
+	        VideoGames juegoSeleccionado = null;
+	        for (VideoGames juego : videoGamesList) {
+	            if (juego.getId() == juegoId) {
+	                juegoSeleccionado = juego;
+	                break;
+	            }
+	        }
+	        
+	        if (juegoSeleccionado != null) {
+	            dispose();
+	            OperacionComprar(juegoSeleccionado);
+	        }
+	    });
+	    panelCentral.add(btnVender);
+
+	    // Botón para cancelar/regresar
+	    JButton btnCancelar = new JButton("CANCELAR");
+	    btnCancelar.setForeground(Color.WHITE);
+	    btnCancelar.setBackground(Color.decode("#B82F2F"));
+	    btnCancelar.setFont(new Font("Arial", Font.BOLD, 14));
+	    btnCancelar.setBounds(26, 420, 172, 30);
+	    btnCancelar.addActionListener(e -> {
+	        dispose();
+	        AdministradorRentaCompra();
+	    });
+	    panelCentral.add(btnCancelar);
 
 		// 3. PANEL ROJO SUPERIOR (barra de título)
 		JPanel barraRoja = new JPanel();
@@ -458,7 +562,7 @@ public class TransactionView extends JFrame {
 		}
 	}
 
-	public void OperacionRentar() {
+	public void OperacionRentar(VideoGames videogames) {
 		// Define estos JTextFields como atributos de clase (arriba, fuera de métodos)
 		JTextField txtNombreCliente;
 		JTextField txtNombreVideojuego;
@@ -533,7 +637,9 @@ public class TransactionView extends JFrame {
 		btnCancelar.setBounds(175, 406, 183, 33);
 		btnCancelar.addActionListener(e -> {
 			dispose();
-			Renta();
+			
+			TransactionController tc = new TransactionController();
+			tc.updateVideogames(videogames.getId());
 
 		});
 		panelCentral.add(btnCancelar);
@@ -544,24 +650,23 @@ public class TransactionView extends JFrame {
 		lblTituloJuego.setFont(new Font("Calibri", Font.BOLD, 14));
 		lblTituloJuego.setBounds(75, 215, 255, 42);
 		panelCentral.add(lblTituloJuego);
-
+		
+		JLabel lblNombre = new JLabel(videogames.getNombre());
+	    lblNombre.setFont(new Font("Anton", Font.BOLD, 14));
+	    lblNombre.setBounds(150, 246, 255, 42);
+	    panelCentral.add(lblNombre);
+	    
 		JLabel lblPrecio = new JLabel("Precio (MXN):");
 		lblPrecio.setHorizontalAlignment(SwingConstants.CENTER);
 		lblPrecio.setFont(new Font("Calibri", Font.BOLD, 14));
 		lblPrecio.setBounds(403, 215, 255, 42);
 		panelCentral.add(lblPrecio);
 
-		JLabel lblValorJuego = new JLabel("Contra");
-		lblValorJuego.setHorizontalAlignment(SwingConstants.CENTER);
-		lblValorJuego.setFont(new Font("Calibri", Font.BOLD, 14));
-		lblValorJuego.setBounds(75, 246, 255, 42);
-		panelCentral.add(lblValorJuego);
+		JLabel lblValorRenta = new JLabel(""+videogames.getPrecioRenta());
+	    lblValorRenta.setFont(new Font("Calibri", Font.BOLD, 14));
+	    lblValorRenta.setBounds(503, 246, 255, 42);
+	    panelCentral.add(lblValorRenta);
 
-		JLabel lblValorPrecio = new JLabel("$100");
-		lblValorPrecio.setHorizontalAlignment(SwingConstants.CENTER);
-		lblValorPrecio.setFont(new Font("Calibri", Font.BOLD, 14));
-		lblValorPrecio.setBounds(403, 246, 255, 42);
-		panelCentral.add(lblValorPrecio);
 
 		JLabel lblDescuento = new JLabel("Descuento:");
 		lblDescuento.setHorizontalAlignment(SwingConstants.CENTER);
@@ -569,7 +674,7 @@ public class TransactionView extends JFrame {
 		lblDescuento.setBounds(75, 293, 255, 42);
 		panelCentral.add(lblDescuento);
 
-		JLabel lblValorDescuento = new JLabel("07%");
+		JLabel lblValorDescuento = new JLabel("7%");
 		lblValorDescuento.setHorizontalAlignment(SwingConstants.CENTER);
 		lblValorDescuento.setFont(new Font("Calibri", Font.BOLD, 14));
 		lblValorDescuento.setBounds(75, 320, 255, 42);
@@ -649,7 +754,7 @@ public class TransactionView extends JFrame {
 		setVisible(true);
 	}
 
-	public void OperacionComprar() {
+	public void OperacionComprar(VideoGames videogames) {
 		// Configuración básica de la ventana
 		setTitle("Detalles de operación Comprar");
 		setSize(1024, 576);
@@ -727,7 +832,8 @@ public class TransactionView extends JFrame {
 		btnCancelar.setBounds(175, 406, 183, 33);
 		btnCancelar.addActionListener(e -> {
 			dispose();
-			Compra();
+			TransactionController tc = new TransactionController();
+			tc.indexCompra();
 
 		});
 		panelCentral.add(btnCancelar);
@@ -747,6 +853,11 @@ public class TransactionView extends JFrame {
 		lblTituloJuego.setFont(new Font("Calibri", Font.BOLD, 14));
 		lblTituloJuego.setBounds(75, 215, 255, 42);
 		panelCentral.add(lblTituloJuego);
+		
+		JLabel lblNombre = new JLabel(videogames.getNombre());
+	    lblNombre.setFont(new Font("Anton", Font.BOLD, 14));
+	    lblNombre.setBounds(150, 246, 255, 42);
+	    panelCentral.add(lblNombre);
 
 		JLabel lblPrecio = new JLabel("Precio (MXN):");
 		lblPrecio.setHorizontalAlignment(SwingConstants.CENTER);
@@ -754,17 +865,11 @@ public class TransactionView extends JFrame {
 		lblPrecio.setBounds(403, 215, 255, 42);
 		panelCentral.add(lblPrecio);
 
-		JLabel lblValorJuego = new JLabel("Contra");
-		lblValorJuego.setHorizontalAlignment(SwingConstants.CENTER);
-		lblValorJuego.setFont(new Font("Calibri", Font.BOLD, 14));
-		lblValorJuego.setBounds(75, 246, 255, 42);
-		panelCentral.add(lblValorJuego);
 
-		JLabel lblValorPrecio = new JLabel("$100");
-		lblValorPrecio.setHorizontalAlignment(SwingConstants.CENTER);
-		lblValorPrecio.setFont(new Font("Calibri", Font.BOLD, 14));
-		lblValorPrecio.setBounds(403, 246, 255, 42);
-		panelCentral.add(lblValorPrecio);
+		JLabel lblValorVenta = new JLabel(""+videogames.getPrecioVenta());
+		lblValorVenta.setFont(new Font("Calibri", Font.BOLD, 14));
+	    lblValorVenta.setBounds(503, 246, 255, 42);
+	    panelCentral.add(lblValorVenta);
 
 		JLabel lblDescuento = new JLabel("Descuento:");
 		lblDescuento.setHorizontalAlignment(SwingConstants.CENTER);
@@ -799,11 +904,11 @@ public class TransactionView extends JFrame {
 		lblTipo.setBounds(687, 215, 101, 42);
 		panelCentral.add(lblTipo);
 
-		JLabel lblValorTipo = new JLabel("Venta");
-		lblValorTipo.setHorizontalAlignment(SwingConstants.CENTER);
-		lblValorTipo.setFont(new Font("Calibri", Font.BOLD, 14));
-		lblValorTipo.setBounds(687, 246, 101, 42);
-		panelCentral.add(lblValorTipo);
+		JLabel lblVenta = new JLabel("Venta");
+		lblVenta.setHorizontalAlignment(SwingConstants.CENTER);
+		lblVenta.setFont(new Font("Calibri", Font.BOLD, 14));
+		lblVenta.setBounds(687, 246, 101, 42);
+		panelCentral.add(lblVenta);
 
 		// Barra superior roja
 		JPanel barraRoja = new JPanel();
@@ -815,6 +920,7 @@ public class TransactionView extends JFrame {
 	}
 
 	public void DetallesCompra() {
+
 		// Configuración básica de la ventana
 		setTitle("Detalles de Compra");
 		setSize(1024, 576);
@@ -874,7 +980,8 @@ public class TransactionView extends JFrame {
 		JButton btnRegresar = new JButton("REGRESAR");
 		btnRegresar.addActionListener(e -> {
 			dispose();
-			Compra();
+			TransactionController tc = new TransactionController();
+			tc.indexCompra();
 
 		});
 		btnRegresar.setBackground(Color.decode("#B82F2F"));
@@ -961,7 +1068,7 @@ public class TransactionView extends JFrame {
 		lblTipoPago.setBounds(772, 85, 70, 42);
 		panelCentral.add(lblTipoPago);
 
-		JLabel lblValorTipoPago = new JLabel("Renta");
+		JLabel lblValorTipoPago = new JLabel("Venta");
 		lblValorTipoPago.setHorizontalAlignment(SwingConstants.CENTER);
 		lblValorTipoPago.setFont(new Font("Calibri", Font.BOLD, 18));
 		lblValorTipoPago.setBounds(755, 102, 112, 42);
@@ -1052,6 +1159,8 @@ public class TransactionView extends JFrame {
 		layeredPane.add(barraRoja, JLayeredPane.PALETTE_LAYER);
 
 		setVisible(true);
+		
+		
 	}
 
 	public void DetallesRenta() {
@@ -1115,7 +1224,7 @@ public class TransactionView extends JFrame {
 		btnRegresar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				dispose();
-				Renta();
+				Renta(null);
 
 			}
 		});

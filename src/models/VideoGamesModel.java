@@ -104,7 +104,7 @@ public class VideoGamesModel {
 
 	}
 
-	public VideoGames getVideojuegos(int id) {
+	public VideoGames getVideogames(int id) {
 
 		String query = "select * from video_games WHERE id = " + id;
 
@@ -197,7 +197,7 @@ public class VideoGamesModel {
 		return false;
 	}
 
-		public boolean addVideogame(String nombre, String plataforma, int añoLanzamiento, boolean disponibilidad,
+	public boolean addVideogame(String nombre, String plataforma, int añoLanzamiento, boolean disponibilidad,
 				String clasificacion, String genero, int existencias, BigDecimal precioRenta, BigDecimal precioVenta,
 				String desarrolladoPor, String descripcion) {
 	

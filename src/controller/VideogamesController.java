@@ -35,7 +35,7 @@ public class VideogamesController {
 
 		VideoGamesModel vm = new VideoGamesModel();
 
-		VideoGames myVideogame = vm.getVideojuegos(id);
+		VideoGames myVideogame = vm.getVideogames(id);
 
 		vista.DetallesJuego(myVideogame);
 
@@ -45,7 +45,7 @@ public class VideogamesController {
 
 		VideoGamesModel vm = new VideoGamesModel();
 
-		VideoGames myVideogame = vm.getVideojuegos(id);
+		VideoGames myVideogame = vm.getVideogames(id);
 
 		vista.EditarJuego(myVideogame);
 

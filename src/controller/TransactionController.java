@@ -10,61 +10,42 @@ import views.TransactionView;
 public class TransactionController {
 
 	private TransactionView vista;
+	private VideoGamesModel modeloVideojuego;
 
 	private List<VideoGames> TransactionView = new ArrayList<>();
 
 	public TransactionController() {
-
-		vista = new TransactionView();
-
+		this.vista = new TransactionView();
+		this.modeloVideojuego = new VideoGamesModel();
 	}
-	
+
 	public void updateVideogames(int id) {
-		
-		TransactionView tv = new TransactionView();
-
-
 		vista.AdministradorRentaCompra();
-
 	}
-	
+
 	public void indexRenta() {
-	    VideoGamesModel um = new VideoGamesModel();
-	    List<VideoGames> videoGamesList = um.getAllVideogames();
-	    vista.Renta(videoGamesList);
+		List<VideoGames> videoGamesList = modeloVideojuego.getAllVideogames();
+		vista.Renta(videoGamesList);
 	}
-	
+
 	public void indexCompra() {
-	    VideoGamesModel um = new VideoGamesModel();
-	    List<VideoGames> videoGamesList = um.getAllVideogames();
-	    vista.Compra(videoGamesList);
+		List<VideoGames> videoGamesList = modeloVideojuego.getAllVideogames();
+		vista.Compra(videoGamesList);
 	}
-	
+
 	public void indexDetallesCompra(int id) {
-		VideoGamesModel um = new VideoGamesModel();
-
-		VideoGames myVideogame = um.getVideojuegos(id);
-
+		VideoGames myVideogame = modeloVideojuego.getVideogames(id);
 		vista.DetallesCompra(myVideogame);
 	}
-	
+
 	public void indexDetallesRenta(int id) {
-		VideoGamesModel um = new VideoGamesModel();
-
-		VideoGames myVideogame = um.getVideojuegos(id);
-
+		VideoGames myVideogame = modeloVideojuego.getVideogames(id);
 		vista.DetallesRenta(myVideogame);
 	}
 
-
 	public void framePrueba(int id) {
-
-		TransactionView tv = new TransactionView();
-		VideoGamesModel vm = new VideoGamesModel();
-		
-		VideoGames myVideogame = vm.getVideojuegos(id);
-
-		tv.OperacionRentar(myVideogame);
+		VideoGames myVideogame = modeloVideojuego.getVideogames(id);
+		vista.OperacionRentar(myVideogame);
 	}
 
 }

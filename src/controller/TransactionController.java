@@ -3,6 +3,8 @@ package controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import models.User;
+import models.UsersModel;
 import models.VideoGames;
 import models.VideoGamesModel;
 import views.TransactionView;
@@ -11,12 +13,14 @@ public class TransactionController {
 
 	private TransactionView vista;
 	private VideoGamesModel modeloVideojuego;
+	private UsersModel modeloUsuario;
+	private List<User> usuarios = new ArrayList<>();
 
-	private List<VideoGames> TransactionView = new ArrayList<>();
-
+	
 	public TransactionController() {
 		this.vista = new TransactionView();
 		this.modeloVideojuego = new VideoGamesModel();
+		this.modeloUsuario = new UsersModel();
 	}
 
 	public void updateVideogames(int id) {
@@ -45,7 +49,8 @@ public class TransactionController {
 
 	public void framePrueba(int id) {
 		VideoGames myVideogame = modeloVideojuego.getVideogames(id);
-		vista.OperacionRentar(myVideogame);
+		usuarios = modeloUsuario.getAll();
+		vista.OperacionRentar(myVideogame,usuarios);
 	}
 
 }

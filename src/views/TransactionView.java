@@ -17,6 +17,7 @@ import java.util.Properties;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -43,6 +44,7 @@ import com.formdev.flatlaf.json.ParseException;
 import controller.AuthController;
 import controller.TransactionController;
 import controller.VideogamesController;
+import models.User;
 import models.VideoGames;
 import views.UserViews.DateLabelFormatter;
 
@@ -344,7 +346,8 @@ public class TransactionView extends JFrame {
 	        
 	        if (juegoSeleccionado != null) {
 	            dispose();
-	            OperacionRentar(juegoSeleccionado);
+	            TransactionController tc = new TransactionController();
+	            tc.framePrueba(juegoId);
 	        }
 	    });
 	    panelCentral.add(btnRentar);
@@ -562,7 +565,7 @@ public class TransactionView extends JFrame {
 		}
 	}
 
-	public void OperacionRentar(VideoGames videogames) {
+	public void OperacionRentar(VideoGames videogames,List<User> users) {
 		// Define estos JTextFields como atributos de clase (arriba, fuera de métodos)
 		JTextField txtNombreCliente;
 		JTextField txtNombreVideojuego;
@@ -600,23 +603,31 @@ public class TransactionView extends JFrame {
 		lblNombreCliente.setBounds(85, 120, 160, 42);
 		panelCentral.add(lblNombreCliente);
 
-		JTextField NombreCliente = new JTextField();
-		NombreCliente.setBackground(Color.decode("#D9D9D9"));
-		NombreCliente.setBounds(85, 161, 255, 27);
-		NombreCliente.setColumns(10);
-		panelCentral.add(NombreCliente);
+		// esta parte se encarga de mostrar los usuarios y los correos
+		String[] nombresUsuarios = users.stream()
+		        .map(user -> {
+		            User u = (User) user;
+		            return u.getNombre()+" "+u.getApellidoPaterno()+" "+ u.getApellidoMaterno() + " - " + u.getCorreo(); 
+		        })
+		        .toArray(String[]::new);
 
-		JLabel lblemail = new JLabel("Correo del cliente:");
-		lblemail.setHorizontalAlignment(SwingConstants.LEFT);
-		lblemail.setFont(new Font("Calibri", Font.BOLD, 14));
-		lblemail.setBounds(405, 120, 263, 42);
-		panelCentral.add(lblemail);
 
-		JTextField txtemail = new JTextField();
-		txtemail.setColumns(10);
-		txtemail.setBackground(new Color(217, 217, 217));
-		txtemail.setBounds(405, 161, 263, 27);
-		panelCentral.add(txtemail);
+		JComboBox<String> comboUsuarios = new JComboBox<>(nombresUsuarios);
+		comboUsuarios.setBounds(85, 161, 510, 27);
+		comboUsuarios.setBackground(Color.decode("#D9D9D9"));
+		panelCentral.add(comboUsuarios);
+
+//		JLabel lblemail = new JLabel("Correo del cliente:");
+//		lblemail.setHorizontalAlignment(SwingConstants.LEFT);
+//		lblemail.setFont(new Font("Calibri", Font.BOLD, 14));
+//		lblemail.setBounds(405, 120, 263, 42);
+//		panelCentral.add(lblemail);
+		
+//		JTextField txtemail = new JTextField();
+//		txtemail.setColumns(10);
+//		txtemail.setBackground(new Color(217, 217, 217));
+//		txtemail.setBounds(405, 161, 263, 27);
+//		panelCentral.add(txtemail);
 
 		JLabel lblCantidad = new JLabel("Cantidad:");
 		lblCantidad.setHorizontalAlignment(SwingConstants.LEFT);
@@ -746,6 +757,8 @@ public class TransactionView extends JFrame {
 		btnConfirmar.setForeground(Color.WHITE);
 		btnConfirmar.setBounds(582, 406, 183, 33);
 		btnConfirmar.addActionListener(e -> {
+			
+			
 			
 			dispose();
 			TransactionController tc = new TransactionController();

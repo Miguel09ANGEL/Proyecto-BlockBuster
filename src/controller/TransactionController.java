@@ -39,6 +39,22 @@ public class TransactionController {
 	    List<VideoGames> videoGamesList = um.getAllVideogames();
 	    vista.Compra(videoGamesList);
 	}
+	
+	public void indexDetallesCompra(int id) {
+		VideoGamesModel um = new VideoGamesModel();
+
+		VideoGames myVideogame = um.getVideojuegos(id);
+
+		vista.DetallesCompra(myVideogame);
+	}
+	
+	public void indexDetallesRenta(int id) {
+		VideoGamesModel um = new VideoGamesModel();
+
+		VideoGames myVideogame = um.getVideojuegos(id);
+
+		vista.DetallesRenta(myVideogame);
+	}
 
 
 	public void framePrueba(int id) {

@@ -569,7 +569,7 @@ public class TransactionView extends JFrame {
 		JTextField txtCantidad;
 
 		// Configuración básica de la ventana
-		setTitle("Operación Rentar");
+		setTitle("Detalles de operación Rentar");
 		setSize(1024, 576);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLocationRelativeTo(null);
@@ -746,8 +746,10 @@ public class TransactionView extends JFrame {
 		btnConfirmar.setForeground(Color.WHITE);
 		btnConfirmar.setBounds(582, 406, 183, 33);
 		btnConfirmar.addActionListener(e -> {
+			
 			dispose();
-			DetallesRenta();
+			TransactionController tc = new TransactionController();
+			tc.indexDetallesRenta(videogames.getId());
 		});
 		panelCentral.add(btnConfirmar);
 
@@ -843,7 +845,10 @@ public class TransactionView extends JFrame {
 		btnConfirmar.setForeground(Color.WHITE);
 		btnConfirmar.setBounds(582, 406, 183, 33);
 		btnConfirmar.addActionListener(e -> {
-			DetallesCompra();
+			dispose();
+			TransactionController tc = new TransactionController();
+			tc.indexDetallesCompra(videogames.getId());
+			
 		});
 		panelCentral.add(btnConfirmar);
 
@@ -919,7 +924,7 @@ public class TransactionView extends JFrame {
 		setVisible(true);
 	}
 
-	public void DetallesCompra() {
+	public void DetallesCompra(VideoGames videogames) {
 
 		// Configuración básica de la ventana
 		setTitle("Detalles de Compra");
@@ -1005,14 +1010,14 @@ public class TransactionView extends JFrame {
 		lblLogoJuego.setBounds(32, 32, 184, 112);
 		panelCentral.add(lblLogoJuego);
 
-		JLabel lblTituloJuego = new JLabel("CONTRA");
+		JLabel lblTituloJuego = new JLabel(videogames.getNombre());
 		lblTituloJuego.setHorizontalAlignment(SwingConstants.LEFT);
 		lblTituloJuego.setFont(new Font("Calibri", Font.BOLD, 24));
 		lblTituloJuego.setBounds(32, 141, 135, 42);
 		panelCentral.add(lblTituloJuego);
 
 		// Detalles del juego
-		JLabel lblAnioJuego = new JLabel("1987");
+		JLabel lblAnioJuego = new JLabel(""+videogames.getAñoLanzamiento());
 		lblAnioJuego.setHorizontalAlignment(SwingConstants.LEFT);
 		lblAnioJuego.setFont(new Font("Calibri", Font.BOLD, 18));
 		lblAnioJuego.setBounds(42, 174, 57, 42);
@@ -1024,7 +1029,7 @@ public class TransactionView extends JFrame {
 		lblClasificacion.setBounds(188, 204, 112, 42);
 		panelCentral.add(lblClasificacion);
 
-		JLabel lblValorClasificacion = new JLabel("E");
+		JLabel lblValorClasificacion = new JLabel(videogames.getClasificacion());
 		lblValorClasificacion.setHorizontalAlignment(SwingConstants.CENTER);
 		lblValorClasificacion.setFont(new Font("Calibri", Font.BOLD, 18));
 		lblValorClasificacion.setBounds(185, 232, 97, 42);
@@ -1036,10 +1041,10 @@ public class TransactionView extends JFrame {
 		lblDistribuidor.setBounds(188, 285, 112, 42);
 		panelCentral.add(lblDistribuidor);
 
-		JLabel lblNombreDistribuidor = new JLabel("Konami");
+		JLabel lblNombreDistribuidor = new JLabel(videogames.getDesarrolladoPor());
 		lblNombreDistribuidor.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNombreDistribuidor.setFont(new Font("Calibri", Font.BOLD, 18));
-		lblNombreDistribuidor.setBounds(198, 309, 97, 42);
+		lblNombreDistribuidor.setBounds(198, 309, 200, 42);
 		panelCentral.add(lblNombreDistribuidor);
 
 		// Fechas
@@ -1048,12 +1053,15 @@ public class TransactionView extends JFrame {
 		lblFechaCompra.setFont(new Font("Calibri", Font.BOLD, 18));
 		lblFechaCompra.setBounds(426, 204, 147, 42);
 		panelCentral.add(lblFechaCompra);
-
-		JLabel lblValorFechaCompra = new JLabel("15/02/2025");
-		lblValorFechaCompra.setHorizontalAlignment(SwingConstants.CENTER);
-		lblValorFechaCompra.setFont(new Font("Calibri", Font.BOLD, 18));
-		lblValorFechaCompra.setBounds(436, 232, 97, 42);
-		panelCentral.add(lblValorFechaCompra);
+		
+		LocalDate fechaActual = LocalDate.now();
+		String fechaFormateada = fechaActual.format(DateTimeFormatter.ofPattern("yyyy/MM/dd"));
+		
+		JLabel lblValorFecha = new JLabel(fechaFormateada);
+		lblValorFecha.setHorizontalAlignment(SwingConstants.CENTER);
+		lblValorFecha.setFont(new Font("Calibri", Font.BOLD, 18));
+		lblValorFecha.setBounds(436, 232, 97, 42);
+		panelCentral.add(lblValorFecha);
 
 		// Información de pago
 		JLabel lblInfoPago = new JLabel("Información de pago");
@@ -1093,7 +1101,7 @@ public class TransactionView extends JFrame {
 		lblProducto.setBounds(700, 205, 70, 42);
 		panelCentral.add(lblProducto);
 
-		JLabel lblPrecioProducto = new JLabel("100.00 MXN");
+		JLabel lblPrecioProducto = new JLabel(""+videogames.getPrecioVenta());
 		lblPrecioProducto.setHorizontalAlignment(SwingConstants.LEFT);
 		lblPrecioProducto.setFont(new Font("Calibri", Font.BOLD, 14));
 		lblPrecioProducto.setBounds(760, 204, 85, 42);
@@ -1163,7 +1171,7 @@ public class TransactionView extends JFrame {
 		
 	}
 
-	public void DetallesRenta() {
+	public void DetallesRenta(VideoGames videogames) {
 		// Configuración básica de la ventana
 		setTitle("Detalles VideoJuego Rentado");
 		setSize(1024, 576);
@@ -1224,7 +1232,8 @@ public class TransactionView extends JFrame {
 		btnRegresar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				dispose();
-				Renta(null);
+				TransactionController tc = new TransactionController();
+				tc.indexRenta();
 
 			}
 		});
@@ -1251,14 +1260,14 @@ public class TransactionView extends JFrame {
 		lblLogoJuego.setBounds(32, 32, 184, 112);
 		panelCentral.add(lblLogoJuego);
 
-		JLabel lblTituloJuego = new JLabel("CONTRA");
+		JLabel lblTituloJuego = new JLabel(videogames.getNombre());
 		lblTituloJuego.setHorizontalAlignment(SwingConstants.LEFT);
 		lblTituloJuego.setFont(new Font("Calibri", Font.BOLD, 24));
 		lblTituloJuego.setBounds(32, 141, 135, 42);
 		panelCentral.add(lblTituloJuego);
 
 		// Información del juego
-		JLabel lblAnioJuego = new JLabel("1987");
+		JLabel lblAnioJuego = new JLabel(""+videogames.getAñoLanzamiento());
 		lblAnioJuego.setHorizontalAlignment(SwingConstants.LEFT);
 		lblAnioJuego.setFont(new Font("Calibri", Font.BOLD, 18));
 		lblAnioJuego.setBounds(42, 174, 57, 42);
@@ -1270,7 +1279,7 @@ public class TransactionView extends JFrame {
 		lblClasificacion.setBounds(188, 204, 112, 42);
 		panelCentral.add(lblClasificacion);
 
-		JLabel lblValorClasificacion = new JLabel("E");
+		JLabel lblValorClasificacion = new JLabel(videogames.getClasificacion());
 		lblValorClasificacion.setHorizontalAlignment(SwingConstants.CENTER);
 		lblValorClasificacion.setFont(new Font("Calibri", Font.BOLD, 18));
 		lblValorClasificacion.setBounds(185, 232, 97, 42);
@@ -1282,10 +1291,10 @@ public class TransactionView extends JFrame {
 		lblDistribuidor.setBounds(188, 285, 112, 42);
 		panelCentral.add(lblDistribuidor);
 
-		JLabel lblNombreDistribuidor = new JLabel("Konami");
+		JLabel lblNombreDistribuidor = new JLabel(videogames.getDesarrolladoPor());
 		lblNombreDistribuidor.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNombreDistribuidor.setFont(new Font("Calibri", Font.BOLD, 18));
-		lblNombreDistribuidor.setBounds(198, 309, 97, 42);
+		lblNombreDistribuidor.setBounds(198, 309, 200, 42);
 		panelCentral.add(lblNombreDistribuidor);
 
 		// Fechas de renta
@@ -1294,12 +1303,15 @@ public class TransactionView extends JFrame {
 		lblFechaRenta.setFont(new Font("Calibri", Font.BOLD, 18));
 		lblFechaRenta.setBounds(426, 204, 126, 42);
 		panelCentral.add(lblFechaRenta);
-
-		JLabel lblValorFechaRenta = new JLabel("15/02/2025");
-		lblValorFechaRenta.setHorizontalAlignment(SwingConstants.CENTER);
-		lblValorFechaRenta.setFont(new Font("Calibri", Font.BOLD, 18));
-		lblValorFechaRenta.setBounds(436, 232, 97, 42);
-		panelCentral.add(lblValorFechaRenta);
+		
+		LocalDate fechaActual = LocalDate.now();
+		String fechaFormateada = fechaActual.format(DateTimeFormatter.ofPattern("yyyy/MM/dd"));
+		
+		JLabel lblValorFecha = new JLabel(fechaFormateada);
+		lblValorFecha.setHorizontalAlignment(SwingConstants.CENTER);
+		lblValorFecha.setFont(new Font("Calibri", Font.BOLD, 18));
+		lblValorFecha.setBounds(436, 232, 97, 42);
+		panelCentral.add(lblValorFecha);
 
 		JLabel lblFechaLimite = new JLabel("Límite de devolución");
 		lblFechaLimite.setHorizontalAlignment(SwingConstants.LEFT);
@@ -1334,14 +1346,14 @@ public class TransactionView extends JFrame {
 
 		JLabel lblCantidad = new JLabel("Cantidad:");
 		lblCantidad.setHorizontalAlignment(SwingConstants.LEFT);
-		lblCantidad.setFont(new Font("Calibri", Font.BOLD, 14));
-		lblCantidad.setBounds(700, 174, 57, 42);
+		lblCantidad.setFont(new Font("Calibri", Font.BOLD, 18));
+		lblCantidad.setBounds(700, 174, 100, 42);
 		panelCentral.add(lblCantidad);
 
 		JLabel lblValorCantidad = new JLabel("1");
 		lblValorCantidad.setHorizontalAlignment(SwingConstants.LEFT);
 		lblValorCantidad.setFont(new Font("Calibri", Font.BOLD, 14));
-		lblValorCantidad.setBounds(760, 174, 57, 42);
+		lblValorCantidad.setBounds(765, 174, 57, 42);
 		panelCentral.add(lblValorCantidad);
 
 		JLabel lblProducto = new JLabel("Producto:");
@@ -1350,7 +1362,7 @@ public class TransactionView extends JFrame {
 		lblProducto.setBounds(700, 205, 70, 42);
 		panelCentral.add(lblProducto);
 
-		JLabel lblPrecioProducto = new JLabel("100.00 MXN");
+		JLabel lblPrecioProducto = new JLabel("" + videogames.getPrecioRenta());
 		lblPrecioProducto.setHorizontalAlignment(SwingConstants.LEFT);
 		lblPrecioProducto.setFont(new Font("Calibri", Font.BOLD, 14));
 		lblPrecioProducto.setBounds(760, 204, 85, 42);

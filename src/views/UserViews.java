@@ -556,7 +556,7 @@ public class UserViews extends JFrame {
 			iniciar_1_1_2_1_1.setBounds(240, 84, 97, 42);
 			panelCentral.add(iniciar_1_1_2_1_1);
 
-			JLabel iniciar_1_1_1_3_1 = new JLabel(user.getNombre() + " " + user.getApellidoPaterno());
+			JLabel iniciar_1_1_1_3_1 = new JLabel(user.getNombre() + " " + user.getApellidoPaterno() + " " + user.getApellidoMaterno());
 			iniciar_1_1_1_3_1.setHorizontalAlignment(SwingConstants.CENTER);
 			iniciar_1_1_1_3_1.setForeground(new Color(59, 55, 65));
 			iniciar_1_1_1_3_1.setFont(new Font("Calibri", Font.BOLD, 18));

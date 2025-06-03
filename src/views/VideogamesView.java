@@ -594,8 +594,6 @@ public class VideogamesView extends JFrame {
 	    btnDescargarPDF.setBackground(Color.decode("#263C54"));
 	    btnDescargarPDF.setForeground(Color.WHITE);
 	    btnDescargarPDF.setBounds(605, 417, 183, 33);
-	    panelCentral.add(btnDescargarPDF);
-
 	    btnDescargarPDF.addActionListener(new ActionListener() {
 	        public void actionPerformed(ActionEvent e) {
 	            JFileChooser fileChooser = new JFileChooser();
@@ -639,7 +637,6 @@ public class VideogamesView extends JFrame {
 	            }
 	        }
 	    });
-
 		panelCentral.add(btnDescargarPDF);
 
 

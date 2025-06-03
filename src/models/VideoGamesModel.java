@@ -21,7 +21,6 @@ public class VideoGamesModel {
 //	String user = "root";
 //	String password = "";
 
-
 	public VideoGamesModel() {
 		// TODO Auto-generated constructor stub
 	}

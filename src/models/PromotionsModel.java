@@ -20,7 +20,7 @@ public class PromotionsModel {
 //	String url = "jdbc:mysql://127.0.0.1:3306/base_de_datos_renta";
 //	String user = "root";
 //	String password = "";
-
+	
 	public List getAllPromotions() {
 
 		String query = "select * from promotions";

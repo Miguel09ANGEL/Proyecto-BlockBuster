@@ -1,5 +1,6 @@
 package controller;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,15 +43,21 @@ public class TransactionController {
 		vista.DetallesCompra(myVideogame);
 	}
 
-	public void indexDetallesRenta(int id) {
-		VideoGames myVideogame = modeloVideojuego.getVideogames(id);
-		vista.DetallesRenta(myVideogame);
-	}
+//	public void indexDetallesRenta(int id) {
+//		VideoGames myVideogame = modeloVideojuego.getVideogames(id);
+//		vista.DetallesRenta(myVideogame);
+//	}
 
-	public void framePrueba(int id) {
+	public void operacionRenta(int id) {
 		VideoGames myVideogame = modeloVideojuego.getVideogames(id);
 		usuarios = modeloUsuario.getAll();
 		vista.OperacionRentar(myVideogame,usuarios);
+	}
+	
+	public void detallesRenta(int idConstumer, int idVideogame, Date fechaDevolucion) {
+		User myUser = modeloUsuario.get(idConstumer);
+		VideoGames myVideogame = modeloVideojuego.getVideogames(idVideogame);
+		vista.DetallesRenta(myUser ,myVideogame, fechaDevolucion);
 	}
 
 }

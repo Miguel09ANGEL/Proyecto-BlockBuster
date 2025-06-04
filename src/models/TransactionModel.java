@@ -54,6 +54,43 @@ public class TransactionModel {
 		}
 		return transacciones;
 	}
+	
+	public List<Transaction> getAllRentals() {
+	    List<Transaction> rentals = new ArrayList<>();
+	    String query = "SELECT t.*, vg.name AS video_game_name, "
+	            + "CONCAT(c.first_name, ' ', c.last_name) AS customer_name " 
+	            + "FROM transactions t "
+	            + "JOIN video_games vg ON t.video_game_id = vg.id " 
+	            + "JOIN customers c ON t.customer_id = c.id "
+	            + "WHERE t.transaction_type = 'rental'";
+
+	    try (Connection conn = DriverManager.getConnection(url, user, password);
+	         Statement stmt = conn.createStatement();
+	         ResultSet rs = stmt.executeQuery(query)) {
+
+	        while (rs.next()) {
+	            Integer id = rs.getInt("id");
+	            Integer customerId = rs.getInt("customer_id");
+	            Integer videoGameId = rs.getInt("video_game_id");
+	            String videoGameName = rs.getString("video_game_name");
+	            String customerName = rs.getString("customer_name");
+	            String transactionType = rs.getString("transaction_type");
+	            Date transactionDate = new Date(rs.getTimestamp("transaction_date").getTime());
+	            Date returnDate = rs.getTimestamp("return_date") != null
+	                    ? new Date(rs.getTimestamp("return_date").getTime())
+	                    : null;
+	            BigDecimal price = rs.getBigDecimal("price");
+	            Date createdAt = new Date(rs.getTimestamp("created_at").getTime());
+	            Date updatedAt = new Date(rs.getTimestamp("updated_at").getTime());
+
+	            rentals.add(new Transaction(id, customerId, videoGameId, customerName, videoGameName,
+	                    transactionType, transactionDate, returnDate, price, createdAt, updatedAt));
+	        }
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+	    return rentals;
+	}
 
 	public boolean createTransaction(int customerId, int videoGameId, String transactionType, Date returnDate,
 			BigDecimal price, String status) {

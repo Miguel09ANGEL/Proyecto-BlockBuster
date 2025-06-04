@@ -290,7 +290,7 @@ public class PromotionsView extends JFrame{
 //		panelCentral.add(btnBuscar);
 		// Datos de la tabla
 		// Crear unan tabla
-		String[] columnNames = { "Núm", "Juego", "Fecha de Renta", "Fecha de Devolución", "Precio" };
+		String[] columnNames = { "Núm", "Nombre cliente","Juego", "Fecha de Renta", "Fecha de Devolución", "Precio" };
 		DefaultTableModel model = new DefaultTableModel(columnNames, 0) {
 			@Override
 			public boolean isCellEditable(int row, int column) {
@@ -300,7 +300,7 @@ public class PromotionsView extends JFrame{
 
 		for (Transaction t : transaciones) {
 
-			Object[] rowData = { t.getId(), t.getVideoGameName(), t.getTransactionDate(),"No devuelto", "$" + t.getPrice() };
+			Object[] rowData = { t.getId(), t.getCustomerName(),t.getVideoGameName(), t.getTransactionDate(),t.getReturnDate(), "$" + t.getPrice() };
 			model.addRow(rowData);
 		}
 

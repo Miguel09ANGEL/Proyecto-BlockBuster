@@ -41,7 +41,7 @@ public class PromotionsController {
 	
 	public void pending_returns() {
 		TransactionModel tm = new TransactionModel();
-		List<Transaction> transaciones = tm.getAllTransactions();
+		List<Transaction> transaciones = tm.getAllRentals();
 		
 		vista.DevolucionesPendientes(transaciones);
 	}

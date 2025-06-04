@@ -63,10 +63,10 @@ public class TransactionController {
 		vista.OperacionComprar(myVideogame,usuarios);
 	}
 	
-	public void indexDetallesCompra(int idConstumer, int idVideogame, Date fechaDevolucion) {
+	public void indexDetallesCompra(int idConstumer, int idVideogame) {
 		User myUser = modeloUsuario.get(idConstumer);
 		VideoGames myVideogame = modeloVideojuego.getVideogames(idVideogame);
-		vista.DetallesCompra(myUser ,myVideogame,fechaDevolucion);
+		vista.DetallesCompra(myUser ,myVideogame);
 	}
 
 }

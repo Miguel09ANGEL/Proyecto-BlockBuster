@@ -50,6 +50,7 @@ import com.itextpdf.text.pdf.PdfWriter;
 
 import controller.UserController;
 import controller.VideogamesController;
+import models.Transaction;
 import models.User;
 import models.UsersModel;
 import models.VideoGames;
@@ -413,7 +414,7 @@ public class UserViews extends JFrame {
 			
 		}
 
-		public void DetallesCliente(User user) {
+		public void DetallesCliente(User user, List<Transaction> transacciones, List<Transaction> misVentas) {
 			// Configuración básica de la ventana
 			setTitle("Detalles Cliente");
 			setSize(1024, 576);
@@ -503,52 +504,67 @@ public class UserViews extends JFrame {
 			btnRegresar.setBackground(new Color(184, 47, 47));
 			btnRegresar.setBounds(157, 403, 183, 33);
 			panelCentral.add(btnRegresar);
-			//
-
-			// Tabla de Rentas del Cliente
-			Object[][] data = { { "Rentas", "Fecha de compra", "Fecha de devolución", "Descuentos" },
-					{ "000006", "13/01/2025", "13/02/2025", "7%" }, { "Fornite", "13/01/2025", "13/02/2025", "7%" },
-					{ "Halo 2", "10/01/2025", "13/02/2025", "7%" }, { "Halo 4", "17/01/2025", "13/02/2025", "7%" },
-					{ "Super Mash Bros", "43/01/2025", "13/02/2025", "7%" },
-					{ "The Last of Us Parte ll", "18/01/2025", "13/02/2025", "7%" } };
-
-			DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
-			centerRenderer.setHorizontalAlignment(JLabel.CENTER);
-
-			// Tabla
-			JTable table = new JTable(data, new String[] { "", "", "", "", });
-			panelCentral.add(table);
-			table.setFont(new Font("Segoe UI", Font.PLAIN, 16));
-			table.setBounds(28, 170, 606, 210);
-			table.setBorder(BorderFactory.createLineBorder(new Color(204, 204, 204)));
-			table.setShowGrid(true);
-			table.setGridColor(new Color(204, 204, 204));
-			table.setTableHeader(null);
-			table.setDefaultRenderer(Object.class, centerRenderer);
-			table.setRowHeight(35);
-			table.setShowHorizontalLines(true);
-			table.setShowVerticalLines(true);
-
-			// Tabla de compras del cliente
-			Object[][] compro = { { "Compras", }, { "Fornite", }, { "Mortal Combat", }, { "Resident Evil", }, { "" },
-					{ "", },
-
+			
+			// Crear unan tabla
+			String[] columnNames = { "ID", "Juego", "Fecha de Renta", "Fecha de Devolución", "Precio" };
+			DefaultTableModel model = new DefaultTableModel(columnNames, 0) {
+			    @Override
+			    public boolean isCellEditable(int row, int column) {
+			        return false;
+			    }
 			};
 
-			DefaultTableCellRenderer ClienteCompro = new DefaultTableCellRenderer();
-			centerRenderer.setHorizontalAlignment(JLabel.CENTER);
-			JTable Compras = new JTable(compro, new String[] { "", });
-			panelCentral.add(Compras);
-			Compras.setFont(new Font("Segoe UI", Font.PLAIN, 16));
-			Compras.setBounds(712, 170, 183, 210);
-			Compras.setBorder(BorderFactory.createLineBorder(new Color(204, 204, 204)));
-			Compras.setShowGrid(true);
-			Compras.setGridColor(new Color(204, 204, 204));
-			Compras.setTableHeader(null);
-			Compras.setDefaultRenderer(Object.class, centerRenderer);
-			Compras.setRowHeight(30);
-			Compras.setShowHorizontalLines(true);
-			Compras.setShowVerticalLines(true);
+			for (Transaction t : transacciones) {
+
+			    Object[] rowData = {
+			        t.getId(),
+			        t.getVideoGameName(),
+			        t.getTransactionDate(),
+			        t.getReturnDate() != null ? t.getReturnDate() : "No devuelto",
+			        "$" + t.getPrice()
+			    };
+			    model.addRow(rowData);
+			}
+			
+			JTable table = new JTable(model);
+			table.getColumnModel().getColumn(0).setPreferredWidth(10); // aqui redusco id
+			table.setFont(new Font("Arial", Font.PLAIN, 14));
+			table.setRowHeight(25);
+			table.getTableHeader().setFont(new Font("Arial", Font.BOLD, 14));
+			table.setAutoCreateRowSorter(true); // ordenar por columnas
+
+			// Agregar la tabla a un JScrollPane
+			JScrollPane scrollPane = new JScrollPane(table);
+			scrollPane.setBounds(28, 170, 606, 210);
+			panelCentral.add(scrollPane);
+			
+			String[] purchaseColumnNames = {"Juego", "Fecha de Compra", "Precio" };
+			DefaultTableModel purchaseModel = new DefaultTableModel(purchaseColumnNames, 0) {
+			    @Override
+			    public boolean isCellEditable(int row, int column) {
+			        return false;
+			    }
+			};
+
+			for (Transaction sale : misVentas) {
+			    Object[] rowData = {
+			        sale.getVideoGameName(),
+			        sale.getTransactionDate(),
+			        "$" + sale.getPrice()
+			    };
+			    purchaseModel.addRow(rowData);
+			}
+
+			JTable purchasesTable = new JTable(purchaseModel);
+			purchasesTable.setFont(new Font("Arial", Font.PLAIN, 14));
+			purchasesTable.setRowHeight(25);
+			purchasesTable.getTableHeader().setFont(new Font("Arial", Font.BOLD, 14));
+			purchasesTable.setAutoCreateRowSorter(true);
+
+			// Agregar la tabla de compras a un JScrollPane
+			JScrollPane purchasesScrollPane = new JScrollPane(purchasesTable);
+			purchasesScrollPane.setBounds(680, 170, 280, 210); 
+			panelCentral.add(purchasesScrollPane);
 
 			JLabel iniciar_1_1_2_1_1 = new JLabel("Nombre:");
 			iniciar_1_1_2_1_1.setHorizontalAlignment(SwingConstants.LEFT);

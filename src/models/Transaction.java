@@ -8,6 +8,8 @@ public class Transaction {
 	private int id;
     private int customerId;
     private int videoGameId;
+    private String videoGameName;
+    private String customerName;
     private String transactionType; // "VENTA" o "RENTA"
     private Date transactionDate;
     private Date returnDate;       
@@ -16,12 +18,14 @@ public class Transaction {
     private Date updatedAt;      
 
     // Constructor completo
-    public Transaction(int id, int customerId, int videoGameId, String transactionType,
+    public Transaction(int id, int customerId, int videoGameId, String customerName,String videoGameName,String transactionType,
                      Date transactionDate, Date returnDate, BigDecimal price,
                      Date createdAt, Date updatedAt) {
         this.id = id;
         this.customerId = customerId;
         this.videoGameId = videoGameId;
+        this.customerName = customerName;
+        this.videoGameName = videoGameName;
         this.transactionType = transactionType;
         this.transactionDate = transactionDate;
         this.returnDate = returnDate;
@@ -100,6 +104,22 @@ public class Transaction {
 
 	public void setUpdatedAt(Date updatedAt) {
 		this.updatedAt = updatedAt;
+	}
+
+	public String getVideoGameName() {
+		return videoGameName;
+	}
+
+	public void setVideoGameName(String videoGameName) {
+		this.videoGameName = videoGameName;
+	}
+
+	public String getCustomerName() {
+		return customerName;
+	}
+
+	public void setCustomerName(String customerName) {
+		this.customerName = customerName;
 	}
     
     

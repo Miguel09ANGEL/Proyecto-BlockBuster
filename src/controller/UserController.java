@@ -3,11 +3,14 @@ package controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import models.Transaction;
+import models.TransactionModel;
 import models.User;
 import models.UsersModel;
 import views.AuthViews;
 import views.HomeView;
 import views.UserViews;
+
 
 public class UserController {
 
@@ -42,10 +45,14 @@ public class UserController {
 	public void update2(int id) {
 
 		UsersModel um = new UsersModel();
-
 		User myUser = um.get(id);
+		
+		TransactionModel tm = new TransactionModel();
+		List<Transaction> misTransacciones = tm.getRentalsByUser(id);
+		List<Transaction> misVentas = tm.getSimplePurchasesByUser(id);
 
-		vista.DetallesCliente(myUser);
+
+		vista.DetallesCliente(myUser, (List<Transaction>) misTransacciones, (List<Transaction>) misVentas);
 
 	}
 	

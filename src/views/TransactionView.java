@@ -1289,7 +1289,7 @@ public class TransactionView extends JFrame {
 		layeredPane.add(panelCentral, JLayeredPane.PALETTE_LAYER);
 
 		// Logo del juego
-		ImageIcon iconoOriginal = new ImageIcon(getClass().getResource("/images/contra.png"));
+		ImageIcon iconoOriginal = new ImageIcon(getClass().getResource("/images/Contra.png"));
 		Image imagenEscalada = iconoOriginal.getImage().getScaledInstance(100, 70, Image.SCALE_SMOOTH);
 
 		// Título principal

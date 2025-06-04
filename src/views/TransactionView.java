@@ -1502,7 +1502,7 @@ public class TransactionView extends JFrame {
 		btnDescargarPDF.addActionListener(e -> {
 			JFileChooser fileChooser = new JFileChooser();
 	        fileChooser.setDialogTitle("Guardar archivo PDF");
-	        fileChooser.setSelectedFile(new File("Detalles_Renta_" + videogames.getNombre() + ".pdf"));
+	        fileChooser.setSelectedFile(new File("Detalles_Venta_" + videogames.getNombre() + ".pdf"));
 
 	        int userSelection = fileChooser.showSaveDialog(null);
 
@@ -1515,7 +1515,7 @@ public class TransactionView extends JFrame {
 	                document.open();
 
 	                // Encabezado
-	                Paragraph titulo = new Paragraph("COMPROBANTE DE RENTA\n\n", 
+	                Paragraph titulo = new Paragraph("COMPROBANTE DE VENTA\n\n", 
 	                    FontFactory.getFont(FontFactory.HELVETICA_BOLD, 18));
 	                titulo.setAlignment(Element.ALIGN_CENTER);
 	                document.add(titulo);

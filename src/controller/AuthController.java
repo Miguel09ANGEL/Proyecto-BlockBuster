@@ -15,7 +15,7 @@ public class AuthController {
 	private List<Admins> administrador = new ArrayList<>();
 
 	public AuthController() { 
-		vista = new AuthViews();
+		this.vista = new AuthViews();
 	}	
 	
 	public void login() {	

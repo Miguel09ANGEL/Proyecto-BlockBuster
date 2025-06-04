@@ -16,7 +16,7 @@ public class PromotionsController {
 	PromotionsView vista;
 	
 	public PromotionsController() {
-		vista = new PromotionsView();
+		this.vista = new PromotionsView();
 	}
 	
 	public void indexPromocion() {

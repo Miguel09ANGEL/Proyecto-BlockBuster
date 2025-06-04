@@ -19,31 +19,22 @@ public class UserController {
 
 	public UserController() {
 
-		vista = new UserViews();
+		this.vista = new UserViews();
 	}
 
 	public void index() {
-
 		UsersModel um = new UsersModel();
-
 		usuarios = um.getAll();
-
 		vista.RegistroClientes(usuarios);
-
 	}
 
 	public void update(int id) {
-
 		UsersModel um = new UsersModel();
-
 		User myUser = um.get(id);
-
 		vista.EditarCliente(myUser);
-
 	}
 
 	public void update2(int id) {
-
 		UsersModel um = new UsersModel();
 		User myUser = um.get(id);
 		
@@ -57,14 +48,9 @@ public class UserController {
 	}
 	
 	public void update3(int id) {
-		
 		UsersModel um = new UsersModel();
-
 		User myUser = um.get(id);
-
 		vista.InformacionCliente(myUser);
-
-		
 	}
 
 }

@@ -581,7 +581,6 @@ public class VideogamesView extends JFrame {
 	    btnEditar.setBounds(394, 417, 183, 33); // Ajusta posición si es necesario
 	    btnEditar.addActionListener(new ActionListener() {
 	        public void actionPerformed(ActionEvent e) {
-//	            EditarJuego();
 	        	dispose();
 	        	VideogamesController vc = new VideogamesController();
 			    vc.updateVideogames2(videogames.getId());
@@ -732,13 +731,32 @@ public class VideogamesView extends JFrame {
 	    lblGenero.setBounds(55, 250, 180, 20);
 	    panelCentral.add(lblGenero);
 
-	    // ComboBox para Género
+	 // ComboBox para Género
 	    String[] genero = { "Acción", "Aventura", "Estrategia", "RPG", "Deportes", 
-	                        "Carreras", "Shooter", "Lucha", "Plataformas", "Simulación", "Otro" };
-	    
+	                       "Carreras", "Shooter", "Lucha", "Plataformas", "Simulación", "Otro" };
+
 	    JComboBox<String> comboGenero = new JComboBox<String>(genero);
-	    
-	    comboGenero.setSelectedItem(videogames.getGenero());
+
+	    String generoActual = videogames.getGenero(); 
+
+	    if (generoActual != null && !generoActual.isEmpty()) {
+	        boolean encontrado = false;
+	        for (int i = 0; i < comboGenero.getItemCount(); i++) {
+	            if (comboGenero.getItemAt(i).equalsIgnoreCase(generoActual)) {
+	                comboGenero.setSelectedIndex(i);
+	                encontrado = true;
+	                break;
+	            }
+	        }
+	        
+	        if (!encontrado) {
+	            comboGenero.setSelectedItem("Otro");
+	        }
+	    } else {
+	        // Si no hay género definido, selecciona el primer elemento
+	        comboGenero.setSelectedIndex(0);
+	    }
+
 	    comboGenero.setBounds(55, 275, 180, 25);
 	    panelCentral.add(comboGenero);
 
@@ -948,14 +966,14 @@ public class VideogamesView extends JFrame {
 	            String Plataforma = txtPlataforma.getText().trim();
 	            boolean Disponibilidad = chkDisponible.isSelected();
 	            String Clasificacion = txtClasificacion.getText().trim();
-	            String Genero = (String) comboGenero.getSelectedItem(); // Obteniendo el género del ComboBox
+	            String Genero = (String) comboGenero.getSelectedItem();	 
 	            String DesarrolladoPor = txtDescripcion.getText().trim();
 	            String Descripcion = txtAreaDescripcion.getText().trim();
 
 	            // Actualizar el videojuego
 	            VideoGamesModel vm = new VideoGamesModel();
 	            boolean actualizado = vm.updateVideogame(videogames.getId(), Nombre, Plataforma, AñoLanzamiento, 
-	                    Disponibilidad, Clasificacion, ExistenciasDisponibles, 
+	                    Disponibilidad, Clasificacion,Genero,ExistenciasDisponibles, 
 	                    PrecioRenta, PrecioVenta, DesarrolladoPor, Descripcion);
 	            
 	            if (actualizado) {

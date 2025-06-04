@@ -16,7 +16,7 @@ public class VideoGamesModel {
 	String url = "jdbc:mysql://sql.freedb.tech:3306/freedb_Base_de_datos_renta?useSSL=false";
 	String user = "freedb_G_user";
 	String password = "%eeFW9csb4$?Dcj";
-	
+
 //	String url = "jdbc:mysql://127.0.0.1:3306/base_de_datos_renta";
 //	String user = "root";
 //	String password = "";
@@ -159,15 +159,15 @@ public class VideoGamesModel {
 	}
 
 	public boolean updateVideogame(int id, String nombre, String plataforma, int añoLanzamiento, boolean disponibilidad,
-			String clasificacion, int existencias, BigDecimal precioRenta, BigDecimal precioVenta,
+			String clasificacion, String genero, int existencias, BigDecimal precioRenta, BigDecimal precioVenta,
 			String desarrolladoPor, String descripcion) {
 
 		String query = "UPDATE video_games SET " + "name = '" + nombre + "', " + "platform = '" + plataforma + "', "
 				+ "release_year = " + añoLanzamiento + ", " + "is_available = " + disponibilidad + ", "
-				+ "classification = '" + clasificacion + "', " + "available_stock = " + existencias + ", " + "rent_price = " + precioRenta + ", "
-				+ "sale_price = " + precioVenta + ", " + "developed_by = '" + desarrolladoPor + "', "
-				+ "description = " + (descripcion != null ? "'" + descripcion + "'" : "NULL") + " " + "WHERE id = "
-				+ id;
+				+ "classification = '" + clasificacion + "', " + "genre = '" + genero + "', " + "available_stock = "
+				+ existencias + ", " + "rent_price = " + precioRenta + ", " + "sale_price = " + precioVenta + ", "
+				+ "developed_by = '" + desarrolladoPor + "', " + "description = "
+				+ (descripcion != null ? "'" + descripcion + "'" : "NULL") + " " + "WHERE id = " + id;
 
 		Connection conn = null;
 		Statement stmt = null;

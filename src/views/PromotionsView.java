@@ -31,6 +31,7 @@ import com.formdev.flatlaf.FlatLightLaf;
 import controller.PromotionsController;
 import models.Promotions;
 import models.PromotionsModel;
+import models.Transaction;
 import models.User;
 
 public class PromotionsView extends JFrame{
@@ -146,7 +147,8 @@ public class PromotionsView extends JFrame{
 		devoluciones.setBackground(new Color(38, 60, 84));
 		devoluciones.addActionListener(e -> {
 			dispose(); // Cierra la ventana actual
-			DevolucionesPendientes(); // Abre la segunda ventana
+			PromotionsController pc = new PromotionsController();
+			pc.pending_returns();
 		});
 
 		JButton btnPromocionAutomatica = new JButton("<html><center>PROMOCIÓN AUTOMATICA<html>");
@@ -202,7 +204,7 @@ public class PromotionsView extends JFrame{
 	}
 
 	
-	public void DevolucionesPendientes() {
+	public void DevolucionesPendientes(java.util.List<Transaction> transaciones) {
 		// Configuración básica de la ventana
 		setTitle("Devoluciones pendientes");
 		setSize(1024, 576);
@@ -652,8 +654,6 @@ public class PromotionsView extends JFrame{
 
 		setVisible(true);
 	}
-
-
 
 	public void DescuentoFrecuencia() {
 		// Configuración básica de la ventana

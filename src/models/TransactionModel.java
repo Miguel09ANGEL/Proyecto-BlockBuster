@@ -16,58 +16,42 @@ public class TransactionModel {
 	String url = "jdbc:mysql://sql.freedb.tech:3306/freedb_Base_de_datos_renta?useSSL=false";
 	String user = "freedb_G_user";
 	String password = "%eeFW9csb4$?Dcj";
-	
+
 //	String url = "jdbc:mysql://127.0.0.1:3306/base_de_datos_renta";
 //	String user = "root";
 //	String password = "";
 
 	public List<Transaction> getAllTransactions() {
 		List<Transaction> transacciones = new ArrayList<>();
-		String query = "SELECT * FROM transactions";
+		String query = "SELECT t.*, vg.name AS video_game_name, "
+				+ "CONCAT(c.first_name, ' ', c.last_name) AS customer_name " + "FROM transactions t "
+				+ "JOIN video_games vg ON t.video_game_id = vg.id " + "JOIN customers c ON t.customer_id = c.id";
 
-		Connection conn = null;
-		Statement stmt = null;
-
-		try {
-			Class.forName("com.mysql.cj.jdbc.Driver");
-			conn = DriverManager.getConnection(url, user, password);
-			stmt = conn.createStatement();
-			ResultSet rs = stmt.executeQuery(query);
+		try (Connection conn = DriverManager.getConnection(url, user, password);
+				Statement stmt = conn.createStatement();
+				ResultSet rs = stmt.executeQuery(query)) {
 
 			while (rs.next()) {
-				Integer id = rs.getInt(1);
-				Integer customerId = rs.getInt(2);
-				Integer videoGameId = rs.getInt(3);
-				String videoGameName = rs.getNString(4);
-				String transactionType = rs.getString(5);
-				Date transactionDate = new Date(rs.getTimestamp(6).getTime());
-				Date returnDate = rs.getTimestamp(7) != null ? new Date(rs.getTimestamp(7).getTime()) : null;
-				BigDecimal price = rs.getBigDecimal(8);
-				Date createdAt = new Date(rs.getTimestamp(9).getTime());
-				Date updatedAt = new Date(rs.getTimestamp(10).getTime());
+				Integer id = rs.getInt("id");
+				Integer customerId = rs.getInt("customer_id");
+				Integer videoGameId = rs.getInt("video_game_id");
+				String videoGameName = rs.getString("video_game_name");
+				String customerName = rs.getString("customer_name");
+				String transactionType = rs.getString("transaction_type");
+				Date transactionDate = new Date(rs.getTimestamp("transaction_date").getTime());
+				Date returnDate = rs.getTimestamp("return_date") != null
+						? new Date(rs.getTimestamp("return_date").getTime())
+						: null;
+				BigDecimal price = rs.getBigDecimal("price");
+				Date createdAt = new Date(rs.getTimestamp("created_at").getTime());
+				Date updatedAt = new Date(rs.getTimestamp("updated_at").getTime());
 
-				System.out.println(""); // Salto de línea para separar registros
-
-				transacciones.add(new Transaction(id, customerId, videoGameId,null, videoGameName,transactionType, transactionDate,
-						returnDate, price, createdAt, updatedAt));
+				transacciones.add(new Transaction(id, customerId, videoGameId, customerName, videoGameName,
+						transactionType, transactionDate, returnDate, price, createdAt, updatedAt));
 			}
-
-			rs.close();
-			return transacciones;
-
 		} catch (Exception e) {
 			e.printStackTrace();
-		} finally {
-			try {
-				if (stmt != null)
-					stmt.close();
-				if (conn != null)
-					conn.close();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
 		}
-
 		return transacciones;
 	}
 
@@ -115,71 +99,59 @@ public class TransactionModel {
 			}
 		}
 	}
-	
+
 	public List<Transaction> getRentalsByUser(int customerId) {
-	    List<Transaction> transacciones = new ArrayList<>();
-	    String query = "SELECT t.id, t.customer_id, t.video_game_id, vg.name AS video_game_name, " +
-	                   "t.transaction_type, t.transaction_date, t.return_date, t.price, " +
-	                   "t.created_at, t.updated_at " +
-	                   "FROM transactions t " +
-	                   "JOIN video_games vg ON t.video_game_id = vg.id " +
-	                   "WHERE t.customer_id = ? AND t.transaction_type = 'rental'";
+		List<Transaction> transacciones = new ArrayList<>();
+		String query = "SELECT t.id, t.customer_id, t.video_game_id, vg.name AS video_game_name, "
+				+ "t.transaction_type, t.transaction_date, t.return_date, t.price, " + "t.created_at, t.updated_at "
+				+ "FROM transactions t " + "JOIN video_games vg ON t.video_game_id = vg.id "
+				+ "WHERE t.customer_id = ? AND t.transaction_type = 'rental'";
 
-	    try (Connection conn = DriverManager.getConnection(url, user, password);
-	         PreparedStatement pstmt = conn.prepareStatement(query)) {
-
-	        pstmt.setInt(1, customerId);
-	        ResultSet rs = pstmt.executeQuery();
-
-	        while (rs.next()) {
-	            Transaction t = new Transaction(
-	                rs.getInt("id"),
-	                rs.getInt("customer_id"),
-	                rs.getInt("video_game_id"),
-	                null,
-	                rs.getString("video_game_name"),
-	                rs.getString("transaction_type"),
-	                new Date(rs.getTimestamp("transaction_date").getTime()),
-	                rs.getTimestamp("return_date") != null ? new Date(rs.getTimestamp("return_date").getTime()) : null,
-	                rs.getBigDecimal("price"),
-	                new Date(rs.getTimestamp("created_at").getTime()),
-	                new Date(rs.getTimestamp("updated_at").getTime())
-	            );
-	            transacciones.add(t);
-	        }
-
-	    } catch (Exception e) {
-	        e.printStackTrace();
-	    }
-
-	    return transacciones;
-	}
-
-	public List<Transaction> getSimplePurchasesByUser(int customerId) {
-	    List<Transaction> purchases = new ArrayList<>();
-	    String query = "SELECT t.id, vg.name AS video_game_name, t.transaction_date, t.price " +
-	                   "FROM transactions t " +
-	                   "JOIN video_games vg ON t.video_game_id = vg.id " +
-	                   "WHERE t.customer_id = ? AND t.transaction_type = 'sale'";
-
-	    try (Connection conn = DriverManager.getConnection(url, user, password);
-	         PreparedStatement pstmt = conn.prepareStatement(query)) {
+		try (Connection conn = DriverManager.getConnection(url, user, password);
+				PreparedStatement pstmt = conn.prepareStatement(query)) {
 
 			pstmt.setInt(1, customerId);
 			ResultSet rs = pstmt.executeQuery();
 
 			while (rs.next()) {
-				Transaction transaction = new Transaction(
-						rs.getInt("id"), // id
+				Transaction t = new Transaction(rs.getInt("id"), rs.getInt("customer_id"), rs.getInt("video_game_id"),
+						null, rs.getString("video_game_name"), rs.getString("transaction_type"),
+						new Date(rs.getTimestamp("transaction_date").getTime()),
+						rs.getTimestamp("return_date") != null ? new Date(rs.getTimestamp("return_date").getTime())
+								: null,
+						rs.getBigDecimal("price"), new Date(rs.getTimestamp("created_at").getTime()),
+						new Date(rs.getTimestamp("updated_at").getTime()));
+				transacciones.add(t);
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return transacciones;
+	}
+
+	public List<Transaction> getSimplePurchasesByUser(int customerId) {
+		List<Transaction> purchases = new ArrayList<>();
+		String query = "SELECT t.id, vg.name AS video_game_name, t.transaction_date, t.price " + "FROM transactions t "
+				+ "JOIN video_games vg ON t.video_game_id = vg.id "
+				+ "WHERE t.customer_id = ? AND t.transaction_type = 'sale'";
+
+		try (Connection conn = DriverManager.getConnection(url, user, password);
+				PreparedStatement pstmt = conn.prepareStatement(query)) {
+
+			pstmt.setInt(1, customerId);
+			ResultSet rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				Transaction transaction = new Transaction(rs.getInt("id"), // id
 						customerId, // customerId
 						0, // videoGameId
-						null,
-						rs.getString("video_game_name"), // videoGameName
+						null, rs.getString("video_game_name"), // videoGameName
 						"sale", // transactionType
 						new Date(rs.getTimestamp("transaction_date").getTime()), // transactionDate
 						null, // returnDate
-		                rs.getBigDecimal("price"),
-						null, // createdAt
+						rs.getBigDecimal("price"), null, // createdAt
 						null // updatedAt
 				);
 				purchases.add(transaction);
@@ -187,8 +159,8 @@ public class TransactionModel {
 
 		} catch (Exception e) {
 			e.printStackTrace();
-	    }
+		}
 
-	    return purchases;
+		return purchases;
 	}
 }

@@ -5,6 +5,8 @@ import java.util.List;
 
 import models.Promotions;
 import models.PromotionsModel;
+import models.Transaction;
+import models.TransactionModel;
 import views.PromotionsView;
 
 public class PromotionsController {
@@ -35,6 +37,13 @@ public class PromotionsController {
 		
 		vista.EditarPromociones(promocion);
 		
+	}
+	
+	public void pending_returns() {
+		TransactionModel tm = new TransactionModel();
+		List<Transaction> transaciones = tm.getAllTransactions();
+		
+		vista.DevolucionesPendientes(transaciones);
 	}
 	
 }

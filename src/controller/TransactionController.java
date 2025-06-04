@@ -39,12 +39,6 @@ public class TransactionController {
 	}
 
 
-
-//	public void indexDetallesRenta(int id) {
-//		VideoGames myVideogame = modeloVideojuego.getVideogames(id);
-//		vista.DetallesRenta(myVideogame);
-//	}
-
 	public void operacionRenta(int id) {
 		VideoGames myVideogame = modeloVideojuego.getVideogames(id);
 		usuarios = modeloUsuario.getAll();

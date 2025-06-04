@@ -603,7 +603,7 @@ public class TransactionView extends JFrame {
 		JLabel lblNombreCliente = new JLabel("Nombre del cliente");
 		lblNombreCliente.setHorizontalAlignment(SwingConstants.LEFT);
 		lblNombreCliente.setFont(new Font("Calibri", Font.BOLD, 14));
-		lblNombreCliente.setBounds(85, 120, 160, 42);
+		lblNombreCliente.setBounds(450, 130, 160, 42);
 		panelCentral.add(lblNombreCliente);
 
 		// esta parte se encarga de mostrar los usuarios y los correos
@@ -618,7 +618,7 @@ public class TransactionView extends JFrame {
 
 		// Crear y configurar el ComboBox
 		JComboBox<String> comboUsuarios = new JComboBox<>(listaUsuarios);
-		comboUsuarios.setBounds(85, 161, 510, 27);
+		comboUsuarios.setBounds(290, 161, 510, 27);
 		comboUsuarios.setBackground(Color.decode("#D9D9D9"));
 		panelCentral.add(comboUsuarios);
 
@@ -645,7 +645,7 @@ public class TransactionView extends JFrame {
 
 		JLabel lblNombre = new JLabel(videogames.getNombre());
 		lblNombre.setFont(new Font("Anton", Font.BOLD, 14));
-		lblNombre.setBounds(150, 246, 255, 42);
+		lblNombre.setBounds(130, 246, 355, 42);
 		panelCentral.add(lblNombre);
 
 		JLabel lblPrecio = new JLabel("Precio (MXN):");
@@ -836,13 +836,13 @@ public class TransactionView extends JFrame {
 		JLabel lblTituloJuego = new JLabel(videogames.getNombre());
 		lblTituloJuego.setHorizontalAlignment(SwingConstants.LEFT);
 		lblTituloJuego.setFont(new Font("Calibri", Font.BOLD, 24));
-		lblTituloJuego.setBounds(32, 141, 135, 42);
+		lblTituloJuego.setBounds(32, 141, 400, 42);
 		panelCentral.add(lblTituloJuego);
 
 		// Información del juego
 		JLabel lblAnioJuego = new JLabel("" + videogames.getAñoLanzamiento());
 		lblAnioJuego.setHorizontalAlignment(SwingConstants.LEFT);
-		lblAnioJuego.setFont(new Font("Calibri", Font.BOLD, 18));
+		lblAnioJuego.setFont(new Font("Calibri", Font.BOLD, 24));
 		lblAnioJuego.setBounds(42, 174, 57, 42);
 		panelCentral.add(lblAnioJuego);
 
@@ -1132,7 +1132,7 @@ public class TransactionView extends JFrame {
 		JLabel lblNombreCliente = new JLabel("Nombre del cliente");
 		lblNombreCliente.setHorizontalAlignment(SwingConstants.LEFT);
 		lblNombreCliente.setFont(new Font("Calibri", Font.BOLD, 14));
-		lblNombreCliente.setBounds(85, 120, 160, 42);
+		lblNombreCliente.setBounds(450, 130, 160, 42);
 		panelCentral.add(lblNombreCliente);
 
 		// esta parte se encarga de mostrar los usuarios y los correos
@@ -1147,7 +1147,7 @@ public class TransactionView extends JFrame {
 
 		// Crear y configurar el ComboBox
 		JComboBox<String> comboUsuarios = new JComboBox<>(listaUsuarios);
-		comboUsuarios.setBounds(85, 161, 510, 27);
+		comboUsuarios.setBounds(290, 161, 510, 27);
 		comboUsuarios.setBackground(Color.decode("#D9D9D9"));
 		panelCentral.add(comboUsuarios);
 
@@ -1348,13 +1348,13 @@ public class TransactionView extends JFrame {
 		JLabel lblTituloJuego = new JLabel(videogames.getNombre());
 		lblTituloJuego.setHorizontalAlignment(SwingConstants.LEFT);
 		lblTituloJuego.setFont(new Font("Calibri", Font.BOLD, 24));
-		lblTituloJuego.setBounds(32, 141, 135, 42);
+		lblTituloJuego.setBounds(32, 141, 400, 42);
 		panelCentral.add(lblTituloJuego);
 
 		// Detalles del juego
 		JLabel lblAnioJuego = new JLabel("" + videogames.getAñoLanzamiento());
 		lblAnioJuego.setHorizontalAlignment(SwingConstants.LEFT);
-		lblAnioJuego.setFont(new Font("Calibri", Font.BOLD, 18));
+		lblAnioJuego.setFont(new Font("Calibri", Font.BOLD, 24));
 		lblAnioJuego.setBounds(42, 174, 57, 42);
 		panelCentral.add(lblAnioJuego);
 

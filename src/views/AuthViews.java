@@ -136,7 +136,7 @@ public class AuthViews extends JFrame {
 		JButton acceder = new JButton("Acceder");
 		acceder.setBackground(Color.decode("#263C54")); // Color de fondo (azul oscuro)
 		acceder.setForeground(Color.WHITE); // Color del texto (blanco)
-		acceder.setFont(new Font("Calibri", Font.BOLD, 15));
+		acceder.setFont(new Font("Calibri", Font.BOLD, 17));
 		acceder.setBounds(50, 371, 289, 26);
 		acceder.addActionListener(new ActionListener() {
 		    public void actionPerformed(ActionEvent e) {

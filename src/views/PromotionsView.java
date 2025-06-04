@@ -289,32 +289,49 @@ public class PromotionsView extends JFrame{
 //		btnBuscar.setBounds(619, 25, 86, 25);
 //		panelCentral.add(btnBuscar);
 		// Datos de la tabla
-		Object[][] data = {
-				{ "Identificador", "Nombre", "Plataforma", "Disponibilidad", "Precio(venta)", "Precio(renta)", },
-				{ "000001", "Contra", "Nintendo", "5", "$800", "$100" },
-				{ "000002", "God of War", "Play Station", "25", "$850", "$250" },
-				{ "000003", "Halo", "Xbox", "32", "$890", "$640" }, { "000004", "Fornite", "Pc", "40", "$900", "$700" },
-				{ "000005", "Pokemon", "Mixto", "41", "$950", "$720" },
-				{ "000006", "ARK: Survival", "Mixto", "30", "$990", "$720" },
-
+		// Crear unan tabla
+		String[] columnNames = { "Núm", "Juego", "Fecha de Renta", "Fecha de Devolución", "Precio" };
+		DefaultTableModel model = new DefaultTableModel(columnNames, 0) {
+			@Override
+			public boolean isCellEditable(int row, int column) {
+				return false;
+			}
 		};
+
+		for (Transaction t : transaciones) {
+
+			Object[] rowData = { t.getId(), t.getVideoGameName(), t.getTransactionDate(),"No devuelto", "$" + t.getPrice() };
+			model.addRow(rowData);
+		}
+
+		JTable table = new JTable(model);
+		table.getColumnModel().getColumn(0).setPreferredWidth(10); // aqui redusco id
+		table.setFont(new Font("Arial", Font.PLAIN, 14));
+		table.setRowHeight(25);
+		table.getTableHeader().setFont(new Font("Arial", Font.BOLD, 14));
+		table.setAutoCreateRowSorter(true); // ordenar por columnas
+
+		// Agregar la tabla a un JScrollPane
+		JScrollPane scrollPane = new JScrollPane(table);
+		scrollPane.setBounds(28, 60, 650, 400);
+		panelCentral.add(scrollPane);
 
 		DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
 		centerRenderer.setHorizontalAlignment(JLabel.CENTER);
 
 		// Tabla
-		JTable table = new JTable(data, new String[] { "", "", "", "", "", "", });
-		panelCentral.add(table);
-		table.setFont(new Font("Segoe UI", Font.PLAIN, 16));
-		table.setBounds(26, 62, 695, 402);
-		table.setBorder(BorderFactory.createLineBorder(new Color(204, 204, 204)));
-		table.setShowGrid(true);
-		table.setGridColor(new Color(204, 204, 204));
-		table.setTableHeader(null);
-		table.setDefaultRenderer(Object.class, centerRenderer);
-		table.setRowHeight(40);
-		table.setShowHorizontalLines(true);
-		table.setShowVerticalLines(true);
+//		JTable table = new JTable(data, new String[] { "", "", "", "", "", "", });
+//		panelCentral.add(table);
+//		table.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+//		table.setBounds(26, 62, 695, 402);
+//		table.setBorder(BorderFactory.createLineBorder(new Color(204, 204, 204)));
+//		table.setShowGrid(true);
+//		table.setGridColor(new Color(204, 204, 204));
+//		table.setTableHeader(null);
+//		table.setDefaultRenderer(Object.class, centerRenderer);
+//		table.setRowHeight(40);
+//		table.setShowHorizontalLines(true);
+//		table.setShowVerticalLines(true);
 
 		// 3. PANEL ROJO SUPERIOR (barra de título)
 		JPanel barraRoja = new JPanel();

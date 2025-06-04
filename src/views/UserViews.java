@@ -44,6 +44,8 @@ import com.formdev.flatlaf.FlatLightLaf;
 import com.formdev.flatlaf.json.ParseException;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Element;
+import com.itextpdf.text.FontFactory;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfAcroForm;
 import com.itextpdf.text.pdf.PdfWriter;
@@ -440,25 +442,25 @@ public class UserViews extends JFrame {
 			JLabel iniciar = new JLabel("DETALLES DE CLIENTE");
 			iniciar.setForeground(Color.decode("#263C54"));
 			iniciar.setSize(331, 42);
-			iniciar.setLocation(334, 32);
+			iniciar.setLocation(334, 12);
 			iniciar.setHorizontalAlignment(JLabel.CENTER);
 			iniciar.setFont(new Font("Anton", Font.BOLD, 20));
 			panelCentral.add(iniciar);
 
+			ImageIcon iconoOrigina = new ImageIcon(getClass().getResource("/images/Block.png"));
+			Image imagen = iconoOriginal.getImage().getScaledInstance(70, 70, Image.SCALE_SMOOTH);
+			
 			JLabel Identificador = new JLabel("Identificador:");
 			Identificador.setHorizontalAlignment(SwingConstants.LEFT);
 			Identificador.setFont(new Font("Calibri", Font.BOLD, 18));
-			Identificador.setBounds(50, 84, 110, 42);
+			Identificador.setBounds(50, 54, 110, 42);
 			panelCentral.add(Identificador);
-
-			ImageIcon iconoOrigina = new ImageIcon(getClass().getResource("/images/Block.png"));
-			Image imagen = iconoOriginal.getImage().getScaledInstance(70, 70, Image.SCALE_SMOOTH);
 
 			JLabel iniciar_1_1_1_3 = new JLabel(""+user.getId());
 			iniciar_1_1_1_3.setForeground(Color.decode("#3B3741"));
 			iniciar_1_1_1_3.setHorizontalAlignment(SwingConstants.CENTER);
 			iniciar_1_1_1_3.setFont(new Font("Calibri", Font.BOLD, 18));
-			iniciar_1_1_1_3.setBounds(39, 109, 103, 42);
+			iniciar_1_1_1_3.setBounds(39, 79, 103, 42);
 			panelCentral.add(iniciar_1_1_1_3);
 
 			// botones
@@ -505,6 +507,12 @@ public class UserViews extends JFrame {
 			btnRegresar.setBounds(157, 403, 183, 33);
 			panelCentral.add(btnRegresar);
 			
+			JLabel HistorialRentas = new JLabel("Historial de rentas:");
+			HistorialRentas.setHorizontalAlignment(SwingConstants.LEFT);
+			HistorialRentas.setFont(new Font("Calibri", Font.BOLD, 18));
+			HistorialRentas.setBounds(250, 140, 150, 42);
+			panelCentral.add(HistorialRentas);
+			
 			// Crear unan tabla
 			String[] columnNames = { "ID", "Juego", "Fecha de Renta", "Fecha de Devolución", "Precio" };
 			DefaultTableModel model = new DefaultTableModel(columnNames, 0) {
@@ -538,6 +546,12 @@ public class UserViews extends JFrame {
 			scrollPane.setBounds(28, 170, 606, 210);
 			panelCentral.add(scrollPane);
 			
+			JLabel HistorialVentas = new JLabel("Historial de ventas:");
+			HistorialVentas.setHorizontalAlignment(SwingConstants.LEFT);
+			HistorialVentas.setFont(new Font("Calibri", Font.BOLD, 18));
+			HistorialVentas.setBounds(750, 140, 150, 42);
+			panelCentral.add(HistorialVentas);
+			
 			String[] purchaseColumnNames = {"Juego", "Fecha de Compra", "Precio" };
 			DefaultTableModel purchaseModel = new DefaultTableModel(purchaseColumnNames, 0) {
 			    @Override
@@ -564,45 +578,47 @@ public class UserViews extends JFrame {
 			// Agregar la tabla de compras a un JScrollPane
 			JScrollPane purchasesScrollPane = new JScrollPane(purchasesTable);
 			purchasesScrollPane.setBounds(680, 170, 280, 210); 
-			panelCentral.add(purchasesScrollPane);
+			panelCentral.add(purchasesScrollPane); 
+			
+			
 
 			JLabel iniciar_1_1_2_1_1 = new JLabel("Nombre:");
 			iniciar_1_1_2_1_1.setHorizontalAlignment(SwingConstants.LEFT);
 			iniciar_1_1_2_1_1.setFont(new Font("Calibri", Font.BOLD, 18));
-			iniciar_1_1_2_1_1.setBounds(240, 84, 97, 42);
+			iniciar_1_1_2_1_1.setBounds(240, 54, 97, 42);
 			panelCentral.add(iniciar_1_1_2_1_1);
 
 			JLabel iniciar_1_1_1_3_1 = new JLabel(user.getNombre() + " " + user.getApellidoPaterno() + " " + user.getApellidoMaterno());
 			iniciar_1_1_1_3_1.setHorizontalAlignment(SwingConstants.CENTER);
 			iniciar_1_1_1_3_1.setForeground(new Color(59, 55, 65));
 			iniciar_1_1_1_3_1.setFont(new Font("Calibri", Font.BOLD, 18));
-			iniciar_1_1_1_3_1.setBounds(175, 109, 196, 42);
+			iniciar_1_1_1_3_1.setBounds(175, 79, 196, 42);
 			panelCentral.add(iniciar_1_1_1_3_1);
 
 			JLabel iniciar_1_1_2_1_1_1 = new JLabel("Correo:");
 			iniciar_1_1_2_1_1_1.setHorizontalAlignment(SwingConstants.LEFT);
 			iniciar_1_1_2_1_1_1.setFont(new Font("Calibri", Font.BOLD, 18));
-			iniciar_1_1_2_1_1_1.setBounds(490, 85, 97, 42);
+			iniciar_1_1_2_1_1_1.setBounds(490, 54, 97, 42);
 			panelCentral.add(iniciar_1_1_2_1_1_1);
 
 			JLabel iniciar_1_1_1_3_1_1 = new JLabel(user.getCorreo());
 			iniciar_1_1_1_3_1_1.setHorizontalAlignment(SwingConstants.CENTER);
 			iniciar_1_1_1_3_1_1.setForeground(new Color(59, 55, 65));
 			iniciar_1_1_1_3_1_1.setFont(new Font("Calibri", Font.BOLD, 18));
-			iniciar_1_1_1_3_1_1.setBounds(410, 109, 250, 42);
+			iniciar_1_1_1_3_1_1.setBounds(410, 79, 250, 42);
 			panelCentral.add(iniciar_1_1_1_3_1_1);
 
 			JLabel iniciar_1_1_2_1_1_1_1 = new JLabel("Telefono:");
 			iniciar_1_1_2_1_1_1_1.setHorizontalAlignment(SwingConstants.LEFT);
 			iniciar_1_1_2_1_1_1_1.setFont(new Font("Calibri", Font.BOLD, 18));
-			iniciar_1_1_2_1_1_1_1.setBounds(767, 84, 97, 42);
+			iniciar_1_1_2_1_1_1_1.setBounds(767, 54, 97, 42);
 			panelCentral.add(iniciar_1_1_2_1_1_1_1);
 
 			JLabel iniciar_1_1_1_3_1_1_1 = new JLabel(user.getTelefono());
 			iniciar_1_1_1_3_1_1_1.setHorizontalAlignment(SwingConstants.CENTER);
 			iniciar_1_1_1_3_1_1_1.setForeground(new Color(59, 55, 65));
 			iniciar_1_1_1_3_1_1_1.setFont(new Font("Calibri", Font.BOLD, 18));
-			iniciar_1_1_1_3_1_1_1.setBounds(733, 109, 145, 42);
+			iniciar_1_1_1_3_1_1_1.setBounds(733, 79, 145, 42);
 			panelCentral.add(iniciar_1_1_1_3_1_1_1);
 
 			// 3. PANEL ROJO SUPERIOR (barra de título)
@@ -653,7 +669,7 @@ public class UserViews extends JFrame {
 			iniciar_1.setBounds(84, 150, 87, 42); // Ajusta tamaño si es necesario
 			panelCentral.add(iniciar_1);
 
-			JButton btnCancelar = new JButton("Cancelar");
+			JButton btnCancelar = new JButton("CANCELAR");
 			btnCancelar.setBackground(Color.decode("#B82F2F")); 
 			btnCancelar.setForeground(Color.WHITE);
 			btnCancelar.setBounds(103, 406, 183, 33);
@@ -691,6 +707,13 @@ public class UserViews extends JFrame {
 							document.add(new Paragraph("Nombre: " + user.getNombre() + " " + user.getApellidoPaterno()+" "+ user.getApellidoMaterno()));
 							document.add(new Paragraph("Correo: " + user.getCorreo()));
 							document.add(new Paragraph("Teléfono: " + user.getTelefono()));
+							
+							Paragraph footer = new Paragraph(
+			                        "Videojuegos Rentables S.A. de C.V.\n" +
+			                        "Tel: 555-123-4567 | contacto@rentables.com",
+			                        FontFactory.getFont(FontFactory.HELVETICA_OBLIQUE, 10));
+			                    footer.setAlignment(Element.ALIGN_CENTER);
+			                    document.add(footer);
 
 							JOptionPane.showMessageDialog(null, "PDF guardado exitosamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
 						} catch (FileNotFoundException | DocumentException ex) {
@@ -704,14 +727,42 @@ public class UserViews extends JFrame {
 			});
 			panelCentral.add(btnConfirmar);
 
-			JButton btnCredencialpdf = new JButton("Credencial (PDF");
+			JButton btnCredencialpdf = new JButton("CREDENCIAL (PDF)");
 			btnCredencialpdf.setForeground(Color.WHITE);
 			btnCredencialpdf.setBackground(Color.decode("#686868"));
 			btnCredencialpdf.setBounds(370, 406, 183, 33);
 			btnCredencialpdf.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-//					dispose();
+					JFileChooser fileChooser = new JFileChooser();
+					fileChooser.setDialogTitle("Guardar archivo PDF");
+
+					
+					fileChooser.setSelectedFile(new File("Credencial_Cliente_" + user.getNombre() + ".pdf"));
+
+					int userSelection = fileChooser.showSaveDialog(null);
+
+					if (userSelection == JFileChooser.APPROVE_OPTION) {
+						File fileToSave = fileChooser.getSelectedFile();
+						Document document = new Document();
+
+						try {
+							PdfWriter.getInstance(document, new FileOutputStream(fileToSave));
+							document.open();
+							document.add(new Paragraph("TARJETA DE CLIENTE\n\n"));
+							document.add(new Paragraph("ID: " + user.getId()));
+							document.add(new Paragraph("Nombre: " + user.getNombre() + " " + user.getApellidoPaterno()+" "+ user.getApellidoMaterno()));
+							document.add(new Paragraph("Correo: " + user.getCorreo()));
+
+							JOptionPane.showMessageDialog(null, "PDF guardado exitosamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+						} catch (FileNotFoundException | DocumentException ex) {
+							ex.printStackTrace();
+							JOptionPane.showMessageDialog(null, "Error al guardar el PDF:\n" + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+						} finally {
+							document.close();
+						}
+					}
 				}
+				
 			});
 			panelCentral.add(btnCredencialpdf);
 

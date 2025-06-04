@@ -42,6 +42,7 @@ import org.jdatepicker.impl.UtilDateModel;
 
 import com.formdev.flatlaf.FlatLightLaf;
 import com.formdev.flatlaf.json.ParseException;
+import com.itextpdf.text.Chunk;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Element;
@@ -702,12 +703,15 @@ public class UserViews extends JFrame {
 						try {
 							PdfWriter.getInstance(document, new FileOutputStream(fileToSave));
 							document.open();
-							document.add(new Paragraph("DETALLES DEL CLIENTE\n\n"));
+							Paragraph clienteHeader = new Paragraph("DETALLES DEL CLIENTE\n", 
+				                    FontFactory.getFont(FontFactory.HELVETICA_BOLD, 14));
+				            document.add(clienteHeader);
 							document.add(new Paragraph("ID: " + user.getId()));
 							document.add(new Paragraph("Nombre: " + user.getNombre() + " " + user.getApellidoPaterno()+" "+ user.getApellidoMaterno()));
 							document.add(new Paragraph("Correo: " + user.getCorreo()));
 							document.add(new Paragraph("Teléfono: " + user.getTelefono()));
-							
+			                document.add(Chunk.NEWLINE);
+
 							Paragraph footer = new Paragraph(
 			                        "Videojuegos Rentables S.A. de C.V.\n" +
 			                        "Tel: 555-123-4567 | contacto@rentables.com",
@@ -748,7 +752,9 @@ public class UserViews extends JFrame {
 						try {
 							PdfWriter.getInstance(document, new FileOutputStream(fileToSave));
 							document.open();
-							document.add(new Paragraph("TARJETA DE CLIENTE\n\n"));
+							Paragraph clienteHeader = new Paragraph("TARJETA DE CLIENTE\n", 
+				                    FontFactory.getFont(FontFactory.HELVETICA_BOLD, 14));
+				            document.add(clienteHeader);
 							document.add(new Paragraph("ID: " + user.getId()));
 							document.add(new Paragraph("Nombre: " + user.getNombre() + " " + user.getApellidoPaterno()+" "+ user.getApellidoMaterno()));
 							document.add(new Paragraph("Correo: " + user.getCorreo()));

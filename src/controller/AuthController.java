@@ -15,19 +15,13 @@ public class AuthController {
 	private List<Admins> administrador = new ArrayList<>();
 
 	public AuthController() { 
-		
 		vista = new AuthViews();
-	
 	}	
 	
-	public void login() {
-
+	public void login() {	
 		AuthModel am = new AuthModel();
-
 		administrador = am.getAll();
-
 		vista.login(administrador);;
-
 	}
 	
 }

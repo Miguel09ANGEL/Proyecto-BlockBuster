@@ -38,10 +38,7 @@ public class TransactionController {
 		vista.Compra(videoGamesList);
 	}
 
-	public void indexDetallesCompra(int id) {
-		VideoGames myVideogame = modeloVideojuego.getVideogames(id);
-		vista.DetallesCompra(myVideogame);
-	}
+
 
 //	public void indexDetallesRenta(int id) {
 //		VideoGames myVideogame = modeloVideojuego.getVideogames(id);
@@ -58,6 +55,18 @@ public class TransactionController {
 		User myUser = modeloUsuario.get(idConstumer);
 		VideoGames myVideogame = modeloVideojuego.getVideogames(idVideogame);
 		vista.DetallesRenta(myUser ,myVideogame, fechaDevolucion);
+	}
+	
+	public void operacionVender(int id) {
+		VideoGames myVideogame = modeloVideojuego.getVideogames(id);
+		usuarios = modeloUsuario.getAll();
+		vista.OperacionComprar(myVideogame,usuarios);
+	}
+	
+	public void indexDetallesCompra(int idConstumer, int idVideogame, Date fechaDevolucion) {
+		User myUser = modeloUsuario.get(idConstumer);
+		VideoGames myVideogame = modeloVideojuego.getVideogames(idVideogame);
+		vista.DetallesCompra(myUser ,myVideogame,fechaDevolucion);
 	}
 
 }

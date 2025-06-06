@@ -1,6 +1,7 @@
 package views;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Image;
@@ -8,6 +9,7 @@ import java.awt.List;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.Iterator;
 
 import javax.swing.BorderFactory;
@@ -305,7 +307,40 @@ public class PromotionsView extends JFrame{
 		}
 
 		JTable table = new JTable(model);
-		table.getColumnModel().getColumn(0).setPreferredWidth(10); // aqui redusco id
+		// aqui redusco id
+		table.getColumnModel().getColumn(0).setPreferredWidth(10);
+		// se encarga de poner colores a las celdas por fecha, si ya paso , si es hoy
+		table.getColumnModel().getColumn(4).setCellRenderer(new DefaultTableCellRenderer() {
+		    @Override
+		    public Component getTableCellRendererComponent(JTable table, Object value,
+		            boolean isSelected, boolean hasFocus, int row, int column) {
+
+		        Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+
+		        if (value instanceof java.sql.Date) {
+		            LocalDate today = LocalDate.now();
+		            LocalDate fechaDevolucion = ((java.sql.Date) value).toLocalDate();
+
+		            if (fechaDevolucion.isBefore(today)) {
+		                c.setBackground(Color.RED);
+		                c.setForeground(Color.BLACK);
+		            } else if (fechaDevolucion.isEqual(today)) {
+		                c.setBackground(Color.YELLOW);
+		                c.setForeground(Color.BLACK);
+		            } else {
+		                c.setBackground(Color.WHITE);
+		                c.setForeground(Color.BLACK);
+		            }
+		        } else {
+		            // Si el valor no es Date, color normal
+		            c.setBackground(Color.WHITE);
+		            c.setForeground(Color.BLACK);
+		        }
+
+		        return c;
+		    }
+		});
+
 		table.setFont(new Font("Arial", Font.PLAIN, 14));
 		table.setRowHeight(25);
 		table.getTableHeader().setFont(new Font("Arial", Font.BOLD, 14));
@@ -319,19 +354,6 @@ public class PromotionsView extends JFrame{
 		DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
 		centerRenderer.setHorizontalAlignment(JLabel.CENTER);
 
-		// Tabla
-//		JTable table = new JTable(data, new String[] { "", "", "", "", "", "", });
-//		panelCentral.add(table);
-//		table.setFont(new Font("Segoe UI", Font.PLAIN, 16));
-//		table.setBounds(26, 62, 695, 402);
-//		table.setBorder(BorderFactory.createLineBorder(new Color(204, 204, 204)));
-//		table.setShowGrid(true);
-//		table.setGridColor(new Color(204, 204, 204));
-//		table.setTableHeader(null);
-//		table.setDefaultRenderer(Object.class, centerRenderer);
-//		table.setRowHeight(40);
-//		table.setShowHorizontalLines(true);
-//		table.setShowVerticalLines(true);
 
 		// 3. PANEL ROJO SUPERIOR (barra de título)
 		JPanel barraRoja = new JPanel();

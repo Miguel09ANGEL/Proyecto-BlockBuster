@@ -1,6 +1,7 @@
 package views;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Image;
@@ -574,6 +575,10 @@ public class TransactionView extends JFrame {
 		JTextField txtNombreVideojuego;
 		JTextField txtCantidad;
 
+		// selecciona la fecha actual y le da formato
+		LocalDate fechaActual = LocalDate.now();
+		String fechaFormateada = fechaActual.format(DateTimeFormatter.ofPattern("yyyy/MM/dd"));
+
 		// Configuración básica de la ventana
 		setTitle("Detalles de operación Rentar");
 		setSize(1024, 576);
@@ -665,10 +670,6 @@ public class TransactionView extends JFrame {
 		lblFecha.setBounds(403, 293, 255, 42);
 		panelCentral.add(lblFecha);
 
-		// en esta tambien pero de diferente forma
-		LocalDate fechaActual = LocalDate.now();
-		String fechaFormateada = fechaActual.format(DateTimeFormatter.ofPattern("yyyy/MM/dd"));
-
 		JLabel lblValorFecha = new JLabel(fechaFormateada);
 		lblValorFecha.setHorizontalAlignment(SwingConstants.CENTER);
 		lblValorFecha.setFont(new Font("Calibri", Font.BOLD, 14));
@@ -693,15 +694,55 @@ public class TransactionView extends JFrame {
 		devolucion.setBounds(637, 293, 255, 42);
 		panelCentral.add(devolucion);
 
+		// AQUI SE USA EL Datapicker
+		// se Configura el modelo con la fecha actual
 		UtilDateModel model = new UtilDateModel();
-
-		// en esta parte se hace la fecha actual en le calendario desplegable
-		model.setDate(fechaActual.getYear(), fechaActual.getMonthValue() - 1, fechaActual.getDayOfMonth());
+		model.setDate(
+		    LocalDate.now().getYear(),
+		    LocalDate.now().getMonthValue() - 1, 
+		    LocalDate.now().getDayOfMonth()
+		);
 		model.setSelected(true);
 
-		// Crear el date picker con el formateador
-		JDatePickerImpl datePicker = new JDatePickerImpl(new JDatePanelImpl(model, new Properties()),
-				new DateLabelFormatter());
+		// se crea el DatePicker
+		JDatePanelImpl datePanel = new JDatePanelImpl(model, new Properties());
+		JDatePickerImpl datePicker = new JDatePickerImpl(datePanel, new DateLabelFormatter());
+		
+		// Agrego un listener al datePicker
+		datePicker.addActionListener(e -> {
+			
+		    // Obtengo el valor seleccionado del modelo
+		    Object selectedValue = datePicker.getModel().getValue();
+		    
+		    // Primero verifico que el valor seleccionado sea realmente una fecha 
+		    if (selectedValue instanceof java.util.Date) {
+		    	
+		    	// Convierto la fecha seleccionada a LocalDate porque es más fácil de comparar
+		        // Esto lo hago en 3 pasos:
+		        // 1. toInstant(): Convierte a Instant (marca de tiempo)
+		        // 2. atZone(): Añade la zona horaria del sistema
+		        // 3. toLocalDate(): Obtengo solo la parte de fecha (sin hora)
+		        java.util.Date selectedDate = (java.util.Date) selectedValue;
+		        LocalDate selectedLocalDate = selectedDate.toInstant()
+		                .atZone(ZoneId.systemDefault())
+		                .toLocalDate();
+		        
+		        if (selectedLocalDate.isBefore(LocalDate.now())) {
+		        		// Si la fecha es anterior a hoy, se cambioa a la actual
+		        		datePicker.getModel().setDate(
+		                LocalDate.now().getYear(),
+		                LocalDate.now().getMonthValue() - 1,
+		                LocalDate.now().getDayOfMonth()
+		            );
+		            
+		            //mensaje al usuario
+		            JOptionPane.showMessageDialog(panelCentral, 
+		                "No se pueden seleccionar fechas anteriores a hoy", 
+		                "Fecha inválida", 
+		                JOptionPane.WARNING_MESSAGE);
+		        }
+		    }
+		});
 
 		// Configurar el campo de texto
 		JFormattedTextField textField = datePicker.getJFormattedTextField();

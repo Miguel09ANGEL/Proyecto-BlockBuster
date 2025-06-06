@@ -206,7 +206,7 @@ public class UserViews extends JFrame {
 			setVisible(true);
 		}
 		
-		public void RegistroClientes(List usuarios) {
+		public void RegistroClientes(List<User> usuarios) {
 
 			try {
 				UIManager.setLookAndFeel(new FlatLightLaf());
@@ -312,14 +312,19 @@ public class UserViews extends JFrame {
 					return false; // Hacer que la tabla no sea editable
 				}
 			};
-
+			
 			// Llenar la tabla con datos
-			for (Iterator iterator = usuarios.iterator(); iterator.hasNext();) {
-				User usuario = (User) iterator.next();
-				Object[] rowData = { usuario.getId(), usuario.getNombre(), usuario.getApellidoPaterno(),
-						usuario.getApellidoMaterno(), usuario.getFechaNacimiento(), usuario.getTelefono(),
-						usuario.getCorreo() };
-				model.addRow(rowData);
+			for (User usuario : usuarios) {
+			    Object[] rowData = {
+			        usuario.getId(),
+			        usuario.getNombre(),
+			        usuario.getApellidoPaterno(),
+			        usuario.getApellidoMaterno(),
+			        usuario.getFechaNacimiento(),
+			        usuario.getTelefono(),
+			        usuario.getCorreo()
+			    };
+			    model.addRow(rowData);
 			}
 
 			// se crea la tabla

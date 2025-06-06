@@ -928,7 +928,7 @@ public class UserViews extends JFrame {
 			txtNombre.addKeyListener(new KeyAdapter() { /////////////Aqui sirve para solo colocar letras o numeros
 				public void keyTyped(KeyEvent e) {
 					char nombre = e.getKeyChar();
-					if(!Character.isLetter(nombre)) {
+					if (!Character.isLetter(nombre) || txtNombre.getText().length() >= 10) {
 						e.consume();
 					}
 				}
@@ -949,7 +949,7 @@ public class UserViews extends JFrame {
 			txtApellidoMaterno.addKeyListener(new KeyAdapter() { /////////////Aqui sirve para solo colocar letras o numeros
 				public void keyTyped(KeyEvent e) {
 					char am = e.getKeyChar();
-					if(!Character.isLetter(am)) {
+					if (!Character.isLetter(am) || txtApellidoMaterno.getText().length() >= 10) {
 						e.consume();
 					}
 				}
@@ -969,7 +969,7 @@ public class UserViews extends JFrame {
 			txtTelefono.addKeyListener(new KeyAdapter() { /////////////Aqui sirve para solo colocar letras o numeros
 				public void keyTyped(KeyEvent e) {
 					char numero = e.getKeyChar();
-					if(!Character.isDigit(numero)) {
+					if (!Character.isLetter(numero) || txtTelefono.getText().length() >= 10) {
 						e.consume();
 					}
 				}
@@ -991,7 +991,7 @@ public class UserViews extends JFrame {
 			txtApellidoPaterno.addKeyListener(new KeyAdapter() { /////////////Aqui sirve para solo colocar letras o numeros
 				public void keyTyped(KeyEvent e) {
 					char ap = e.getKeyChar();
-					if(!Character.isLetter(ap)) {
+					if (!Character.isLetter(ap) || txtApellidoPaterno.getText().length() >= 10) {
 						e.consume();
 					}
 				}
@@ -1209,7 +1209,7 @@ public class UserViews extends JFrame {
 			textFieldNombre.addKeyListener(new KeyAdapter() { /////////////Aqui sirve para solo colocar letras o numeros
 				public void keyTyped(KeyEvent e) {
 					char nombre = e.getKeyChar();
-					if(!Character.isLetter(nombre)) {
+					if (!Character.isLetter(nombre) || textFieldNombre.getText().length() >= 20) {
 						e.consume();
 					}
 				}
@@ -1232,7 +1232,7 @@ public class UserViews extends JFrame {
 			textFieldApellidoMaterno.addKeyListener(new KeyAdapter() { /////////////Aqui sirve para solo colocar letras o numeros
 				public void keyTyped(KeyEvent e) {
 					char am = e.getKeyChar();
-					if(!Character.isLetter(am)) {
+					if (!Character.isLetter(am) || textFieldApellidoMaterno.getText().length() >= 10) {
 						e.consume();
 					}
 				}
@@ -1253,7 +1253,7 @@ public class UserViews extends JFrame {
 			textFieldTelefono.addKeyListener(new KeyAdapter() { /////////////Aqui sirve para solo colocar letras o numeros
 				public void keyTyped(KeyEvent e) {
 					char numero = e.getKeyChar();
-					if (!Character.isDigit(e.getKeyChar()) || textFieldTelefono.getText().length() >= 10) {
+					if (!Character.isDigit(numero) || textFieldTelefono.getText().length() >= 10) {
 						e.consume();
 					}
 				}
@@ -1274,7 +1274,7 @@ public class UserViews extends JFrame {
 			textFieldApellidoPaterno.addKeyListener(new KeyAdapter() { /////////////Aqui sirve para solo colocar letras o numeros
 				public void keyTyped(KeyEvent e) {
 					char ap = e.getKeyChar();
-					if(!Character.isLetter(ap)) {
+					if (!Character.isLetter(ap) || textFieldApellidoPaterno.getText().length() >= 10) {
 						e.consume();
 					}
 				}

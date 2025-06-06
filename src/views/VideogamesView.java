@@ -730,7 +730,7 @@ public class VideogamesView extends JFrame {
 	    txtAnioLanzamiento.addKeyListener(new KeyAdapter() { /////////////Aqui sirve para solo colocar letras o numeros
 			public void keyTyped(KeyEvent e) {
 				char anio = e.getKeyChar();
-				if(!Character.isDigit(anio)) {
+				if (!Character.isDigit(anio) || txtAnioLanzamiento.getText().length() >= 4) {
 					e.consume();
 				}
 			}
@@ -781,7 +781,7 @@ public class VideogamesView extends JFrame {
 	    txtPrecioRenta.addKeyListener(new KeyAdapter() { /////////////Aqui sirve para solo colocar letras o numeros
 			public void keyTyped(KeyEvent e) {
 				char renta = e.getKeyChar();
-				if(!Character.isDigit(renta)) {
+				if (!Character.isDigit(renta) || txtPrecioRenta.getText().length() >= 5) {
 					e.consume();
 				}
 			}
@@ -833,7 +833,7 @@ public class VideogamesView extends JFrame {
 	    lblPrecioVenta.addKeyListener(new KeyAdapter() { /////////////Aqui sirve para solo colocar letras o numeros
 			public void keyTyped(KeyEvent e) {
 				char venta = e.getKeyChar();
-				if(!Character.isDigit(venta)) {
+				if (!Character.isDigit(venta) || lblPrecioVenta.getText().length() >= 5) {
 					e.consume();
 				}
 			}
@@ -1091,6 +1091,14 @@ public class VideogamesView extends JFrame {
 	    panelCentral.add(lblPrecioRenta);
 
 	    txtPrecioRenta.setBounds(55, 335, 180, 25);
+	    txtPrecioRenta.addKeyListener(new KeyAdapter() { /////////////Aqui sirve para solo colocar letras o numeros
+			public void keyTyped(KeyEvent e) {
+				char renta = e.getKeyChar();
+				if (!Character.isDigit(renta) || txtPrecioRenta.getText().length() >= 5) {
+					e.consume();
+				}
+			}
+		});
 	    panelCentral.add(txtPrecioRenta);
 
 
@@ -1109,6 +1117,14 @@ public class VideogamesView extends JFrame {
 	    panelCentral.add(lblAnio);
 
 	    txtAnioLanzamiento.setBounds(55, 215, 150, 25);
+	    txtAnioLanzamiento.addKeyListener(new KeyAdapter() { /////////////Aqui sirve para solo colocar letras o numeros
+			public void keyTyped(KeyEvent e) {
+				char anio = e.getKeyChar();
+				if (!Character.isDigit(anio) || txtAnioLanzamiento.getText().length() >= 4) {
+					e.consume();
+				}
+			}
+		});
 	    panelCentral.add(txtAnioLanzamiento);
 
 	    JLabel lblDisponibilidad = new JLabel("Disponibilidad:");
@@ -1151,6 +1167,14 @@ public class VideogamesView extends JFrame {
 	    panelCentral.add(lblExistencias);
 
 	    txtExistencias.setBounds(300, 275, 200, 25);
+	    txtExistencias.addKeyListener(new KeyAdapter() { /////////////Aqui sirve para solo colocar letras o numeros
+			public void keyTyped(KeyEvent e) {
+				char ex = e.getKeyChar();
+				if (!Character.isDigit(ex) || txtExistencias.getText().length() >= 4) {
+					e.consume();
+				}
+			}
+		});
 	    panelCentral.add(txtExistencias);
 	    
 	    JLabel lblPrecioVenta = new JLabel("Precio venta (MXN):");
@@ -1159,6 +1183,14 @@ public class VideogamesView extends JFrame {
 	    panelCentral.add(lblPrecioVenta);
 
 	    txtPrecioVenta.setBounds(300, 335, 200, 25);
+	    txtPrecioVenta.addKeyListener(new KeyAdapter() { /////////////Aqui sirve para solo colocar letras o numeros
+			public void keyTyped(KeyEvent e) {
+				char venta = e.getKeyChar();
+				if (!Character.isDigit(venta) || txtPrecioVenta.getText().length() >= 5) {
+					e.consume();
+				}
+			}
+		});
 	    panelCentral.add(txtPrecioVenta);
 
 	    // Sección derecha (Información adicional)

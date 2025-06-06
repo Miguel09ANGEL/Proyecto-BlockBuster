@@ -6,6 +6,8 @@ import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -167,7 +169,8 @@ public class VideogamesView extends JFrame {
 		btnAgregarVideojuegos.setBounds(442, 261, 206, 100);
 		btnAgregarVideojuegos.addActionListener(e -> {
 			dispose();
-			AgregarJuego();
+			VideogamesView vgm = new VideogamesView();
+			vgm.AgregarJuego();
 			
 		});
 		panelCentral.add(btnAgregarVideojuegos);
@@ -724,6 +727,14 @@ public class VideogamesView extends JFrame {
 
 	    txtAnioLanzamiento = new JTextField(String.valueOf(videogames.getAñoLanzamiento()));
 	    txtAnioLanzamiento.setBounds(55, 215, 150, 25);
+	    txtAnioLanzamiento.addKeyListener(new KeyAdapter() { /////////////Aqui sirve para solo colocar letras o numeros
+			public void keyTyped(KeyEvent e) {
+				char anio = e.getKeyChar();
+				if(!Character.isDigit(anio)) {
+					e.consume();
+				}
+			}
+		});
 	    panelCentral.add(txtAnioLanzamiento);
 
 	    JLabel lblGenero = new JLabel("Género:");
@@ -767,6 +778,14 @@ public class VideogamesView extends JFrame {
 
 	    txtPrecioRenta = new JTextField(String.valueOf(videogames.getPrecioRenta()));
 	    txtPrecioRenta.setBounds(55, 335, 180, 25);
+	    txtPrecioRenta.addKeyListener(new KeyAdapter() { /////////////Aqui sirve para solo colocar letras o numeros
+			public void keyTyped(KeyEvent e) {
+				char renta = e.getKeyChar();
+				if(!Character.isDigit(renta)) {
+					e.consume();
+				}
+			}
+		});
 	    panelCentral.add(txtPrecioRenta);
 
 	    // Sección central (Detalles técnicos)
@@ -811,6 +830,14 @@ public class VideogamesView extends JFrame {
 	    JLabel lblPrecioVenta = new JLabel("Precio venta (MXN):");
 	    lblPrecioVenta.setFont(new Font("Calibri", Font.BOLD, 14));
 	    lblPrecioVenta.setBounds(300, 310, 180, 20);
+	    lblPrecioVenta.addKeyListener(new KeyAdapter() { /////////////Aqui sirve para solo colocar letras o numeros
+			public void keyTyped(KeyEvent e) {
+				char venta = e.getKeyChar();
+				if(!Character.isDigit(venta)) {
+					e.consume();
+				}
+			}
+		});
 	    panelCentral.add(lblPrecioVenta);
 
 	    txtPrecioVenta = new JTextField(String.valueOf(videogames.getPrecioVenta()));
@@ -1105,9 +1132,17 @@ public class VideogamesView extends JFrame {
 	    lblGenero.setFont(new Font("Calibri", Font.BOLD, 14));
 	    lblGenero.setBounds(55, 250, 180, 20);
 	    panelCentral.add(lblGenero);
+	    
+	    // ComboBox para Género
+	    String[] generos = { "Acción", "Aventura", "Estrategia", "RPG", "Deportes", 
+	                       "Carreras", "Shooter", "Lucha", "Plataformas", "Simulación", "Otro" };
 
-	    txtGenero.setBounds(55, 275, 180, 25);
-	    panelCentral.add(txtGenero);
+	    JComboBox<String> comboGenero = new JComboBox<String>(generos);
+	    
+	    comboGenero.setSelectedIndex(0);
+
+	    comboGenero.setBounds(55, 275, 180, 25);
+	    panelCentral.add(comboGenero);
 
 
 	    JLabel lblExistencias = new JLabel("Existencias disponibles:");
@@ -1205,12 +1240,12 @@ public class VideogamesView extends JFrame {
 		     return;
 		 }
 
-		 if (txtGenero.getText().trim().isEmpty()) {
-		     txtGenero.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
-		     mensajeError.append("• Género es obligatorio.\n");
-		     JOptionPane.showMessageDialog(null, mensajeError.toString(), "Campos obligatorios", JOptionPane.ERROR_MESSAGE);
-		     return;
-		 }
+		 if (comboGenero.getSelectedItem() == null || comboGenero.getSelectedItem().toString().trim().isEmpty()) {
+			    comboGenero.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
+			    mensajeError.append("• Género es obligatorio.\n");
+			    JOptionPane.showMessageDialog(null, mensajeError.toString(), "Campos obligatorios", JOptionPane.ERROR_MESSAGE);
+			    return;
+			}
 
 		 if (txtExistencias.getText().trim().isEmpty()) {
 		     txtExistencias.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
@@ -1280,7 +1315,7 @@ public class VideogamesView extends JFrame {
 		        String nombre = txtNombre.getText().trim();
 		        String plataforma = txtPlataforma.getText().trim();
 		        String clasificacion = txtClasificacion.getText().trim();
-		        String genero = txtGenero.getText().trim();
+		        String genero = generos[comboGenero.getSelectedIndex()]; 
 		        String desarrollador = txtDesarrollador.getText().trim();
 		        String descripcion = txtDescripcion.getText().trim();
 

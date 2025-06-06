@@ -6,6 +6,8 @@ import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.File;
@@ -923,18 +925,35 @@ public class UserViews extends JFrame {
 			txtNombre.setBounds(84, 163, 330, 27);
 			txtNombre.setBackground(Color.decode("#D9D9D9"));
 			txtNombre.setColumns(10);
+			txtNombre.addKeyListener(new KeyAdapter() { /////////////Aqui sirve para solo colocar letras o numeros
+				public void keyTyped(KeyEvent e) {
+					char nombre = e.getKeyChar();
+					if(!Character.isLetter(nombre)) {
+						e.consume();
+					}
+				}
+			});
 			panelCentral.add(txtNombre);
 
 			// Apellido Materno
 			JLabel lblApellidoMaterno = new JLabel("Apellido materno:");
 			lblApellidoMaterno.setBounds(84, 209, 115, 42);
 			lblApellidoMaterno.setFont(new Font("Calibri", Font.BOLD, 14));
+			
 			panelCentral.add(lblApellidoMaterno);
 
 			txtApellidoMaterno = new JTextField(user.getApellidoMaterno());
 			txtApellidoMaterno.setBounds(84, 236, 330, 27);
 			txtApellidoMaterno.setBackground(Color.decode("#D9D9D9"));
 			txtApellidoMaterno.setColumns(10);
+			txtApellidoMaterno.addKeyListener(new KeyAdapter() { /////////////Aqui sirve para solo colocar letras o numeros
+				public void keyTyped(KeyEvent e) {
+					char am = e.getKeyChar();
+					if(!Character.isLetter(am)) {
+						e.consume();
+					}
+				}
+			});
 			panelCentral.add(txtApellidoMaterno);
 
 			// Teléfono
@@ -947,6 +966,14 @@ public class UserViews extends JFrame {
 			txtTelefono.setBounds(84, 311, 330, 27);
 			txtTelefono.setBackground(Color.decode("#D9D9D9"));
 			txtTelefono.setColumns(10);
+			txtTelefono.addKeyListener(new KeyAdapter() { /////////////Aqui sirve para solo colocar letras o numeros
+				public void keyTyped(KeyEvent e) {
+					char numero = e.getKeyChar();
+					if(!Character.isDigit(numero)) {
+						e.consume();
+					}
+				}
+			});
 			panelCentral.add(txtTelefono);
 
 			// -------- LADO DERECHO --------
@@ -961,6 +988,14 @@ public class UserViews extends JFrame {
 			txtApellidoPaterno.setBounds(596, 163, 330, 27);
 			txtApellidoPaterno.setBackground(Color.decode("#D9D9D9"));
 			txtApellidoPaterno.setColumns(10);
+			txtApellidoPaterno.addKeyListener(new KeyAdapter() { /////////////Aqui sirve para solo colocar letras o numeros
+				public void keyTyped(KeyEvent e) {
+					char ap = e.getKeyChar();
+					if(!Character.isLetter(ap)) {
+						e.consume();
+					}
+				}
+			});
 			panelCentral.add(txtApellidoPaterno);
 
 			// Fecha de nacimiento con JDatePicker
@@ -1171,19 +1206,17 @@ public class UserViews extends JFrame {
 			textFieldNombre.setBackground(Color.decode("#D9D9D9"));
 			textFieldNombre.setBounds(84, 163, 330, 27);
 			textFieldNombre.setColumns(10);
+			textFieldNombre.addKeyListener(new KeyAdapter() { /////////////Aqui sirve para solo colocar letras o numeros
+				public void keyTyped(KeyEvent e) {
+					char nombre = e.getKeyChar();
+					if(!Character.isLetter(nombre)) {
+						e.consume();
+					}
+				}
+			});
 			panelCentral.add(textFieldNombre);
 
-			// Botón Cancelar
-			JButton btnCancelar = new JButton("Cancelar");
-			btnCancelar.setBackground(Color.decode("#B82F2F")); // Rojo
-			btnCancelar.setForeground(Color.WHITE);
-			btnCancelar.setBounds(175, 406, 183, 33);
-			btnCancelar.addActionListener(e -> {
-				dispose(); // Cierra esta ventana
-				AdministradorCliente();
-			});
-			panelCentral.add(btnCancelar);
-
+			
 
 			// Etiqueta y campo para Apellido materno
 			JLabel lblApellidoMaterno = new JLabel("Apellido materno:");
@@ -1196,6 +1229,14 @@ public class UserViews extends JFrame {
 			textFieldApellidoMaterno.setColumns(10);
 			textFieldApellidoMaterno.setBackground(new Color(217, 217, 217));
 			textFieldApellidoMaterno.setBounds(84, 236, 330, 27);
+			textFieldApellidoMaterno.addKeyListener(new KeyAdapter() { /////////////Aqui sirve para solo colocar letras o numeros
+				public void keyTyped(KeyEvent e) {
+					char am = e.getKeyChar();
+					if(!Character.isLetter(am)) {
+						e.consume();
+					}
+				}
+			});
 			panelCentral.add(textFieldApellidoMaterno);
 
 			// Etiqueta y campo para Teléfono
@@ -1209,6 +1250,14 @@ public class UserViews extends JFrame {
 			textFieldTelefono.setColumns(10);
 			textFieldTelefono.setBackground(new Color(217, 217, 217));
 			textFieldTelefono.setBounds(84, 311, 330, 27);
+			textFieldTelefono.addKeyListener(new KeyAdapter() { /////////////Aqui sirve para solo colocar letras o numeros
+				public void keyTyped(KeyEvent e) {
+					char numero = e.getKeyChar();
+					if (!Character.isDigit(e.getKeyChar()) || textFieldTelefono.getText().length() >= 10) {
+						e.consume();
+					}
+				}
+			}); 
 			panelCentral.add(textFieldTelefono);
 
 			// Etiqueta y campo para Apellido paterno
@@ -1222,6 +1271,14 @@ public class UserViews extends JFrame {
 			textFieldApellidoPaterno.setColumns(10);
 			textFieldApellidoPaterno.setBackground(new Color(217, 217, 217));
 			textFieldApellidoPaterno.setBounds(596, 163, 330, 27);
+			textFieldApellidoPaterno.addKeyListener(new KeyAdapter() { /////////////Aqui sirve para solo colocar letras o numeros
+				public void keyTyped(KeyEvent e) {
+					char ap = e.getKeyChar();
+					if(!Character.isLetter(ap)) {
+						e.consume();
+					}
+				}
+			});
 			panelCentral.add(textFieldApellidoPaterno);
 
 			// Etiqueta y campo para Fecha de nacimiento
@@ -1263,6 +1320,16 @@ public class UserViews extends JFrame {
 			textFieldCorreo.setBounds(596, 311, 330, 27);
 			panelCentral.add(textFieldCorreo);
 
+			// Botón Cancelar
+			JButton btnCancelar = new JButton("Cancelar");
+			btnCancelar.setBackground(Color.decode("#B82F2F")); // Rojo
+			btnCancelar.setForeground(Color.WHITE);
+			btnCancelar.setBounds(175, 406, 183, 33);
+			btnCancelar.addActionListener(e -> {
+				dispose(); // Cierra esta ventana
+				AdministradorCliente();
+			});
+			panelCentral.add(btnCancelar);
 
 			// Botón Guardar
 			JButton btnConfirmar = new JButton("Guardar");

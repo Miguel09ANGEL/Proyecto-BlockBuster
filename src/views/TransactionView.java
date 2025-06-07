@@ -327,8 +327,8 @@ public class TransactionView extends JFrame {
 		panelCentral.add(scrollPane);
 
 		// Buscador icon
-		ImageIcon iconoOriginal = new ImageIcon(getClass().getResource("/images/Buscador.png"));
-		Image imagenEscalada = iconoOriginal.getImage().getScaledInstance(30, 29, Image.SCALE_SMOOTH);
+		ImageIcon Buscadorpng = new ImageIcon(getClass().getResource("/images/Buscador.png"));
+		Image imagenEscalada = Buscadorpng.getImage().getScaledInstance(30, 29, Image.SCALE_SMOOTH);
 		JLabel logo = new JLabel(new ImageIcon(imagenEscalada));
 		logo.setBounds(455, 49, 30, 29); // posicion
 		panelCentral.add(logo);
@@ -628,7 +628,7 @@ public class TransactionView extends JFrame {
 			ex.printStackTrace();
 		}
 		// Configuración básica de la ventana
-		setTitle("Seleccione usaurio para renta");
+		setTitle("Seleccione usuario para renta");
 		setSize(1024, 576);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLocationRelativeTo(null);
@@ -651,9 +651,17 @@ public class TransactionView extends JFrame {
 		btnClientes.setForeground(Color.WHITE);
 		btnClientes.setBounds(10, 11, 237, 100);
 		btnClientes.addActionListener(e -> {
-			dispose(); // Cierra la ventana actual
-			UserViews uv = new UserViews();
-			uv.AdministradorCliente(); // Abre la segunda ventana
+			int cancelar;
+
+			cancelar = JOptionPane.showConfirmDialog(null, "¿Seguro que quieres cancelar?", "Confirmar cancelacion",
+					JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+
+			if (cancelar == JOptionPane.YES_OPTION) {
+				dispose(); // Cierra la ventana actual
+				UserViews uv = new UserViews();
+				uv.AdministradorCliente(); // Abre la segunda ventana
+			}
+
 		});
 		panelIzq.add(btnClientes);
 
@@ -664,9 +672,17 @@ public class TransactionView extends JFrame {
 		btnVideojuegos.setBounds(10, 128, 237, 100);
 		panelIzq.add(btnVideojuegos);
 		btnVideojuegos.addActionListener(e -> {
-			dispose(); // Cierra la ventana actual
-			VideogamesView vv = new VideogamesView();
-			vv.AdministradorJuegos(); // Abre la segunda ventana
+			int cancelar;
+
+			cancelar = JOptionPane.showConfirmDialog(null, "¿Seguro que quieres cancelar?", "Confirmar cancelacion",
+					JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+
+			if (cancelar == JOptionPane.YES_OPTION) {
+				dispose(); // Cierra la ventana actual
+				VideogamesView vv = new VideogamesView();
+				vv.AdministradorJuegos(); // Abre la segunda ventana
+			}
+
 		});
 
 		JButton btnRentaYCompra = new JButton("RENTA Y COMPRA");
@@ -675,9 +691,17 @@ public class TransactionView extends JFrame {
 		btnRentaYCompra.setBackground(new Color(38, 60, 84));
 		btnRentaYCompra.setBounds(10, 242, 237, 100);
 		btnRentaYCompra.addActionListener(e -> {
-			dispose(); // Cierra la ventana actual
-			TransactionView tv = new TransactionView();
-			tv.AdministradorRentaCompra(); // Abre la segunda ventana
+			int cancelar;
+
+			cancelar = JOptionPane.showConfirmDialog(null, "¿Seguro que quieres cancelar?", "Confirmar cancelacion",
+					JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+
+			if (cancelar == JOptionPane.YES_OPTION) {
+				dispose(); // Cierra la ventana actual
+				TransactionView tv = new TransactionView();
+				tv.AdministradorRentaCompra(); // Abre la segunda ventana
+			}
+
 		});
 		panelIzq.add(btnRentaYCompra);
 
@@ -687,9 +711,16 @@ public class TransactionView extends JFrame {
 		btnNuevaOperacion.setBackground(new Color(38, 60, 84));
 		btnNuevaOperacion.setBounds(10, 364, 237, 100);
 		btnNuevaOperacion.addActionListener(e -> {
-			dispose(); // Cierra la ventana actual
-			PromotionsView pv = new PromotionsView();
-			pv.NuevaOperacion(); // Abre la segunda ventana
+			int cancelar;
+
+			cancelar = JOptionPane.showConfirmDialog(null, "¿Seguro que quieres cancelar?", "Confirmar cancelacion",
+					JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+
+			if (cancelar == JOptionPane.YES_OPTION) {
+				dispose(); // Cierra la ventana actual
+				PromotionsView pv = new PromotionsView();
+				pv.NuevaOperacion(); // Abre la segunda ventana
+			}
 		});
 		panelIzq.add(btnNuevaOperacion);
 
@@ -701,11 +732,10 @@ public class TransactionView extends JFrame {
 		panelCentral.setBounds(277, 62, 731, 475);
 		layeredPane.add(panelCentral, JLayeredPane.PALETTE_LAYER);
 
-		JLabel iniciar = new JLabel("SELECCIONE UN USARIO PARA RENTA");
-		iniciar.setSize(236, 60);
-		iniciar.setLocation(143, 11);
-		iniciar.setHorizontalAlignment(JLabel.CENTER);
-		iniciar.setFont(new Font("Calibri", Font.BOLD, 24));
+		JLabel iniciar = new JLabel("SELECCIONE UN USUARIO PARA RENTA");
+		iniciar.setBounds(150, 11, 500, 42);
+		iniciar.setHorizontalAlignment(JLabel.LEFT);
+		iniciar.setFont(new Font("Calibri", Font.BOLD, 20));
 		panelCentral.add(iniciar);
 
 		// Crear unan tabla
@@ -745,17 +775,19 @@ public class TransactionView extends JFrame {
 
 		// Agregar la tabla a un JScrollPane
 		JScrollPane scrollPane = new JScrollPane(table);
-		scrollPane.setBounds(26, 62, 695, 366);
+		scrollPane.setBounds(26, 80, 680, 330);
 		panelCentral.add(scrollPane);
-		
-		JButton btnBuscar = new JButton("Buscar");
-		btnBuscar.setFont(new Font("League Spartan Light", Font.PLAIN, 14));
-		btnBuscar.setBounds(619, 25, 86, 25);
-		panelCentral.add(btnBuscar);
-		
+
+		// Buscador icon
+		ImageIcon Buscadorpng = new ImageIcon(getClass().getResource("/images/Buscador.png"));
+		Image imagenEscalada = Buscadorpng.getImage().getScaledInstance(30, 29, Image.SCALE_SMOOTH);
+		JLabel logo = new JLabel(new ImageIcon(imagenEscalada));
+		logo.setBounds(455, 49, 30, 29); // posicion
+		panelCentral.add(logo);
+
 		JTextField Buscador = new JTextField();
 		Buscador.setFont(new Font("League Spartan Light", Font.PLAIN, 14));
-		Buscador.setBounds(385, 25,220, 25);
+		Buscador.setBounds(485, 50, 220, 25);
 		Buscador.addKeyListener(new KeyAdapter() {
 		    @Override
 		    public void keyReleased(KeyEvent e) {
@@ -795,7 +827,7 @@ public class TransactionView extends JFrame {
 		JButton btnEditar = new JButton("Seleccionar");
 		btnEditar.setForeground(Color.WHITE);
 		btnEditar.setBackground(Color.decode("#4fadbd"));
-		btnEditar.setBounds(379, 439, 172, 25);
+		btnEditar.setBounds(534, 420, 172, 30);
 		btnEditar.addActionListener(e -> {
 
 			int selectedRow = table.getSelectedRow();
@@ -819,9 +851,17 @@ public class TransactionView extends JFrame {
 		JButton btnEliminar = new JButton("Cancelar");
 		btnEliminar.setForeground(Color.WHITE);
 		btnEliminar.setBackground(Color.decode("#B82F2F"));
-		btnEliminar.setBounds(187, 439, 172, 25);
-		btnEliminar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {}
+		btnEliminar.setBounds(26, 420, 172, 30);
+		btnEliminar.addActionListener(e -> {
+			int cancelar;
+			
+			cancelar = JOptionPane.showConfirmDialog(null, "¿Seguro que quieres cancelar?","Confirmar cancelacion",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE);
+			
+			if(cancelar == JOptionPane.YES_OPTION) {
+				dispose();
+				AdministradorRentaCompra();
+			}
+			
 		});
 		panelCentral.add(btnEliminar);
 

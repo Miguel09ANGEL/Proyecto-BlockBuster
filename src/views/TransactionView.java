@@ -915,7 +915,6 @@ public class TransactionView extends JFrame {
 
 		// Nombre del cliente
 		JLabel lblNombreCliente = new JLabel("Nombre del cliente");
-		lblNombreCliente.setHorizontalAlignment(SwingConstants.LEFT);
 		lblNombreCliente.setFont(new Font("Calibri", Font.BOLD, 14));
 		lblNombreCliente.setBounds(450, 130, 160, 42);
 		panelCentral.add(lblNombreCliente);
@@ -930,36 +929,42 @@ public class TransactionView extends JFrame {
 		// ID del Cliente
 		JLabel lblIDCliente = new JLabel("ID del cliente:");
 		lblIDCliente.setFont(new Font("Calibri", Font.BOLD, 14));
-		lblIDCliente.setBounds(75, 130, 150, 20);
+		lblIDCliente.setBounds(155, 140, 150, 20);
 		panelCentral.add(lblIDCliente);
 
 		JLabel lblValorIDCliente = new JLabel(String.valueOf(user.getId()));
 		lblValorIDCliente.setFont(new Font("Calibri", Font.PLAIN, 14));
-		lblValorIDCliente.setBounds(180, 130, 200, 20);
+		lblValorIDCliente.setBounds(250, 140, 200, 20);
 		panelCentral.add(lblValorIDCliente);
 
 		// Correo electrónico
 		JLabel lblCorreoCliente = new JLabel("Correo electrónico:");
 		lblCorreoCliente.setFont(new Font("Calibri", Font.BOLD, 14));
-		lblCorreoCliente.setBounds(75, 160, 150, 20);
+		lblCorreoCliente.setBounds(700, 140, 160, 20);
 		panelCentral.add(lblCorreoCliente);
 
 		JLabel lblValorCorreoCliente = new JLabel(user.getCorreo());
 		lblValorCorreoCliente.setFont(new Font("Calibri", Font.PLAIN, 14));
-		lblValorCorreoCliente.setBounds(180, 160, 300, 20);
+		lblValorCorreoCliente.setBounds(700, 160, 300, 20);
 		panelCentral.add(lblValorCorreoCliente);
 
 		// Botones
 		JButton btnCancelar = new JButton("Cancelar");
 		btnCancelar.setBackground(Color.decode("#B82F2F"));
 		btnCancelar.setForeground(Color.WHITE);
-		btnCancelar.setBounds(175, 406, 183, 33);
+		btnCancelar.setBounds(175, 406, 172, 30);
 		btnCancelar.addActionListener(e -> {
-			dispose();
+			int cancelar;
 
-			TransactionController tc = new TransactionController();
-			tc.updateVideogames(videogames.getId());
+			cancelar = JOptionPane.showConfirmDialog(null, "¿Seguro que quieres cancelar?", "Confirmar cancelacion",
+					JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 
+			if (cancelar == JOptionPane.YES_OPTION) {
+				dispose();
+
+				TransactionController tc = new TransactionController();
+				tc.updateVideogames(videogames.getId());
+			}
 		});
 		panelCentral.add(btnCancelar);
 
@@ -972,60 +977,60 @@ public class TransactionView extends JFrame {
 
 		JLabel lblNombre = new JLabel(videogames.getNombre());
 		lblNombre.setFont(new Font("Anton", Font.BOLD, 14));
-		lblNombre.setBounds(130, 246, 355, 42);
+		lblNombre.setBounds(135, 246, 355, 42);
 		panelCentral.add(lblNombre);
 
 		JLabel lblPrecio = new JLabel("Precio (MXN) por dia:");
-		lblPrecio.setHorizontalAlignment(SwingConstants.CENTER);
+		lblPrecio.setHorizontalAlignment(SwingConstants.LEFT);
 		lblPrecio.setFont(new Font("Calibri", Font.BOLD, 14));
-		lblPrecio.setBounds(403, 215, 255, 42);
+		lblPrecio.setBounds(450, 215, 255, 42);
 		panelCentral.add(lblPrecio);
 
 		JLabel lblValorRenta = new JLabel("" + videogames.getPrecioRenta());
 		lblValorRenta.setFont(new Font("Calibri", Font.BOLD, 14));
-		lblValorRenta.setBounds(503, 246, 255, 42);
+		lblValorRenta.setBounds(490, 246, 255, 42);
 		panelCentral.add(lblValorRenta);
 
 		JLabel lblFecha = new JLabel("Fecha:");
 		lblFecha.setHorizontalAlignment(SwingConstants.CENTER);
 		lblFecha.setFont(new Font("Calibri", Font.BOLD, 14));
-		lblFecha.setBounds(403, 293, 255, 42);
+		lblFecha.setBounds(70, 293, 255, 42);
 		panelCentral.add(lblFecha);
 
 		JLabel lblValorFecha = new JLabel(fechaFormateada);
 		lblValorFecha.setHorizontalAlignment(SwingConstants.CENTER);
 		lblValorFecha.setFont(new Font("Calibri", Font.BOLD, 14));
-		lblValorFecha.setBounds(403, 320, 255, 42);
+		lblValorFecha.setBounds(75, 320, 255, 42);
 		panelCentral.add(lblValorFecha);
 
 		JLabel lblTipo = new JLabel("Tipo:");
 		lblTipo.setHorizontalAlignment(SwingConstants.CENTER);
 		lblTipo.setFont(new Font("Calibri", Font.BOLD, 14));
-		lblTipo.setBounds(687, 215, 101, 42);
+		lblTipo.setBounds(695, 215, 101, 42);
 		panelCentral.add(lblTipo);
 
 		JLabel lblValorTipo = new JLabel("Renta");
 		lblValorTipo.setHorizontalAlignment(SwingConstants.CENTER);
 		lblValorTipo.setFont(new Font("Calibri", Font.BOLD, 14));
-		lblValorTipo.setBounds(687, 246, 101, 42);
+		lblValorTipo.setBounds(700, 246, 101, 42);
 		panelCentral.add(lblValorTipo);
 		
 		JLabel lblDiasRenta = new JLabel("Días de renta:");
 		lblDiasRenta.setHorizontalAlignment(SwingConstants.CENTER);
 		lblDiasRenta.setFont(new Font("Calibri", Font.BOLD, 14));
-		lblDiasRenta.setBounds(75, 350, 255, 20);  // Posición debajo del precio final
+		lblDiasRenta.setBounds(620, 293, 255, 20);  // Posición debajo del precio final
 		panelCentral.add(lblDiasRenta);
 
 		lblValorDiasRenta = new JLabel("1");
 		lblValorDiasRenta.setHorizontalAlignment(SwingConstants.CENTER);
 		lblValorDiasRenta.setFont(new Font("Calibri", Font.BOLD, 14));
-		lblValorDiasRenta.setBounds(75, 370, 255, 20);
+		lblValorDiasRenta.setBounds(625, 320, 255, 20);
 		panelCentral.add(lblValorDiasRenta);
 
 		JLabel devolucion = new JLabel("Fecha de devolución:");
 		devolucion.setHorizontalAlignment(SwingConstants.CENTER);
 		devolucion.setFont(new Font("Calibri", Font.BOLD, 14));
-		devolucion.setBounds(637, 293, 255, 42);
+		devolucion.setBounds(382, 293, 255, 42);
 		panelCentral.add(devolucion);
 
 		// AQUI SE USA EL Datapicker
@@ -1085,7 +1090,7 @@ public class TransactionView extends JFrame {
 		textField.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(Color.GRAY),
 				BorderFactory.createEmptyBorder(5, 5, 5, 5)));
 		textField.setEditable(false);
-		datePicker.setBounds(697, 325, 165, 27);
+		datePicker.setBounds(450, 325, 165, 27);
 		panelCentral.add(datePicker);
 
 		// 3. PANEL ROJO SUPERIOR (barra de título)
@@ -1097,7 +1102,7 @@ public class TransactionView extends JFrame {
 		JButton btnConfirmar = new JButton("Confirmar");
 		btnConfirmar.setBackground(Color.decode("#263C54"));
 		btnConfirmar.setForeground(Color.WHITE);
-		btnConfirmar.setBounds(582, 406, 183, 33);
+		btnConfirmar.setBounds(582, 406, 172, 30);
 		btnConfirmar.addActionListener(e -> {
 			try {
 				// 1. Obtener fecha de devolución

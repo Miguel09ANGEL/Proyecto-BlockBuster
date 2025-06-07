@@ -286,7 +286,7 @@ public class TransactionView extends JFrame {
 		// Título
 		JLabel lblTitulo = new JLabel("SELECCIONAR VIDEOJUEGO PARA RENTA");
 		lblTitulo.setFont(new Font("Calibri", Font.BOLD, 20));
-		lblTitulo.setBounds(150, 11, 450, 42);
+		lblTitulo.setBounds(150, 11, 500, 42);
 		panelCentral.add(lblTitulo);
 
 		// Modelo de tabla con columnas
@@ -323,18 +323,20 @@ public class TransactionView extends JFrame {
 
 		// Agregar la tabla a un JScrollPane
 		JScrollPane scrollPane = new JScrollPane(table);
-		scrollPane.setBounds(26, 62, 680, 350);
+		scrollPane.setBounds(26, 80, 680, 330);
 		panelCentral.add(scrollPane);
-		
-		// el boton no hace nada se puede quitar o dejar
-		JButton btnBuscar = new JButton("Buscar");
-		btnBuscar.setFont(new Font("League Spartan Light", Font.PLAIN, 14));
-		btnBuscar.setBounds(619, 25, 86, 25);
-		panelCentral.add(btnBuscar);
-		
-		JTextField Buscador = new JTextField();
+
+		// Buscador icon
+		ImageIcon iconoOriginal = new ImageIcon(getClass().getResource("/images/Buscador.png"));
+		Image imagenEscalada = iconoOriginal.getImage().getScaledInstance(30, 29, Image.SCALE_SMOOTH);
+		JLabel logo = new JLabel(new ImageIcon(imagenEscalada));
+		logo.setBounds(455, 49, 30, 29); // posicion
+		panelCentral.add(logo);
+
+		// Cuadro de buscador
+		JTextField Buscador = new JTextField("");
 		Buscador.setFont(new Font("League Spartan Light", Font.PLAIN, 14));
-		Buscador.setBounds(385, 25, 220, 25);
+		Buscador.setBounds(485, 50, 220, 25);
 		Buscador.addKeyListener(new KeyAdapter() {
 
 			@Override

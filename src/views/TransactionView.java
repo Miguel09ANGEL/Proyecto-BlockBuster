@@ -14,11 +14,13 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.math.BigDecimal;
 import java.sql.Date;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
+import java.time.temporal.Temporal;
 import java.util.Calendar;
 import java.util.Iterator;
 import java.util.List;
@@ -164,7 +166,7 @@ public class TransactionView extends JFrame {
 		renta.addActionListener(e -> {
 			dispose(); // Cierra la ventana actual
 			TransactionController tc = new TransactionController();
-			tc.indexRenta(); // Abre la segunda ventana
+			tc.rentalIndex(); // Abre la segunda ventana
 
 		});
 
@@ -176,7 +178,7 @@ public class TransactionView extends JFrame {
 		btnCompra.addActionListener(e -> {
 			dispose(); // Cierra la ventana actual
 			TransactionController tc = new TransactionController();
-			tc.indexCompra();// Abre la segunda ventana
+			tc.salesIndex();// Abre la segunda ventana
 		});
 		panelCentral.add(btnCompra);
 
@@ -324,7 +326,7 @@ public class TransactionView extends JFrame {
 		scrollPane.setBounds(26, 62, 680, 350);
 		panelCentral.add(scrollPane);
 		
-		
+		// el boton no hace nada se puede quitar o dejar
 		JButton btnBuscar = new JButton("Buscar");
 		btnBuscar.setFont(new Font("League Spartan Light", Font.PLAIN, 14));
 		btnBuscar.setBounds(619, 25, 86, 25);
@@ -343,8 +345,11 @@ public class TransactionView extends JFrame {
 				for (VideoGames juegos : videoGamesList) {
 					String nombreVideojuego = juegos.getNombre().toLowerCase();
 					String plataforma = juegos.getPlataforma().toLowerCase();
+		            String id = String.valueOf(juegos.getId()); 
 
-					if (nombreVideojuego.contains(textoBusqueda) || plataforma.contains(textoBusqueda)) {
+					if (nombreVideojuego.contains(textoBusqueda) || 
+							plataforma.contains(textoBusqueda) ||
+							id.contains(textoBusqueda)) {
 						
 						Object[] rowData = { juegos.getId(), 
 								juegos.getNombre(), 
@@ -579,7 +584,7 @@ public class TransactionView extends JFrame {
 			if (juegoSeleccionado != null) {
 				dispose();
 				TransactionController tc = new TransactionController();
-				tc.operacionVender(juegoId);
+				tc.salesOperation(juegoId);
 			}
 		});
 		panelCentral.add(btnVender);
@@ -760,11 +765,13 @@ public class TransactionView extends JFrame {
 		            String apellidoP = usuario.getApellidoPaterno().toLowerCase();
 		            String apellidoM = usuario.getApellidoMaterno() != null ? usuario.getApellidoMaterno().toLowerCase() : "";
 		            String correo = usuario.getCorreo().toLowerCase();
+		            String id = String.valueOf(usuario.getId()); 
 
 		            if (nombre.contains(textoBusqueda) ||
 		                apellidoP.contains(textoBusqueda) ||
 		                apellidoM.contains(textoBusqueda)||
-		                correo.contains(textoBusqueda)) {
+		                correo.contains(textoBusqueda)||
+		                id.contains(textoBusqueda)) {
 
 		                Object[] rowData = {
 		                    usuario.getId(),
@@ -781,8 +788,6 @@ public class TransactionView extends JFrame {
 		    }
 		});
 		panelCentral.add(Buscador);
-		
-		
 
 		// BOTON EDITAR PROVICIONAL, MEJORAR
 		JButton btnEditar = new JButton("Seleccionar");
@@ -804,10 +809,19 @@ public class TransactionView extends JFrame {
 
 			dispose();			
 			TransactionController tc = new TransactionController();
-			tc.operacionRenta(videojuegos.getId(), userId);
+			tc.rentalOperation(videojuegos.getId(), userId);
 
 		});
 		panelCentral.add(btnEditar);
+		
+		JButton btnEliminar = new JButton("Cancelar");
+		btnEliminar.setForeground(Color.WHITE);
+		btnEliminar.setBackground(Color.decode("#B82F2F"));
+		btnEliminar.setBounds(187, 439, 172, 25);
+		btnEliminar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {}
+		});
+		panelCentral.add(btnEliminar);
 
 		// 3. PANEL ROJO SUPERIOR (barra de título)
 		JPanel barraRoja = new JPanel();
@@ -825,10 +839,12 @@ public class TransactionView extends JFrame {
 		JTextField txtNombreCliente;
 		JTextField txtNombreVideojuego;
 		JTextField txtCantidad;
+		JLabel precioRentafinal;
+		JLabel lblValorDiasRenta;
 
 		// selecciona la fecha actual y le da formato
 		LocalDate fechaActual = LocalDate.now();
-		String fechaFormateada = fechaActual.format(DateTimeFormatter.ofPattern("yyyy/MM/dd"));
+		String fechaFormateada = fechaActual.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
 
 		// Configuración básica de la ventana
 		setTitle("Detalles de operación Rentar");
@@ -855,12 +871,19 @@ public class TransactionView extends JFrame {
 		logo.setBounds(477, 11, 70, 70); // posicion
 		panelCentral.add(logo);
 
-		// Campos de entrada
+		// Nombre del cliente
 		JLabel lblNombreCliente = new JLabel("Nombre del cliente");
 		lblNombreCliente.setHorizontalAlignment(SwingConstants.LEFT);
 		lblNombreCliente.setFont(new Font("Calibri", Font.BOLD, 14));
 		lblNombreCliente.setBounds(450, 130, 160, 42);
 		panelCentral.add(lblNombreCliente);
+
+		// Nombre completo del cliente
+		JLabel lblValorNombreCliente = new JLabel(
+				user.getNombre() + " " + user.getApellidoMaterno() + " " + user.getApellidoMaterno());
+		lblValorNombreCliente.setFont(new Font("Calibri", Font.PLAIN, 14));
+		lblValorNombreCliente.setBounds(450, 160, 300, 20);
+		panelCentral.add(lblValorNombreCliente);
 
 		// ID del Cliente
 		JLabel lblIDCliente = new JLabel("ID del cliente:");
@@ -873,12 +896,6 @@ public class TransactionView extends JFrame {
 		lblValorIDCliente.setBounds(180, 130, 200, 20);
 		panelCentral.add(lblValorIDCliente);
 
-		// Nombre completo del cliente
-		JLabel lblValorNombreCliente = new JLabel(user.getNombre() + " " + user.getApellidoMaterno());
-		lblValorNombreCliente.setFont(new Font("Calibri", Font.PLAIN, 14));
-		lblValorNombreCliente.setBounds(450, 160, 300, 20);
-		panelCentral.add(lblValorNombreCliente);
-
 		// Correo electrónico
 		JLabel lblCorreoCliente = new JLabel("Correo electrónico:");
 		lblCorreoCliente.setFont(new Font("Calibri", Font.BOLD, 14));
@@ -889,7 +906,6 @@ public class TransactionView extends JFrame {
 		lblValorCorreoCliente.setFont(new Font("Calibri", Font.PLAIN, 14));
 		lblValorCorreoCliente.setBounds(180, 160, 300, 20);
 		panelCentral.add(lblValorCorreoCliente);
-
 
 		// Botones
 		JButton btnCancelar = new JButton("Cancelar");
@@ -917,7 +933,7 @@ public class TransactionView extends JFrame {
 		lblNombre.setBounds(130, 246, 355, 42);
 		panelCentral.add(lblNombre);
 
-		JLabel lblPrecio = new JLabel("Precio (MXN):");
+		JLabel lblPrecio = new JLabel("Precio (MXN) por dia:");
 		lblPrecio.setHorizontalAlignment(SwingConstants.CENTER);
 		lblPrecio.setFont(new Font("Calibri", Font.BOLD, 14));
 		lblPrecio.setBounds(403, 215, 255, 42);
@@ -951,6 +967,18 @@ public class TransactionView extends JFrame {
 		lblValorTipo.setFont(new Font("Calibri", Font.BOLD, 14));
 		lblValorTipo.setBounds(687, 246, 101, 42);
 		panelCentral.add(lblValorTipo);
+		
+		JLabel lblDiasRenta = new JLabel("Días de renta:");
+		lblDiasRenta.setHorizontalAlignment(SwingConstants.CENTER);
+		lblDiasRenta.setFont(new Font("Calibri", Font.BOLD, 14));
+		lblDiasRenta.setBounds(75, 350, 255, 20);  // Posición debajo del precio final
+		panelCentral.add(lblDiasRenta);
+
+		lblValorDiasRenta = new JLabel("1");
+		lblValorDiasRenta.setHorizontalAlignment(SwingConstants.CENTER);
+		lblValorDiasRenta.setFont(new Font("Calibri", Font.BOLD, 14));
+		lblValorDiasRenta.setBounds(75, 370, 255, 20);
+		panelCentral.add(lblValorDiasRenta);
 
 		JLabel devolucion = new JLabel("Fecha de devolución:");
 		devolucion.setHorizontalAlignment(SwingConstants.CENTER);
@@ -959,65 +987,64 @@ public class TransactionView extends JFrame {
 		panelCentral.add(devolucion);
 
 		// AQUI SE USA EL Datapicker
-		// se Configura el modelo con la fecha actual
+		// se Configura el modelo con la fecha actual y se le suma un dia
 		UtilDateModel model = new UtilDateModel();
 		model.setDate(
 		    LocalDate.now().getYear(),
 		    LocalDate.now().getMonthValue() - 1, 
-		    LocalDate.now().getDayOfMonth()
+		    LocalDate.now().getDayOfMonth()+1
 		);
 		model.setSelected(true);
 
 		// se crea el DatePicker
 		JDatePanelImpl datePanel = new JDatePanelImpl(model, new Properties());
 		JDatePickerImpl datePicker = new JDatePickerImpl(datePanel, new DateLabelFormatter());
-		
+
 		// Agrego un listener al datePicker
 		datePicker.addActionListener(e -> {
-			
-		    // Obtengo el valor seleccionado del modelo
-		    Object selectedValue = datePicker.getModel().getValue();
-		    
-		    // Primero verifico que el valor seleccionado sea realmente una fecha 
-		    if (selectedValue instanceof java.util.Date) {
-		    	
-		    	// Convierto la fecha seleccionada a LocalDate porque es más fácil de comparar
-		        // Esto lo hago en 3 pasos:
-		        // 1. toInstant(): Convierte a Instant (marca de tiempo)
-		        // 2. atZone(): Añade la zona horaria del sistema
-		        // 3. toLocalDate(): Obtengo solo la parte de fecha (sin hora)
-		        java.util.Date selectedDate = (java.util.Date) selectedValue;
-		        LocalDate selectedLocalDate = selectedDate.toInstant()
-		                .atZone(ZoneId.systemDefault())
-		                .toLocalDate();
-		        
-		        if (selectedLocalDate.isBefore(LocalDate.now())) {
-		        		// Si la fecha es anterior a hoy, se cambioa a la actual
-		        		datePicker.getModel().setDate(
-		                LocalDate.now().getYear(),
-		                LocalDate.now().getMonthValue() - 1,
-		                LocalDate.now().getDayOfMonth()
-		            );
-		            
-		            //mensaje al usuario
-		            JOptionPane.showMessageDialog(panelCentral, 
-		                "No se pueden seleccionar fechas anteriores a hoy", 
-		                "Fecha inválida", 
-		                JOptionPane.WARNING_MESSAGE);
-		        }
-		    }
-		});
+			// Obtengo el valor seleccionado del modelo
+			Object selectedValue = datePicker.getModel().getValue();
 
+			// Primero verifico que el valor seleccionado sea realmente una fecha
+			if (selectedValue instanceof java.util.Date) {
+
+				// Convierto la fecha seleccionada a LocalDate porque es más fácil de comparar
+				// Esto lo hago en 3 pasos:
+				// 1. toInstant(): Convierte a Instant (marca de tiempo)
+				// 2. atZone(): Añade la zona horaria del sistema
+				// 3. toLocalDate(): Obtengo solo la parte de fecha (sin hora)
+				java.util.Date selectedDate = (java.util.Date) selectedValue;
+				LocalDate selectedLocalDate = selectedDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+
+				if (selectedLocalDate.isBefore(LocalDate.now()) || selectedLocalDate.equals(LocalDate.now())) {
+					// se encarga de que no escoja fehcas anteriores
+					// se cambia la fecha y se le suma uno al dia
+					datePicker.getModel().setDate(LocalDate.now().getYear(), LocalDate.now().getMonthValue() - 1,
+							LocalDate.now().getDayOfMonth() + 1);
+
+					// mensaje al usuario
+					JOptionPane.showMessageDialog(panelCentral, "No se pueden seleccionar fechas anteriores",
+							"Fecha inválida", JOptionPane.WARNING_MESSAGE);
+
+				}else{
+					// esta aparte se encarga de sacar la diferencia entre el dia de renta
+					// y la fecha de devolucion
+					long diasRenta = ChronoUnit.DAYS.between(LocalDate.now(), // fecha actual
+							selectedLocalDate // fecha de devolución
+					);
+
+					lblValorDiasRenta.setText(String.valueOf(diasRenta));
+				}
+			}
+		});
 		// Configurar el campo de texto
 		JFormattedTextField textField = datePicker.getJFormattedTextField();
 		textField.setBackground(Color.decode("#D9D9D9"));
 		textField.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(Color.GRAY),
 				BorderFactory.createEmptyBorder(5, 5, 5, 5)));
 		textField.setEditable(false);
-
 		datePicker.setBounds(697, 325, 165, 27);
 		panelCentral.add(datePicker);
-		
 
 		// 3. PANEL ROJO SUPERIOR (barra de título)
 		JPanel barraRoja = new JPanel();
@@ -1031,26 +1058,13 @@ public class TransactionView extends JFrame {
 		btnConfirmar.setBounds(582, 406, 183, 33);
 		btnConfirmar.addActionListener(e -> {
 			try {
-				// 1. Obtener usuario seleccionado
-//				String seleccion = (String) comboUsuarios.getSelectedItem();
-//				int customerId = Integer.parseInt(seleccion.split(" - ")[0]);
-
-				// 2. Obtener fecha de devolución
+				// 1. Obtener fecha de devolución
 				Date fechaDevolucion = new Date(((java.util.Date) datePicker.getModel().getValue()).getTime());
 
-				// 3. Crear la transacción en la base de datos
-				TransactionModel transModel = new TransactionModel();
-				boolean exito = transModel.createTransaction(user.getId(), videogames.getId(), "rental", fechaDevolucion,
-						videogames.getPrecioRenta(), "rented");
+				dispose();
+				TransactionController tc = new TransactionController();
+				tc.rentalDetails(user.getId(), videogames.getId(), fechaDevolucion);
 
-				if (exito) {
-					JOptionPane.showMessageDialog(this, "¡Renta registrada con éxito!");
-					dispose();
-					new TransactionController().detallesRenta(user.getId(), videogames.getId(), fechaDevolucion);
-				} else {
-					JOptionPane.showMessageDialog(this, "Error al registrar la renta", "Error",
-							JOptionPane.ERROR_MESSAGE);
-				}
 			} catch (Exception ex) {
 				JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 				ex.printStackTrace();
@@ -1085,7 +1099,7 @@ public class TransactionView extends JFrame {
 		Image imagenEscalada = iconoOriginal.getImage().getScaledInstance(100, 70, Image.SCALE_SMOOTH);
 
 		// Título principal
-		JLabel lblTitulo = new JLabel("DETALLES DE VIDEOJUEGO");
+		JLabel lblTitulo = new JLabel("RENTA DE VIDEOJUEGO");
 		lblTitulo.setSize(285, 42);
 		lblTitulo.setLocation(442, 32);
 		lblTitulo.setHorizontalAlignment(JLabel.CENTER);
@@ -1099,7 +1113,7 @@ public class TransactionView extends JFrame {
 		lblCliente.setBounds(256, 85, 70, 42);
 		panelCentral.add(lblCliente);
 
-		JLabel lblNombreCliente = new JLabel(user.getNombre()+" "+user.getApellidoPaterno());
+		JLabel lblNombreCliente = new JLabel(user.getNombre()+" "+user.getApellidoPaterno()+" "+user.getApellidoMaterno());
 		lblNombreCliente.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNombreCliente.setFont(new Font("Calibri", Font.BOLD, 18));
 		lblNombreCliente.setBounds(226, 102, 112, 42);
@@ -1123,8 +1137,7 @@ public class TransactionView extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				dispose();
 				TransactionController tc = new TransactionController();
-				tc.indexRenta();
-
+				tc.rentalIndex();
 			}
 		});
 		btnRegresar.setBackground(Color.decode("#B82F2F"));
@@ -1133,7 +1146,7 @@ public class TransactionView extends JFrame {
 		panelCentral.add(btnRegresar);
 
 		// Logo del juego
-		ImageIcon iconoOrigina = new ImageIcon(getClass().getResource("/images/Contra.png"));
+//		ImageIcon iconoOrigina = new ImageIcon(getClass().getResource("/images/Contra.png"));
 		Image imagen = iconoOriginal.getImage().getScaledInstance(180, 120, Image.SCALE_SMOOTH);
 		JLabel lblLogoJuego = new JLabel(new ImageIcon(imagen));
 		lblLogoJuego.setBounds(32, 32, 184, 112);
@@ -1184,7 +1197,7 @@ public class TransactionView extends JFrame {
 		panelCentral.add(lblFechaRenta);
 
 		LocalDate fechaActual = LocalDate.now();
-		String fechaFormateada = fechaActual.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+		String fechaFormateada = fechaActual.format(DateTimeFormatter.ofPattern("yyyy/MM/dd"));
 
 		JLabel lblValorFecha = new JLabel(fechaFormateada);
 		lblValorFecha.setHorizontalAlignment(SwingConstants.CENTER);
@@ -1198,7 +1211,7 @@ public class TransactionView extends JFrame {
 		lblFechaLimite.setBounds(407, 285, 157, 42);
 		panelCentral.add(lblFechaLimite);
 		
-	    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+	    SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
 
 		JLabel lblValorFechaLimite = new JLabel();
 	    lblValorFechaLimite.setText(sdf.format(fechaDevolucion));
@@ -1206,6 +1219,25 @@ public class TransactionView extends JFrame {
 		lblValorFechaLimite.setFont(new Font("Calibri", Font.BOLD, 18));
 		lblValorFechaLimite.setBounds(436, 309, 97, 42);
 		panelCentral.add(lblValorFechaLimite);
+		
+		JLabel lblDiasRenta = new JLabel("Días de renta:");
+		lblDiasRenta.setHorizontalAlignment(SwingConstants.LEFT);
+		lblDiasRenta.setFont(new Font("Calibri", Font.BOLD, 18));
+		lblDiasRenta.setBounds(626, 204, 126, 42);
+		panelCentral.add(lblDiasRenta);
+	
+		// esta la logica para sacar los dias de renta
+		// se hace la conversion a java sql
+        LocalDate fechaDevolucionLocal = new java.sql.Date(fechaDevolucion.getTime()).toLocalDate();
+        // se compra la fecha actual con la fecha de devolucion
+        // aqui aqui hay error de logica pero lo arrgelo despues
+        long diasRenta = ChronoUnit.DAYS.between(fechaActual, fechaDevolucionLocal);
+
+		JLabel lblValorDiasRenta = new JLabel(String.valueOf(diasRenta));
+		lblValorDiasRenta.setHorizontalAlignment(SwingConstants.CENTER);
+		lblValorDiasRenta.setFont(new Font("Calibri", Font.BOLD, 18));
+		lblValorDiasRenta.setBounds(636, 232, 97, 42);
+		panelCentral.add(lblValorDiasRenta);
 
 		// Información de pago
 		JLabel lblInfoPago = new JLabel("Información de pago");
@@ -1256,14 +1288,43 @@ public class TransactionView extends JFrame {
 		lblSubtotal.setBounds(700, 248, 57, 42);
 		panelCentral.add(lblSubtotal);
 
-		JLabel lblValorSubtotal = new JLabel(" "+videogames.getPrecioRenta());
+		// logica para sacar total de Producto
+		// Primero pasamos los dias de renta que estaban en entero a bigdecimal
+		BigDecimal diasDerenta = BigDecimal.valueOf(diasRenta);
+		// despues selccionamos el precio de renta y lo multilicamos
+		// haci sacando el total del producto
+		BigDecimal valorTotalProducto = videogames.getPrecioRenta().multiply(diasDerenta);
+		// despues lo convertimos a un string para poder mostrarlo
+		JLabel lblValorSubtotal = new JLabel(String.valueOf(valorTotalProducto));
 		lblValorSubtotal.setHorizontalAlignment(SwingConstants.LEFT);
 		lblValorSubtotal.setFont(new Font("Calibri", Font.BOLD, 14));
 		lblValorSubtotal.setBounds(760, 248, 78, 42);
 		panelCentral.add(lblValorSubtotal);
 
+		// Operaciones
+		// todo lo que ocupe la logica de los numero debe estar abajo de esto
+		BigDecimal valorIVA = BigDecimal.valueOf(0.16);
+		BigDecimal subtotal = valorTotalProducto;
+		BigDecimal iva = valorTotalProducto.multiply(valorIVA);
+		BigDecimal total = subtotal.add(iva);
+
+		// IVA logica
+		JLabel lblIVA = new JLabel("iva");
+		lblIVA.setHorizontalAlignment(SwingConstants.LEFT);
+		lblIVA.setFont(new Font("Calibri", Font.BOLD, 18));
+		lblIVA.setBounds(626, 304, 126, 42);
+		panelCentral.add(lblIVA);
+
+		// este lo ocupe para darle formato de que solo me muestr 2 digitos
+		DecimalFormat formato = new DecimalFormat("#0.00");
+		JLabel lblValorIVA = new JLabel(formato.format(iva));
+		lblValorIVA.setHorizontalAlignment(SwingConstants.CENTER);
+		lblValorIVA.setFont(new Font("Calibri", Font.BOLD, 18));
+		lblValorIVA.setBounds(626, 352, 97, 42);
+		panelCentral.add(lblValorIVA);
+
 		// Total
-		JTextArea txtTotal = new JTextArea("Total(IVA incluído, en caso de ser aplicable):");
+		JTextArea txtTotal = new JTextArea("Total(IVA 16%):");
 		txtTotal.setWrapStyleWord(true);
 		txtTotal.setOpaque(false);
 		txtTotal.setLineWrap(true);
@@ -1272,7 +1333,7 @@ public class TransactionView extends JFrame {
 		txtTotal.setBounds(628, 341, 298, 54);
 		panelCentral.add(txtTotal);
 
-		JLabel lblTotal = new JLabel(" "+videogames.getPrecioRenta());
+		JLabel lblTotal = new JLabel(String.valueOf(total));
 		lblTotal.setForeground(new Color(153, 0, 0));
 		lblTotal.setHorizontalAlignment(SwingConstants.LEFT);
 		lblTotal.setFont(new Font("Calibri", Font.BOLD, 18));
@@ -1332,12 +1393,12 @@ public class TransactionView extends JFrame {
 		                    FontFactory.getFont(FontFactory.HELVETICA_BOLD, 14));
 		                document.add(rentaHeader);
 		                
-//		                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+		                SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
 		                document.add(new Paragraph("Fecha de renta: " + fechaFormateada));
-		                document.add(new Paragraph("Fecha de devolución: " + fechaDevolucion));
+		                document.add(new Paragraph("Fecha de devolución: " + sdf.format(fechaDevolucion)));
 		                
 		                // Conversión segura y cálculo de días
-		                LocalDate fechaDevolucionLocal = new java.sql.Date(fechaDevolucion.getTime()).toLocalDate();
+//		                LocalDate fechaDevolucionLocal = new java.sql.Date(fechaDevolucion.getTime()).toLocalDate();
 		                LocalDate fechaActualLocal = LocalDate.now();
 		                long diasRenta = ChronoUnit.DAYS.between(fechaActualLocal, fechaDevolucionLocal);
 		                
@@ -1349,12 +1410,9 @@ public class TransactionView extends JFrame {
 		                    FontFactory.getFont(FontFactory.HELVETICA_BOLD, 14));
 		                document.add(pagoHeader);
 		                
+		                
 		                document.add(new Paragraph("Precio por día: $" + videogames.getPrecioRenta()));
 		                document.add(new Paragraph("Días rentados: " + diasRenta));
-		                
-		                BigDecimal subtotal = videogames.getPrecioRenta();
-		                BigDecimal iva = subtotal ;
-		                BigDecimal total = subtotal;
 		                
 		                document.add(new Paragraph("Subtotal: $" + String.format("%.2f", subtotal)));
 		                document.add(new Paragraph("IVA (16%): $" + String.format("%.2f", iva)));
@@ -1389,6 +1447,34 @@ public class TransactionView extends JFrame {
 		    }
 		});
 		panelCentral.add(btnDescargarPDF);
+		
+
+		JButton btnConfirmacionCompra = new JButton("confirmacionde compra");
+		btnConfirmacionCompra.setBackground(Color.decode("#3db8cd"));
+		btnConfirmacionCompra.setForeground(Color.WHITE);
+		btnConfirmacionCompra.setBounds(450, 406, 183, 33);
+		btnConfirmacionCompra.addActionListener(e ->{
+			try {
+
+				TransactionModel transModel = new TransactionModel();
+				boolean exito = transModel.createTransaction(user.getId(), videogames.getId(), "rental", fechaDevolucion,
+						total, "rented");
+
+				if (exito) {
+					JOptionPane.showMessageDialog(this, "¡Renta registrada con éxito!");
+				
+				} else {
+					JOptionPane.showMessageDialog(this, "Error al registrar la renta", "Error",
+							JOptionPane.ERROR_MESSAGE);
+				}
+
+			} catch (Exception ex) {
+				JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+				ex.printStackTrace();
+			}
+			
+		});
+		panelCentral.add(btnConfirmacionCompra);
 
 
 		// 3. PANEL ROJO SUPERIOR (barra de título)
@@ -1465,7 +1551,7 @@ public class TransactionView extends JFrame {
 		btnCancelar.addActionListener(e -> {
 			dispose();
 			TransactionController tc = new TransactionController();
-			tc.indexCompra();
+			tc.salesIndex();
 
 		});
 		panelCentral.add(btnCancelar);
@@ -1636,7 +1722,7 @@ public class TransactionView extends JFrame {
 		btnRegresar.addActionListener(e -> {
 			dispose();
 			TransactionController tc = new TransactionController();
-			tc.indexCompra();
+			tc.salesIndex();
 
 		});
 		btnRegresar.setBackground(Color.decode("#B82F2F"));

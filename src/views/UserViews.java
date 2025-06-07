@@ -386,8 +386,6 @@ public class UserViews extends JFrame {
 			});
 			panelCentral.add(btnEliminar);
 
-			
-
 			// BOTON EDITAR PROVICIONAL, MEJORAR
 			JButton btnEditar = new JButton("DETALLES");
 			btnEditar.setForeground(Color.WHITE);

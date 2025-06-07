@@ -28,29 +28,29 @@ public class TransactionController {
 		vista.AdministradorRentaCompra();
 	}
 
-	public void indexRenta() {
+	public void rentalIndex() {
 		List<VideoGames> videoGamesList = modeloVideojuego.getAllVideogames();
 		vista.Renta(videoGamesList);
 	}
 
-	public void indexCompra() {
+	public void salesIndex() {
 		List<VideoGames> videoGamesList = modeloVideojuego.getAllVideogames();
 		vista.Compra(videoGamesList);
 	}
 
-	public void operacionRenta(int idVideogame, int idConstumer) {
+	public void rentalOperation(int idVideogame, int idConstumer) {
 		VideoGames myVideogame = modeloVideojuego.getVideogames(idVideogame);
 		User myUser = modeloUsuario.get(idConstumer);
 		vista.OperacionRentar( myUser,myVideogame);
 	}
 	
-	public void detallesRenta(int idConstumer, int idVideogame, Date fechaDevolucion) {
+	public void rentalDetails(int idConstumer, int idVideogame, Date fechaDevolucion) {
 		User myUser = modeloUsuario.get(idConstumer);
 		VideoGames myVideogame = modeloVideojuego.getVideogames(idVideogame);
 		vista.DetallesRenta(myUser ,myVideogame, fechaDevolucion);
 	}
 	
-	public void operacionVender(int id) {
+	public void salesOperation(int id) {
 		VideoGames myVideogame = modeloVideojuego.getVideogames(id);
 		usuarios = modeloUsuario.getAll();
 		vista.OperacionComprar(myVideogame,usuarios);

@@ -10,6 +10,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.Iterator;
 
 import javax.swing.BorderFactory;
@@ -292,7 +293,7 @@ public class PromotionsView extends JFrame{
 //		panelCentral.add(btnBuscar);
 		// Datos de la tabla
 		// Crear unan tabla
-		String[] columnNames = { "Núm", "Nombre cliente","Juego", "Fecha de Renta", "Fecha de Devolución", "Precio" };
+		String[] columnNames = { "Núm", "Nombre cliente","Juego", "Fecha de Renta", "Fecha de Devolución", "Días Rentados","Precio" };
 		DefaultTableModel model = new DefaultTableModel(columnNames, 0) {
 			@Override
 			public boolean isCellEditable(int row, int column) {
@@ -301,8 +302,14 @@ public class PromotionsView extends JFrame{
 		};
 
 		for (Transaction t : transaciones) {
+			// esta parte la uso para poder calcular los dias que rento el cliente
+			// la diferencia entre la fecha de renta y la fecha de devolucion
+			LocalDate fechaRenta = t.getTransactionDate().toLocalDate();
+		    LocalDate fechaDevolucion = t.getReturnDate().toLocalDate();
+		    long diasRentados = ChronoUnit.DAYS.between(fechaRenta, fechaDevolucion);
 
-			Object[] rowData = { t.getId(), t.getCustomerName(),t.getVideoGameName(), t.getTransactionDate(),t.getReturnDate(), "$" + t.getPrice() };
+			Object[] rowData = { t.getId(), t.getCustomerName(),t.getVideoGameName(), t.getTransactionDate(),
+					t.getReturnDate(),diasRentados, "$" + t.getPrice() };
 			model.addRow(rowData);
 		}
 
@@ -352,7 +359,7 @@ public class PromotionsView extends JFrame{
 		panelCentral.add(scrollPane);
 
 		DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
-		centerRenderer.setHorizontalAlignment(JLabel.CENTER);
+		centerRenderer.setHorizontalAlignment(JLabel.CENTER);	
 
 
 		// 3. PANEL ROJO SUPERIOR (barra de título)

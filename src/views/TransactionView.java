@@ -987,26 +987,6 @@ public class TransactionView extends JFrame {
 		lblValorCorreoCliente.setBounds(700, 160, 300, 20);
 		panelCentral.add(lblValorCorreoCliente);
 
-		// Botones
-		JButton btnCancelar = new JButton("Cancelar");
-		btnCancelar.setBackground(Color.decode("#B82F2F"));
-		btnCancelar.setForeground(Color.WHITE);
-		btnCancelar.setBounds(175, 406, 172, 30);
-		btnCancelar.addActionListener(e -> {
-			int cancelar;
-
-			cancelar = JOptionPane.showConfirmDialog(null, "¿Seguro que quieres cancelar?", "Confirmar cancelacion",
-					JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-
-			if (cancelar == JOptionPane.YES_OPTION) {
-				dispose();
-
-				TransactionController tc = new TransactionController();
-				tc.selectCustomerRent(videogames.getId());
-			}
-		});
-		panelCentral.add(btnCancelar);
-
 		// Detalles de la compra
 		JLabel lblTituloJuego = new JLabel("Nombre de videojuego");
 		lblTituloJuego.setHorizontalAlignment(SwingConstants.CENTER);
@@ -1137,6 +1117,26 @@ public class TransactionView extends JFrame {
 		barraRoja.setBackground(Color.decode("#B44635"));
 		barraRoja.setBounds(0, 0, 1024, 60);
 		layeredPane.add(barraRoja, JLayeredPane.PALETTE_LAYER);
+
+		// Botones
+		JButton btnCancelar = new JButton("Cancelar");
+		btnCancelar.setBackground(Color.decode("#B82F2F"));
+		btnCancelar.setForeground(Color.WHITE);
+		btnCancelar.setBounds(175, 406, 172, 30);
+		btnCancelar.addActionListener(e -> {
+			int cancelar;
+
+			cancelar = JOptionPane.showConfirmDialog(null, "¿Seguro que quieres cancelar?", "Confirmar cancelacion",
+					JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+
+			if (cancelar == JOptionPane.YES_OPTION) {
+				dispose();
+
+				TransactionController tc = new TransactionController();
+				tc.selectCustomerRent(videogames.getId());
+			}
+		});
+		panelCentral.add(btnCancelar);
 
 		JButton btnConfirmar = new JButton("Confirmar");
 		btnConfirmar.setBackground(Color.decode("#263C54"));
@@ -1599,7 +1599,7 @@ public class TransactionView extends JFrame {
 			ex.printStackTrace();
 		}
 		// Configuración básica de la ventana
-		setTitle("Seleccione usuario para renta");
+		setTitle("Seleccione usuario para venta");
 		setSize(1024, 576);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLocationRelativeTo(null);
@@ -1703,7 +1703,7 @@ public class TransactionView extends JFrame {
 		panelCentral.setBounds(277, 62, 731, 475);
 		layeredPane.add(panelCentral, JLayeredPane.PALETTE_LAYER);
 
-		JLabel iniciar = new JLabel("SELECCIONE UN USUARIO PARA RENTA");
+		JLabel iniciar = new JLabel("SELECCIONE UN USUARIO PARA VENTA");
 		iniciar.setBounds(150, 11, 500, 42);
 		iniciar.setHorizontalAlignment(JLabel.LEFT);
 		iniciar.setFont(new Font("Calibri", Font.BOLD, 20));
@@ -1848,8 +1848,12 @@ public class TransactionView extends JFrame {
 		
 	}
 	
-	public void OperacionComprar(VideoGames videogames, List<User> users) {
-		
+	public void OperacionComprar(VideoGames videogames, User user) {
+
+		// selecciona la fecha actual y le da formato
+		LocalDate fechaActual = LocalDate.now();
+		String fechaFormateada = fechaActual.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+
 		// Configuración básica de la ventana
 		setTitle("Detalles de operación Comprar");
 		setSize(1024, 576);
@@ -1868,43 +1872,100 @@ public class TransactionView extends JFrame {
 		panelCentral.setBounds(5, 62, 998, 475);
 		layeredPane.add(panelCentral, JLayeredPane.PALETTE_LAYER);
 
-		// Logo
+		// Logotipo
 		ImageIcon iconoOriginal = new ImageIcon(getClass().getResource("/images/Block.png"));
 		Image imagenEscalada = iconoOriginal.getImage().getScaledInstance(70, 70, Image.SCALE_SMOOTH);
-		JLabel lblLogo = new JLabel(new ImageIcon(imagenEscalada));
-		lblLogo.setBounds(477, 11, 70, 70);
-		panelCentral.add(lblLogo);
+		JLabel logo = new JLabel(new ImageIcon(imagenEscalada));
+		logo.setBounds(477, 11, 70, 70); // posicion
+		panelCentral.add(logo);
 
-		// Título principal
-		JLabel lblTitulo = new JLabel("DETALLES DE OPERACIÓN");
-		lblTitulo.setSize(273, 42);
-		lblTitulo.setLocation(369, 78);
-		lblTitulo.setHorizontalAlignment(JLabel.LEFT);
-		lblTitulo.setFont(new Font("Calibri", Font.BOLD, 24));
-		panelCentral.add(lblTitulo);
-
-		// Campos de entrada
+		// Nombre del cliente
 		JLabel lblNombreCliente = new JLabel("Nombre del cliente");
-		lblNombreCliente.setHorizontalAlignment(SwingConstants.LEFT);
 		lblNombreCliente.setFont(new Font("Calibri", Font.BOLD, 14));
 		lblNombreCliente.setBounds(450, 130, 160, 42);
 		panelCentral.add(lblNombreCliente);
 
-		// esta parte se encarga de mostrar los usuarios y los correos
-		// Crear un arreglo con los nombres y correos de los usuarios
-		String[] listaUsuarios = new String[users.size()];
+		// Nombre completo del cliente
+		JLabel lblValorNombreCliente = new JLabel(
+				user.getNombre() + " " + user.getApellidoMaterno() + " " + user.getApellidoMaterno());
+		lblValorNombreCliente.setFont(new Font("Calibri", Font.PLAIN, 14));
+		lblValorNombreCliente.setBounds(450, 160, 300, 20);
+		panelCentral.add(lblValorNombreCliente);
 
-		for (int i = 0; i < users.size(); i++) {
-			User usuario = users.get(i);
-			listaUsuarios[i] = usuario.getId() + " - " + usuario.getNombre() + " " + usuario.getApellidoPaterno() + " "
-					+ usuario.getApellidoMaterno() + " (" + usuario.getCorreo() + ")";
-		}
+		// ID del Cliente
+		JLabel lblIDCliente = new JLabel("ID del cliente:");
+		lblIDCliente.setFont(new Font("Calibri", Font.BOLD, 14));
+		lblIDCliente.setBounds(155, 140, 150, 20);
+		panelCentral.add(lblIDCliente);
 
-		// Crear y configurar el ComboBox
-		JComboBox<String> comboUsuarios = new JComboBox<>(listaUsuarios);
-		comboUsuarios.setBounds(290, 161, 510, 27);
-		comboUsuarios.setBackground(Color.decode("#D9D9D9"));
-		panelCentral.add(comboUsuarios);
+		JLabel lblValorIDCliente = new JLabel(String.valueOf(user.getId()));
+		lblValorIDCliente.setFont(new Font("Calibri", Font.PLAIN, 14));
+		lblValorIDCliente.setBounds(250, 140, 200, 20);
+		panelCentral.add(lblValorIDCliente);
+
+		// Correo electrónico
+		JLabel lblCorreoCliente = new JLabel("Correo electrónico:");
+		lblCorreoCliente.setFont(new Font("Calibri", Font.BOLD, 14));
+		lblCorreoCliente.setBounds(700, 140, 160, 20);
+		panelCentral.add(lblCorreoCliente);
+
+		JLabel lblValorCorreoCliente = new JLabel(user.getCorreo());
+		lblValorCorreoCliente.setFont(new Font("Calibri", Font.PLAIN, 14));
+		lblValorCorreoCliente.setBounds(700, 160, 300, 20);
+		panelCentral.add(lblValorCorreoCliente);
+
+		// Detalles de la compra
+		JLabel lblTituloJuego = new JLabel("Nombre de videojuego");
+		lblTituloJuego.setHorizontalAlignment(SwingConstants.CENTER);
+		lblTituloJuego.setFont(new Font("Calibri", Font.BOLD, 14));
+		lblTituloJuego.setBounds(75, 215, 255, 42);
+		panelCentral.add(lblTituloJuego);
+
+		JLabel lblNombre = new JLabel(videogames.getNombre());
+		lblNombre.setFont(new Font("Anton", Font.BOLD, 14));
+		lblNombre.setBounds(135, 246, 355, 42);
+		panelCentral.add(lblNombre);
+
+		JLabel lblPrecio = new JLabel("Precio (MXN):");
+		lblPrecio.setHorizontalAlignment(SwingConstants.LEFT);
+		lblPrecio.setFont(new Font("Calibri", Font.BOLD, 14));
+		lblPrecio.setBounds(450, 215, 255, 42);
+		panelCentral.add(lblPrecio);
+
+		JLabel lblValorRenta = new JLabel("" + videogames.getPrecioVenta());
+		lblValorRenta.setFont(new Font("Calibri", Font.BOLD, 14));
+		lblValorRenta.setBounds(490, 246, 255, 42);
+		panelCentral.add(lblValorRenta);
+
+		JLabel lblFecha = new JLabel("Fecha:");
+		lblFecha.setHorizontalAlignment(SwingConstants.CENTER);
+		lblFecha.setFont(new Font("Calibri", Font.BOLD, 14));
+		lblFecha.setBounds(70, 293, 255, 42);
+		panelCentral.add(lblFecha);
+
+		JLabel lblValorFecha = new JLabel(fechaFormateada);
+		lblValorFecha.setHorizontalAlignment(SwingConstants.CENTER);
+		lblValorFecha.setFont(new Font("Calibri", Font.BOLD, 14));
+		lblValorFecha.setBounds(75, 320, 255, 42);
+		panelCentral.add(lblValorFecha);
+
+		JLabel lblTipo = new JLabel("Tipo:");
+		lblTipo.setHorizontalAlignment(SwingConstants.CENTER);
+		lblTipo.setFont(new Font("Calibri", Font.BOLD, 14));
+		lblTipo.setBounds(695, 215, 101, 42);
+		panelCentral.add(lblTipo);
+
+		JLabel lblValorTipo = new JLabel("Venta");
+		lblValorTipo.setHorizontalAlignment(SwingConstants.CENTER);
+		lblValorTipo.setFont(new Font("Calibri", Font.BOLD, 14));
+		lblValorTipo.setBounds(700, 246, 101, 42);
+		panelCentral.add(lblValorTipo);
+
+		// Barra superior roja
+		JPanel barraRoja = new JPanel();
+		barraRoja.setBackground(Color.decode("#B44635"));
+		barraRoja.setBounds(0, 0, 1024, 60);
+		layeredPane.add(barraRoja, JLayeredPane.PALETTE_LAYER);
 
 		// Botones
 		JButton btnCancelar = new JButton("Cancelar");
@@ -1919,100 +1980,16 @@ public class TransactionView extends JFrame {
 		});
 		panelCentral.add(btnCancelar);
 
-
-		// Detalles de la compra
-		JLabel lblTituloJuego = new JLabel("Nombre de videojuego");
-		lblTituloJuego.setHorizontalAlignment(SwingConstants.CENTER);
-		lblTituloJuego.setFont(new Font("Calibri", Font.BOLD, 14));
-		lblTituloJuego.setBounds(75, 215, 255, 42);
-		panelCentral.add(lblTituloJuego);
-
-		JLabel lblNombre = new JLabel(videogames.getNombre());
-		lblNombre.setFont(new Font("Anton", Font.BOLD, 14));
-		lblNombre.setBounds(150, 246, 255, 42);
-		panelCentral.add(lblNombre);
-
-		JLabel lblPrecio = new JLabel("Precio (MXN):");
-		lblPrecio.setHorizontalAlignment(SwingConstants.CENTER);
-		lblPrecio.setFont(new Font("Calibri", Font.BOLD, 14));
-		lblPrecio.setBounds(403, 215, 255, 42);
-		panelCentral.add(lblPrecio);
-
-		JLabel lblValorVenta = new JLabel("" + videogames.getPrecioVenta());
-		lblValorVenta.setFont(new Font("Calibri", Font.BOLD, 14));
-		lblValorVenta.setBounds(503, 246, 255, 42);
-		panelCentral.add(lblValorVenta);
-
-		JLabel lblDescuento = new JLabel("Descuento:");
-		lblDescuento.setHorizontalAlignment(SwingConstants.CENTER);
-		lblDescuento.setFont(new Font("Calibri", Font.BOLD, 14));
-		lblDescuento.setBounds(75, 293, 255, 42);
-		panelCentral.add(lblDescuento);
-
-		JLabel lblValorDescuento = new JLabel("07%");
-		lblValorDescuento.setHorizontalAlignment(SwingConstants.CENTER);
-		lblValorDescuento.setFont(new Font("Calibri", Font.BOLD, 14));
-		lblValorDescuento.setBounds(75, 320, 255, 42);
-		panelCentral.add(lblValorDescuento);
-
-		JLabel lblFecha = new JLabel("Fecha:");
-		lblFecha.setHorizontalAlignment(SwingConstants.CENTER);
-		lblFecha.setFont(new Font("Calibri", Font.BOLD, 14));
-		lblFecha.setBounds(403, 293, 255, 42);
-		panelCentral.add(lblFecha);
-
-		LocalDate fechaActual = LocalDate.now();
-		String fechaFormateada = fechaActual.format(DateTimeFormatter.ofPattern("yyyy/MM/dd"));
-
-		JLabel lblValorFecha = new JLabel(fechaFormateada);
-		lblValorFecha.setHorizontalAlignment(SwingConstants.CENTER);
-		lblValorFecha.setFont(new Font("Calibri", Font.BOLD, 14));
-		lblValorFecha.setBounds(403, 320, 255, 42);
-		panelCentral.add(lblValorFecha);
-
-		JLabel lblTipo = new JLabel("Tipo:");
-		lblTipo.setHorizontalAlignment(SwingConstants.CENTER);
-		lblTipo.setFont(new Font("Calibri", Font.BOLD, 14));
-		lblTipo.setBounds(687, 215, 101, 42);
-		panelCentral.add(lblTipo);
-
-		JLabel lblVenta = new JLabel("Venta");
-		lblVenta.setHorizontalAlignment(SwingConstants.CENTER);
-		lblVenta.setFont(new Font("Calibri", Font.BOLD, 14));
-		lblVenta.setBounds(687, 246, 101, 42);
-		panelCentral.add(lblVenta);
-
-		// Barra superior roja
-		JPanel barraRoja = new JPanel();
-		barraRoja.setBackground(Color.decode("#B44635"));
-		barraRoja.setBounds(0, 0, 1024, 60);
-		layeredPane.add(barraRoja, JLayeredPane.PALETTE_LAYER);
-
-		UtilDateModel model = new UtilDateModel();
-		
 		JButton btnConfirmar = new JButton("Confirmar");
 		btnConfirmar.setBackground(Color.decode("#263C54"));
 		btnConfirmar.setForeground(Color.WHITE);
 		btnConfirmar.setBounds(582, 406, 183, 33);
 		btnConfirmar.addActionListener(e -> {
 			try {
-				// 1. Obtener usuario seleccionado
-				String seleccion = (String) comboUsuarios.getSelectedItem();
-				int customerId = Integer.parseInt(seleccion.split(" - ")[0]);
+				dispose();
+				TransactionController tc = new TransactionController();
+				tc.indexDetallesCompra(user.getId(), videogames.getId());
 
-				// 3. Crear la transacción en la base de datos
-				TransactionModel transModel = new TransactionModel();
-				boolean exito = transModel.createTransaction(customerId, videogames.getId(), "sale",
-						null, videogames.getPrecioVenta(), "completed");
-
-				if (exito) {
-					JOptionPane.showMessageDialog(this, "¡Venta registrada con éxito!");
-					dispose();
-					new TransactionController().indexDetallesCompra(customerId, videogames.getId());
-				} else {
-					JOptionPane.showMessageDialog(this, "Error al registrar la renta", "Error",
-							JOptionPane.ERROR_MESSAGE);
-				}
 			} catch (Exception ex) {
 				JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 				ex.printStackTrace();

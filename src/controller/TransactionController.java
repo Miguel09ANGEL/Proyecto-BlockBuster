@@ -53,7 +53,7 @@ public class TransactionController {
 	public void salesOperation(int idVideogame, int idConstumer) {
 		VideoGames myVideogame = modeloVideojuego.getVideogames(idVideogame);
 		User myUser = modeloUsuario.get(idConstumer);
-		vista.OperacionComprar(myVideogame,usuarios);
+		vista.OperacionComprar(myVideogame,myUser);
 	}
 	
 	public void indexDetallesCompra(int idConstumer, int idVideogame) {

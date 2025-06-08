@@ -859,7 +859,8 @@ public class TransactionView extends JFrame {
 			
 			if(cancelar == JOptionPane.YES_OPTION) {
 				dispose();
-				AdministradorRentaCompra();
+				TransactionController tc = new TransactionController();
+				tc.rentalIndex();
 			}
 			
 		});
@@ -963,7 +964,7 @@ public class TransactionView extends JFrame {
 				dispose();
 
 				TransactionController tc = new TransactionController();
-				tc.updateVideogames(videogames.getId());
+				tc.selectCustomerRent(videogames.getId());
 			}
 		});
 		panelCentral.add(btnCancelar);
@@ -1169,13 +1170,13 @@ public class TransactionView extends JFrame {
 		JLabel lblCorreo = new JLabel("Correo:");
 		lblCorreo.setHorizontalAlignment(SwingConstants.LEFT);
 		lblCorreo.setFont(new Font("Calibri", Font.BOLD, 18));
-		lblCorreo.setBounds(503, 85, 70, 42);
+		lblCorreo.setBounds(553, 85, 70, 42);
 		panelCentral.add(lblCorreo);
 
 		JLabel lblEmailCliente = new JLabel(user.getCorreo());
 		lblEmailCliente.setHorizontalAlignment(SwingConstants.CENTER);
 		lblEmailCliente.setFont(new Font("Calibri", Font.BOLD, 18));
-		lblEmailCliente.setBounds(436, 102, 200, 42);
+		lblEmailCliente.setBounds(469, 102, 200, 42);
 		panelCentral.add(lblEmailCliente);
 
 		// Logo del juego
@@ -1392,7 +1393,7 @@ public class TransactionView extends JFrame {
 				if (cancelar == JOptionPane.YES_OPTION) {
 					dispose();
 					TransactionController tc = new TransactionController();
-					tc.rentalIndex();
+					tc.rentalOperation(videogames.getId(), user.getId());
 				}
 			}
 		});

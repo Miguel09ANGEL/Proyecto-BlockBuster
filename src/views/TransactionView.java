@@ -862,11 +862,12 @@ public class TransactionView extends JFrame {
 		panelCentral.add(Buscador);
 
 		// BOTON EDITAR PROVICIONAL, MEJORAR
-		JButton btnEditar = new JButton("Seleccionar");
-		btnEditar.setForeground(Color.WHITE);
-		btnEditar.setBackground(Color.decode("#4fadbd"));
-		btnEditar.setBounds(534, 420, 172, 30);
-		btnEditar.addActionListener(e -> {
+		JButton btnSiguiente = new JButton("SIGUIENTE");
+		btnSiguiente.setForeground(Color.WHITE);
+		btnSiguiente.setBackground(Color.decode("#6D91B9"));
+		btnSiguiente.setFont(new Font("Arial", Font.BOLD, 14));
+		btnSiguiente.setBounds(534, 420, 172, 30);
+		btnSiguiente.addActionListener(e -> {
 
 			int selectedRow = table.getSelectedRow();
 
@@ -884,11 +885,12 @@ public class TransactionView extends JFrame {
 			tc.rentalOperation(videojuegos.getId(), userId);
 
 		});
-		panelCentral.add(btnEditar);
+		panelCentral.add(btnSiguiente);
 		
-		JButton btnEliminar = new JButton("Cancelar");
+		JButton btnEliminar = new JButton("CANCELAR");
 		btnEliminar.setForeground(Color.WHITE);
 		btnEliminar.setBackground(Color.decode("#B82F2F"));
+		btnEliminar.setFont(new Font("Arial", Font.BOLD, 14));
 		btnEliminar.setBounds(26, 420, 172, 30);
 		btnEliminar.addActionListener(e -> {
 			int cancelar;
@@ -1007,7 +1009,7 @@ public class TransactionView extends JFrame {
 
 		JLabel lblValorRenta = new JLabel("" + videogames.getPrecioRenta());
 		lblValorRenta.setFont(new Font("Calibri", Font.BOLD, 14));
-		lblValorRenta.setBounds(490, 246, 255, 42);
+		lblValorRenta.setBounds(465, 246, 255, 42);
 		panelCentral.add(lblValorRenta);
 
 		JLabel lblFecha = new JLabel("Fecha:");
@@ -1119,9 +1121,10 @@ public class TransactionView extends JFrame {
 		layeredPane.add(barraRoja, JLayeredPane.PALETTE_LAYER);
 
 		// Botones
-		JButton btnCancelar = new JButton("Cancelar");
-		btnCancelar.setBackground(Color.decode("#B82F2F"));
+		JButton btnCancelar = new JButton("CANCELAR");
 		btnCancelar.setForeground(Color.WHITE);
+		btnCancelar.setBackground(Color.decode("#B82F2F"));
+		btnCancelar.setFont(new Font("Arial", Font.BOLD, 14));
 		btnCancelar.setBounds(175, 406, 172, 30);
 		btnCancelar.addActionListener(e -> {
 			int cancelar;
@@ -1138,11 +1141,12 @@ public class TransactionView extends JFrame {
 		});
 		panelCentral.add(btnCancelar);
 
-		JButton btnConfirmar = new JButton("Confirmar");
-		btnConfirmar.setBackground(Color.decode("#263C54"));
-		btnConfirmar.setForeground(Color.WHITE);
-		btnConfirmar.setBounds(582, 406, 172, 30);
-		btnConfirmar.addActionListener(e -> {
+		JButton btnSiguiente = new JButton("SIGUIENTE");
+		btnSiguiente.setForeground(Color.WHITE);
+		btnSiguiente.setBackground(Color.decode("#6D91B9"));
+		btnSiguiente.setFont(new Font("Arial", Font.BOLD, 14));
+		btnSiguiente.setBounds(582, 406, 172, 30);
+		btnSiguiente.addActionListener(e -> {
 			try {
 				// 1. Obtener fecha de devolución
 				Date fechaDevolucion = new Date(((java.util.Date) datePicker.getModel().getValue()).getTime());
@@ -1156,12 +1160,13 @@ public class TransactionView extends JFrame {
 				ex.printStackTrace();
 			}
 		});
-		panelCentral.add(btnConfirmar);
+		panelCentral.add(btnSiguiente);
 
 		setVisible(true);
 	}
 
 	public void DetallesRenta(User user, VideoGames videogames, Date fechaDevolucion) {
+		
 		// Configuración básica de la ventana
 		setTitle("Detalles VideoJuego Rentado");
 		setSize(1024, 576);
@@ -1419,8 +1424,8 @@ public class TransactionView extends JFrame {
 		panelCentral.add(lblTotal);
 		
 		// Botones
-		JButton btnRegresar = new JButton("REGRESAR");
-		btnRegresar.addActionListener(new ActionListener() {
+		JButton btnCancelar = new JButton("CANCELAR");
+		btnCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
 				int cancelar;
@@ -1435,14 +1440,16 @@ public class TransactionView extends JFrame {
 				}
 			}
 		});
-		btnRegresar.setBackground(Color.decode("#B82F2F"));
-		btnRegresar.setForeground(Color.WHITE);
-		btnRegresar.setBounds(185, 406, 183, 33);
-		panelCentral.add(btnRegresar);
+		btnCancelar.setForeground(Color.WHITE);
+		btnCancelar.setBackground(Color.decode("#B82F2F"));
+		btnCancelar.setFont(new Font("Arial", Font.BOLD, 14));
+		btnCancelar.setBounds(185, 406, 183, 33);
+		panelCentral.add(btnCancelar);
 		
 		JButton btnDescargarPDF = new JButton("DESCARGAR (PDF)");
-		btnDescargarPDF.setBackground(Color.decode("#263C54"));
 		btnDescargarPDF.setForeground(Color.WHITE);
+		btnDescargarPDF.setBackground(Color.decode("#6D91B9"));
+		btnDescargarPDF.setFont(new Font("Arial", Font.BOLD, 14));
 		btnDescargarPDF.setBounds(680, 406, 183, 33);
 		btnDescargarPDF.setEnabled(false); // Con esto se desabilita el boton al inicio
 		btnDescargarPDF.addActionListener(new ActionListener() {
@@ -1550,9 +1557,10 @@ public class TransactionView extends JFrame {
 		panelCentral.add(btnDescargarPDF);
 		
 
-		JButton btnConfirmacionCompra = new JButton("CONFIRMACION DE COMPRA");
-		btnConfirmacionCompra.setBackground(Color.decode("#3db8cd"));
+		JButton btnConfirmacionCompra = new JButton("CONFIRMACION DE RENTA");
 		btnConfirmacionCompra.setForeground(Color.WHITE);
+		btnConfirmacionCompra.setBackground(Color.decode("#6D91B9"));
+		btnConfirmacionCompra.setFont(new Font("Arial", Font.BOLD, 14));
 		btnConfirmacionCompra.setBounds(420, 406, 220, 33);
 		btnConfirmacionCompra.addActionListener(e ->{
 			try {
@@ -1588,6 +1596,7 @@ public class TransactionView extends JFrame {
 		layeredPane.add(barraRoja, JLayeredPane.PALETTE_LAYER);
 
 		setVisible(true);
+		
 	}
 	
 	public void SeleccionClienteVenta(VideoGames videojuegos ,List<User> usuarios) {
@@ -1795,11 +1804,12 @@ public class TransactionView extends JFrame {
 		panelCentral.add(Buscador);
 
 		// BOTON EDITAR PROVICIONAL, MEJORAR
-		JButton btnEditar = new JButton("Seleccionar");
-		btnEditar.setForeground(Color.WHITE);
-		btnEditar.setBackground(Color.decode("#4fadbd"));
-		btnEditar.setBounds(534, 420, 172, 30);
-		btnEditar.addActionListener(e -> {
+		JButton btnSiguiente = new JButton("SIGUIENTE");
+		btnSiguiente.setForeground(Color.WHITE);
+		btnSiguiente.setBackground(Color.decode("#6D91B9"));
+		btnSiguiente.setFont(new Font("Arial", Font.BOLD, 14));
+		btnSiguiente.setBounds(534, 420, 172, 30);
+		btnSiguiente.addActionListener(e -> {
 
 			int selectedRow = table.getSelectedRow();
 
@@ -1817,11 +1827,12 @@ public class TransactionView extends JFrame {
 			tc.salesOperation(videojuegos.getId(), userId);
 
 		});
-		panelCentral.add(btnEditar);
+		panelCentral.add(btnSiguiente);
 		
-		JButton btnEliminar = new JButton("Cancelar");
+		JButton btnEliminar = new JButton("CANCELAR");
 		btnEliminar.setForeground(Color.WHITE);
 		btnEliminar.setBackground(Color.decode("#B82F2F"));
+		btnEliminar.setFont(new Font("Arial", Font.BOLD, 14));
 		btnEliminar.setBounds(26, 420, 172, 30);
 		btnEliminar.addActionListener(e -> {
 			int cancelar;
@@ -1831,7 +1842,7 @@ public class TransactionView extends JFrame {
 			if(cancelar == JOptionPane.YES_OPTION) {
 				dispose();
 				TransactionController tc = new TransactionController();
-				tc.rentalIndex();
+				tc.salesIndex();
 			}
 			
 		});
@@ -1887,7 +1898,7 @@ public class TransactionView extends JFrame {
 
 		// Nombre completo del cliente
 		JLabel lblValorNombreCliente = new JLabel(
-				user.getNombre() + " " + user.getApellidoMaterno() + " " + user.getApellidoMaterno());
+				user.getNombre() + " " + user.getApellidoMaterno() + " " + user.getApellidoPaterno());
 		lblValorNombreCliente.setFont(new Font("Calibri", Font.PLAIN, 14));
 		lblValorNombreCliente.setBounds(450, 160, 300, 20);
 		panelCentral.add(lblValorNombreCliente);
@@ -1929,12 +1940,12 @@ public class TransactionView extends JFrame {
 		JLabel lblPrecio = new JLabel("Precio (MXN):");
 		lblPrecio.setHorizontalAlignment(SwingConstants.LEFT);
 		lblPrecio.setFont(new Font("Calibri", Font.BOLD, 14));
-		lblPrecio.setBounds(450, 215, 255, 42);
+		lblPrecio.setBounds(460, 215, 255, 42);
 		panelCentral.add(lblPrecio);
 
-		JLabel lblValorRenta = new JLabel("" + videogames.getPrecioVenta());
+		JLabel lblValorRenta = new JLabel("$ " + videogames.getPrecioVenta());
 		lblValorRenta.setFont(new Font("Calibri", Font.BOLD, 14));
-		lblValorRenta.setBounds(490, 246, 255, 42);
+		lblValorRenta.setBounds(470, 246, 255, 42);
 		panelCentral.add(lblValorRenta);
 
 		JLabel lblFecha = new JLabel("Fecha:");
@@ -1968,23 +1979,25 @@ public class TransactionView extends JFrame {
 		layeredPane.add(barraRoja, JLayeredPane.PALETTE_LAYER);
 
 		// Botones
-		JButton btnCancelar = new JButton("Cancelar");
-		btnCancelar.setBackground(Color.decode("#B82F2F"));
+		JButton btnCancelar = new JButton("CANCELAR");
 		btnCancelar.setForeground(Color.WHITE);
+		btnCancelar.setBackground(Color.decode("#B82F2F"));
+		btnCancelar.setFont(new Font("Arial", Font.BOLD, 14));
 		btnCancelar.setBounds(175, 406, 183, 33);
 		btnCancelar.addActionListener(e -> {
 			dispose();
 			TransactionController tc = new TransactionController();
-			tc.salesIndex();
+			tc.selectCustomerVent(videogames.getId());
 
 		});
 		panelCentral.add(btnCancelar);
 
-		JButton btnConfirmar = new JButton("Confirmar");
-		btnConfirmar.setBackground(Color.decode("#263C54"));
-		btnConfirmar.setForeground(Color.WHITE);
-		btnConfirmar.setBounds(582, 406, 183, 33);
-		btnConfirmar.addActionListener(e -> {
+		JButton btnSiguiente = new JButton("SIGUIENTE");
+		btnSiguiente.setForeground(Color.WHITE);
+		btnSiguiente.setBackground(Color.decode("#6D91B9"));
+		btnSiguiente.setFont(new Font("Arial", Font.BOLD, 14));
+		btnSiguiente.setBounds(582, 406, 183, 33);
+		btnSiguiente.addActionListener(e -> {
 			try {
 				dispose();
 				TransactionController tc = new TransactionController();
@@ -1995,7 +2008,7 @@ public class TransactionView extends JFrame {
 				ex.printStackTrace();
 			}
 		});
-		panelCentral.add(btnConfirmar);
+		panelCentral.add(btnSiguiente);
 
 		setVisible(true);
 	}
@@ -2025,7 +2038,7 @@ public class TransactionView extends JFrame {
 		Image imagenEscalada = iconoOriginal.getImage().getScaledInstance(100, 70, Image.SCALE_SMOOTH);
 
 		// Título principal
-		JLabel lblTitulo = new JLabel("DETALLES DE VIDEOJUEGO");
+		JLabel lblTitulo = new JLabel("VENTA DE VIDEOJUEGO");
 		lblTitulo.setSize(285, 42);
 		lblTitulo.setLocation(442, 32);
 		lblTitulo.setHorizontalAlignment(JLabel.CENTER);
@@ -2039,41 +2052,29 @@ public class TransactionView extends JFrame {
 		lblCliente.setBounds(256, 85, 70, 42);
 		panelCentral.add(lblCliente);
 
-		JLabel lblNombreCliente = new JLabel(user.getNombre()+" "+user.getApellidoPaterno());
-		lblNombreCliente.setHorizontalAlignment(SwingConstants.CENTER);
+		JLabel lblNombreCliente = new JLabel(
+				user.getNombre() + " " + user.getApellidoPaterno() + " " + user.getApellidoMaterno());
+		lblNombreCliente.setHorizontalAlignment(SwingConstants.LEFT);
 		lblNombreCliente.setFont(new Font("Calibri", Font.BOLD, 18));
-		lblNombreCliente.setBounds(226, 102, 112, 42);
+		lblNombreCliente.setBounds(256, 102, 250, 42);
 		panelCentral.add(lblNombreCliente);
 
 		JLabel lblCorreo = new JLabel("Correo:");
 		lblCorreo.setHorizontalAlignment(SwingConstants.LEFT);
 		lblCorreo.setFont(new Font("Calibri", Font.BOLD, 18));
-		lblCorreo.setBounds(503, 85, 70, 42);
+		lblCorreo.setBounds(553, 85, 70, 42);
 		panelCentral.add(lblCorreo);
 
 		JLabel lblEmailCliente = new JLabel(user.getCorreo());
 		lblEmailCliente.setHorizontalAlignment(SwingConstants.CENTER);
 		lblEmailCliente.setFont(new Font("Calibri", Font.BOLD, 18));
-		lblEmailCliente.setBounds(436, 102, 200, 42);
+		lblEmailCliente.setBounds(469, 102, 250, 42);
 		panelCentral.add(lblEmailCliente);
 
-		// Botones
-		JButton btnRegresar = new JButton("REGRESAR");
-		btnRegresar.addActionListener(e -> {
-			dispose();
-			TransactionController tc = new TransactionController();
-			tc.salesIndex();
-
-		});
-		btnRegresar.setBackground(Color.decode("#B82F2F"));
-		btnRegresar.setForeground(Color.WHITE);
-		btnRegresar.setBounds(185, 406, 183, 33);
-		panelCentral.add(btnRegresar);
-
-		// Imagen del juego
-		ImageIcon iconoLogo = new ImageIcon(getClass().getResource("/images/Contra.png"));
-		Image imagenLogo = iconoOriginal.getImage().getScaledInstance(180, 120, Image.SCALE_SMOOTH);
-		JLabel lblLogoJuego = new JLabel(new ImageIcon(imagenLogo));
+		// Logo del juego
+		ImageIcon iconoOrigina = new ImageIcon(getClass().getResource("/images/Contra.png"));
+		Image imagen = iconoOriginal.getImage().getScaledInstance(180, 120, Image.SCALE_SMOOTH);
+		JLabel lblLogoJuego = new JLabel(new ImageIcon(imagen));
 		lblLogoJuego.setBounds(32, 32, 184, 112);
 		panelCentral.add(lblLogoJuego);
 
@@ -2083,7 +2084,7 @@ public class TransactionView extends JFrame {
 		lblTituloJuego.setBounds(32, 141, 400, 42);
 		panelCentral.add(lblTituloJuego);
 
-		// Detalles del juego
+		// Información del juego
 		JLabel lblAnioJuego = new JLabel("" + videogames.getAñoLanzamiento());
 		lblAnioJuego.setHorizontalAlignment(SwingConstants.LEFT);
 		lblAnioJuego.setFont(new Font("Calibri", Font.BOLD, 24));
@@ -2093,33 +2094,33 @@ public class TransactionView extends JFrame {
 		JLabel lblClasificacion = new JLabel("Clasificación:");
 		lblClasificacion.setHorizontalAlignment(SwingConstants.LEFT);
 		lblClasificacion.setFont(new Font("Calibri", Font.BOLD, 18));
-		lblClasificacion.setBounds(188, 204, 112, 42);
+		lblClasificacion.setBounds(270, 204, 112, 42);
 		panelCentral.add(lblClasificacion);
 
 		JLabel lblValorClasificacion = new JLabel(videogames.getClasificacion());
 		lblValorClasificacion.setHorizontalAlignment(SwingConstants.CENTER);
 		lblValorClasificacion.setFont(new Font("Calibri", Font.BOLD, 18));
-		lblValorClasificacion.setBounds(185, 232, 97, 42);
+		lblValorClasificacion.setBounds(280, 232, 97, 42);
 		panelCentral.add(lblValorClasificacion);
 
 		JLabel lblDistribuidor = new JLabel("Distribuidores:");
 		lblDistribuidor.setHorizontalAlignment(SwingConstants.LEFT);
 		lblDistribuidor.setFont(new Font("Calibri", Font.BOLD, 18));
-		lblDistribuidor.setBounds(188, 285, 112, 42);
+		lblDistribuidor.setBounds(270, 285, 112, 42);
 		panelCentral.add(lblDistribuidor);
 
 		JLabel lblNombreDistribuidor = new JLabel(videogames.getDesarrolladoPor());
-		lblNombreDistribuidor.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNombreDistribuidor.setHorizontalAlignment(SwingConstants.LEFT);
 		lblNombreDistribuidor.setFont(new Font("Calibri", Font.BOLD, 18));
-		lblNombreDistribuidor.setBounds(138, 309, 200, 42);
+		lblNombreDistribuidor.setBounds(270, 309, 200, 42);
 		panelCentral.add(lblNombreDistribuidor);
 
-		// Fechas
-		JLabel lblFechaCompra = new JLabel("Fecha de compra:");
-		lblFechaCompra.setHorizontalAlignment(SwingConstants.LEFT);
-		lblFechaCompra.setFont(new Font("Calibri", Font.BOLD, 18));
-		lblFechaCompra.setBounds(426, 204, 147, 42);
-		panelCentral.add(lblFechaCompra);
+		// Fechas de renta
+		JLabel lblFechaRenta = new JLabel("Fecha de renta:");
+		lblFechaRenta.setHorizontalAlignment(SwingConstants.LEFT);
+		lblFechaRenta.setFont(new Font("Calibri", Font.BOLD, 18));
+		lblFechaRenta.setBounds(520, 204, 126, 42);
+		panelCentral.add(lblFechaRenta);
 
 		LocalDate fechaActual = LocalDate.now();
 		String fechaFormateada = fechaActual.format(DateTimeFormatter.ofPattern("yyyy/MM/dd"));
@@ -2127,14 +2128,14 @@ public class TransactionView extends JFrame {
 		JLabel lblValorFecha = new JLabel(fechaFormateada);
 		lblValorFecha.setHorizontalAlignment(SwingConstants.CENTER);
 		lblValorFecha.setFont(new Font("Calibri", Font.BOLD, 18));
-		lblValorFecha.setBounds(436, 232, 97, 42);
+		lblValorFecha.setBounds(530, 232, 97, 42);
 		panelCentral.add(lblValorFecha);
 
 		// Información de pago
 		JLabel lblInfoPago = new JLabel("Información de pago");
 		lblInfoPago.setHorizontalAlignment(SwingConstants.LEFT);
 		lblInfoPago.setFont(new Font("Calibri", Font.BOLD, 18));
-		lblInfoPago.setBounds(700, 141, 167, 42);
+		lblInfoPago.setBounds(780, 141, 167, 42);
 		panelCentral.add(lblInfoPago);
 
 		JLabel lblTipoPago = new JLabel("Tipo:");
@@ -2149,185 +2150,236 @@ public class TransactionView extends JFrame {
 		lblValorTipoPago.setBounds(755, 102, 112, 42);
 		panelCentral.add(lblValorTipoPago);
 
-		// Detalles de pago
 		JLabel lblCantidad = new JLabel("Cantidad:");
 		lblCantidad.setHorizontalAlignment(SwingConstants.LEFT);
-		lblCantidad.setFont(new Font("Calibri", Font.BOLD, 14));
-		lblCantidad.setBounds(700, 174, 57, 42);
+		lblCantidad.setFont(new Font("Calibri", Font.BOLD, 18));
+		lblCantidad.setBounds(780, 174, 100, 42);
 		panelCentral.add(lblCantidad);
 
 		JLabel lblValorCantidad = new JLabel("1");
 		lblValorCantidad.setHorizontalAlignment(SwingConstants.LEFT);
-		lblValorCantidad.setFont(new Font("Calibri", Font.BOLD, 14));
-		lblValorCantidad.setBounds(765, 174, 57, 42);
+		lblValorCantidad.setFont(new Font("Calibri", Font.BOLD, 18));
+		lblValorCantidad.setBounds(860, 174, 57, 42);
 		panelCentral.add(lblValorCantidad);
 
+		// Producto y precio (sin cambios)
 		JLabel lblProducto = new JLabel("Producto:");
 		lblProducto.setHorizontalAlignment(SwingConstants.LEFT);
-		lblProducto.setFont(new Font("Calibri", Font.BOLD, 14));
-		lblProducto.setBounds(700, 205, 70, 42);
+		lblProducto.setFont(new Font("Calibri", Font.BOLD, 18));
+		lblProducto.setBounds(780, 215, 100, 42);
 		panelCentral.add(lblProducto);
 
 		JLabel lblPrecioProducto = new JLabel("" + videogames.getPrecioVenta());
 		lblPrecioProducto.setHorizontalAlignment(SwingConstants.LEFT);
-		lblPrecioProducto.setFont(new Font("Calibri", Font.BOLD, 14));
-		lblPrecioProducto.setBounds(760, 204, 85, 42);
+		lblPrecioProducto.setFont(new Font("Calibri", Font.BOLD, 18));
+		lblPrecioProducto.setBounds(860, 215, 85, 42);
 		panelCentral.add(lblPrecioProducto);
 
-		JLabel lblIVA = new JLabel("IVA:");
-		lblIVA.setHorizontalAlignment(SwingConstants.LEFT);
-		lblIVA.setFont(new Font("Calibri", Font.BOLD, 14));
-		lblIVA.setBounds(700, 232, 57, 42);
-		panelCentral.add(lblIVA);
-
-		JLabel lblValorIVA = new JLabel("$8");
-		lblValorIVA.setHorizontalAlignment(SwingConstants.LEFT);
-		lblValorIVA.setFont(new Font("Calibri", Font.BOLD, 14));
-		lblValorIVA.setBounds(728, 232, 57, 42);
-		panelCentral.add(lblValorIVA);
-
+		// Subtotal (directamente el precio de venta)
 		JLabel lblSubtotal = new JLabel("Subtotal:");
 		lblSubtotal.setHorizontalAlignment(SwingConstants.LEFT);
-		lblSubtotal.setFont(new Font("Calibri", Font.BOLD, 14));
-		lblSubtotal.setBounds(700, 258, 57, 42);
+		lblSubtotal.setFont(new Font("Calibri", Font.BOLD, 18));
+		lblSubtotal.setBounds(780, 248, 100, 42);
 		panelCentral.add(lblSubtotal);
 
-		JLabel lblValorSubtotal = new JLabel("$108.00 MXN");
+		// Valor subtotal (precio directo sin multiplicar por días)
+		BigDecimal subtotal = videogames.getPrecioVenta();
+		JLabel lblValorSubtotal = new JLabel(String.valueOf(subtotal));
 		lblValorSubtotal.setHorizontalAlignment(SwingConstants.LEFT);
-		lblValorSubtotal.setFont(new Font("Calibri", Font.BOLD, 14));
-		lblValorSubtotal.setBounds(760, 258, 78, 42);
+		lblValorSubtotal.setFont(new Font("Calibri", Font.BOLD, 18));
+		lblValorSubtotal.setBounds(860, 248, 78, 42);
 		panelCentral.add(lblValorSubtotal);
 
-		JLabel lblDescuento = new JLabel("Descuento:");
-		lblDescuento.setHorizontalAlignment(SwingConstants.LEFT);
-		lblDescuento.setFont(new Font("Calibri", Font.BOLD, 14));
-		lblDescuento.setBounds(700, 285, 70, 42);
-		panelCentral.add(lblDescuento);
+		// Operaciones (IVA y Total)
+		BigDecimal valorIVA = BigDecimal.valueOf(0.16);
+		BigDecimal iva = subtotal.multiply(valorIVA);
+		BigDecimal total = subtotal.add(iva);
 
-		JLabel lblValorDescuento = new JLabel("7%");
-		lblValorDescuento.setHorizontalAlignment(SwingConstants.LEFT);
-		lblValorDescuento.setFont(new Font("Calibri", Font.BOLD, 14));
-		lblValorDescuento.setBounds(770, 285, 57, 42);
-		panelCentral.add(lblValorDescuento);
+		// Formato para mostrar solo 2 decimales
+		DecimalFormat formato = new DecimalFormat("#0.00");
+
+		// Mostrar IVA
+		JLabel lblValorIVA = new JLabel(formato.format(iva));
+		lblValorIVA.setHorizontalAlignment(SwingConstants.CENTER);
+		lblValorIVA.setFont(new Font("Calibri", Font.BOLD, 18));
+		lblValorIVA.setBounds(880, 285, 97, 42);
+		panelCentral.add(lblValorIVA);
 
 		// Total
-		JTextArea txtTotal = new JTextArea("Total(IVA incluído, en caso de ser aplicable):");
+		JTextArea txtTotal = new JTextArea("Total(IVA 16%):");
 		txtTotal.setWrapStyleWord(true);
 		txtTotal.setOpaque(false);
 		txtTotal.setLineWrap(true);
-		txtTotal.setFont(new Font("Calibri", Font.BOLD, 20));
+		txtTotal.setFont(new Font("Calibri", Font.BOLD, 18));
 		txtTotal.setEditable(false);
-		txtTotal.setBounds(628, 341, 298, 54);
+		txtTotal.setBounds(778, 294, 298, 54);
 		panelCentral.add(txtTotal);
-
-		JLabel lblTotal = new JLabel("$800.00 MXN");
-		lblTotal.setForeground(new Color(153, 0, 0));
-		lblTotal.setHorizontalAlignment(SwingConstants.LEFT);
-		lblTotal.setFont(new Font("Calibri", Font.BOLD, 18));
-		lblTotal.setBounds(719, 359, 126, 42);
-		panelCentral.add(lblTotal);
 		
-		JButton btnDescargarPDF = new JButton("Descargar (PDF)");
-		btnDescargarPDF.setBackground(Color.decode("#263C54"));
+		JLabel precioFinal = new JLabel("Precio Final:");
+		precioFinal.setHorizontalAlignment(SwingConstants.LEFT);
+		precioFinal.setFont(new Font("Calibri", Font.BOLD, 18));
+		precioFinal.setBounds(780, 320, 100, 42);
+		panelCentral.add(precioFinal);
+
+		JLabel lbltotal = new JLabel(String.valueOf(total));
+		lbltotal.setForeground(new Color(153, 0, 0));
+		lbltotal.setHorizontalAlignment(SwingConstants.LEFT);
+		lbltotal.setFont(new Font("Calibri", Font.BOLD, 18));
+		lbltotal.setBounds(875, 320, 126, 42);
+		panelCentral.add(lbltotal);
+
+		// Botones
+		JButton btnRegresar = new JButton("REGRESAR");
+		btnRegresar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+
+				int cancelar;
+
+				cancelar = JOptionPane.showConfirmDialog(null, "¿Seguro que quieres cancelar?", "Confirmar cancelacion",
+						JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+
+				if (cancelar == JOptionPane.YES_OPTION) {
+					dispose();
+					TransactionController tc = new TransactionController();
+					tc.salesOperation(videogames.getId(), user.getId());
+				}
+			}
+		});
+		btnRegresar.setBackground(Color.decode("#B82F2F"));
+		btnRegresar.setForeground(Color.WHITE);
+		btnRegresar.setBounds(185, 406, 183, 33);
+		panelCentral.add(btnRegresar);
+
+		JButton btnDescargarPDF = new JButton("DESCARGAR (PDF)");
 		btnDescargarPDF.setForeground(Color.WHITE);
-		btnDescargarPDF.setBounds(614, 406, 183, 33);
-		btnDescargarPDF.addActionListener(e -> {
-			JFileChooser fileChooser = new JFileChooser();
-	        fileChooser.setDialogTitle("Guardar archivo PDF");
-	        fileChooser.setSelectedFile(new File("Detalles_Venta_" + videogames.getNombre() + ".pdf"));
+		btnDescargarPDF.setBackground(Color.decode("#6D91B9"));
+		btnDescargarPDF.setFont(new Font("Arial", Font.BOLD, 14));
+		btnDescargarPDF.setBounds(680, 406, 183, 33);
+		btnDescargarPDF.setEnabled(false); // Con esto se desabilita el boton al inicio
+		btnDescargarPDF.addActionListener(new ActionListener() {
+		    public void actionPerformed(ActionEvent e) {
+		        JFileChooser fileChooser = new JFileChooser();
+		        fileChooser.setDialogTitle("Guardar archivo PDF");
+		        fileChooser.setSelectedFile(new File("Detalles_Renta_" + videogames.getNombre() + ".pdf"));
 
-	        int userSelection = fileChooser.showSaveDialog(null);
+		        int userSelection = fileChooser.showSaveDialog(null);
 
-	        if (userSelection == JFileChooser.APPROVE_OPTION) {
-	            File fileToSave = fileChooser.getSelectedFile();
-	            Document document = new Document();
+		        if (userSelection == JFileChooser.APPROVE_OPTION) {
+		            File fileToSave = fileChooser.getSelectedFile();
+		            Document document = new Document();
 
-	            try {
-	                PdfWriter.getInstance(document, new FileOutputStream(fileToSave));
-	                document.open();
+		            try {
+		                PdfWriter.getInstance(document, new FileOutputStream(fileToSave));
+		                document.open();
 
-	                // Encabezado
-	                Paragraph titulo = new Paragraph("COMPROBANTE DE VENTA\n\n", 
-	                    FontFactory.getFont(FontFactory.HELVETICA_BOLD, 18));
-	                titulo.setAlignment(Element.ALIGN_CENTER);
-	                document.add(titulo);
+		                // Encabezado
+		                Paragraph titulo = new Paragraph("COMPROBANTE DE VENTA\n\n", 
+		                    FontFactory.getFont(FontFactory.HELVETICA_BOLD, 18));
+		                titulo.setAlignment(Element.ALIGN_CENTER);
+		                document.add(titulo);
 
-	                // Información del cliente
-	                Paragraph clienteHeader = new Paragraph("INFORMACIÓN DEL CLIENTE\n", 
-	                    FontFactory.getFont(FontFactory.HELVETICA_BOLD, 14));
-	                document.add(clienteHeader);
-	                
-	                document.add(new Paragraph("Nombre: " + user.getNombre() + " " + 
-	                    user.getApellidoPaterno() + " " + user.getApellidoMaterno()));
-	                document.add(new Paragraph("Correo: " + user.getCorreo()));
-	                document.add(Chunk.NEWLINE);
+		                // Información del cliente
+		                Paragraph clienteHeader = new Paragraph("INFORMACIÓN DEL CLIENTE\n", 
+		                    FontFactory.getFont(FontFactory.HELVETICA_BOLD, 14));
+		                document.add(clienteHeader);
+		                
+		                document.add(new Paragraph("Nombre: " + user.getNombre() + " " + 
+		                    user.getApellidoPaterno() + " " + user.getApellidoMaterno()));
+		                document.add(new Paragraph("Correo: " + user.getCorreo()));
+		                document.add(Chunk.NEWLINE);
 
-	                // Información del videojuego
-	                Paragraph juegoHeader = new Paragraph("INFORMACIÓN DEL VIDEOJUEGO\n", 
-	                    FontFactory.getFont(FontFactory.HELVETICA_BOLD, 14));
-	                document.add(juegoHeader);
-	                
-	                document.add(new Paragraph("Título: " + videogames.getNombre()));
-	                document.add(new Paragraph("Plataforma: " + videogames.getPlataforma()));
-	                document.add(new Paragraph("Año: " + videogames.getAñoLanzamiento()));
-	                document.add(new Paragraph("Clasificación: " + videogames.getClasificacion()));
-	                document.add(new Paragraph("Desarrollador: " + videogames.getDesarrolladoPor()));
-	                document.add(Chunk.NEWLINE);
+		                // Información del videojuego
+		                Paragraph juegoHeader = new Paragraph("INFORMACIÓN DEL VIDEOJUEGO\n", 
+		                    FontFactory.getFont(FontFactory.HELVETICA_BOLD, 14));
+		                document.add(juegoHeader);
+		                
+		                document.add(new Paragraph("Título: " + videogames.getNombre()));
+		                document.add(new Paragraph("Plataforma: " + videogames.getPlataforma()));
+		                document.add(new Paragraph("Año: " + videogames.getAñoLanzamiento()));
+		                document.add(new Paragraph("Clasificación: " + videogames.getClasificacion()));
+		                document.add(new Paragraph("Desarrollador: " + videogames.getDesarrolladoPor()));
+		                document.add(Chunk.NEWLINE);
 
-	                // Detalles de la renta
-	                Paragraph rentaHeader = new Paragraph("DETALLES DE LA VENTA\n", 
-	                    FontFactory.getFont(FontFactory.HELVETICA_BOLD, 14));
-	                document.add(rentaHeader);
-	                
-	                document.add(new Paragraph("Fecha de venta: " + fechaFormateada));
-	                
-	                document.add(Chunk.NEWLINE);
+		                // Detalles de la renta
+		                Paragraph rentaHeader = new Paragraph("DETALLES DE LA VENTA\n", 
+		                    FontFactory.getFont(FontFactory.HELVETICA_BOLD, 14));
+		                document.add(rentaHeader);
+		                
+		                SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+		                document.add(new Paragraph("Fecha de renta: " + fechaFormateada));
 
-	                // Información de pago
-	                Paragraph pagoHeader = new Paragraph("INFORMACIÓN DE PAGO\n", 
-	                    FontFactory.getFont(FontFactory.HELVETICA_BOLD, 14));
-	                document.add(pagoHeader);
-	                
-	                document.add(new Paragraph("Precio por día: $" + videogames.getPrecioVenta()));
-	                
-	                BigDecimal subtotal = videogames.getPrecioVenta();
-	                BigDecimal iva = subtotal ;
-	                BigDecimal total = subtotal;
-	                
-	                document.add(new Paragraph("Subtotal: $" + String.format("%.2f", subtotal)));
-	                document.add(new Paragraph("IVA (16%): $" + String.format("%.2f", iva)));
-	                
-	                Paragraph totalParagraph = new Paragraph("TOTAL: $" + String.format("%.2f", total), 
-	                    FontFactory.getFont(FontFactory.HELVETICA_BOLD, 12));
-	                document.add(totalParagraph);
-	                document.add(Chunk.NEWLINE);
-	                
-	                // es el pie de pagina
-	                Paragraph footer = new Paragraph(
-	                        "Gracias por su preferencia\n" +
-	                        "Videojuegos Rentables S.A. de C.V.\n" +
-	                        "Tel: 555-123-4567 | contacto@rentables.com",
-	                        FontFactory.getFont(FontFactory.HELVETICA_OBLIQUE, 10));
-	                    footer.setAlignment(Element.ALIGN_CENTER);
-	                    document.add(footer);
+		                // Información de pago
+		                Paragraph pagoHeader = new Paragraph("INFORMACIÓN DE PAGO\n", 
+		                    FontFactory.getFont(FontFactory.HELVETICA_BOLD, 14));
+		                document.add(pagoHeader);
+		                
+		                
+		                document.add(new Paragraph("Precio fijo de venta: $" + videogames.getPrecioVenta()));
+		                
+		                document.add(new Paragraph("Subtotal: $" + String.format("%.2f", subtotal)));
+		                document.add(new Paragraph("IVA (16%): $" + String.format("%.2f", iva)));
+		                
+		                Paragraph totalParagraph = new Paragraph("TOTAL: $" + String.format("%.2f", total), 
+		                    FontFactory.getFont(FontFactory.HELVETICA_BOLD, 12));
+		                document.add(totalParagraph);
+		                
+		                // es el pie de pagina
+		                Paragraph footer = new Paragraph(
+		                        "Gracias por su preferencia\n" +
+		                        "Videojuegos Rentables S.A. de C.V.\n" +
+		                        "Tel: 555-123-4567 | contacto@rentables.com",
+		                        FontFactory.getFont(FontFactory.HELVETICA_OBLIQUE, 10));
+		                    footer.setAlignment(Element.ALIGN_CENTER);
+		                    document.add(footer);
 
-	                JOptionPane.showMessageDialog(null, 
-	                    "PDF generado exitosamente", 
-	                    "Éxito", 
-	                    JOptionPane.INFORMATION_MESSAGE);
-	            } catch (Exception ex) {
-	                JOptionPane.showMessageDialog(null, 
-	                    "Error al generar PDF: " + ex.getMessage(), 
-	                    "Error", 
-	                    JOptionPane.ERROR_MESSAGE);
-	                ex.printStackTrace();
-	            } finally {
-	                document.close();
-	            }
-	        }
-	    
+		                JOptionPane.showMessageDialog(null, 
+		                    "PDF generado exitosamente", 
+		                    "Éxito", 
+		                    JOptionPane.INFORMATION_MESSAGE);
+		            } catch (Exception ex) {
+		                JOptionPane.showMessageDialog(null, 
+		                    "Error al generar PDF: " + ex.getMessage(), 
+		                    "Error", 
+		                    JOptionPane.ERROR_MESSAGE);
+		                ex.printStackTrace();
+		            } finally {
+		                document.close();
+		            }
+		        }
+		    }
 		});
 		panelCentral.add(btnDescargarPDF);
+		
+		JButton btnConfirmacionCompra = new JButton("CONFIRMACION DE VENTA");
+		btnConfirmacionCompra.setForeground(Color.WHITE);
+		btnConfirmacionCompra.setBackground(Color.decode("#6D91B9"));
+		btnConfirmacionCompra.setFont(new Font("Arial", Font.BOLD, 14));
+		btnConfirmacionCompra.setBounds(420, 406, 220, 33);
+		btnConfirmacionCompra.addActionListener(e ->{
+			try {
+
+				TransactionModel transModel = new TransactionModel();
+				boolean exito = transModel.createTransaction(user.getId(), videogames.getId(), "sale",
+						null, total, "completed");
+
+				if (exito) {
+					JOptionPane.showMessageDialog(this, "¡Renta registrada con éxito!");
+					btnDescargarPDF.setEnabled(true); // Aqui se habilita el boton de descargar
+				
+				} else {
+					JOptionPane.showMessageDialog(this, "Error al registrar la renta", "Error",
+							JOptionPane.ERROR_MESSAGE);
+					btnDescargarPDF.setEnabled(false); //Sigue desabilitado el boton descargar
+				}
+
+			} catch (Exception ex) {
+				JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+				ex.printStackTrace();
+				btnDescargarPDF.setEnabled(false);//Sigue desabilitado el boton descargar
+			}
+			
+		});
+		panelCentral.add(btnConfirmacionCompra);
 
 		// Barra superior roja
 		JPanel barraRoja = new JPanel();

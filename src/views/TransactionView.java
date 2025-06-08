@@ -69,7 +69,7 @@ import models.TransactionModel;
 import models.User;
 import models.UsersModel;
 import models.VideoGames;
-import views.UserViews.DateLabelFormatter;
+import utils.DateLabelFormatter;
 
 public class TransactionView extends JFrame {
 
@@ -2391,25 +2391,4 @@ public class TransactionView extends JFrame {
 
 	}
 
-	public class DateLabelFormatter extends AbstractFormatter {
-
-		private String datePattern = "yyyy-MM-dd";
-		private SimpleDateFormat dateFormatter = new SimpleDateFormat(datePattern);
-
-		@Override
-		public Object stringToValue(String text) throws ParseException, java.text.ParseException {
-			return dateFormatter.parseObject(text);
-		}
-
-		@Override
-		public String valueToString(Object value) throws ParseException {
-			if (value != null) {
-				Calendar cal = (Calendar) value;
-				return dateFormatter.format(cal.getTime());
-			}
-
-			return "";
-		}
-
-	}
 }

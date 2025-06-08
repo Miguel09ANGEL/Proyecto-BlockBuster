@@ -32,6 +32,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.JFormattedTextField.AbstractFormatter;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -61,6 +62,8 @@ import models.User;
 import models.UsersModel;
 import models.VideoGames;
 import models.VideoGamesModel;
+import utils.DateLabelFormatter;
+import utils.LoadingFrame;
 
 public class UserViews extends JFrame {
 
@@ -79,6 +82,18 @@ public class UserViews extends JFrame {
 			JLayeredPane layeredPane = new JLayeredPane();
 			layeredPane.setPreferredSize(new Dimension(900, 650));
 			setContentPane(layeredPane);
+
+			ImageIcon gifIcon = new ImageIcon(getClass().getResource("/images/gifCarga2.gif"));
+			JLabel labelGif = new JLabel(gifIcon);
+
+			// Tamaño del GIF
+			int gifWidth = gifIcon.getIconWidth();
+			int gifHeight = gifIcon.getIconHeight();
+
+			// Centrar el GIF en la ventana de 900x650
+			labelGif.setBounds((900 - gifWidth) / 2, (650 - gifHeight) / 2, gifWidth, gifHeight);
+			labelGif.setVisible(false);
+			layeredPane.add(labelGif, JLayeredPane.PALETTE_LAYER);
 
 			// 3. PANEL ROJO SUPERIOR (barra de título)
 			JPanel barraRoja = new JPanel();
@@ -174,10 +189,16 @@ public class UserViews extends JFrame {
 			registros.setFont(new Font("Calibri", Font.BOLD, 16));
 			registros.setBackground(new Color(38, 60, 84));
 			registros.addActionListener(e -> {
-				dispose();
-//				RegistroClientes(); // Abre la segunda ventana
-				UserController uc = new UserController();
-				uc.index();
+
+				// se crea el objeto runnable que es la tarea que tiene que recibir
+				Runnable tarea = () -> {
+					UserController uc = new UserController();
+					uc.index();
+					dispose();
+				};
+
+				// recibe el label donde esta el gif y la tarea a ejecutar
+				new LoadingFrame(labelGif, tarea).show();
 			});
 			panelCentral.add(registros);
 
@@ -206,6 +227,8 @@ public class UserViews extends JFrame {
 
 			setVisible(true);
 		}
+		
+		
 		
 		public void RegistroClientes(List<User> usuarios) {
 
@@ -888,27 +911,6 @@ public class UserViews extends JFrame {
 			setVisible(true);
 		}
 		
-		public class DateLabelFormatter extends AbstractFormatter {
-
-		    private String datePattern = "yyyy-MM-dd";
-		    private SimpleDateFormat dateFormatter = new SimpleDateFormat(datePattern);
-
-		    @Override
-		    public Object stringToValue(String text) throws ParseException, java.text.ParseException {
-		        return dateFormatter.parseObject(text);
-		    }
-
-		    @Override
-		    public String valueToString(Object value) throws ParseException {
-		        if (value != null) {
-		            Calendar cal = (Calendar) value;
-		            return dateFormatter.format(cal.getTime());
-		        }
-
-		        return "";
-		    }
-
-		}
 
 		public void EditarCliente(User user) {
 		    // Campos de texto renombrados con sentido

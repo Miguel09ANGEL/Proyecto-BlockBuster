@@ -205,7 +205,7 @@ public class VideogamesView extends JFrame {
 	}
 
 
-	public void RegistroJuegos(List juegos) {
+	public void RegistroJuegos( List<VideoGames> videoGamesList) {
 
 		try {
 			UIManager.setLookAndFeel(new FlatLightLaf());
@@ -292,16 +292,6 @@ public class VideogamesView extends JFrame {
 		iniciar.setHorizontalAlignment(JLabel.CENTER);
 		iniciar.setFont(new Font("Calibri", Font.BOLD, 24));
 		panelCentral.add(iniciar);
-		
-//		JButton btnBuscar = new JButton("Buscar");
-//		btnBuscar.setFont(new Font("League Spartan Light", Font.PLAIN, 14));
-//		btnBuscar.setBounds(619, 25, 86, 25);
-//		panelCentral.add(btnBuscar);
-//		
-//		JTextField Buscador = new JTextField();
-//		Buscador.setFont(new Font("League Spartan Light", Font.PLAIN, 14));
-//		Buscador.setBounds(385, 25,220, 25);
-//		panelCentral.add(Buscador);
 
 		// Crear unan tabla
 		String[] columnNames = { "ID", "Nombre", "Plataforma", "Existencia", "Precio venta", "Precio renta" };
@@ -314,17 +304,9 @@ public class VideogamesView extends JFrame {
 
 		
 		// Llenar la tabla con datos
-		for (Iterator iterator = juegos.iterator(); iterator.hasNext();) {
-			VideoGames juego = (VideoGames) iterator.next();
-			 Object[] rowData = {
-				        juego.getId(),
-				        juego.getNombre(),
-				        juego.getPlataforma(),
-				        juego.getExistenciasDisponibles(),
-				        "$" + juego.getPrecioVenta(),
-				        "$" + juego.getPrecioRenta(),
-				        juego.getClasificacion()
-				    };
+		for (VideoGames juego : videoGamesList) {
+			Object[] rowData = { juego.getId(), juego.getNombre(), juego.getPlataforma(),
+					juego.getExistenciasDisponibles(), "$" + juego.getPrecioRenta(), "$" + juego.getPrecioVenta(),juego.getClasificacion() };
 			model.addRow(rowData);
 		}
 
@@ -344,7 +326,44 @@ public class VideogamesView extends JFrame {
 		scrollPane.setBounds(26, 80, 680, 330);
 		panelCentral.add(scrollPane);
 
-		
+		// Buscador icon
+		ImageIcon Buscadorpng = new ImageIcon(getClass().getResource("/images/Buscador.png"));
+		Image imagenEscalada = Buscadorpng.getImage().getScaledInstance(30, 29, Image.SCALE_SMOOTH);
+		JLabel logo = new JLabel(new ImageIcon(imagenEscalada));
+		logo.setBounds(455, 49, 30, 29); // posicion
+		panelCentral.add(logo);
+
+		// Cuadro de buscador
+		JTextField Buscador = new JTextField("");
+		Buscador.setFont(new Font("League Spartan Light", Font.PLAIN, 14));
+		Buscador.setBounds(485, 50, 220, 25);
+		Buscador.addKeyListener(new KeyAdapter() {
+
+			@Override
+			public void keyReleased(KeyEvent e) {
+				String textoBusqueda = Buscador.getText().trim().toLowerCase();
+				model.setRowCount(0);
+
+				for (VideoGames juegos : videoGamesList) {
+					String nombreVideojuego = juegos.getNombre().toLowerCase();
+					String plataforma = juegos.getPlataforma().toLowerCase();
+					String id = String.valueOf(juegos.getId());
+
+					if (nombreVideojuego.contains(textoBusqueda) || plataforma.contains(textoBusqueda)
+							|| id.contains(textoBusqueda)) {
+
+						Object[] rowData = { juegos.getId(), juegos.getNombre(), juegos.getPlataforma(),
+								juegos.getExistenciasDisponibles(), "$" + juegos.getPrecioVenta(),
+								juegos.getClasificacion() };
+						model.addRow(rowData);
+					}
+				}
+
+			}
+
+		});
+		panelCentral.add(Buscador);
+
 		// BOTÓN EDITAR
 		JButton btnEditar = new JButton("DETALLES");
 		btnEditar.setForeground(Color.WHITE);

@@ -1383,9 +1383,17 @@ public class TransactionView extends JFrame {
 		JButton btnRegresar = new JButton("REGRESAR");
 		btnRegresar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				dispose();
-				TransactionController tc = new TransactionController();
-				tc.rentalIndex();
+
+				int cancelar;
+
+				cancelar = JOptionPane.showConfirmDialog(null, "¿Seguro que quieres cancelar?", "Confirmar cancelacion",
+						JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+
+				if (cancelar == JOptionPane.YES_OPTION) {
+					dispose();
+					TransactionController tc = new TransactionController();
+					tc.rentalIndex();
+				}
 			}
 		});
 		btnRegresar.setBackground(Color.decode("#B82F2F"));
@@ -1397,6 +1405,7 @@ public class TransactionView extends JFrame {
 		btnDescargarPDF.setBackground(Color.decode("#263C54"));
 		btnDescargarPDF.setForeground(Color.WHITE);
 		btnDescargarPDF.setBounds(680, 406, 183, 33);
+		btnDescargarPDF.setEnabled(false); // Con esto se desabilita el boton al inicio
 		btnDescargarPDF.addActionListener(new ActionListener() {
 		    public void actionPerformed(ActionEvent e) {
 		        JFileChooser fileChooser = new JFileChooser();
@@ -1515,15 +1524,18 @@ public class TransactionView extends JFrame {
 
 				if (exito) {
 					JOptionPane.showMessageDialog(this, "¡Renta registrada con éxito!");
+					btnDescargarPDF.setEnabled(true); // Aqui se habilita el boton de descargar
 				
 				} else {
 					JOptionPane.showMessageDialog(this, "Error al registrar la renta", "Error",
 							JOptionPane.ERROR_MESSAGE);
+					btnDescargarPDF.setEnabled(false); //Sigue desabilitado el boton descargar
 				}
 
 			} catch (Exception ex) {
 				JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 				ex.printStackTrace();
+				btnDescargarPDF.setEnabled(false);//Sigue desabilitado el boton descargar
 			}
 			
 		});

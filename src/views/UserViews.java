@@ -34,6 +34,7 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.JFormattedTextField.AbstractFormatter;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JFileChooser;
@@ -502,55 +503,11 @@ public class UserViews extends JFrame {
 			iniciar_1_1_1_3.setFont(new Font("Calibri", Font.BOLD, 18));
 			iniciar_1_1_1_3.setBounds(39, 79, 103, 42);
 			panelCentral.add(iniciar_1_1_1_3);
-
-			// botones
-			JButton btnEditar = new JButton("EDITAR");
-			btnEditar.setBackground(Color.decode("#6D91B9"));
-			btnEditar.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-
-					UserController uc = new UserController();
-					uc.update(user.getId());
-//					EditarCliente();
-					dispose();
-				}
-			});
-
-			btnEditar.setForeground(Color.WHITE);
-			btnEditar.setBounds(398, 403, 183, 33);
-			panelCentral.add(btnEditar);
-
-			JButton btnConfirmar = new JButton("INFORMACION (PDF)");
-			btnConfirmar.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					dispose();
-					UserController uc = new UserController();
-					uc.update3(user.getId());
-				}
-			});
-			btnConfirmar.setBackground(Color.decode("#263C54")); // Color de fondo (azul oscuro)
-			btnConfirmar.setForeground(Color.WHITE);
-			btnConfirmar.setBounds(641, 403, 183, 33);
-			panelCentral.add(btnConfirmar);
-
-			JButton btnRegresar = new JButton("REGRESAR");
-			btnRegresar.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					UserController uc = new UserController();
-					uc.index();
-
-					dispose();
-				}
-			});
-			btnRegresar.setForeground(Color.WHITE);
-			btnRegresar.setBackground(new Color(184, 47, 47));
-			btnRegresar.setBounds(157, 403, 183, 33);
-			panelCentral.add(btnRegresar);
 			
 			JLabel HistorialRentas = new JLabel("Historial de rentas:");
 			HistorialRentas.setHorizontalAlignment(SwingConstants.LEFT);
 			HistorialRentas.setFont(new Font("Calibri", Font.BOLD, 18));
-			HistorialRentas.setBounds(250, 140, 150, 42);
+			HistorialRentas.setBounds(250, 140, 200, 42);
 			panelCentral.add(HistorialRentas);
 			
 			// Crear unan tabla
@@ -589,7 +546,7 @@ public class UserViews extends JFrame {
 			JLabel HistorialVentas = new JLabel("Historial de ventas:");
 			HistorialVentas.setHorizontalAlignment(SwingConstants.LEFT);
 			HistorialVentas.setFont(new Font("Calibri", Font.BOLD, 18));
-			HistorialVentas.setBounds(750, 140, 150, 42);
+			HistorialVentas.setBounds(750, 140, 200, 42);
 			panelCentral.add(HistorialVentas);
 			
 			String[] purchaseColumnNames = {"Juego", "Fecha de Compra", "Precio" };
@@ -660,6 +617,51 @@ public class UserViews extends JFrame {
 			iniciar_1_1_1_3_1_1_1.setFont(new Font("Calibri", Font.BOLD, 18));
 			iniciar_1_1_1_3_1_1_1.setBounds(733, 79, 145, 42);
 			panelCentral.add(iniciar_1_1_1_3_1_1_1);
+
+			// botones
+			JButton btnEditar = new JButton("EDITAR");
+			btnEditar.setForeground(Color.WHITE);
+			btnEditar.setBackground(Color.decode("#6D91B9"));
+			btnEditar.setFont(new Font("Arial", Font.BOLD, 14));
+			btnEditar.setForeground(Color.WHITE);
+			btnEditar.setBounds(398, 403, 183, 33);
+			btnEditar.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					dispose();
+					UserController uc = new UserController();
+					uc.update(user.getId());
+					//EditarCliente();
+				}
+			});
+			panelCentral.add(btnEditar);
+
+			JButton btnConfirmar = new JButton("INFORMACION (PDF)");
+			btnConfirmar.setBackground(Color.decode("#263C54")); // Color de fondo (azul oscuro)
+			btnConfirmar.setForeground(Color.WHITE);
+			btnConfirmar.setFont(new Font("Arial", Font.BOLD, 14));
+			btnConfirmar.setBounds(641, 403, 183, 33);
+			btnConfirmar.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					dispose();
+					UserController uc = new UserController();
+					uc.update3(user.getId());
+				}
+			});
+			panelCentral.add(btnConfirmar);
+
+			JButton btnRegresar = new JButton("REGRESAR");
+			btnRegresar.setForeground(Color.WHITE);
+			btnRegresar.setBackground(Color.decode("#B82F2F"));
+			btnRegresar.setFont(new Font("Arial", Font.BOLD, 14));
+			btnRegresar.setBounds(150, 403, 183, 33);
+			btnRegresar.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					dispose();
+					UserController uc = new UserController();
+					uc.index();
+				}
+			});
+			panelCentral.add(btnRegresar);
 
 			// 3. PANEL ROJO SUPERIOR (barra de título)
 			JPanel barraRoja = new JPanel();
@@ -1231,17 +1233,51 @@ public class UserViews extends JFrame {
 			titulo.setHorizontalAlignment(JLabel.CENTER);
 			titulo.setFont(new Font("Calibri", Font.BOLD, 24));
 			panelCentral.add(titulo);
+			
+			// 1) JLabel para mostrar la imagen
+		    JLabel lblFoto = new JLabel();
+		    lblFoto.setBounds(84, 160, 150, 150);
+		    lblFoto.setBorder(BorderFactory.createLineBorder(Color.GRAY));
+		    panelCentral.add(lblFoto);
+
+		    // 2) Botón para cargar imagen
+		    JButton btnCargarFoto = new JButton("CARGAR FOTO");
+		    btnCargarFoto.setBounds(84, 320, 150, 25);
+			btnCargarFoto.addActionListener(new ActionListener() {
+
+				// 3) Variable para almacenar el archivo seleccionado
+				final File[] imagenSeleccionada = new File[1];
+
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					JFileChooser fileChooser = new JFileChooser();
+					FileNameExtensionFilter filtrado = new FileNameExtensionFilter("JPG, PNG & GIF", "jpg", "png", "gif");
+					fileChooser.setFileFilter(filtrado);
+
+					int respuesta = fileChooser.showOpenDialog(btnCargarFoto);
+					if (respuesta == JFileChooser.APPROVE_OPTION) {
+						imagenSeleccionada[0] = fileChooser.getSelectedFile();
+						String ruta = imagenSeleccionada[0].getAbsolutePath();
+
+						// Escalamos la imagen para caber en el JLabel
+						Image img = new ImageIcon(ruta).getImage().getScaledInstance(lblFoto.getWidth(),
+								lblFoto.getHeight(), Image.SCALE_SMOOTH);
+						lblFoto.setIcon(new ImageIcon(img));
+					}
+				}
+			});
+			panelCentral.add(btnCargarFoto);
 
 			// Etiqueta y campo para Nombre
 			JLabel lblNombre = new JLabel("Nombre:");
 			lblNombre.setHorizontalAlignment(SwingConstants.LEFT);
 			lblNombre.setFont(new Font("Calibri", Font.BOLD, 14));
-			lblNombre.setBounds(84, 135, 87, 42);
+			lblNombre.setBounds(350, 135, 100, 42);
 			panelCentral.add(lblNombre);
 
 			textFieldNombre = new JTextField();
 			textFieldNombre.setBackground(Color.decode("#D9D9D9"));
-			textFieldNombre.setBounds(84, 163, 330, 27);
+			textFieldNombre.setBounds(350, 163, 200, 27);
 			textFieldNombre.setColumns(10);
 			textFieldNombre.addKeyListener(new KeyAdapter() { /////////////Aqui sirve para solo colocar letras o numeros
 				public void keyTyped(KeyEvent e) {
@@ -1253,19 +1289,17 @@ public class UserViews extends JFrame {
 			});
 			panelCentral.add(textFieldNombre);
 
-			
-
 			// Etiqueta y campo para Apellido materno
 			JLabel lblApellidoMaterno = new JLabel("Apellido materno:");
 			lblApellidoMaterno.setHorizontalAlignment(SwingConstants.LEFT);
 			lblApellidoMaterno.setFont(new Font("Calibri", Font.BOLD, 14));
-			lblApellidoMaterno.setBounds(84, 209, 115, 42);
+			lblApellidoMaterno.setBounds(350, 209, 115, 42);
 			panelCentral.add(lblApellidoMaterno);
 
 			textFieldApellidoMaterno = new JTextField();
 			textFieldApellidoMaterno.setColumns(10);
 			textFieldApellidoMaterno.setBackground(new Color(217, 217, 217));
-			textFieldApellidoMaterno.setBounds(84, 236, 330, 27);
+			textFieldApellidoMaterno.setBounds(350, 236, 200, 27);
 			textFieldApellidoMaterno.addKeyListener(new KeyAdapter() { /////////////Aqui sirve para solo colocar letras o numeros
 				public void keyTyped(KeyEvent e) {
 					char am = e.getKeyChar();
@@ -1280,13 +1314,13 @@ public class UserViews extends JFrame {
 			JLabel lblTelefono = new JLabel("Telefono:");
 			lblTelefono.setHorizontalAlignment(SwingConstants.LEFT);
 			lblTelefono.setFont(new Font("Calibri", Font.BOLD, 14));
-			lblTelefono.setBounds(84, 282, 87, 42);
+			lblTelefono.setBounds(350, 282, 87, 42);
 			panelCentral.add(lblTelefono);
 
 			textFieldTelefono = new JTextField();
 			textFieldTelefono.setColumns(10);
 			textFieldTelefono.setBackground(new Color(217, 217, 217));
-			textFieldTelefono.setBounds(84, 311, 330, 27);
+			textFieldTelefono.setBounds(350, 311, 200, 27);
 			textFieldTelefono.addKeyListener(new KeyAdapter() { /////////////Aqui sirve para solo colocar letras o numeros
 				public void keyTyped(KeyEvent e) {
 					char numero = e.getKeyChar();
@@ -1301,13 +1335,13 @@ public class UserViews extends JFrame {
 			JLabel lblApellidoPaterno = new JLabel("Apellido paterno:");
 			lblApellidoPaterno.setHorizontalAlignment(SwingConstants.LEFT);
 			lblApellidoPaterno.setFont(new Font("Calibri", Font.BOLD, 14));
-			lblApellidoPaterno.setBounds(594, 135, 122, 42);
+			lblApellidoPaterno.setBounds(650, 135, 122, 42);
 			panelCentral.add(lblApellidoPaterno);
 
 			textFieldApellidoPaterno = new JTextField();
 			textFieldApellidoPaterno.setColumns(10);
 			textFieldApellidoPaterno.setBackground(new Color(217, 217, 217));
-			textFieldApellidoPaterno.setBounds(596, 163, 330, 27);
+			textFieldApellidoPaterno.setBounds(650, 163, 200, 27);
 			textFieldApellidoPaterno.addKeyListener(new KeyAdapter() { /////////////Aqui sirve para solo colocar letras o numeros
 				public void keyTyped(KeyEvent e) {
 					char ap = e.getKeyChar();
@@ -1322,7 +1356,7 @@ public class UserViews extends JFrame {
 			JLabel lblFechaNacimiento = new JLabel("Fecha de nacimiento:");
 			lblFechaNacimiento.setHorizontalAlignment(SwingConstants.LEFT);
 			lblFechaNacimiento.setFont(new Font("Calibri", Font.BOLD, 14));
-			lblFechaNacimiento.setBounds(596, 209, 136, 42);
+			lblFechaNacimiento.setBounds(650, 209, 136, 42);
 			panelCentral.add(lblFechaNacimiento);
 			
 			UtilDateModel model = new UtilDateModel();
@@ -1341,27 +1375,28 @@ public class UserViews extends JFrame {
 			        BorderFactory.createEmptyBorder(5, 5, 5, 5)));
 			textField.setEditable(false);
 
-			datePicker.setBounds(596, 236, 330, 27);
+			datePicker.setBounds(650, 236, 200, 27);
 			panelCentral.add(datePicker);
 			
 			// Etiqueta y campo para Correo
 			JLabel lblCorreo = new JLabel("Correo:");
 			lblCorreo.setHorizontalAlignment(SwingConstants.LEFT);
 			lblCorreo.setFont(new Font("Calibri", Font.BOLD, 14));
-			lblCorreo.setBounds(596, 282, 87, 42);
+			lblCorreo.setBounds(650, 282, 87, 42);
 			panelCentral.add(lblCorreo);
 
 			textFieldCorreo = new JTextField();
 			textFieldCorreo.setColumns(10);
 			textFieldCorreo.setBackground(new Color(217, 217, 217));
-			textFieldCorreo.setBounds(596, 311, 330, 27);
+			textFieldCorreo.setBounds(650, 311, 200, 27);
 			panelCentral.add(textFieldCorreo);
 
 			// Botón Cancelar
-			JButton btnCancelar = new JButton("Cancelar");
-			btnCancelar.setBackground(Color.decode("#B82F2F")); // Rojo
+			JButton btnCancelar = new JButton("CANCELAR");
 			btnCancelar.setForeground(Color.WHITE);
-			btnCancelar.setBounds(175, 406, 183, 33);
+			btnCancelar.setBackground(Color.decode("#B82F2F"));
+			btnCancelar.setFont(new Font("Arial", Font.BOLD, 14));
+			btnCancelar.setBounds(300, 420, 150, 30);
 			btnCancelar.addActionListener(e -> {
 				dispose(); // Cierra esta ventana
 				AdministradorCliente();
@@ -1369,10 +1404,11 @@ public class UserViews extends JFrame {
 			panelCentral.add(btnCancelar);
 
 			// Botón Guardar
-			JButton btnConfirmar = new JButton("Guardar");
-			btnConfirmar.setBackground(Color.decode("#263C54")); // Azul oscuro
+			JButton btnConfirmar = new JButton("AGREGAR");
 			btnConfirmar.setForeground(Color.WHITE);
-			btnConfirmar.setBounds(533, 406, 183, 33);
+			btnConfirmar.setBackground(Color.decode("#6D91B9"));
+			btnConfirmar.setFont(new Font("Arial", Font.BOLD, 14));
+			btnConfirmar.setBounds(550, 420, 150, 30);
 			btnConfirmar.addActionListener(e -> {
 			    // Resetear bordes a su estado normal
 			    textFieldNombre.setBorder(BorderFactory.createLineBorder(Color.GRAY));

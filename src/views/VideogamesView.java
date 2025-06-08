@@ -1343,7 +1343,7 @@ public class VideogamesView extends JFrame {
 	    scrollDescripcion.setBounds(730, 215, 240, 150);
 	    panelCentral.add(scrollDescripcion);
 
-		JButton btnConfirmar = new JButton("AGREGAR JUEGO");
+		JButton btnConfirmar = new JButton("AGREGAR");
 		btnConfirmar.setForeground(Color.WHITE);
 		btnConfirmar.setBackground(Color.decode("#6D91B9"));
 		btnConfirmar.setFont(new Font("Arial", Font.BOLD, 14));

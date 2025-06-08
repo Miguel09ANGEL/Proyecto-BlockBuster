@@ -911,284 +911,296 @@ public class UserViews extends JFrame {
 		}
 
 		public void EditarCliente(User user) {
-			// Campos de texto renombrados con sentido
-			JTextField txtNombre;
-			JTextField txtApellidoMaterno;
-			JTextField txtTelefono;
-			JTextField txtApellidoPaterno;
-			JTextField txtFechaNac = null;
-			JTextField txtCorreo;
+		    // Campos de texto renombrados con sentido
+		    JTextField txtNombre;
+		    JTextField txtApellidoMaterno;
+		    JTextField txtTelefono;
+		    JTextField txtApellidoPaterno;
+		    JTextField txtCorreo;
 
-			// Configuración de la ventana
-			setTitle("Editar Cliente");
-			setSize(1024, 576);
-			setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-			setLocationRelativeTo(null);
+		    // Configuración de la ventana
+		    setTitle("Editar Cliente");
+		    setSize(1024, 576);
+		    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		    setLocationRelativeTo(null);
 
-			// Panel principal
-			JLayeredPane layeredPane = new JLayeredPane();
-			layeredPane.setPreferredSize(new Dimension(900, 650));
-			setContentPane(layeredPane);
+		    // Panel principal
+		    JLayeredPane layeredPane = new JLayeredPane();
+		    layeredPane.setPreferredSize(new Dimension(900, 650));
+		    setContentPane(layeredPane);
 
-			// Panel central
-			JPanel panelCentral = new JPanel();
-			panelCentral.setLayout(null);
-			panelCentral.setBackground(Color.decode("#F2F2F2"));
-			panelCentral.setBounds(5, 62, 998, 475);
-			layeredPane.add(panelCentral, JLayeredPane.PALETTE_LAYER);
+		    // Panel central
+		    JPanel panelCentral = new JPanel();
+		    panelCentral.setLayout(null);
+		    panelCentral.setBackground(Color.decode("#F2F2F2"));
+		    panelCentral.setBounds(5, 62, 998, 475);
+		    layeredPane.add(panelCentral, JLayeredPane.PALETTE_LAYER);
 
-			// Logotipo
-			ImageIcon iconoOriginal = new ImageIcon(getClass().getResource("/images/Block.png"));
-			Image imagenEscalada = iconoOriginal.getImage().getScaledInstance(70, 70, Image.SCALE_SMOOTH);
-			JLabel logo = new JLabel(new ImageIcon(imagenEscalada));
-			logo.setBounds(477, 11, 70, 70);
-			panelCentral.add(logo);
+		    // Logotipo centrado arriba
+		    ImageIcon iconoOriginal = new ImageIcon(getClass().getResource("/images/Block.png"));
+		    Image imagenEscalada = iconoOriginal.getImage().getScaledInstance(70, 70, Image.SCALE_SMOOTH);
+		    JLabel logo = new JLabel(new ImageIcon(imagenEscalada));
+		    logo.setBounds(465, 11, 70, 70);
+		    panelCentral.add(logo);
 
-			// Título
-			JLabel lblTitulo = new JLabel("EDITAR CLIENTE");
-			lblTitulo.setSize(263, 42);
-			lblTitulo.setLocation(370, 94);
-			lblTitulo.setHorizontalAlignment(JLabel.CENTER);
-			lblTitulo.setFont(new Font("Calibri", Font.BOLD, 24));
-			panelCentral.add(lblTitulo);
+		    // Título
+		    JLabel lblTitulo = new JLabel("EDITAR CLIENTE");
+		    lblTitulo.setSize(263, 42);
+		    lblTitulo.setLocation(370, 94);
+		    lblTitulo.setHorizontalAlignment(JLabel.CENTER);
+		    lblTitulo.setFont(new Font("Calibri", Font.BOLD, 24));
+		    panelCentral.add(lblTitulo);
+		    
+		    // 1) JLabel para mostrar la imagen
+		    JLabel lblFoto = new JLabel();
+		    lblFoto.setBounds(84, 160, 150, 150);
+		    lblFoto.setBorder(BorderFactory.createLineBorder(Color.GRAY));
+		    panelCentral.add(lblFoto);
 
-			// -------- LADO IZQUIERDO --------
+		    // 2) Botón para cargar imagen
+		    JButton btnCargarFoto = new JButton("CARGAR FOTO");
+		    btnCargarFoto.setBounds(84, 320, 150, 25);
+		    panelCentral.add(btnCargarFoto);
 
-			// Nombre
-			JLabel lblNombre = new JLabel("Nombre:");
-			lblNombre.setBounds(84, 135, 87, 42);
-			lblNombre.setFont(new Font("Calibri", Font.BOLD, 14));
-			panelCentral.add(lblNombre);
+		    // -------- SECCIÓN IZQUIERDA --------
 
-			txtNombre = new JTextField(user.getNombre());
-			txtNombre.setBounds(84, 163, 330, 27);
-			txtNombre.setBackground(Color.decode("#D9D9D9"));
-			txtNombre.setColumns(10);
-			txtNombre.addKeyListener(new KeyAdapter() { /////////////Aqui sirve para solo colocar letras o numeros
-				public void keyTyped(KeyEvent e) {
-					char nombre = e.getKeyChar();
-					if (!Character.isLetter(nombre) || txtNombre.getText().length() >= 10) {
-						e.consume();
-					}
-				}
-			});
-			panelCentral.add(txtNombre);
+		    // Nombre
+		    JLabel lblNombre = new JLabel("Nombre:");
+		    lblNombre.setHorizontalAlignment(SwingConstants.LEFT);
+		    lblNombre.setFont(new Font("Calibri", Font.BOLD, 14));
+		    lblNombre.setBounds(350, 135, 100, 42);
+		    panelCentral.add(lblNombre);
 
-			// Apellido Materno
-			JLabel lblApellidoMaterno = new JLabel("Apellido materno:");
-			lblApellidoMaterno.setBounds(84, 209, 115, 42);
-			lblApellidoMaterno.setFont(new Font("Calibri", Font.BOLD, 14));
-			
-			panelCentral.add(lblApellidoMaterno);
+		    txtNombre = new JTextField(user.getNombre());
+		    txtNombre.setBackground(Color.decode("#D9D9D9"));
+		    txtNombre.setBounds(350, 163, 200, 27);
+		    txtNombre.setColumns(10);
+		    txtNombre.addKeyListener(new KeyAdapter() {
+		        public void keyTyped(KeyEvent e) {
+		            char nombre = e.getKeyChar();
+		            if (!Character.isLetter(nombre) || txtNombre.getText().length() >= 20) {
+		                e.consume();
+		            }
+		        }
+		    });
+		    panelCentral.add(txtNombre);
 
-			txtApellidoMaterno = new JTextField(user.getApellidoMaterno());
-			txtApellidoMaterno.setBounds(84, 236, 330, 27);
-			txtApellidoMaterno.setBackground(Color.decode("#D9D9D9"));
-			txtApellidoMaterno.setColumns(10);
-			txtApellidoMaterno.addKeyListener(new KeyAdapter() { /////////////Aqui sirve para solo colocar letras o numeros
-				public void keyTyped(KeyEvent e) {
-					char am = e.getKeyChar();
-					if (!Character.isLetter(am) || txtApellidoMaterno.getText().length() >= 10) {
-						e.consume();
-					}
-				}
-			});
-			panelCentral.add(txtApellidoMaterno);
+		    // Apellido Materno
+		    JLabel lblApellidoMaterno = new JLabel("Apellido materno:");
+		    lblApellidoMaterno.setHorizontalAlignment(SwingConstants.LEFT);
+		    lblApellidoMaterno.setFont(new Font("Calibri", Font.BOLD, 14));
+		    lblApellidoMaterno.setBounds(350, 209, 115, 42);
+		    panelCentral.add(lblApellidoMaterno);
 
-			// Teléfono
-			JLabel lblTelefono = new JLabel("Telefono:");
-			lblTelefono.setBounds(84, 282, 87, 42);
-			lblTelefono.setFont(new Font("Calibri", Font.BOLD, 14));
-			panelCentral.add(lblTelefono);
+		    txtApellidoMaterno = new JTextField(user.getApellidoMaterno());
+		    txtApellidoMaterno.setColumns(10);
+		    txtApellidoMaterno.setBackground(Color.decode("#D9D9D9"));
+		    txtApellidoMaterno.setBounds(350, 236, 200, 27);
+		    txtApellidoMaterno.addKeyListener(new KeyAdapter() {
+		        public void keyTyped(KeyEvent e) {
+		            char am = e.getKeyChar();
+		            if (!Character.isLetter(am) || txtApellidoMaterno.getText().length() >= 10) {
+		                e.consume();
+		            }
+		        }
+		    });
+		    panelCentral.add(txtApellidoMaterno);
 
-			txtTelefono = new JTextField(user.getTelefono());
-			txtTelefono.setBounds(84, 311, 330, 27);
-			txtTelefono.setBackground(Color.decode("#D9D9D9"));
-			txtTelefono.setColumns(10);
-			txtTelefono.addKeyListener(new KeyAdapter() { /////////////Aqui sirve para solo colocar letras o numeros
-				public void keyTyped(KeyEvent e) {
-					char numero = e.getKeyChar();
-					if (!Character.isLetter(numero) || txtTelefono.getText().length() >= 10) {
-						e.consume();
-					}
-				}
-			});
-			panelCentral.add(txtTelefono);
+		    // Teléfono
+		    JLabel lblTelefono = new JLabel("Telefono:");
+		    lblTelefono.setHorizontalAlignment(SwingConstants.LEFT);
+		    lblTelefono.setFont(new Font("Calibri", Font.BOLD, 14));
+		    lblTelefono.setBounds(350, 282, 87, 42);
+		    panelCentral.add(lblTelefono);
 
-			// -------- LADO DERECHO --------
+		    txtTelefono = new JTextField(user.getTelefono());
+		    txtTelefono.setColumns(10);
+		    txtTelefono.setBackground(Color.decode("#D9D9D9"));
+		    txtTelefono.setBounds(350, 311, 200, 27);
+		    txtTelefono.addKeyListener(new KeyAdapter() {
+		        public void keyTyped(KeyEvent e) {
+		            char numero = e.getKeyChar();
+		            if (!Character.isDigit(numero) || txtTelefono.getText().length() >= 10) {
+		                e.consume();
+		            }
+		        }
+		    });
+		    panelCentral.add(txtTelefono);
 
-			// Apellido Paterno
-			JLabel lblApellidoPaterno = new JLabel("Apellido paterno:");
-			lblApellidoPaterno.setBounds(594, 135, 122, 42);
-			lblApellidoPaterno.setFont(new Font("Calibri", Font.BOLD, 14));
-			panelCentral.add(lblApellidoPaterno);
+		    // -------- SECCIÓN DERECHA --------
 
-			txtApellidoPaterno = new JTextField(user.getApellidoPaterno());
-			txtApellidoPaterno.setBounds(596, 163, 330, 27);
-			txtApellidoPaterno.setBackground(Color.decode("#D9D9D9"));
-			txtApellidoPaterno.setColumns(10);
-			txtApellidoPaterno.addKeyListener(new KeyAdapter() { /////////////Aqui sirve para solo colocar letras o numeros
-				public void keyTyped(KeyEvent e) {
-					char ap = e.getKeyChar();
-					if (!Character.isLetter(ap) || txtApellidoPaterno.getText().length() >= 10) {
-						e.consume();
-					}
-				}
-			});
-			panelCentral.add(txtApellidoPaterno);
+		    // Apellido Paterno
+		    JLabel lblApellidoPaterno = new JLabel("Apellido paterno:");
+		    lblApellidoPaterno.setHorizontalAlignment(SwingConstants.LEFT);
+		    lblApellidoPaterno.setFont(new Font("Calibri", Font.BOLD, 14));
+		    lblApellidoPaterno.setBounds(650, 135, 122, 42);
+		    panelCentral.add(lblApellidoPaterno);
 
-			// Fecha de nacimiento con JDatePicker
-			JLabel lblFechaNac = new JLabel("Fecha de nacimiento:");
-			lblFechaNac.setBounds(596, 190, 136, 42); // Ajusté la posición Y
-			lblFechaNac.setFont(new Font("Calibri", Font.BOLD, 14));
-			panelCentral.add(lblFechaNac);
+		    txtApellidoPaterno = new JTextField(user.getApellidoPaterno());
+		    txtApellidoPaterno.setColumns(10);
+		    txtApellidoPaterno.setBackground(Color.decode("#D9D9D9"));
+		    txtApellidoPaterno.setBounds(650, 163, 200, 27);
+		    txtApellidoPaterno.addKeyListener(new KeyAdapter() {
+		        public void keyTyped(KeyEvent e) {
+		            char ap = e.getKeyChar();
+		            if (!Character.isLetter(ap) || txtApellidoPaterno.getText().length() >= 10) {
+		                e.consume();
+		            }
+		        }
+		    });
+		    panelCentral.add(txtApellidoPaterno);
 
-			// Configuración del modelo
-			UtilDateModel model = new UtilDateModel();
-			if (user.getFechaNacimiento() != null) {
-				Calendar cal = Calendar.getInstance();
-				cal.setTime(user.getFechaNacimiento());
-				model.setDate(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH));
-			}
-			model.setSelected(true);
+		    // Fecha de nacimiento con JDatePicker
+		    JLabel lblFechaNac = new JLabel("Fecha de nacimiento:");
+		    lblFechaNac.setHorizontalAlignment(SwingConstants.LEFT);
+		    lblFechaNac.setFont(new Font("Calibri", Font.BOLD, 14));
+		    lblFechaNac.setBounds(650, 209, 136, 42);
+		    panelCentral.add(lblFechaNac);
 
-			// Crear el date picker con el formateador
-			JDatePickerImpl datePicker = new JDatePickerImpl(new JDatePanelImpl(model, new Properties()),
-					new DateLabelFormatter());
+		    // Configuración del modelo
+		    UtilDateModel model = new UtilDateModel();
+		    if (user.getFechaNacimiento() != null) {
+		        Calendar cal = Calendar.getInstance();
+		        cal.setTime(user.getFechaNacimiento());
+		        model.setDate(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH));
+		    }
+		    model.setSelected(true);
 
-			// Configurar el campo de texto
-			JFormattedTextField textField = datePicker.getJFormattedTextField();
-			textField.setBackground(Color.decode("#D9D9D9"));
-			textField.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(Color.GRAY),
-					BorderFactory.createEmptyBorder(5, 5, 5, 5)));
-			textField.setEditable(false);
+		    // Crear el date picker con el formateador
+		    JDatePickerImpl datePicker = new JDatePickerImpl(new JDatePanelImpl(model, new Properties()),
+		            new DateLabelFormatter());
 
-			datePicker.setBounds(596, 236, 330, 27);
-			panelCentral.add(datePicker);
+		    // Configurar el campo de texto
+		    JFormattedTextField textField = datePicker.getJFormattedTextField();
+		    textField.setBackground(Color.decode("#D9D9D9"));
+		    textField.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(Color.GRAY),
+		            BorderFactory.createEmptyBorder(5, 5, 5, 5)));
+		    textField.setEditable(false);
 
-			// Correo
-			JLabel lblCorreo = new JLabel("Correo:");
-			lblCorreo.setBounds(596, 282, 87, 42);
-			lblCorreo.setFont(new Font("Calibri", Font.BOLD, 14));
-			panelCentral.add(lblCorreo);
+		    datePicker.setBounds(650, 236, 200, 27);
+		    panelCentral.add(datePicker);
 
-			txtCorreo = new JTextField(user.getCorreo());
-			txtCorreo.setBounds(596, 311, 330, 27);
-			txtCorreo.setBackground(Color.decode("#D9D9D9"));
-			txtCorreo.setColumns(10);
-			panelCentral.add(txtCorreo);
+		    // Correo
+		    JLabel lblCorreo = new JLabel("Correo:");
+		    lblCorreo.setHorizontalAlignment(SwingConstants.LEFT);
+		    lblCorreo.setFont(new Font("Calibri", Font.BOLD, 14));
+		    lblCorreo.setBounds(650, 282, 87, 42);
+		    panelCentral.add(lblCorreo);
 
-			// -------- BOTONES --------
+		    txtCorreo = new JTextField(user.getCorreo());
+		    txtCorreo.setColumns(10);
+		    txtCorreo.setBackground(Color.decode("#D9D9D9"));
+		    txtCorreo.setBounds(650, 311, 200, 27);
+		    panelCentral.add(txtCorreo);
 
-			JButton btnCancelar = new JButton("Cancelar");
-			btnCancelar.setBounds(175, 406, 183, 33);
-			btnCancelar.setBackground(Color.decode("#B82F2F"));
-			btnCancelar.setForeground(Color.WHITE);
-			btnCancelar.addActionListener(e -> {
-				dispose();
-				UserController us = new UserController();
-				
-				us.update2(user.getId());
-				
-			});
-			panelCentral.add(btnCancelar);
+		    // -------- BOTONES --------
 
-			JButton btnConfirmar = new JButton("Confirmar");
-			btnConfirmar.setBounds(533, 406, 183, 33);
-			btnConfirmar.setBackground(Color.decode("#263C54"));
-			btnConfirmar.setForeground(Color.WHITE);
-			btnConfirmar.addActionListener(e -> {
-			    // Resetear bordes a su estado normal
-			    txtNombre.setBorder(BorderFactory.createLineBorder(Color.GRAY));
-			    txtApellidoPaterno.setBorder(BorderFactory.createLineBorder(Color.GRAY));
-			    txtTelefono.setBorder(BorderFactory.createLineBorder(Color.GRAY));
-			    txtCorreo.setBorder(BorderFactory.createLineBorder(Color.GRAY));
-			    datePicker.setBorder(BorderFactory.createLineBorder(Color.GRAY));
-			    
-			    // Obtener valores desde los campos de texto
-			    String nuevoNombre = txtNombre.getText().trim();
-			    String nuevoApellidoPaterno = txtApellidoPaterno.getText().trim();
-			    String nuevoApellidoMaterno = txtApellidoMaterno.getText().trim();
-			    String nuevoTelefono = txtTelefono.getText().trim();
-			    String nuevoCorreo = txtCorreo.getText().trim();
+		    // Botón Cancelar
+		    JButton btnCancelar = new JButton("CANCELAR");
+		    btnCancelar.setForeground(Color.WHITE);
+		    btnCancelar.setBackground(Color.decode("#B82F2F"));
+		    btnCancelar.setFont(new Font("Arial", Font.BOLD, 14));
+		    btnCancelar.setBounds(300, 420, 150, 30);
+		    btnCancelar.addActionListener(e -> {
+		        dispose();
+		        UserController us = new UserController();
+		        us.update2(user.getId());
+		    });
+		    panelCentral.add(btnCancelar);
 
-			    boolean camposValidos = true;
-			    
-			    // Validar campos obligatorios
-			    if (nuevoNombre.isEmpty()) {
-			        txtNombre.setBorder(BorderFactory.createLineBorder(Color.RED));
-			        JOptionPane.showMessageDialog(panelCentral, "El nombre es obligatorio", "Error", JOptionPane.ERROR_MESSAGE);
-			        camposValidos = false;
-			        return;
-			    }
-			    
-			    if (nuevoApellidoPaterno.isEmpty()) {
-			        txtApellidoPaterno.setBorder(BorderFactory.createLineBorder(Color.RED));
-			        JOptionPane.showMessageDialog(panelCentral, "El apellido paterno es obligatorio", "Error", JOptionPane.ERROR_MESSAGE);
-			        camposValidos = false;
-			        return;
+		    // Botón Confirmar
+		    JButton btnConfirmar = new JButton("CONFIRMAR");
+		    btnConfirmar.setForeground(Color.WHITE);
+		    btnConfirmar.setBackground(Color.decode("#6D91B9"));
+		    btnConfirmar.setFont(new Font("Arial", Font.BOLD, 14));
+		    btnConfirmar.setBounds(550, 420, 150, 30);
+		    btnConfirmar.addActionListener(e -> {
+		        // Resetear bordes a su estado normal
+		        txtNombre.setBorder(BorderFactory.createLineBorder(Color.GRAY));
+		        txtApellidoPaterno.setBorder(BorderFactory.createLineBorder(Color.GRAY));
+		        txtTelefono.setBorder(BorderFactory.createLineBorder(Color.GRAY));
+		        txtCorreo.setBorder(BorderFactory.createLineBorder(Color.GRAY));
+		        datePicker.setBorder(BorderFactory.createLineBorder(Color.GRAY));
+		        
+		        // Obtener valores desde los campos de texto
+		        String nuevoNombre = txtNombre.getText().trim();
+		        String nuevoApellidoPaterno = txtApellidoPaterno.getText().trim();
+		        String nuevoApellidoMaterno = txtApellidoMaterno.getText().trim();
+		        String nuevoTelefono = txtTelefono.getText().trim();
+		        String nuevoCorreo = txtCorreo.getText().trim();
 
-			    }
-			    
-			    if (nuevoTelefono.isEmpty()) {
-			        txtTelefono.setBorder(BorderFactory.createLineBorder(Color.RED));
-			        JOptionPane.showMessageDialog(panelCentral, "El teléfono es obligatorio", "Error", JOptionPane.ERROR_MESSAGE);
-			        camposValidos = false;
-			        return;
+		        boolean camposValidos = true;
+		        
+		        // Validar campos obligatorios
+		        if (nuevoNombre.isEmpty()) {
+		            txtNombre.setBorder(BorderFactory.createLineBorder(Color.RED));
+		            JOptionPane.showMessageDialog(panelCentral, "El nombre es obligatorio", "Error", JOptionPane.ERROR_MESSAGE);
+		            camposValidos = false;
+		            return;
+		        }
+		        
+		        if (nuevoApellidoPaterno.isEmpty()) {
+		            txtApellidoPaterno.setBorder(BorderFactory.createLineBorder(Color.RED));
+		            JOptionPane.showMessageDialog(panelCentral, "El apellido paterno es obligatorio", "Error", JOptionPane.ERROR_MESSAGE);
+		            camposValidos = false;
+		            return;
+		        }
+		        
+		        if (nuevoTelefono.isEmpty()) {
+		            txtTelefono.setBorder(BorderFactory.createLineBorder(Color.RED));
+		            JOptionPane.showMessageDialog(panelCentral, "El teléfono es obligatorio", "Error", JOptionPane.ERROR_MESSAGE);
+		            camposValidos = false;
+		            return;
+		        }
+		        
+		        if (nuevoCorreo.isEmpty()) {
+		            txtCorreo.setBorder(BorderFactory.createLineBorder(Color.RED));
+		            JOptionPane.showMessageDialog(panelCentral, "El correo electrónico es obligatorio", "Error", JOptionPane.ERROR_MESSAGE);
+		            camposValidos = false;
+		            return;
+		        }
+		        
+		        java.sql.Date nuevaFechaNac = null;
+		        if (model.getValue() == null) {
+		            datePicker.setBorder(BorderFactory.createLineBorder(Color.RED));
+		            JOptionPane.showMessageDialog(panelCentral, "La fecha de nacimiento es obligatoria", "Error", JOptionPane.ERROR_MESSAGE);
+		            camposValidos = false;
+		            return;
+		        } else {
+		            nuevaFechaNac = new java.sql.Date(model.getValue().getTime());
+		        }
+		        
+		        // Si hay campos inválidos, no continuar con la actualización
+		        if (!camposValidos) {
+		            return;
+		        }
 
-			    }
-			    
-			    if (nuevoCorreo.isEmpty()) {
-			        txtCorreo.setBorder(BorderFactory.createLineBorder(Color.RED));
-			        JOptionPane.showMessageDialog(panelCentral, "El correo electrónico es obligatorio", "Error", JOptionPane.ERROR_MESSAGE);
-			        camposValidos = false;
-			        return;
+		        // Llamar al método del modelo para actualizar
+		        UsersModel us = new UsersModel();
+		        boolean actualizado = us.update(user.getId(), nuevoNombre, nuevoApellidoPaterno, nuevoApellidoMaterno,
+		                nuevaFechaNac, nuevoTelefono, nuevoCorreo);
 
-			    }
-			    
-			    java.sql.Date nuevaFechaNac = null;
-			    if (model.getValue() == null) {
-			        datePicker.setBorder(BorderFactory.createLineBorder(Color.RED));
-			        JOptionPane.showMessageDialog(panelCentral, "La fecha de nacimiento es obligatoria", "Error", JOptionPane.ERROR_MESSAGE);
-			        camposValidos = false;
-			        return;
+		        if (actualizado) {
+		            JOptionPane.showMessageDialog(panelCentral, "Cliente actualizado correctamente", "Éxito",
+		                    JOptionPane.INFORMATION_MESSAGE);
+		            dispose();
+		            UserController us1 = new UserController();
+		            us1.update2(user.getId());
+		        } else {
+		            JOptionPane.showMessageDialog(panelCentral, "Error al actualizar el cliente", "Error",
+		                    JOptionPane.ERROR_MESSAGE);
+		        }
+		    });
+		    panelCentral.add(btnConfirmar);
 
-			    } else {
-			        nuevaFechaNac = new java.sql.Date(model.getValue().getTime());
-			    }
-			    
-			    // Si hay campos inválidos, no continuar con la actualización
-			    if (!camposValidos) {
-			        return;
-			    }
+		    // -------- BARRA ROJA SUPERIOR --------
 
-			    // Llamar al método del modelo para actualizar
-			    UsersModel us = new UsersModel();
-			    boolean actualizado = us.update(user.getId(), nuevoNombre, nuevoApellidoPaterno, nuevoApellidoMaterno,
-			            nuevaFechaNac, nuevoTelefono, nuevoCorreo);
+		    JPanel barraRoja = new JPanel();
+		    barraRoja.setBackground(Color.decode("#B44635"));
+		    barraRoja.setBounds(0, 0, 1024, 60);
+		    layeredPane.add(barraRoja, JLayeredPane.PALETTE_LAYER);
 
-			    if (actualizado) {
-			        JOptionPane.showMessageDialog(panelCentral, "Cliente actualizado correctamente", "Éxito",
-			                JOptionPane.INFORMATION_MESSAGE);
-			        dispose();
-			        UserController us1 = new UserController();
-			        us1.update2(user.getId());
-			    } else {
-			        JOptionPane.showMessageDialog(panelCentral, "Error al actualizar el cliente", "Error",
-			                JOptionPane.ERROR_MESSAGE);
-			    }
-			});
-
-			panelCentral.add(btnConfirmar);
-
-			// -------- BARRA ROJA SUPERIOR --------
-
-			JPanel barraRoja = new JPanel();
-			barraRoja.setBackground(Color.decode("#B44635"));
-			barraRoja.setBounds(0, 0, 1024, 60);
-			layeredPane.add(barraRoja, JLayeredPane.PALETTE_LAYER);
-
-			setVisible(true);
+		    setVisible(true);
 		}
 		
 		public void AgregarCliente() {

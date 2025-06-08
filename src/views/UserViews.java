@@ -293,16 +293,6 @@ public class UserViews extends JFrame {
 			iniciar.setHorizontalAlignment(JLabel.CENTER);
 			iniciar.setFont(new Font("Calibri", Font.BOLD, 24));
 			panelCentral.add(iniciar);
-			
-//			JButton btnBuscar = new JButton("Buscar");
-//			btnBuscar.setFont(new Font("League Spartan Light", Font.PLAIN, 14));
-//			btnBuscar.setBounds(619, 25, 86, 25);
-//			panelCentral.add(btnBuscar);
-//			
-//			JTextField Buscador = new JTextField();
-//			Buscador.setFont(new Font("League Spartan Light", Font.PLAIN, 14));
-//			Buscador.setBounds(385, 25,220, 25);
-//			panelCentral.add(Buscador);
 
 			// Crear unan tabla
 			String[] columnNames = { "ID", "Nombre", "A. pat:", "A. mat;", "Fecha de nacimierto", "telefono", "Correo" };
@@ -341,13 +331,81 @@ public class UserViews extends JFrame {
 
 			// Agregar la tabla a un JScrollPane
 			JScrollPane scrollPane = new JScrollPane(table);
-			scrollPane.setBounds(26, 62, 695, 366);
+			scrollPane.setBounds(26, 80, 680, 330);
 			panelCentral.add(scrollPane);
+			
+			// Buscador icon
+			ImageIcon Buscadorpng = new ImageIcon(getClass().getResource("/images/Buscador.png"));
+			Image imagenEscalada = Buscadorpng.getImage().getScaledInstance(30, 29, Image.SCALE_SMOOTH);
+			JLabel logo = new JLabel(new ImageIcon(imagenEscalada));
+			logo.setBounds(455, 49, 30, 29); // posicion
+			panelCentral.add(logo);
+
+			// Cuadro de buscador
+			JTextField Buscador = new JTextField("");
+			Buscador.setFont(new Font("League Spartan Light", Font.PLAIN, 14));
+			Buscador.setBounds(485, 50, 220, 25);
+			Buscador.addKeyListener(new KeyAdapter() {
+
+				@Override
+				public void keyReleased(KeyEvent e) {
+					String textoBusqueda = Buscador.getText().trim().toLowerCase();
+					model.setRowCount(0);
+
+					for (User usuario : usuarios) {
+						String nombreCompleto = (usuario.getNombre() + " " + usuario.getApellidoPaterno() + " "
+								+ usuario.getApellidoMaterno()).toLowerCase();
+						String correo = usuario.getCorreo().toLowerCase();
+						String telefono = usuario.getTelefono().toLowerCase();
+						String id = String.valueOf(usuario.getId());
+
+						if (nombreCompleto.contains(textoBusqueda) || correo.contains(textoBusqueda) ||
+				                telefono.contains(textoBusqueda) || id.contains(textoBusqueda)){
+
+							 Object[] rowData = { usuario.getId(), usuario.getNombre() + " " + usuario.getApellidoPaterno() + " " + usuario.getApellidoMaterno(),
+					                    usuario.getCorreo(), usuario.getTelefono(),
+
+					                };
+					                model.addRow(rowData);
+						}
+					}
+
+				}
+
+			});
+			panelCentral.add(Buscador);
+
+			// BOTON EDITAR
+			JButton btnEditar = new JButton("DETALLES");
+			btnEditar.setForeground(Color.WHITE);
+			btnEditar.setBackground(Color.decode("#6D91B9"));
+			btnEditar.setFont(new Font("Arial", Font.BOLD, 14));
+			btnEditar.setBounds(534, 420, 172, 30);
+			btnEditar.addActionListener(e -> {
+
+				int selectedRow = table.getSelectedRow();
+
+				if (selectedRow == -1) {
+					JOptionPane.showMessageDialog(layeredPane, "Por favor seleccione un usuario", "Advertencia",
+							JOptionPane.WARNING_MESSAGE);
+					return;
+				}
+
+				// Obtener datos del usuario seleccionado
+				int userId = (int) model.getValueAt(selectedRow, 0);
+
+				dispose();
+				UserController uc = new UserController();
+				uc.update2(userId);
+
+			});
+			panelCentral.add(btnEditar);
 
 			JButton btnEliminar = new JButton("ELIMINAR");
 			btnEliminar.setForeground(Color.WHITE);
 			btnEliminar.setBackground(Color.decode("#B82F2F"));
-			btnEliminar.setBounds(187, 439, 172, 25);
+			btnEliminar.setFont(new Font("Arial", Font.BOLD, 14));
+			btnEliminar.setBounds(26, 420, 172, 30);
 			btnEliminar.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 
@@ -386,30 +444,6 @@ public class UserViews extends JFrame {
 			});
 			panelCentral.add(btnEliminar);
 
-			// BOTON EDITAR PROVICIONAL, MEJORAR
-			JButton btnEditar = new JButton("DETALLES");
-			btnEditar.setForeground(Color.WHITE);
-			btnEditar.setBackground(Color.decode("#4fadbd"));
-			btnEditar.setBounds(379, 439, 172, 25);
-			btnEditar.addActionListener(e -> {
-
-				int selectedRow = table.getSelectedRow();
-
-				if (selectedRow == -1) {
-					JOptionPane.showMessageDialog(layeredPane, "Por favor seleccione un usuario", "Advertencia",
-							JOptionPane.WARNING_MESSAGE);
-					return;
-				}
-
-				// Obtener datos del usuario seleccionado
-				int userId = (int) model.getValueAt(selectedRow, 0);
-
-				dispose();
-				UserController uc = new UserController();
-				uc.update2(userId);
-
-			});
-			panelCentral.add(btnEditar);
 
 			// 3. PANEL ROJO SUPERIOR (barra de título)
 			JPanel barraRoja = new JPanel();

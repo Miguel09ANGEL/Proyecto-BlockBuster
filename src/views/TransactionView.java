@@ -546,8 +546,46 @@ public class TransactionView extends JFrame {
 
 		// Agregar la tabla a un JScrollPane
 		JScrollPane scrollPane = new JScrollPane(table);
-		scrollPane.setBounds(26, 62, 680, 350);
+		scrollPane.setBounds(26, 80, 680, 330);
 		panelCentral.add(scrollPane);
+
+		// Buscador icon
+		ImageIcon Buscadorpng = new ImageIcon(getClass().getResource("/images/Buscador.png"));
+		Image imagenEscalada = Buscadorpng.getImage().getScaledInstance(30, 29, Image.SCALE_SMOOTH);
+		JLabel logo = new JLabel(new ImageIcon(imagenEscalada));
+		logo.setBounds(455, 49, 30, 29); // posicion
+		panelCentral.add(logo);
+
+		// Cuadro de buscador
+		JTextField Buscador = new JTextField("");
+		Buscador.setFont(new Font("League Spartan Light", Font.PLAIN, 14));
+		Buscador.setBounds(485, 50, 220, 25);
+		Buscador.addKeyListener(new KeyAdapter() {
+
+			@Override
+			public void keyReleased(KeyEvent e) {
+				String textoBusqueda = Buscador.getText().trim().toLowerCase();
+				model.setRowCount(0);
+
+				for (VideoGames juegos : videoGamesList) {
+					String nombreVideojuego = juegos.getNombre().toLowerCase();
+					String plataforma = juegos.getPlataforma().toLowerCase();
+					String id = String.valueOf(juegos.getId());
+
+					if (nombreVideojuego.contains(textoBusqueda) || plataforma.contains(textoBusqueda)
+							|| id.contains(textoBusqueda)) {
+
+						Object[] rowData = { juegos.getId(), juegos.getNombre(), juegos.getPlataforma(),
+								juegos.getExistenciasDisponibles(), "$" + juegos.getPrecioVenta(),
+								juegos.getClasificacion() };
+						model.addRow(rowData);
+					}
+				}
+
+			}
+
+		});
+		panelCentral.add(Buscador);
 
 		JButton btnVender = new JButton("VENDER");
 		btnVender.setForeground(Color.WHITE);
@@ -586,7 +624,7 @@ public class TransactionView extends JFrame {
 			if (juegoSeleccionado != null) {
 				dispose();
 				TransactionController tc = new TransactionController();
-				tc.salesOperation(juegoId);
+				tc.selectCustomerVent(juegoId);
 			}
 		});
 		panelCentral.add(btnVender);
@@ -1176,7 +1214,7 @@ public class TransactionView extends JFrame {
 		JLabel lblEmailCliente = new JLabel(user.getCorreo());
 		lblEmailCliente.setHorizontalAlignment(SwingConstants.CENTER);
 		lblEmailCliente.setFont(new Font("Calibri", Font.BOLD, 18));
-		lblEmailCliente.setBounds(469, 102, 200, 42);
+		lblEmailCliente.setBounds(469, 102, 250, 42);
 		panelCentral.add(lblEmailCliente);
 
 		// Logo del juego
@@ -1552,7 +1590,266 @@ public class TransactionView extends JFrame {
 		setVisible(true);
 	}
 	
+	public void SeleccionClienteVenta(VideoGames videojuegos ,List<User> usuarios) {
+
+		try {
+			UIManager.setLookAndFeel(new FlatLightLaf());
+			UIManager.put("Button.arc", 15); // Esquinas redondeadas
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+		// Configuración básica de la ventana
+		setTitle("Seleccione usuario para renta");
+		setSize(1024, 576);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setLocationRelativeTo(null);
+
+		// Usamos JLayeredPane para superponer componentes
+		JLayeredPane layeredPane = new JLayeredPane();
+		layeredPane.setPreferredSize(new Dimension(900, 650));
+		setContentPane(layeredPane);
+
+		// 1. PANEL BLANCO (fondo completo)
+		JPanel panelIzq = new JPanel();
+		panelIzq.setLayout(null);
+		panelIzq.setBackground(Color.decode("#FFFFFF"));
+		panelIzq.setBounds(10, 62, 257, 475);
+		layeredPane.add(panelIzq, JLayeredPane.PALETTE_LAYER);
+
+		JButton btnClientes = new JButton("CLIENTES");
+		btnClientes.setFont(new Font("Calibri", Font.BOLD, 16));
+		btnClientes.setBackground(Color.decode("#263C54"));
+		btnClientes.setForeground(Color.WHITE);
+		btnClientes.setBounds(10, 11, 237, 100);
+		btnClientes.addActionListener(e -> {
+			int cancelar;
+
+			cancelar = JOptionPane.showConfirmDialog(null, "¿Seguro que quieres cancelar?", "Confirmar cancelacion",
+					JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+
+			if (cancelar == JOptionPane.YES_OPTION) {
+				dispose(); // Cierra la ventana actual
+				UserViews uv = new UserViews();
+				uv.AdministradorCliente(); // Abre la segunda ventana
+			}
+
+		});
+		panelIzq.add(btnClientes);
+
+		JButton btnVideojuegos = new JButton("VIDEOJUEGOS");
+		btnVideojuegos.setForeground(Color.WHITE);
+		btnVideojuegos.setFont(new Font("Calibri", Font.BOLD, 16));
+		btnVideojuegos.setBackground(new Color(38, 60, 84));
+		btnVideojuegos.setBounds(10, 128, 237, 100);
+		panelIzq.add(btnVideojuegos);
+		btnVideojuegos.addActionListener(e -> {
+			int cancelar;
+
+			cancelar = JOptionPane.showConfirmDialog(null, "¿Seguro que quieres cancelar?", "Confirmar cancelacion",
+					JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+
+			if (cancelar == JOptionPane.YES_OPTION) {
+				dispose(); // Cierra la ventana actual
+				VideogamesView vv = new VideogamesView();
+				vv.AdministradorJuegos(); // Abre la segunda ventana
+			}
+
+		});
+
+		JButton btnRentaYCompra = new JButton("RENTA Y COMPRA");
+		btnRentaYCompra.setForeground(Color.WHITE);
+		btnRentaYCompra.setFont(new Font("Calibri", Font.BOLD, 16));
+		btnRentaYCompra.setBackground(new Color(38, 60, 84));
+		btnRentaYCompra.setBounds(10, 242, 237, 100);
+		btnRentaYCompra.addActionListener(e -> {
+			int cancelar;
+
+			cancelar = JOptionPane.showConfirmDialog(null, "¿Seguro que quieres cancelar?", "Confirmar cancelacion",
+					JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+
+			if (cancelar == JOptionPane.YES_OPTION) {
+				dispose(); // Cierra la ventana actual
+				TransactionView tv = new TransactionView();
+				tv.AdministradorRentaCompra(); // Abre la segunda ventana
+			}
+
+		});
+		panelIzq.add(btnRentaYCompra);
+
+		JButton btnNuevaOperacion = new JButton("NUEVA OPERACIÓN");
+		btnNuevaOperacion.setForeground(Color.WHITE);
+		btnNuevaOperacion.setFont(new Font("Calibri", Font.BOLD, 16));
+		btnNuevaOperacion.setBackground(new Color(38, 60, 84));
+		btnNuevaOperacion.setBounds(10, 364, 237, 100);
+		btnNuevaOperacion.addActionListener(e -> {
+			int cancelar;
+
+			cancelar = JOptionPane.showConfirmDialog(null, "¿Seguro que quieres cancelar?", "Confirmar cancelacion",
+					JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+
+			if (cancelar == JOptionPane.YES_OPTION) {
+				dispose(); // Cierra la ventana actual
+				PromotionsView pv = new PromotionsView();
+				pv.NuevaOperacion(); // Abre la segunda ventana
+			}
+		});
+		panelIzq.add(btnNuevaOperacion);
+
+		
+		//PANEL GRIS CENTRAL
+		JPanel panelCentral = new JPanel();
+		panelCentral.setLayout(null);
+		panelCentral.setBackground(Color.decode("#F2F2F2"));
+		panelCentral.setBounds(277, 62, 731, 475);
+		layeredPane.add(panelCentral, JLayeredPane.PALETTE_LAYER);
+
+		JLabel iniciar = new JLabel("SELECCIONE UN USUARIO PARA RENTA");
+		iniciar.setBounds(150, 11, 500, 42);
+		iniciar.setHorizontalAlignment(JLabel.LEFT);
+		iniciar.setFont(new Font("Calibri", Font.BOLD, 20));
+		panelCentral.add(iniciar);
+
+		// Crear unan tabla
+		String[] columnNames = { "ID", "Nombre", "A. pat:", "A. mat;", "Fecha de nacimierto", "telefono", "Correo" };
+		DefaultTableModel model = new DefaultTableModel(columnNames, 0) {
+			@Override
+			public boolean isCellEditable(int row, int column) {
+				return false; // Hacer que la tabla no sea editable
+			}
+		};
+		
+		// Llenar la tabla con datos
+		for (User usuario : usuarios) {
+		    Object[] rowData = {
+		        usuario.getId(),
+		        usuario.getNombre(),
+		        usuario.getApellidoPaterno(),
+		        usuario.getApellidoMaterno(),
+		        usuario.getFechaNacimiento(),
+		        usuario.getTelefono(),
+		        usuario.getCorreo()
+		    };
+		    model.addRow(rowData);
+		}
+
+		// se crea la tabla
+		JTable table = new JTable(model);
+		
+		table.getColumnModel().getColumn(0).setPreferredWidth(10); // aqui redusco id
+		table.getColumnModel().getColumn(2).setPreferredWidth(50); // aqui se reduce paellido paterno
+		table.getColumnModel().getColumn(3).setPreferredWidth(50); // here i reduce midle name
+
+		table.setFont(new Font("Arial", Font.PLAIN, 14));
+		table.setRowHeight(25);
+		table.getTableHeader().setFont(new Font("Arial", Font.BOLD, 14));
+		table.setAutoCreateRowSorter(true); // ordenar por columnas
+
+		// Agregar la tabla a un JScrollPane
+		JScrollPane scrollPane = new JScrollPane(table);
+		scrollPane.setBounds(26, 80, 680, 330);
+		panelCentral.add(scrollPane);
+
+		// Buscador icon
+		ImageIcon Buscadorpng = new ImageIcon(getClass().getResource("/images/Buscador.png"));
+		Image imagenEscalada = Buscadorpng.getImage().getScaledInstance(30, 29, Image.SCALE_SMOOTH);
+		JLabel logo = new JLabel(new ImageIcon(imagenEscalada));
+		logo.setBounds(455, 49, 30, 29); // posicion
+		panelCentral.add(logo);
+
+		JTextField Buscador = new JTextField();
+		Buscador.setFont(new Font("League Spartan Light", Font.PLAIN, 14));
+		Buscador.setBounds(485, 50, 220, 25);
+		Buscador.addKeyListener(new KeyAdapter() {
+		    @Override
+		    public void keyReleased(KeyEvent e) {
+		        String textoBusqueda = Buscador.getText().trim().toLowerCase();
+		        model.setRowCount(0); // Limpiar tabla
+
+		        for (User usuario : usuarios) {
+		            String nombre = usuario.getNombre().toLowerCase() ;
+		            String apellidoP = usuario.getApellidoPaterno().toLowerCase();
+		            String apellidoM = usuario.getApellidoMaterno() != null ? usuario.getApellidoMaterno().toLowerCase() : "";
+		            String correo = usuario.getCorreo().toLowerCase();
+		            String id = String.valueOf(usuario.getId()); 
+
+		            if (nombre.contains(textoBusqueda) ||
+		                apellidoP.contains(textoBusqueda) ||
+		                apellidoM.contains(textoBusqueda)||
+		                correo.contains(textoBusqueda)||
+		                id.contains(textoBusqueda)) {
+
+		                Object[] rowData = {
+		                    usuario.getId(),
+		                    usuario.getNombre(),
+		                    usuario.getApellidoPaterno(),
+		                    usuario.getApellidoMaterno(),
+		                    usuario.getFechaNacimiento(),
+		                    usuario.getTelefono(),
+		                    usuario.getCorreo()
+		                };
+		                model.addRow(rowData);
+		            }
+		        }
+		    }
+		});
+		panelCentral.add(Buscador);
+
+		// BOTON EDITAR PROVICIONAL, MEJORAR
+		JButton btnEditar = new JButton("Seleccionar");
+		btnEditar.setForeground(Color.WHITE);
+		btnEditar.setBackground(Color.decode("#4fadbd"));
+		btnEditar.setBounds(534, 420, 172, 30);
+		btnEditar.addActionListener(e -> {
+
+			int selectedRow = table.getSelectedRow();
+
+			if (selectedRow == -1) {
+				JOptionPane.showMessageDialog(layeredPane, "Por favor seleccione un usuario", "Advertencia",
+						JOptionPane.WARNING_MESSAGE);
+				return;
+			}
+
+			// Obtener datos del usuario seleccionado
+			int userId = (int) model.getValueAt(selectedRow, 0);
+
+			dispose();			
+			TransactionController tc = new TransactionController();
+			tc.salesOperation(videojuegos.getId(), userId);
+
+		});
+		panelCentral.add(btnEditar);
+		
+		JButton btnEliminar = new JButton("Cancelar");
+		btnEliminar.setForeground(Color.WHITE);
+		btnEliminar.setBackground(Color.decode("#B82F2F"));
+		btnEliminar.setBounds(26, 420, 172, 30);
+		btnEliminar.addActionListener(e -> {
+			int cancelar;
+			
+			cancelar = JOptionPane.showConfirmDialog(null, "¿Seguro que quieres cancelar?","Confirmar cancelacion",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE);
+			
+			if(cancelar == JOptionPane.YES_OPTION) {
+				dispose();
+				TransactionController tc = new TransactionController();
+				tc.rentalIndex();
+			}
+			
+		});
+		panelCentral.add(btnEliminar);
+
+		// 3. PANEL ROJO SUPERIOR (barra de título)
+		JPanel barraRoja = new JPanel();
+		barraRoja.setBackground(Color.decode("#B44635"));
+		barraRoja.setBounds(0, 0, 1024, 60);
+		layeredPane.add(barraRoja, JLayeredPane.PALETTE_LAYER);
+
+		setVisible(true);
+
+		
+	}
+	
 	public void OperacionComprar(VideoGames videogames, List<User> users) {
+		
 		// Configuración básica de la ventana
 		setTitle("Detalles de operación Comprar");
 		setSize(1024, 576);

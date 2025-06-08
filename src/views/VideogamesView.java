@@ -775,6 +775,14 @@ public class VideogamesView extends JFrame {
 
 	    txtNombreJuego = new JTextField(videogames.getNombre());
 	    txtNombreJuego.setBounds(300, 155, 230, 25);
+	    txtNombreJuego.addKeyListener(new KeyAdapter() {
+	        public void keyTyped(KeyEvent e) {
+	            char nj = e.getKeyChar();
+	            if (!Character.isLetter(nj) || txtNombreJuego.getText().length() >= 100) {
+	                e.consume();
+	            }
+	        }
+	    });
 	    panelCentral.add(txtNombreJuego);
 	    
 	    JLabel lblAnio = new JLabel("Año de lanzamiento:");
@@ -802,6 +810,14 @@ public class VideogamesView extends JFrame {
 
 	    txtPlataforma = new JTextField(videogames.getPlataforma());
 	    txtPlataforma.setBounds(555, 155, 150, 25);
+	    txtPlataforma.addKeyListener(new KeyAdapter() {
+	        public void keyTyped(KeyEvent e) {
+	            char Plataforma = e.getKeyChar();
+	            if (!Character.isLetter(Plataforma) || txtNombreJuego.getText().length() >= 50) {
+	                e.consume();
+	            }
+	        }
+	    });
 	    panelCentral.add(txtPlataforma);
 	    
 	    JLabel lblDisponibilidad = new JLabel("Disponibilidad:");
@@ -941,6 +957,14 @@ public class VideogamesView extends JFrame {
 
 	    txtDescripcion = new JTextField(videogames.getDesarrolladoPor());
 	    txtDescripcion.setBounds(730, 155, 240, 25);
+	    txtDescripcion.addKeyListener(new KeyAdapter() {
+	        public void keyTyped(KeyEvent e) {
+
+	            if (txtDescripcion.getText().length() >= 50) {
+	                e.consume();
+	            }
+	        }
+	    });
 	    panelCentral.add(txtDescripcion);
 
 	    JLabel lblAcercaDe = new JLabel("Descripción:");
@@ -1206,6 +1230,14 @@ public class VideogamesView extends JFrame {
 	    panelCentral.add(lblNombre);
 
 	    txtNombre.setBounds(300, 155, 230, 25);
+	    txtNombre.addKeyListener(new KeyAdapter() { /////////////Aqui sirve para solo colocar letras o numeros
+	        public void keyTyped(KeyEvent e) {
+	        	
+	            if (txtNombre.getText().length() >= 100) {
+	                e.consume();
+	            }
+	        }
+	    });
 	    panelCentral.add(txtNombre);
 	    
 	    JLabel lblPrecioRenta = new JLabel("Precio renta (MXN):");
@@ -1222,13 +1254,19 @@ public class VideogamesView extends JFrame {
 				}
 			}
 		});
-	    panelCentral.add(txtPrecioRenta);
-
 
 	    // Sección central (Detalles técnicos)
 	    JLabel lblPlataforma = new JLabel("Plataforma:");
 	    lblPlataforma.setFont(new Font("Calibri", Font.BOLD, 14));
 	    lblPlataforma.setBounds(555, 130, 180, 20);
+	    lblPlataforma.addKeyListener(new KeyAdapter() { /////////////Aqui sirve para solo colocar letras o numeros
+	        public void keyTyped(KeyEvent e) {
+
+	            if (lblPlataforma.getText().length() >= 50) {
+	                e.consume();
+	            }
+	        }
+	    });
 	    panelCentral.add(lblPlataforma);
 
 	    txtPlataforma.setBounds(555, 155, 150, 25);
@@ -1328,8 +1366,17 @@ public class VideogamesView extends JFrame {
 	    lblDesarrollador.setFont(new Font("Calibri", Font.BOLD, 14));
 	    lblDesarrollador.setBounds(730, 130, 180, 20);
 	    panelCentral.add(lblDesarrollador);
-
+	    panelCentral.add(txtPrecioRenta);
+	    
 	    txtDesarrollador.setBounds(730, 155, 240, 25);
+	    txtDesarrollador.addKeyListener(new KeyAdapter() { /////////////Aqui sirve para solo colocar letras o numeros
+	        public void keyTyped(KeyEvent e) {
+
+	            if (txtDesarrollador.getText().length() >= 50) {
+	                e.consume();
+	            }
+	        }
+	    });
 	    panelCentral.add(txtDesarrollador);
 
 	    JLabel lblDescripcion = new JLabel("Descripción:");

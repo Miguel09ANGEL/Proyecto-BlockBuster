@@ -999,7 +999,7 @@ public class UserViews extends JFrame {
 		    txtApellidoMaterno.addKeyListener(new KeyAdapter() {
 		        public void keyTyped(KeyEvent e) {
 		            char am = e.getKeyChar();
-		            if (!Character.isLetter(am) || txtApellidoMaterno.getText().length() >= 10) {
+		            if (!Character.isLetter(am) || txtApellidoMaterno.getText().length() >= 20) {
 		                e.consume();
 		            }
 		        }
@@ -1020,7 +1020,7 @@ public class UserViews extends JFrame {
 		    txtTelefono.addKeyListener(new KeyAdapter() {
 		        public void keyTyped(KeyEvent e) {
 		            char numero = e.getKeyChar();
-		            if (!Character.isDigit(numero) || txtTelefono.getText().length() >= 10) {
+		            if (!Character.isDigit(numero) || txtTelefono.getText().length() >= 12) {
 		                e.consume();
 		            }
 		        }
@@ -1043,7 +1043,7 @@ public class UserViews extends JFrame {
 		    txtApellidoPaterno.addKeyListener(new KeyAdapter() {
 		        public void keyTyped(KeyEvent e) {
 		            char ap = e.getKeyChar();
-		            if (!Character.isLetter(ap) || txtApellidoPaterno.getText().length() >= 10) {
+		            if (!Character.isLetter(ap) || txtApellidoPaterno.getText().length() >= 20) {
 		                e.consume();
 		            }
 		        }
@@ -1091,6 +1091,14 @@ public class UserViews extends JFrame {
 		    txtCorreo.setColumns(10);
 		    txtCorreo.setBackground(Color.decode("#D9D9D9"));
 		    txtCorreo.setBounds(650, 311, 200, 27);
+		    txtCorreo.addKeyListener(new KeyAdapter() { /////////////Aqui sirve para solo colocar letras o numeros
+				public void keyTyped(KeyEvent e) {
+
+					if (txtCorreo.getText().length() >= 50) {
+						e.consume();
+					}
+				}
+			});
 		    panelCentral.add(txtCorreo);
 
 		    // -------- BOTONES --------
@@ -1315,7 +1323,7 @@ public class UserViews extends JFrame {
 			textFieldApellidoMaterno.addKeyListener(new KeyAdapter() { /////////////Aqui sirve para solo colocar letras o numeros
 				public void keyTyped(KeyEvent e) {
 					char am = e.getKeyChar();
-					if (!Character.isLetter(am) || textFieldApellidoMaterno.getText().length() >= 10) {
+					if (!Character.isLetter(am) || textFieldApellidoMaterno.getText().length() >= 20) {
 						e.consume();
 					}
 				}
@@ -1336,7 +1344,7 @@ public class UserViews extends JFrame {
 			textFieldTelefono.addKeyListener(new KeyAdapter() { /////////////Aqui sirve para solo colocar letras o numeros
 				public void keyTyped(KeyEvent e) {
 					char numero = e.getKeyChar();
-					if (!Character.isDigit(numero) || textFieldTelefono.getText().length() >= 10) {
+					if (!Character.isDigit(numero) || textFieldTelefono.getText().length() >= 12) {
 						e.consume();
 					}
 				}
@@ -1357,7 +1365,7 @@ public class UserViews extends JFrame {
 			textFieldApellidoPaterno.addKeyListener(new KeyAdapter() { /////////////Aqui sirve para solo colocar letras o numeros
 				public void keyTyped(KeyEvent e) {
 					char ap = e.getKeyChar();
-					if (!Character.isLetter(ap) || textFieldApellidoPaterno.getText().length() >= 10) {
+					if (!Character.isLetter(ap) || textFieldApellidoPaterno.getText().length() >= 20) {
 						e.consume();
 					}
 				}
@@ -1401,6 +1409,14 @@ public class UserViews extends JFrame {
 			textFieldCorreo.setColumns(10);
 			textFieldCorreo.setBackground(new Color(217, 217, 217));
 			textFieldCorreo.setBounds(650, 311, 200, 27);
+			textFieldCorreo.addKeyListener(new KeyAdapter() { /////////////Aqui sirve para solo colocar letras o numeros
+				public void keyTyped(KeyEvent e) {
+
+					if (textFieldCorreo.getText().length() >= 50) {
+						e.consume();
+					}
+				}
+			});
 			panelCentral.add(textFieldCorreo);
 
 			// Botón Cancelar

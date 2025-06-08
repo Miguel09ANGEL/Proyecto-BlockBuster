@@ -673,7 +673,7 @@ public class VideogamesView extends JFrame {
 	    JTextField txtAnioLanzamiento;
 	    JTextField txtPrecioRenta;
 	    JTextField txtPlataforma;
-	    JTextField txtClasificacion;
+	    //JTextField txtClasificacion;
 	    JTextField txtExistencias;  
 	    JTextField txtPrecioVenta;
 	    JTextField txtAcercaDe;
@@ -814,9 +814,33 @@ public class VideogamesView extends JFrame {
 	    lblClasificacion.setBounds(390, 190, 180, 20);
 	    panelCentral.add(lblClasificacion);
 
-	    txtClasificacion = new JTextField(videogames.getClasificacion());
-	    txtClasificacion.setBounds(390, 215, 130, 25);
-	    panelCentral.add(txtClasificacion);
+	    // ComboBox para Clasificacion
+	    String[] Clasificacion = { "E", "E10+", "T", "M", "AO" };
+
+	    JComboBox<String> comboclasificacion = new JComboBox<String>(Clasificacion);
+	    
+	    String ClasificacionActual = videogames.getClasificacion(); 
+	   
+	    if (ClasificacionActual != null && !ClasificacionActual.isEmpty()) {
+	        boolean encontrado = false;
+	        for (int i = 0; i < comboclasificacion.getItemCount(); i++) {
+	            if (comboclasificacion.getItemAt(i).equalsIgnoreCase(ClasificacionActual)) {
+	            	comboclasificacion.setSelectedIndex(i);
+	                encontrado = true;
+	                break;
+	            }
+	        }
+	        
+	        if (!encontrado) {
+	        	comboclasificacion.setSelectedItem("Otro");
+	        }
+	    } else {
+	        // Si no hay género definido, selecciona el primer elemento
+	    	comboclasificacion.setSelectedIndex(0);
+	    }
+
+	    comboclasificacion.setBounds(390, 215, 130, 25);
+	    panelCentral.add(comboclasificacion);
 
 	    JLabel lblExistencias = new JLabel("Existencias disponibles:");
 	    lblExistencias.setFont(new Font("Calibri", Font.BOLD, 14));
@@ -888,7 +912,7 @@ public class VideogamesView extends JFrame {
 	        txtNombreJuego.setBorder(BorderFactory.createLineBorder(Color.GRAY));
 	        txtPlataforma.setBorder(BorderFactory.createLineBorder(Color.GRAY));
 	        txtAnioLanzamiento.setBorder(BorderFactory.createLineBorder(Color.GRAY));
-	        txtClasificacion.setBorder(BorderFactory.createLineBorder(Color.GRAY));
+	        //txtClasificacion.setBorder(BorderFactory.createLineBorder(Color.GRAY));
 	        txtExistencias.setBorder(BorderFactory.createLineBorder(Color.GRAY));
 	        txtPrecioRenta.setBorder(BorderFactory.createLineBorder(Color.GRAY));
 	        txtPrecioVenta.setBorder(BorderFactory.createLineBorder(Color.GRAY));
@@ -917,11 +941,11 @@ public class VideogamesView extends JFrame {
 	            camposValidos = false;
 	        }
 	        
-	        if (txtClasificacion.getText().trim().isEmpty()) {
-	            txtClasificacion.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
-	            mensajeError.append("• Clasificación es obligatoria\n");
-	            camposValidos = false;
-	        }
+//	        if (txtClasificacion.getText().trim().isEmpty()) {
+//	            txtClasificacion.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
+//	            mensajeError.append("• Clasificación es obligatoria\n");
+//	            camposValidos = false;
+//	        }
 	        
 	        if (txtExistencias.getText().trim().isEmpty()) {
 	            txtExistencias.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
@@ -992,7 +1016,7 @@ public class VideogamesView extends JFrame {
 	            String Nombre = txtNombreJuego.getText().trim();
 	            String Plataforma = txtPlataforma.getText().trim();
 	            boolean Disponibilidad = chkDisponible.isSelected();
-	            String Clasificacion = txtClasificacion.getText().trim();
+	            String clasificacion = (String) comboclasificacion.getSelectedItem();
 	            String Genero = (String) comboGenero.getSelectedItem();	 
 	            String DesarrolladoPor = txtDescripcion.getText().trim();
 	            String Descripcion = txtAreaDescripcion.getText().trim();
@@ -1000,7 +1024,7 @@ public class VideogamesView extends JFrame {
 	            // Actualizar el videojuego
 	            VideoGamesModel vm = new VideoGamesModel();
 	            boolean actualizado = vm.updateVideogame(videogames.getId(), Nombre, Plataforma, AñoLanzamiento, 
-	                    Disponibilidad, Clasificacion,Genero,ExistenciasDisponibles, 
+	                    Disponibilidad, clasificacion,Genero,ExistenciasDisponibles, 
 	                    PrecioRenta, PrecioVenta, DesarrolladoPor, Descripcion);
 	            
 	            if (actualizado) {
@@ -1140,9 +1164,16 @@ public class VideogamesView extends JFrame {
 	    lblClasificacion.setFont(new Font("Calibri", Font.BOLD, 14));
 	    lblClasificacion.setBounds(390, 190, 180, 20);
 	    panelCentral.add(lblClasificacion);
+	    
+	    // ComboBox para Clasificacion
+	    String[] Clasificacion = { "E", "E10+", "T", "M", "AO"};
 
-	    txtClasificacion.setBounds(390, 215, 130, 25);
-	    panelCentral.add(txtClasificacion);
+	    JComboBox<String> comboclasificacion = new JComboBox<String>(Clasificacion);
+	   
+	    comboclasificacion.setSelectedIndex(0);
+
+	    comboclasificacion.setBounds(390, 215, 130, 25);
+	    panelCentral.add(comboclasificacion);
 	    
 	    JLabel lblGenero = new JLabel("Género:");
 	    lblGenero.setFont(new Font("Calibri", Font.BOLD, 14));

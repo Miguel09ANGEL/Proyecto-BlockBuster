@@ -143,7 +143,7 @@ public class PromotionsView extends JFrame{
 		panelCentral.add(iniciar);
 
 		JButton devoluciones = new JButton("<html><center>DEVOLUCIONES PENDIENTES<html>");
-		devoluciones.setBounds(34, 261, 206, 100);
+		devoluciones.setBounds(100, 261, 206, 100);
 		panelCentral.add(devoluciones);
 		devoluciones.setForeground(Color.WHITE);
 		devoluciones.setFont(new Font("Calibri", Font.BOLD, 16));
@@ -158,7 +158,7 @@ public class PromotionsView extends JFrame{
 		btnPromocionAutomatica.setForeground(Color.WHITE);
 		btnPromocionAutomatica.setFont(new Font("Calibri", Font.BOLD, 16));
 		btnPromocionAutomatica.setBackground(new Color(38, 60, 84));
-		btnPromocionAutomatica.setBounds(266, 261, 206, 100);
+		btnPromocionAutomatica.setBounds(442, 261, 206, 100);
 		btnPromocionAutomatica.addActionListener(e -> {
 			dispose(); // Cierra la ventana actual
 			PromotionsController pc = new PromotionsController();
@@ -175,18 +175,18 @@ public class PromotionsView extends JFrame{
 		lblDesdeAquPodrs.setBounds(90, 168, 494, 60);
 		panelCentral.add(lblDesdeAquPodrs);
 
-		JButton btnDescuentoPorCliente = new JButton("<html><center>DESCUENTO POR CLIENTE FRECUENTE<html>");
-		btnDescuentoPorCliente.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				dispose();
-				DescuentoFrecuencia(); // Abre la segunda ventana
-			}
-		});
-		btnDescuentoPorCliente.setForeground(Color.WHITE);
-		btnDescuentoPorCliente.setFont(new Font("Calibri", Font.BOLD, 16));
-		btnDescuentoPorCliente.setBackground(new Color(38, 60, 84));
-		btnDescuentoPorCliente.setBounds(497, 261, 206, 100);
-		panelCentral.add(btnDescuentoPorCliente);
+//		JButton btnDescuentoPorCliente = new JButton("<html><center>DESCUENTO POR CLIENTE FRECUENTE<html>");
+//		btnDescuentoPorCliente.addActionListener(new ActionListener() {
+//			public void actionPerformed(ActionEvent e) {
+//				dispose();
+//				DescuentoFrecuencia(); // Abre la segunda ventana
+//			}
+//		});
+//		btnDescuentoPorCliente.setForeground(Color.WHITE);
+//		btnDescuentoPorCliente.setFont(new Font("Calibri", Font.BOLD, 16));
+//		btnDescuentoPorCliente.setBackground(new Color(38, 60, 84));
+//		btnDescuentoPorCliente.setBounds(497, 261, 206, 100);
+//		panelCentral.add(btnDescuentoPorCliente);
 		
 		ImageIcon icono = new ImageIcon(getClass().getResource("/images/Salida.png"));
 		JButton salida = new JButton(icono);
@@ -700,7 +700,7 @@ public class PromotionsView extends JFrame{
 
 		setVisible(true);
 	}
-
+/*
 	public void DescuentoFrecuencia() {
 		// Configuración básica de la ventana
 		setTitle(" Editar Descuento");
@@ -967,5 +967,5 @@ public class PromotionsView extends JFrame{
 
 		setVisible(true);
 	}
-	
+	*/
 }

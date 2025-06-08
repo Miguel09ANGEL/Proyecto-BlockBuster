@@ -174,19 +174,6 @@ public class PromotionsView extends JFrame{
 		lblDesdeAquPodrs.setFont(new Font("Calibri", Font.BOLD, 14));
 		lblDesdeAquPodrs.setBounds(90, 168, 494, 60);
 		panelCentral.add(lblDesdeAquPodrs);
-
-//		JButton btnDescuentoPorCliente = new JButton("<html><center>DESCUENTO POR CLIENTE FRECUENTE<html>");
-//		btnDescuentoPorCliente.addActionListener(new ActionListener() {
-//			public void actionPerformed(ActionEvent e) {
-//				dispose();
-//				DescuentoFrecuencia(); // Abre la segunda ventana
-//			}
-//		});
-//		btnDescuentoPorCliente.setForeground(Color.WHITE);
-//		btnDescuentoPorCliente.setFont(new Font("Calibri", Font.BOLD, 16));
-//		btnDescuentoPorCliente.setBackground(new Color(38, 60, 84));
-//		btnDescuentoPorCliente.setBounds(497, 261, 206, 100);
-//		panelCentral.add(btnDescuentoPorCliente);
 		
 		ImageIcon icono = new ImageIcon(getClass().getResource("/images/Salida.png"));
 		JButton salida = new JButton(icono);

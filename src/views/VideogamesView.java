@@ -32,6 +32,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 
 import com.formdev.flatlaf.FlatLightLaf;
@@ -340,16 +341,16 @@ public class VideogamesView extends JFrame {
 
 		// Agregar la tabla a un JScrollPane
 		JScrollPane scrollPane = new JScrollPane(table);
-		scrollPane.setBounds(26, 62, 695, 366);
+		scrollPane.setBounds(26, 80, 680, 330);
 		panelCentral.add(scrollPane);
 
 		
 		// BOTÓN EDITAR
-		JButton btnEditar = new JButton("DETALLES	");
+		JButton btnEditar = new JButton("DETALLES");
 		btnEditar.setForeground(Color.WHITE);
-		btnEditar.setBackground(Color.decode("#4fadbd"));
+		btnEditar.setBackground(Color.decode("#6D91B9"));
 		btnEditar.setFont(new Font("Arial", Font.BOLD, 14));
-		btnEditar.setBounds(400, 439, 172, 25);
+		btnEditar.setBounds(534, 420, 172, 30);
 		btnEditar.addActionListener(e -> {
 		    int selectedRow = table.getSelectedRow();
 		    
@@ -377,7 +378,7 @@ public class VideogamesView extends JFrame {
 		btnEliminar.setForeground(Color.WHITE);
 		btnEliminar.setBackground(Color.decode("#B82F2F"));
 		btnEliminar.setFont(new Font("Arial", Font.BOLD, 14));
-		btnEliminar.setBounds(187, 439, 172, 25);
+		btnEliminar.setBounds(26, 420, 172, 30);
 		btnEliminar.setToolTipText("Eliminar el videojuego seleccionado");
 
 		btnEliminar.addActionListener(new ActionListener() {
@@ -469,7 +470,7 @@ public class VideogamesView extends JFrame {
 	    // Nombre del juego
 	    JLabel lblNombre = new JLabel(videogames.getNombre());
 	    lblNombre.setFont(new Font("Anton", Font.BOLD, 20));
-	    lblNombre.setBounds(55, 124, 250, 42);
+	    lblNombre.setBounds(55, 124, 300, 42);
 	    panelCentral.add(lblNombre);
 	    
 	    JLabel lblanio = new JLabel("Año de lanzamiento:");
@@ -578,9 +579,10 @@ public class VideogamesView extends JFrame {
 	    panelCentral.add(lblValorVenta);
 
 	    // Botón Editar
-	    JButton btnEditar = new JButton("Editar");
-	    btnEditar.setBackground(Color.decode("#6D91B9"));
+	    JButton btnEditar = new JButton("EDITAR");
 	    btnEditar.setForeground(Color.WHITE);
+	    btnEditar.setBackground(Color.decode("#6D91B9"));
+	    btnEditar.setFont(new Font("Arial", Font.BOLD, 14));
 	    btnEditar.setBounds(394, 417, 183, 33); // Ajusta posición si es necesario
 	    btnEditar.addActionListener(new ActionListener() {
 	        public void actionPerformed(ActionEvent e) {
@@ -592,8 +594,9 @@ public class VideogamesView extends JFrame {
 	    });
 	    panelCentral.add(btnEditar);
 	    
-	    JButton btnDescargarPDF = new JButton("Descargar (PDF)");
+	    JButton btnDescargarPDF = new JButton("DESCARGAR (PDF)");
 	    btnDescargarPDF.setBackground(Color.decode("#263C54"));
+	    btnDescargarPDF.setFont(new Font("Arial", Font.BOLD, 14));
 	    btnDescargarPDF.setForeground(Color.WHITE);
 	    btnDescargarPDF.setBounds(605, 417, 183, 33);
 	    btnDescargarPDF.addActionListener(new ActionListener() {
@@ -642,9 +645,10 @@ public class VideogamesView extends JFrame {
 		panelCentral.add(btnDescargarPDF);
 
 
-		JButton btnRegresar = new JButton("Regresar");
+		JButton btnRegresar = new JButton("REGRESAR");
 		btnRegresar.setForeground(Color.WHITE);
-		btnRegresar.setBackground(new Color(184, 47, 47));
+		btnRegresar.setBackground(Color.decode("#B82F2F"));
+		btnRegresar.setFont(new Font("Arial", Font.BOLD, 14));
 		btnRegresar.setBounds(175, 417, 183, 33);
 		panelCentral.add(btnRegresar);
 		btnRegresar.addActionListener(new ActionListener() {
@@ -710,39 +714,127 @@ public class VideogamesView extends JFrame {
 	    lblTitulo.setBounds(350, 78, 350, 42);
 	    panelCentral.add(lblTitulo);
 
+	    // 1) JLabel para mostrar la imagen
+	    JLabel lblFoto = new JLabel();
+	    lblFoto.setBounds(84, 160, 150, 150);
+	    lblFoto.setBorder(BorderFactory.createLineBorder(Color.GRAY));
+	    panelCentral.add(lblFoto);
+
+	    // 2) Botón para cargar imagen
+	    JButton btnCargarFoto = new JButton("CARGAR FOTO");
+	    btnCargarFoto.setBounds(84, 320, 150, 25);
+	    btnCargarFoto.addActionListener(new ActionListener() {
+
+			// 3) Variable para almacenar el archivo seleccionado
+			final File[] imagenSeleccionada = new File[1];
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				JFileChooser fileChooser = new JFileChooser();
+				FileNameExtensionFilter filtrado = new FileNameExtensionFilter("JPG, PNG & GIF", "jpg", "png", "gif");
+				fileChooser.setFileFilter(filtrado);
+
+				int respuesta = fileChooser.showOpenDialog(btnCargarFoto);
+				if (respuesta == JFileChooser.APPROVE_OPTION) {
+					imagenSeleccionada[0] = fileChooser.getSelectedFile();
+					String ruta = imagenSeleccionada[0].getAbsolutePath();
+
+					// Escalamos la imagen para caber en el JLabel
+					Image img = new ImageIcon(ruta).getImage().getScaledInstance(lblFoto.getWidth(),
+							lblFoto.getHeight(), Image.SCALE_SMOOTH);
+					lblFoto.setIcon(new ImageIcon(img));
+				}
+			}
+		});
+	    panelCentral.add(btnCargarFoto);
+
 	    // Sección izquierda (Datos básicos)
 	    JLabel lblNombre = new JLabel("Nombre del Videojuego:");
 	    lblNombre.setFont(new Font("Calibri", Font.BOLD, 14));
-	    lblNombre.setBounds(55, 130, 180, 20);
+	    lblNombre.setBounds(300, 130, 180, 20);
 	    panelCentral.add(lblNombre);
 
 	    txtNombreJuego = new JTextField(videogames.getNombre());
-	    txtNombreJuego.setBounds(55, 155, 230, 25);
+	    txtNombreJuego.setBounds(300, 155, 230, 25);
 	    panelCentral.add(txtNombreJuego);
 	    
 	    JLabel lblAnio = new JLabel("Año de lanzamiento:");
 	    lblAnio.setFont(new Font("Calibri", Font.BOLD, 14));
-	    lblAnio.setBounds(55, 190, 180, 20);
+	    lblAnio.setBounds(300, 190, 180, 20);
 	    panelCentral.add(lblAnio);
 
 	    txtAnioLanzamiento = new JTextField(String.valueOf(videogames.getAñoLanzamiento()));
-	    txtAnioLanzamiento.setBounds(55, 215, 150, 25);
+	    txtAnioLanzamiento.setBounds(300, 215, 150, 25);
 	    txtAnioLanzamiento.addKeyListener(new KeyAdapter() { /////////////Aqui sirve para solo colocar letras o numeros
-			public void keyTyped(KeyEvent e) {
-				char anio = e.getKeyChar();
-				if (!Character.isDigit(anio) || txtAnioLanzamiento.getText().length() >= 4) {
-					e.consume();
-				}
-			}
-		});
+	        public void keyTyped(KeyEvent e) {
+	            char anio = e.getKeyChar();
+	            if (!Character.isDigit(anio) || txtAnioLanzamiento.getText().length() >= 4) {
+	                e.consume();
+	            }
+	        }
+	    });
 	    panelCentral.add(txtAnioLanzamiento);
 
+	    // Sección central (Detalles técnicos)
+	    JLabel lblPlataforma = new JLabel("Plataforma:");
+	    lblPlataforma.setFont(new Font("Calibri", Font.BOLD, 14));
+	    lblPlataforma.setBounds(555, 130, 180, 20);
+	    panelCentral.add(lblPlataforma);
+
+	    txtPlataforma = new JTextField(videogames.getPlataforma());
+	    txtPlataforma.setBounds(555, 155, 150, 25);
+	    panelCentral.add(txtPlataforma);
+	    
+	    JLabel lblDisponibilidad = new JLabel("Disponibilidad:");
+	    lblDisponibilidad.setFont(new Font("Calibri", Font.BOLD, 14));
+	    lblDisponibilidad.setBounds(500, 190, 180, 20);
+	    panelCentral.add(lblDisponibilidad);
+
+	    // CheckBox para disponibilidad
+	    JCheckBox chkDisponible = new JCheckBox("Disponible");
+	    chkDisponible.setSelected(videogames.isDisponibilidad());
+	    chkDisponible.setBounds(500, 215, 100, 25);
+	    panelCentral.add(chkDisponible);
+
+	    JLabel lblClasificacion = new JLabel("Clasificación:");
+	    lblClasificacion.setFont(new Font("Calibri", Font.BOLD, 14));
+	    lblClasificacion.setBounds(630, 190, 180, 20);
+	    panelCentral.add(lblClasificacion);
+
+	    // ComboBox para Clasificacion
+	    String[] Clasificacion = { "E", "E10+", "T", "M", "AO" };
+
+	    JComboBox<String> comboclasificacion = new JComboBox<String>(Clasificacion);
+	    
+	    String ClasificacionActual = videogames.getClasificacion(); 
+	   
+	    if (ClasificacionActual != null && !ClasificacionActual.isEmpty()) {
+	        boolean encontrado = false;
+	        for (int i = 0; i < comboclasificacion.getItemCount(); i++) {
+	            if (comboclasificacion.getItemAt(i).equalsIgnoreCase(ClasificacionActual)) {
+	                comboclasificacion.setSelectedIndex(i);
+	                encontrado = true;
+	                break;
+	            }
+	        }
+	        
+	        if (!encontrado) {
+	            comboclasificacion.setSelectedItem("Otro");
+	        }
+	    } else {
+	        // Si no hay género definido, selecciona el primer elemento
+	        comboclasificacion.setSelectedIndex(0);
+	    }
+
+	    comboclasificacion.setBounds(630, 215, 70, 25);
+	    panelCentral.add(comboclasificacion);
+	    
 	    JLabel lblGenero = new JLabel("Género:");
 	    lblGenero.setFont(new Font("Calibri", Font.BOLD, 14));
-	    lblGenero.setBounds(55, 250, 180, 20);
+	    lblGenero.setBounds(300, 250, 180, 20);
 	    panelCentral.add(lblGenero);
 
-	 // ComboBox para Género
+	    // ComboBox para Género
 	    String[] genero = { "Acción", "Aventura", "Estrategia", "RPG", "Deportes", 
 	                       "Carreras", "Shooter", "Lucha", "Plataformas", "Simulación", "Otro" };
 
@@ -768,119 +860,73 @@ public class VideogamesView extends JFrame {
 	        comboGenero.setSelectedIndex(0);
 	    }
 
-	    comboGenero.setBounds(55, 275, 180, 25);
+	    comboGenero.setBounds(300, 275, 180, 25);
 	    panelCentral.add(comboGenero);
-
-	    JLabel lblPrecioRenta = new JLabel("Precio renta (MXN):");
-	    lblPrecioRenta.setFont(new Font("Calibri", Font.BOLD, 14));
-	    lblPrecioRenta.setBounds(55, 310, 180, 20);
-	    panelCentral.add(lblPrecioRenta);
-
-	    txtPrecioRenta = new JTextField(String.valueOf(videogames.getPrecioRenta()));
-	    txtPrecioRenta.setBounds(55, 335, 180, 25);
-	    txtPrecioRenta.addKeyListener(new KeyAdapter() { /////////////Aqui sirve para solo colocar letras o numeros
-			public void keyTyped(KeyEvent e) {
-				char renta = e.getKeyChar();
-				if (!Character.isDigit(renta) || txtPrecioRenta.getText().length() >= 5) {
-					e.consume();
-				}
-			}
-		});
-	    panelCentral.add(txtPrecioRenta);
-
-	    // Sección central (Detalles técnicos)
-	    JLabel lblPlataforma = new JLabel("Plataforma:");
-	    lblPlataforma.setFont(new Font("Calibri", Font.BOLD, 14));
-	    lblPlataforma.setBounds(300, 130, 180, 20);
-	    panelCentral.add(lblPlataforma);
-
-	    txtPlataforma = new JTextField(videogames.getPlataforma());
-	    txtPlataforma.setBounds(300, 155, 200, 25);
-	    panelCentral.add(txtPlataforma);
-
-	    JLabel lblDisponibilidad = new JLabel("Disponibilidad:");
-	    lblDisponibilidad.setFont(new Font("Calibri", Font.BOLD, 14));
-	    lblDisponibilidad.setBounds(250, 190, 180, 20);
-	    panelCentral.add(lblDisponibilidad);
-
-	    // CheckBox para disponibilidad
-	    JCheckBox chkDisponible = new JCheckBox("Disponible");
-	    chkDisponible.setSelected(videogames.isDisponibilidad());
-	    chkDisponible.setBounds(250, 215, 100, 25);
-	    panelCentral.add(chkDisponible);
-
-	    JLabel lblClasificacion = new JLabel("Clasificación:");
-	    lblClasificacion.setFont(new Font("Calibri", Font.BOLD, 14));
-	    lblClasificacion.setBounds(390, 190, 180, 20);
-	    panelCentral.add(lblClasificacion);
-
-	    // ComboBox para Clasificacion
-	    String[] Clasificacion = { "E", "E10+", "T", "M", "AO" };
-
-	    JComboBox<String> comboclasificacion = new JComboBox<String>(Clasificacion);
-	    
-	    String ClasificacionActual = videogames.getClasificacion(); 
-	   
-	    if (ClasificacionActual != null && !ClasificacionActual.isEmpty()) {
-	        boolean encontrado = false;
-	        for (int i = 0; i < comboclasificacion.getItemCount(); i++) {
-	            if (comboclasificacion.getItemAt(i).equalsIgnoreCase(ClasificacionActual)) {
-	            	comboclasificacion.setSelectedIndex(i);
-	                encontrado = true;
-	                break;
-	            }
-	        }
-	        
-	        if (!encontrado) {
-	        	comboclasificacion.setSelectedItem("Otro");
-	        }
-	    } else {
-	        // Si no hay género definido, selecciona el primer elemento
-	    	comboclasificacion.setSelectedIndex(0);
-	    }
-
-	    comboclasificacion.setBounds(390, 215, 130, 25);
-	    panelCentral.add(comboclasificacion);
 
 	    JLabel lblExistencias = new JLabel("Existencias disponibles:");
 	    lblExistencias.setFont(new Font("Calibri", Font.BOLD, 14));
-	    lblExistencias.setBounds(300, 250, 180, 20);
+	    lblExistencias.setBounds(500, 250, 180, 20);
 	    panelCentral.add(lblExistencias);
 
 	    txtExistencias = new JTextField(String.valueOf(videogames.getExistenciasDisponibles()));
-	    txtExistencias.setBounds(300, 275, 200, 25);
+	    txtExistencias.setBounds(500, 275, 200, 25);
+	    txtExistencias.addKeyListener(new KeyAdapter() { /////////////Aqui sirve para solo colocar letras o numeros
+	        public void keyTyped(KeyEvent e) {
+	            char ex = e.getKeyChar();
+	            if (!Character.isDigit(ex) || txtExistencias.getText().length() >= 4) {
+	                e.consume();
+	            }
+	        }
+	    });
 	    panelCentral.add(txtExistencias);
+	    
+	    JLabel lblPrecioRenta = new JLabel("Precio renta (MXN):");
+	    lblPrecioRenta.setFont(new Font("Calibri", Font.BOLD, 14));
+	    lblPrecioRenta.setBounds(300, 310, 180, 20);
+	    panelCentral.add(lblPrecioRenta);
+
+	    txtPrecioRenta = new JTextField(String.valueOf(videogames.getPrecioRenta()));
+	    txtPrecioRenta.setBounds(300, 335, 180, 25);
+	    txtPrecioRenta.addKeyListener(new KeyAdapter() { /////////////Aqui sirve para solo colocar letras o numeros
+	        public void keyTyped(KeyEvent e) {
+	            char renta = e.getKeyChar();
+	            if (!Character.isDigit(renta) || txtPrecioRenta.getText().length() >= 5) {
+	                e.consume();
+	            }
+	        }
+	    });
+	    panelCentral.add(txtPrecioRenta);
 
 	    JLabel lblPrecioVenta = new JLabel("Precio venta (MXN):");
 	    lblPrecioVenta.setFont(new Font("Calibri", Font.BOLD, 14));
-	    lblPrecioVenta.setBounds(300, 310, 180, 20);
-	    lblPrecioVenta.addKeyListener(new KeyAdapter() { /////////////Aqui sirve para solo colocar letras o numeros
-			public void keyTyped(KeyEvent e) {
-				char venta = e.getKeyChar();
-				if (!Character.isDigit(venta) || lblPrecioVenta.getText().length() >= 5) {
-					e.consume();
-				}
-			}
-		});
+	    lblPrecioVenta.setBounds(500, 310, 180, 20);
 	    panelCentral.add(lblPrecioVenta);
 
 	    txtPrecioVenta = new JTextField(String.valueOf(videogames.getPrecioVenta()));
-	    txtPrecioVenta.setBounds(300, 335, 200, 25);
+	    txtPrecioVenta.setBounds(500, 335, 200, 25);
+	    txtPrecioVenta.addKeyListener(new KeyAdapter() { /////////////Aqui sirve para solo colocar letras o numeros
+	        public void keyTyped(KeyEvent e) {
+	            char venta = e.getKeyChar();
+	            if (!Character.isDigit(venta) || txtPrecioVenta.getText().length() >= 5) {
+	                e.consume();
+	            }
+	        }
+	    });
 	    panelCentral.add(txtPrecioVenta);
 
 	    // Sección derecha (Información adicional)
 	    JLabel lblDesarrollador = new JLabel("Desarrollado por:");
 	    lblDesarrollador.setFont(new Font("Calibri", Font.BOLD, 14));
-	    lblDesarrollador.setBounds(550, 130, 180, 20);
+	    lblDesarrollador.setBounds(730, 130, 180, 20);
 	    panelCentral.add(lblDesarrollador);
 
 	    txtDescripcion = new JTextField(videogames.getDesarrolladoPor());
-	    txtDescripcion.setBounds(550, 155, 340, 25);
+	    txtDescripcion.setBounds(730, 155, 240, 25);
 	    panelCentral.add(txtDescripcion);
 
 	    JLabel lblAcercaDe = new JLabel("Descripción:");
 	    lblAcercaDe.setFont(new Font("Calibri", Font.BOLD, 14));
-	    lblAcercaDe.setBounds(550, 190, 180, 20);
+	    lblAcercaDe.setBounds(730, 190, 180, 20);
 	    panelCentral.add(lblAcercaDe);
 
 	    // Usando JTextArea con JScrollPane para la descripción
@@ -888,7 +934,7 @@ public class VideogamesView extends JFrame {
 	    txtAreaDescripcion.setLineWrap(true);
 	    txtAreaDescripcion.setWrapStyleWord(true);
 	    JScrollPane scrollDescripcion = new JScrollPane(txtAreaDescripcion);
-	    scrollDescripcion.setBounds(550, 215, 340, 150);
+	    scrollDescripcion.setBounds(730, 215, 240, 150);
 	    panelCentral.add(scrollDescripcion);
 
 	    // Botones
@@ -1017,7 +1063,7 @@ public class VideogamesView extends JFrame {
 	            String Plataforma = txtPlataforma.getText().trim();
 	            boolean Disponibilidad = chkDisponible.isSelected();
 	            String clasificacion = (String) comboclasificacion.getSelectedItem();
-	            String Genero = (String) comboGenero.getSelectedItem();	 
+	            String Genero = (String) comboGenero.getSelectedItem();     
 	            String DesarrolladoPor = txtDescripcion.getText().trim();
 	            String Descripcion = txtAreaDescripcion.getText().trim();
 
@@ -1099,22 +1145,56 @@ public class VideogamesView extends JFrame {
 	    lblTitulo.setFont(new Font("Calibri", Font.BOLD, 24));
 	    lblTitulo.setBounds(350, 78, 350, 42);
 	    panelCentral.add(lblTitulo);
+	    
+	    // 1) JLabel para mostrar la imagen
+	    JLabel lblFoto = new JLabel();
+	    lblFoto.setBounds(84, 160, 150, 150);
+	    lblFoto.setBorder(BorderFactory.createLineBorder(Color.GRAY));
+	    panelCentral.add(lblFoto);
 
+	    // 2) Botón para cargar imagen
+	    JButton btnCargarFoto = new JButton("CARGAR FOTO");
+	    btnCargarFoto.setBounds(84, 320, 150, 25);
+		btnCargarFoto.addActionListener(new ActionListener() {
+
+			// 3) Variable para almacenar el archivo seleccionado
+			final File[] imagenSeleccionada = new File[1];
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				JFileChooser fileChooser = new JFileChooser();
+				FileNameExtensionFilter filtrado = new FileNameExtensionFilter("JPG, PNG & GIF", "jpg", "png", "gif");
+				fileChooser.setFileFilter(filtrado);
+
+				int respuesta = fileChooser.showOpenDialog(btnCargarFoto);
+				if (respuesta == JFileChooser.APPROVE_OPTION) {
+					imagenSeleccionada[0] = fileChooser.getSelectedFile();
+					String ruta = imagenSeleccionada[0].getAbsolutePath();
+
+					// Escalamos la imagen para caber en el JLabel
+					Image img = new ImageIcon(ruta).getImage().getScaledInstance(lblFoto.getWidth(),
+							lblFoto.getHeight(), Image.SCALE_SMOOTH);
+					lblFoto.setIcon(new ImageIcon(img));
+				}
+			}
+		});
+		panelCentral.add(btnCargarFoto);
+	    
 	    // Sección izquierda (Datos básicos)
 	    JLabel lblNombre = new JLabel("Nombre del Videojuego:");
 	    lblNombre.setFont(new Font("Calibri", Font.BOLD, 14));
-	    lblNombre.setBounds(55, 130, 180, 20);
+	    lblNombre.setBounds(300, 130, 180, 20);
 	    panelCentral.add(lblNombre);
 
-	    txtNombre.setBounds(55, 155, 230, 25);
+	    txtNombre.setBounds(300, 155, 230, 25);
 	    panelCentral.add(txtNombre);
 	    
 	    JLabel lblPrecioRenta = new JLabel("Precio renta (MXN):");
 	    lblPrecioRenta.setFont(new Font("Calibri", Font.BOLD, 14));
-	    lblPrecioRenta.setBounds(55, 310, 180, 20);
+	    lblPrecioRenta.setBounds(300, 310, 180, 20);
 	    panelCentral.add(lblPrecioRenta);
 
-	    txtPrecioRenta.setBounds(55, 335, 180, 25);
+	    txtPrecioRenta.setBounds(300, 335, 180, 25);
 	    txtPrecioRenta.addKeyListener(new KeyAdapter() { /////////////Aqui sirve para solo colocar letras o numeros
 			public void keyTyped(KeyEvent e) {
 				char renta = e.getKeyChar();
@@ -1129,18 +1209,18 @@ public class VideogamesView extends JFrame {
 	    // Sección central (Detalles técnicos)
 	    JLabel lblPlataforma = new JLabel("Plataforma:");
 	    lblPlataforma.setFont(new Font("Calibri", Font.BOLD, 14));
-	    lblPlataforma.setBounds(300, 130, 180, 20);
+	    lblPlataforma.setBounds(555, 130, 180, 20);
 	    panelCentral.add(lblPlataforma);
 
-	    txtPlataforma.setBounds(300, 155, 200, 25);
+	    txtPlataforma.setBounds(555, 155, 150, 25);
 	    panelCentral.add(txtPlataforma);
 	    
 	    JLabel lblAnio = new JLabel("Año de lanzamiento:");
 	    lblAnio.setFont(new Font("Calibri", Font.BOLD, 14));
-	    lblAnio.setBounds(55, 190, 180, 20);
+	    lblAnio.setBounds(300, 190, 180, 20);
 	    panelCentral.add(lblAnio);
 
-	    txtAnioLanzamiento.setBounds(55, 215, 150, 25);
+	    txtAnioLanzamiento.setBounds(300, 215, 150, 25);
 	    txtAnioLanzamiento.addKeyListener(new KeyAdapter() { /////////////Aqui sirve para solo colocar letras o numeros
 			public void keyTyped(KeyEvent e) {
 				char anio = e.getKeyChar();
@@ -1153,16 +1233,16 @@ public class VideogamesView extends JFrame {
 
 	    JLabel lblDisponibilidad = new JLabel("Disponibilidad:");
 	    lblDisponibilidad.setFont(new Font("Calibri", Font.BOLD, 14));
-	    lblDisponibilidad.setBounds(250, 190, 180, 20);
+	    lblDisponibilidad.setBounds(500, 190, 180, 20);
 	    panelCentral.add(lblDisponibilidad);
 
-	    chkDisponible.setBounds(250, 215, 100, 25);
+	    chkDisponible.setBounds(500, 215, 100, 25);
 	    chkDisponible.setSelected(true);
 	    panelCentral.add(chkDisponible);
 
 	    JLabel lblClasificacion = new JLabel("Clasificación:");
 	    lblClasificacion.setFont(new Font("Calibri", Font.BOLD, 14));
-	    lblClasificacion.setBounds(390, 190, 180, 20);
+	    lblClasificacion.setBounds(630, 190, 180, 20);
 	    panelCentral.add(lblClasificacion);
 	    
 	    // ComboBox para Clasificacion
@@ -1172,12 +1252,12 @@ public class VideogamesView extends JFrame {
 	   
 	    comboclasificacion.setSelectedIndex(0);
 
-	    comboclasificacion.setBounds(390, 215, 130, 25);
+	    comboclasificacion.setBounds(630, 215, 70, 25);
 	    panelCentral.add(comboclasificacion);
 	    
 	    JLabel lblGenero = new JLabel("Género:");
 	    lblGenero.setFont(new Font("Calibri", Font.BOLD, 14));
-	    lblGenero.setBounds(55, 250, 180, 20);
+	    lblGenero.setBounds(300, 250, 180, 20);
 	    panelCentral.add(lblGenero);
 	    
 	    // ComboBox para Género
@@ -1188,16 +1268,16 @@ public class VideogamesView extends JFrame {
 	    
 	    comboGenero.setSelectedIndex(0);
 
-	    comboGenero.setBounds(55, 275, 180, 25);
+	    comboGenero.setBounds(300, 275, 180, 25);
 	    panelCentral.add(comboGenero);
 
 
 	    JLabel lblExistencias = new JLabel("Existencias disponibles:");
 	    lblExistencias.setFont(new Font("Calibri", Font.BOLD, 14));
-	    lblExistencias.setBounds(300, 250, 180, 20);
+	    lblExistencias.setBounds(500, 250, 180, 20);
 	    panelCentral.add(lblExistencias);
 
-	    txtExistencias.setBounds(300, 275, 200, 25);
+	    txtExistencias.setBounds(500, 275, 200, 25);
 	    txtExistencias.addKeyListener(new KeyAdapter() { /////////////Aqui sirve para solo colocar letras o numeros
 			public void keyTyped(KeyEvent e) {
 				char ex = e.getKeyChar();
@@ -1210,10 +1290,10 @@ public class VideogamesView extends JFrame {
 	    
 	    JLabel lblPrecioVenta = new JLabel("Precio venta (MXN):");
 	    lblPrecioVenta.setFont(new Font("Calibri", Font.BOLD, 14));
-	    lblPrecioVenta.setBounds(300, 310, 180, 20);
+	    lblPrecioVenta.setBounds(500, 310, 180, 20);
 	    panelCentral.add(lblPrecioVenta);
 
-	    txtPrecioVenta.setBounds(300, 335, 200, 25);
+	    txtPrecioVenta.setBounds(500, 335, 200, 25);
 	    txtPrecioVenta.addKeyListener(new KeyAdapter() { /////////////Aqui sirve para solo colocar letras o numeros
 			public void keyTyped(KeyEvent e) {
 				char venta = e.getKeyChar();
@@ -1227,37 +1307,27 @@ public class VideogamesView extends JFrame {
 	    // Sección derecha (Información adicional)
 	    JLabel lblDesarrollador = new JLabel("Desarrollado por:");
 	    lblDesarrollador.setFont(new Font("Calibri", Font.BOLD, 14));
-	    lblDesarrollador.setBounds(550, 130, 180, 20);
+	    lblDesarrollador.setBounds(730, 130, 180, 20);
 	    panelCentral.add(lblDesarrollador);
 
-	    txtDesarrollador.setBounds(550, 155, 340, 25);
+	    txtDesarrollador.setBounds(730, 155, 240, 25);
 	    panelCentral.add(txtDesarrollador);
 
 	    JLabel lblDescripcion = new JLabel("Descripción:");
 	    lblDescripcion.setFont(new Font("Calibri", Font.BOLD, 14));
-	    lblDescripcion.setBounds(550, 190, 180, 20);
+	    lblDescripcion.setBounds(730, 190, 180, 20);
 	    panelCentral.add(lblDescripcion);
 
 	    txtDescripcion.setLineWrap(true);
 	    txtDescripcion.setWrapStyleWord(true);
 	    JScrollPane scrollDescripcion = new JScrollPane(txtDescripcion);
-	    scrollDescripcion.setBounds(550, 215, 340, 150);
+	    scrollDescripcion.setBounds(730, 215, 240, 150);
 	    panelCentral.add(scrollDescripcion);
 
-	    // Botones
-	    JButton btnCancelar = new JButton("Cancelar");
-	    btnCancelar.setBackground(Color.decode("#B82F2F"));
-		btnCancelar.setForeground(Color.WHITE);
-		btnCancelar.setBounds(300, 420, 150, 30);
-		btnCancelar.addActionListener(e -> {
-			dispose();
-			AdministradorJuegos();
-		});
-		panelCentral.add(btnCancelar);
-
-		JButton btnConfirmar = new JButton("Agregar Juego");
-		btnConfirmar.setBackground(Color.decode("#263C54"));
+		JButton btnConfirmar = new JButton("AGREGAR JUEGO");
 		btnConfirmar.setForeground(Color.WHITE);
+		btnConfirmar.setBackground(Color.decode("#6D91B9"));
+		btnConfirmar.setFont(new Font("Arial", Font.BOLD, 14));
 		btnConfirmar.setBounds(550, 420, 150, 30);
 		btnConfirmar.addActionListener(e -> {
 		    // Resetear todos los bordes a su estado normal
@@ -1403,6 +1473,19 @@ public class VideogamesView extends JFrame {
 		    }
 		});
 		panelCentral.add(btnConfirmar);
+		
+		// Botones
+	    JButton btnCancelar = new JButton("Cancelar");
+	    btnCancelar.setForeground(Color.WHITE);
+		btnCancelar.setBackground(Color.decode("#B82F2F"));
+		btnCancelar.setFont(new Font("Arial", Font.BOLD, 14));
+		btnCancelar.setBounds(300, 420, 150, 30);
+		btnCancelar.addActionListener(e -> {
+			dispose();
+			AdministradorJuegos();
+		});
+		panelCentral.add(btnCancelar);
+		
 		// Barra superior roja
 		JPanel barraSuperior = new JPanel();
 		barraSuperior.setBackground(Color.decode("#B44635"));

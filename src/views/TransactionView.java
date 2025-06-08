@@ -1161,9 +1161,9 @@ public class TransactionView extends JFrame {
 		panelCentral.add(lblCliente);
 
 		JLabel lblNombreCliente = new JLabel(user.getNombre()+" "+user.getApellidoPaterno()+" "+user.getApellidoMaterno());
-		lblNombreCliente.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNombreCliente.setHorizontalAlignment(SwingConstants.LEFT);
 		lblNombreCliente.setFont(new Font("Calibri", Font.BOLD, 18));
-		lblNombreCliente.setBounds(226, 102, 112, 42);
+		lblNombreCliente.setBounds(256, 102, 250, 42);
 		panelCentral.add(lblNombreCliente);
 
 		JLabel lblCorreo = new JLabel("Correo:");
@@ -1177,20 +1177,6 @@ public class TransactionView extends JFrame {
 		lblEmailCliente.setFont(new Font("Calibri", Font.BOLD, 18));
 		lblEmailCliente.setBounds(436, 102, 200, 42);
 		panelCentral.add(lblEmailCliente);
-
-		// Botones
-		JButton btnRegresar = new JButton("REGRESAR");
-		btnRegresar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				dispose();
-				TransactionController tc = new TransactionController();
-				tc.rentalIndex();
-			}
-		});
-		btnRegresar.setBackground(Color.decode("#B82F2F"));
-		btnRegresar.setForeground(Color.WHITE);
-		btnRegresar.setBounds(185, 406, 183, 33);
-		panelCentral.add(btnRegresar);
 
 		// Logo del juego
 //		ImageIcon iconoOrigina = new ImageIcon(getClass().getResource("/images/Contra.png"));
@@ -1240,7 +1226,7 @@ public class TransactionView extends JFrame {
 		JLabel lblFechaRenta = new JLabel("Fecha de renta:");
 		lblFechaRenta.setHorizontalAlignment(SwingConstants.LEFT);
 		lblFechaRenta.setFont(new Font("Calibri", Font.BOLD, 18));
-		lblFechaRenta.setBounds(426, 204, 126, 42);
+		lblFechaRenta.setBounds(428, 204, 126, 42);
 		panelCentral.add(lblFechaRenta);
 
 		LocalDate fechaActual = LocalDate.now();
@@ -1290,7 +1276,7 @@ public class TransactionView extends JFrame {
 		JLabel lblInfoPago = new JLabel("Información de pago");
 		lblInfoPago.setHorizontalAlignment(SwingConstants.LEFT);
 		lblInfoPago.setFont(new Font("Calibri", Font.BOLD, 18));
-		lblInfoPago.setBounds(700, 141, 167, 42);
+		lblInfoPago.setBounds(780, 141, 167, 42);
 		panelCentral.add(lblInfoPago);
 
 		JLabel lblTipoPago = new JLabel("Tipo:");
@@ -1308,31 +1294,31 @@ public class TransactionView extends JFrame {
 		JLabel lblCantidad = new JLabel("Cantidad:");
 		lblCantidad.setHorizontalAlignment(SwingConstants.LEFT);
 		lblCantidad.setFont(new Font("Calibri", Font.BOLD, 18));
-		lblCantidad.setBounds(700, 174, 100, 42);
+		lblCantidad.setBounds(780, 174, 100, 42);
 		panelCentral.add(lblCantidad);
 
 		JLabel lblValorCantidad = new JLabel("1");
 		lblValorCantidad.setHorizontalAlignment(SwingConstants.LEFT);
-		lblValorCantidad.setFont(new Font("Calibri", Font.BOLD, 14));
-		lblValorCantidad.setBounds(775, 174, 57, 42);
+		lblValorCantidad.setFont(new Font("Calibri", Font.BOLD, 18));
+		lblValorCantidad.setBounds(860, 174, 57, 42);
 		panelCentral.add(lblValorCantidad);
 
 		JLabel lblProducto = new JLabel("Producto:");
 		lblProducto.setHorizontalAlignment(SwingConstants.LEFT);
-		lblProducto.setFont(new Font("Calibri", Font.BOLD, 14));
-		lblProducto.setBounds(700, 215, 70, 42);
+		lblProducto.setFont(new Font("Calibri", Font.BOLD, 18));
+		lblProducto.setBounds(780, 215, 100, 42);
 		panelCentral.add(lblProducto);
 
 		JLabel lblPrecioProducto = new JLabel("" + videogames.getPrecioRenta());
 		lblPrecioProducto.setHorizontalAlignment(SwingConstants.LEFT);
-		lblPrecioProducto.setFont(new Font("Calibri", Font.BOLD, 14));
-		lblPrecioProducto.setBounds(760, 215, 85, 42);
+		lblPrecioProducto.setFont(new Font("Calibri", Font.BOLD, 18));
+		lblPrecioProducto.setBounds(860, 215, 85, 42);
 		panelCentral.add(lblPrecioProducto);
 
 		JLabel lblSubtotal = new JLabel("Subtotal:");
 		lblSubtotal.setHorizontalAlignment(SwingConstants.LEFT);
-		lblSubtotal.setFont(new Font("Calibri", Font.BOLD, 14));
-		lblSubtotal.setBounds(700, 248, 57, 42);
+		lblSubtotal.setFont(new Font("Calibri", Font.BOLD, 18));
+		lblSubtotal.setBounds(780, 248, 100, 42);
 		panelCentral.add(lblSubtotal);
 
 		// logica para sacar total de Producto
@@ -1344,8 +1330,8 @@ public class TransactionView extends JFrame {
 		// despues lo convertimos a un string para poder mostrarlo
 		JLabel lblValorSubtotal = new JLabel(String.valueOf(valorTotalProducto));
 		lblValorSubtotal.setHorizontalAlignment(SwingConstants.LEFT);
-		lblValorSubtotal.setFont(new Font("Calibri", Font.BOLD, 14));
-		lblValorSubtotal.setBounds(760, 248, 78, 42);
+		lblValorSubtotal.setFont(new Font("Calibri", Font.BOLD, 18));
+		lblValorSubtotal.setBounds(860, 248, 78, 42);
 		panelCentral.add(lblValorSubtotal);
 
 		// Operaciones
@@ -1355,19 +1341,19 @@ public class TransactionView extends JFrame {
 		BigDecimal iva = valorTotalProducto.multiply(valorIVA);
 		BigDecimal total = subtotal.add(iva);
 
-		// IVA logica
-		JLabel lblIVA = new JLabel("iva");
-		lblIVA.setHorizontalAlignment(SwingConstants.LEFT);
-		lblIVA.setFont(new Font("Calibri", Font.BOLD, 18));
-		lblIVA.setBounds(626, 304, 126, 42);
-		panelCentral.add(lblIVA);
+//		// IVA logica
+//		JLabel lblIVA = new JLabel("IVA");
+//		lblIVA.setHorizontalAlignment(SwingConstants.LEFT);
+//		lblIVA.setFont(new Font("Calibri", Font.BOLD, 18));
+//		lblIVA.setBounds(780, 304, 126, 42);
+//		panelCentral.add(lblIVA);
 
 		// este lo ocupe para darle formato de que solo me muestr 2 digitos
 		DecimalFormat formato = new DecimalFormat("#0.00");
 		JLabel lblValorIVA = new JLabel(formato.format(iva));
 		lblValorIVA.setHorizontalAlignment(SwingConstants.CENTER);
 		lblValorIVA.setFont(new Font("Calibri", Font.BOLD, 18));
-		lblValorIVA.setBounds(626, 352, 97, 42);
+		lblValorIVA.setBounds(880, 285, 97, 42);
 		panelCentral.add(lblValorIVA);
 
 		// Total
@@ -1375,22 +1361,42 @@ public class TransactionView extends JFrame {
 		txtTotal.setWrapStyleWord(true);
 		txtTotal.setOpaque(false);
 		txtTotal.setLineWrap(true);
-		txtTotal.setFont(new Font("Calibri", Font.BOLD, 20));
+		txtTotal.setFont(new Font("Calibri", Font.BOLD, 18));
 		txtTotal.setEditable(false);
-		txtTotal.setBounds(628, 341, 298, 54);
+		txtTotal.setBounds(778, 294, 298, 54);
 		panelCentral.add(txtTotal);
+		
+		JLabel precioFinal = new JLabel("Precio Final:");
+		precioFinal.setHorizontalAlignment(SwingConstants.LEFT);
+		precioFinal.setFont(new Font("Calibri", Font.BOLD, 18));
+		precioFinal.setBounds(780, 320, 100, 42);
+		panelCentral.add(precioFinal);
 
 		JLabel lblTotal = new JLabel(String.valueOf(total));
 		lblTotal.setForeground(new Color(153, 0, 0));
 		lblTotal.setHorizontalAlignment(SwingConstants.LEFT);
 		lblTotal.setFont(new Font("Calibri", Font.BOLD, 18));
-		lblTotal.setBounds(719, 359, 126, 42);
+		lblTotal.setBounds(875, 320, 126, 42);
 		panelCentral.add(lblTotal);
 		
-		JButton btnDescargarPDF = new JButton("Descargar (PDF)");
+		// Botones
+		JButton btnRegresar = new JButton("REGRESAR");
+		btnRegresar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+				TransactionController tc = new TransactionController();
+				tc.rentalIndex();
+			}
+		});
+		btnRegresar.setBackground(Color.decode("#B82F2F"));
+		btnRegresar.setForeground(Color.WHITE);
+		btnRegresar.setBounds(185, 406, 183, 33);
+		panelCentral.add(btnRegresar);
+		
+		JButton btnDescargarPDF = new JButton("DESCARGAR (PDF)");
 		btnDescargarPDF.setBackground(Color.decode("#263C54"));
 		btnDescargarPDF.setForeground(Color.WHITE);
-		btnDescargarPDF.setBounds(614, 406, 183, 33);
+		btnDescargarPDF.setBounds(680, 406, 183, 33);
 		btnDescargarPDF.addActionListener(new ActionListener() {
 		    public void actionPerformed(ActionEvent e) {
 		        JFileChooser fileChooser = new JFileChooser();
@@ -1496,10 +1502,10 @@ public class TransactionView extends JFrame {
 		panelCentral.add(btnDescargarPDF);
 		
 
-		JButton btnConfirmacionCompra = new JButton("confirmacionde compra");
+		JButton btnConfirmacionCompra = new JButton("CONFIRMACION DE COMPRA");
 		btnConfirmacionCompra.setBackground(Color.decode("#3db8cd"));
 		btnConfirmacionCompra.setForeground(Color.WHITE);
-		btnConfirmacionCompra.setBounds(450, 406, 183, 33);
+		btnConfirmacionCompra.setBounds(420, 406, 220, 33);
 		btnConfirmacionCompra.addActionListener(e ->{
 			try {
 

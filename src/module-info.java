@@ -6,4 +6,5 @@ module BlockBuster {
 	requires java.sql;
 	requires jdatepicker;
 	requires itextpdf;
+	requires jcalendar;
 }

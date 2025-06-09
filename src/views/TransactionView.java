@@ -60,6 +60,8 @@ import com.itextpdf.text.Element;
 import com.itextpdf.text.FontFactory;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfWriter;
+import com.toedter.calendar.JDateChooser;
+import com.toedter.calendar.JTextFieldDateEditor;
 
 import controller.AuthController;
 import controller.TransactionController;
@@ -69,7 +71,6 @@ import models.TransactionModel;
 import models.User;
 import models.UsersModel;
 import models.VideoGames;
-import utils.DateLabelFormatter;
 
 public class TransactionView extends JFrame {
 
@@ -1047,72 +1048,51 @@ public class TransactionView extends JFrame {
 		lblValorDiasRenta.setFont(new Font("Calibri", Font.BOLD, 14));
 		lblValorDiasRenta.setBounds(625, 320, 255, 20);
 		panelCentral.add(lblValorDiasRenta);
+		
+		JDateChooser dateChooser = new JDateChooser();
+		dateChooser.setDateFormatString("dd/MM/yyyy");
 
-		JLabel devolucion = new JLabel("Fecha de devolución:");
-		devolucion.setHorizontalAlignment(SwingConstants.CENTER);
-		devolucion.setFont(new Font("Calibri", Font.BOLD, 14));
-		devolucion.setBounds(382, 293, 255, 42);
-		panelCentral.add(devolucion);
+		// Establecer la fecha mínima como HOY (no permite fechas anteriores)
+		Calendar min = Calendar.getInstance();
+		min.add(Calendar.DAY_OF_MONTH, 1); 
+		dateChooser.setMinSelectableDate(min.getTime());
+		
+		//Establecer fecha inicial (mañana)
+		Calendar calendar = Calendar.getInstance();
+		calendar.add(Calendar.DAY_OF_MONTH, 1); // Sumar 1 día
+		dateChooser.setDate(calendar.getTime());
+		
+		Calendar max = Calendar.getInstance();
+		max.add(Calendar.MONTH, +1); // Máximo: hace
+		dateChooser.setMaxSelectableDate(max.getTime());
 
-		// AQUI SE USA EL Datapicker
-		// se Configura el modelo con la fecha actual y se le suma un dia
-		UtilDateModel model = new UtilDateModel();
-		model.setDate(
-		    LocalDate.now().getYear(),
-		    LocalDate.now().getMonthValue() - 1, 
-		    LocalDate.now().getDayOfMonth()+1
-		);
-		model.setSelected(true);
-
-		// se crea el DatePicker
-		JDatePanelImpl datePanel = new JDatePanelImpl(model, new Properties());
-		JDatePickerImpl datePicker = new JDatePickerImpl(datePanel, new DateLabelFormatter());
-
-		// Agrego un listener al datePicker
-		datePicker.addActionListener(e -> {
-			// Obtengo el valor seleccionado del modelo
-			Object selectedValue = datePicker.getModel().getValue();
-
-			// Primero verifico que el valor seleccionado sea realmente una fecha
-			if (selectedValue instanceof java.util.Date) {
-
-				// Convierto la fecha seleccionada a LocalDate porque es más fácil de comparar
-				// Esto lo hago en 3 pasos:
-				// 1. toInstant(): Convierte a Instant (marca de tiempo)
-				// 2. atZone(): Añade la zona horaria del sistema
-				// 3. toLocalDate(): Obtengo solo la parte de fecha (sin hora)
-				java.util.Date selectedDate = (java.util.Date) selectedValue;
-				LocalDate selectedLocalDate = selectedDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-
-				if (selectedLocalDate.isBefore(LocalDate.now()) || selectedLocalDate.equals(LocalDate.now())) {
-					// se encarga de que no escoja fehcas anteriores
-					// se cambia la fecha y se le suma uno al dia
-					datePicker.getModel().setDate(LocalDate.now().getYear(), LocalDate.now().getMonthValue() - 1,
-							LocalDate.now().getDayOfMonth() + 1);
-
-					// mensaje al usuario
-					JOptionPane.showMessageDialog(panelCentral, "No se pueden seleccionar fechas anteriores",
-							"Fecha inválida", JOptionPane.WARNING_MESSAGE);
-
-				}else{
-					// esta aparte se encarga de sacar la diferencia entre el dia de renta
-					// y la fecha de devolucion
-					long diasRenta = ChronoUnit.DAYS.between(LocalDate.now(), // fecha actual
-							selectedLocalDate // fecha de devolución
-					);
-
-					lblValorDiasRenta.setText(String.valueOf(diasRenta));
-				}
-			}
-		});
 		// Configurar el campo de texto
-		JFormattedTextField textField = datePicker.getJFormattedTextField();
+		JFormattedTextField textField = ((JTextFieldDateEditor) dateChooser.getDateEditor());
 		textField.setBackground(Color.decode("#D9D9D9"));
-		textField.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(Color.GRAY),
-				BorderFactory.createEmptyBorder(5, 5, 5, 5)));
+		textField.setBorder(BorderFactory.createCompoundBorder(
+		    BorderFactory.createLineBorder(Color.GRAY),
+		    BorderFactory.createEmptyBorder(5, 5, 5, 5)
+		));
 		textField.setEditable(false);
-		datePicker.setBounds(450, 325, 165, 27);
-		panelCentral.add(datePicker);
+		
+		dateChooser.addPropertyChangeListener("date", evt -> {
+			java.util.Date selectedDate = dateChooser.getDate();
+		    if (selectedDate != null) {
+		        LocalDate selectedLocalDate = selectedDate.toInstant()
+		            .atZone(ZoneId.systemDefault())
+		            .toLocalDate();
+		       
+		            // --- AQUÍ VA EL CÁLCULO DE DÍAS ---
+		            long diasRenta = ChronoUnit.DAYS.between(
+		                LocalDate.now(),
+		                selectedLocalDate
+		            );
+		            lblValorDiasRenta.setText(String.valueOf(diasRenta));		        
+		    }
+		});
+
+		dateChooser.setBounds(450, 325, 165, 27);
+		panelCentral.add(dateChooser);
 
 		// 3. PANEL ROJO SUPERIOR (barra de título)
 		JPanel barraRoja = new JPanel();
@@ -1148,8 +1128,11 @@ public class TransactionView extends JFrame {
 		btnSiguiente.setBounds(582, 406, 172, 30);
 		btnSiguiente.addActionListener(e -> {
 			try {
+				
 				// 1. Obtener fecha de devolución
-				Date fechaDevolucion = new Date(((java.util.Date) datePicker.getModel().getValue()).getTime());
+				java.sql.Date fecha = new java.sql.Date(dateChooser.getDate().getTime()); // ✅ Correcto
+
+				java.sql.Date fechaDevolucion = new java.sql.Date(fecha.getTime());
 
 				dispose();
 				TransactionController tc = new TransactionController();
@@ -1274,7 +1257,7 @@ public class TransactionView extends JFrame {
 		panelCentral.add(lblFechaRenta);
 
 		LocalDate fechaActual = LocalDate.now();
-		String fechaFormateada = fechaActual.format(DateTimeFormatter.ofPattern("yyyy/MM/dd"));
+		String fechaFormateada = fechaActual.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
 
 		JLabel lblValorFecha = new JLabel(fechaFormateada);
 		lblValorFecha.setHorizontalAlignment(SwingConstants.CENTER);
@@ -1288,7 +1271,7 @@ public class TransactionView extends JFrame {
 		lblFechaLimite.setBounds(407, 285, 157, 42);
 		panelCentral.add(lblFechaLimite);
 		
-	    SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+	    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
 		JLabel lblValorFechaLimite = new JLabel();
 	    lblValorFechaLimite.setText(sdf.format(fechaDevolucion));
@@ -1501,7 +1484,7 @@ public class TransactionView extends JFrame {
 		                    FontFactory.getFont(FontFactory.HELVETICA_BOLD, 14));
 		                document.add(rentaHeader);
 		                
-		                SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+		                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		                document.add(new Paragraph("Fecha de renta: " + fechaFormateada));
 		                document.add(new Paragraph("Fecha de devolución: " + sdf.format(fechaDevolucion)));
 		                

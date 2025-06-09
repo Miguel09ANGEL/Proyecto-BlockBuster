@@ -1125,10 +1125,7 @@ public class TransactionView extends JFrame {
 		btnSiguiente.addActionListener(e -> {
 			try {
 				
-				// 1. Obtener fecha de devolución
-				java.sql.Date fecha = new java.sql.Date(dateChooser.getDate().getTime()); // ✅ Correcto
-
-				java.sql.Date fechaDevolucion = new java.sql.Date(fecha.getTime());
+		        java.sql.Date fechaDevolucion = new java.sql.Date(dateChooser.getDate().getTime());
 
 				dispose();
 				TransactionController tc = new TransactionController();

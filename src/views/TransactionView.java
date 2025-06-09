@@ -47,10 +47,6 @@ import javax.swing.JFormattedTextField.AbstractFormatter;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
-import org.jdatepicker.impl.JDatePanelImpl;
-import org.jdatepicker.impl.JDatePickerImpl;
-import org.jdatepicker.impl.UtilDateModel;
-
 import com.formdev.flatlaf.FlatLightLaf;
 import com.formdev.flatlaf.json.ParseException;
 import com.itextpdf.text.Chunk;

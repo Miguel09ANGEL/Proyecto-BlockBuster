@@ -1422,6 +1422,31 @@ public class TransactionView extends JFrame {
 		btnCancelar.setBounds(185, 406, 183, 33);
 		panelCentral.add(btnCancelar);
 		
+		
+		JButton btnRegresar = new JButton("REGRESAR");
+		btnRegresar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+
+				int cancelar;
+
+				cancelar = JOptionPane.showConfirmDialog(null, "¿Seguro que quieres regresar?", "Confirmar",
+						JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+
+				if (cancelar == JOptionPane.YES_OPTION) {
+					dispose();
+					TransactionView tv = new TransactionView();
+					tv.AdministradorRentaCompra();
+				}
+			}
+		});
+		btnRegresar.setForeground(Color.WHITE);
+		btnRegresar.setBackground(Color.decode("#B82F2F"));
+		btnRegresar.setFont(new Font("Arial", Font.BOLD, 14));
+		btnRegresar.setVisible(false);
+		btnRegresar.setBounds(185, 406, 183, 33);
+		panelCentral.add(btnRegresar);
+		
+		
 		JButton btnDescargarPDF = new JButton("DESCARGAR (PDF)");
 		btnDescargarPDF.setForeground(Color.WHITE);
 		btnDescargarPDF.setBackground(Color.decode("#6D91B9"));
@@ -1548,6 +1573,13 @@ public class TransactionView extends JFrame {
 				if (exito) {
 					JOptionPane.showMessageDialog(this, "¡Renta registrada con éxito!");
 					btnDescargarPDF.setEnabled(true); // Aqui se habilita el boton de descargar
+					
+					
+		            btnCancelar.setVisible(false);// Aqui Oculta Cancelar y aparece Regresar
+		            btnRegresar.setVisible(true);
+		            
+		            panelCentral.revalidate();
+		            panelCentral.repaint();///////
 				
 				} else {
 					JOptionPane.showMessageDialog(this, "Error al registrar la renta", "Error",
@@ -2205,8 +2237,8 @@ public class TransactionView extends JFrame {
 		panelCentral.add(lbltotal);
 
 		// Botones
-		JButton btnRegresar = new JButton("REGRESAR");
-		btnRegresar.addActionListener(new ActionListener() {
+		JButton btnCancelar = new JButton("CANCELAR");
+		btnCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
 				int cancelar;
@@ -2217,12 +2249,37 @@ public class TransactionView extends JFrame {
 				if (cancelar == JOptionPane.YES_OPTION) {
 					dispose();
 					TransactionController tc = new TransactionController();
-					tc.salesOperation(videogames.getId(), user.getId());
+					tc.rentalOperation(videogames.getId(), user.getId());
 				}
 			}
 		});
-		btnRegresar.setBackground(Color.decode("#B82F2F"));
+		btnCancelar.setForeground(Color.WHITE);
+		btnCancelar.setBackground(Color.decode("#B82F2F"));
+		btnCancelar.setFont(new Font("Arial", Font.BOLD, 14));
+		btnCancelar.setBounds(185, 406, 183, 33);
+		panelCentral.add(btnCancelar);
+		
+		
+		JButton btnRegresar = new JButton("REGRESAR");
+		btnRegresar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+
+				int cancelar;
+
+				cancelar = JOptionPane.showConfirmDialog(null, "¿Seguro que quieres regresar?", "Confirmar",
+						JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+
+				if (cancelar == JOptionPane.YES_OPTION) {
+					dispose();
+					TransactionView tv = new TransactionView();
+					tv.AdministradorRentaCompra();
+				}
+			}
+		});
 		btnRegresar.setForeground(Color.WHITE);
+		btnRegresar.setBackground(Color.decode("#B82F2F"));
+		btnRegresar.setFont(new Font("Arial", Font.BOLD, 14));
+		btnRegresar.setVisible(false);
 		btnRegresar.setBounds(185, 406, 183, 33);
 		panelCentral.add(btnRegresar);
 
@@ -2341,6 +2398,12 @@ public class TransactionView extends JFrame {
 				if (exito) {
 					JOptionPane.showMessageDialog(this, "¡Renta registrada con éxito!");
 					btnDescargarPDF.setEnabled(true); // Aqui se habilita el boton de descargar
+					
+					btnCancelar.setVisible(false);// Aqui Oculta Cancelar y aparece Regresar
+		            btnRegresar.setVisible(true);
+		            
+		            panelCentral.revalidate();
+		            panelCentral.repaint();///////
 				
 				} else {
 					JOptionPane.showMessageDialog(this, "Error al registrar la renta", "Error",

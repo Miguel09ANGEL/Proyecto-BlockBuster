@@ -785,22 +785,19 @@ public class VideogamesView extends JFrame {
 	    });
 	    panelCentral.add(txtNombreJuego);
 	    
+	    
 	    JLabel lblAnio = new JLabel("Año de lanzamiento:");
 	    lblAnio.setFont(new Font("Calibri", Font.BOLD, 14));
 	    lblAnio.setBounds(300, 190, 180, 20);
 	    panelCentral.add(lblAnio);
-
-	    txtAnioLanzamiento = new JTextField(String.valueOf(videogames.getAñoLanzamiento()));
-	    txtAnioLanzamiento.setBounds(300, 215, 150, 25);
-	    txtAnioLanzamiento.addKeyListener(new KeyAdapter() { /////////////Aqui sirve para solo colocar letras o numeros
-	        public void keyTyped(KeyEvent e) {
-	            char anio = e.getKeyChar();
-	            if (!Character.isDigit(anio) || txtAnioLanzamiento.getText().length() >= 4) {
-	                e.consume();
-	            }
-	        }
-	    });
-	    panelCentral.add(txtAnioLanzamiento);
+	    
+	    JComboBox<Integer> comboanio = new JComboBox<>();
+	    
+	    for (int year = 1950; year <= 2025; year++) {
+	    	comboanio.addItem(year);
+        }
+	    comboanio.setBounds(300, 215, 150, 25);
+	    panelCentral.add(comboanio);
 
 	    // Sección central (Detalles técnicos)
 	    JLabel lblPlataforma = new JLabel("Plataforma:");
@@ -1000,8 +997,8 @@ public class VideogamesView extends JFrame {
 	        // Resetear todos los bordes a su estado normal
 	        txtNombreJuego.setBorder(BorderFactory.createLineBorder(Color.GRAY));
 	        txtPlataforma.setBorder(BorderFactory.createLineBorder(Color.GRAY));
-	        txtAnioLanzamiento.setBorder(BorderFactory.createLineBorder(Color.GRAY));
-	        //txtClasificacion.setBorder(BorderFactory.createLineBorder(Color.GRAY));
+	        comboanio.setBorder(BorderFactory.createLineBorder(Color.GRAY));
+	        comboclasificacion.setBorder(BorderFactory.createLineBorder(Color.GRAY));
 	        txtExistencias.setBorder(BorderFactory.createLineBorder(Color.GRAY));
 	        txtPrecioRenta.setBorder(BorderFactory.createLineBorder(Color.GRAY));
 	        txtPrecioVenta.setBorder(BorderFactory.createLineBorder(Color.GRAY));
@@ -1024,17 +1021,24 @@ public class VideogamesView extends JFrame {
 	            camposValidos = false;
 	        }
 	        
-	        if (txtAnioLanzamiento.getText().trim().isEmpty()) {
-	            txtAnioLanzamiento.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
+	        if (comboanio.getSelectedItem().toString().trim().isEmpty()){
+	        	comboanio.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
 	            mensajeError.append("• Año de lanzamiento es obligatorio\n");
 	            camposValidos = false;
 	        }
 	        
-//	        if (txtClasificacion.getText().trim().isEmpty()) {
-//	            txtClasificacion.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
-//	            mensajeError.append("• Clasificación es obligatoria\n");
-//	            camposValidos = false;
-//	        }
+	        if (comboclasificacion.getSelectedItem().toString().trim().isEmpty()){
+	        	comboclasificacion.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
+	            mensajeError.append("• Clasificación es obligatoria\n");
+	            camposValidos = false;
+	        }
+	        
+	        if (comboGenero.getSelectedItem().toString().trim().isEmpty()){
+	        	comboGenero.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
+	            mensajeError.append("• Clasificación es obligatoria\n");
+	            camposValidos = false;
+	        }
+	        
 	        
 	        if (txtExistencias.getText().trim().isEmpty()) {
 	            txtExistencias.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
@@ -1075,16 +1079,10 @@ public class VideogamesView extends JFrame {
 
 	        try {
 	            // Validaciones numéricas
-	            int AñoLanzamiento = Integer.parseInt(txtAnioLanzamiento.getText().trim());
+	            //int AñoLanzamiento = Integer.parseInt(txtAnioLanzamiento.getText().trim());
 	            int ExistenciasDisponibles = Integer.parseInt(txtExistencias.getText().trim());
 	            BigDecimal PrecioRenta = new BigDecimal(txtPrecioRenta.getText().trim());
 	            BigDecimal PrecioVenta = new BigDecimal(txtPrecioVenta.getText().trim());
-	            
-	            // Validaciones adicionales
-	            if (AñoLanzamiento <= 0) {
-	                txtAnioLanzamiento.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
-	                throw new NumberFormatException("El año de lanzamiento debe ser un número positivo");
-	            }
 	            
 	            if (ExistenciasDisponibles < 0) {
 	                txtExistencias.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
@@ -1109,6 +1107,7 @@ public class VideogamesView extends JFrame {
 	            String Genero = (String) comboGenero.getSelectedItem();     
 	            String DesarrolladoPor = txtDescripcion.getText().trim();
 	            String Descripcion = txtAreaDescripcion.getText().trim();
+	            String AñoLanzamiento = (String) comboclasificacion.getSelectedItem();
 
 	            // Actualizar el videojuego
 	            VideoGamesModel vm = new VideoGamesModel();
@@ -1276,17 +1275,16 @@ public class VideogamesView extends JFrame {
 	    lblAnio.setFont(new Font("Calibri", Font.BOLD, 14));
 	    lblAnio.setBounds(300, 190, 180, 20);
 	    panelCentral.add(lblAnio);
-
-	    txtAnioLanzamiento.setBounds(300, 215, 150, 25);
-	    txtAnioLanzamiento.addKeyListener(new KeyAdapter() { /////////////Aqui sirve para solo colocar letras o numeros
-			public void keyTyped(KeyEvent e) {
-				char anio = e.getKeyChar();
-				if (!Character.isDigit(anio) || txtAnioLanzamiento.getText().length() >= 4) {
-					e.consume();
-				}
-			}
-		});
-	    panelCentral.add(txtAnioLanzamiento);
+	    
+	    JComboBox<Integer> comboanio = new JComboBox<>();
+	    
+	    for (int year = 1950; year <= 2025; year++) {
+	    	comboanio.addItem(year);
+        }
+	    comboanio.setBounds(300, 215, 150, 25);
+	    panelCentral.add(comboanio);
+	    
+	    
 
 	    JLabel lblDisponibilidad = new JLabel("Disponibilidad:");
 	    lblDisponibilidad.setFont(new Font("Calibri", Font.BOLD, 14));
@@ -1399,9 +1397,9 @@ public class VideogamesView extends JFrame {
 		    // Resetear todos los bordes a su estado normal
 		    txtNombre.setBorder(BorderFactory.createLineBorder(Color.GRAY));
 		    txtPlataforma.setBorder(BorderFactory.createLineBorder(Color.GRAY));
-		    txtAnioLanzamiento.setBorder(BorderFactory.createLineBorder(Color.GRAY));
-		    txtClasificacion.setBorder(BorderFactory.createLineBorder(Color.GRAY));
-		    txtGenero.setBorder(BorderFactory.createLineBorder(Color.GRAY));
+		    comboanio.setBorder(BorderFactory.createLineBorder(Color.GRAY));
+		    comboclasificacion.setBorder(BorderFactory.createLineBorder(Color.GRAY));
+		    comboGenero.setBorder(BorderFactory.createLineBorder(Color.GRAY));
 		    txtExistencias.setBorder(BorderFactory.createLineBorder(Color.GRAY));
 		    txtPrecioRenta.setBorder(BorderFactory.createLineBorder(Color.GRAY));
 		    txtPrecioVenta.setBorder(BorderFactory.createLineBorder(Color.GRAY));
@@ -1425,21 +1423,21 @@ public class VideogamesView extends JFrame {
 		     return;
 		 }
 
-		 if (txtAnioLanzamiento.getText().trim().isEmpty()) {
-		     txtAnioLanzamiento.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
+		 if (comboanio.getSelectedItem().toString().trim().isEmpty()) {
+			 comboanio.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
 		     mensajeError.append("• Año de lanzamiento es obligatorio.\n");
 		     JOptionPane.showMessageDialog(null, mensajeError.toString(), "Campos obligatorios", JOptionPane.ERROR_MESSAGE);
 		     return;
 		 }
 
-		 if (txtClasificacion.getText().trim().isEmpty()) {
-		     txtClasificacion.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
+		 if (comboclasificacion.getSelectedItem().toString().trim().isEmpty()) {
+			 comboclasificacion.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
 		     mensajeError.append("• Clasificación es obligatoria.\n");
 		     JOptionPane.showMessageDialog(null, mensajeError.toString(), "Campos obligatorios", JOptionPane.ERROR_MESSAGE);
 		     return;
 		 }
 
-		 if (comboGenero.getSelectedItem() == null || comboGenero.getSelectedItem().toString().trim().isEmpty()) {
+		 if (comboGenero.getSelectedItem().toString().trim().isEmpty()) {
 			    comboGenero.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
 			    mensajeError.append("• Género es obligatorio.\n");
 			    JOptionPane.showMessageDialog(null, mensajeError.toString(), "Campos obligatorios", JOptionPane.ERROR_MESSAGE);
@@ -1513,7 +1511,7 @@ public class VideogamesView extends JFrame {
 		        boolean disponibilidad = chkDisponible.isSelected();
 		        String nombre = txtNombre.getText().trim();
 		        String plataforma = txtPlataforma.getText().trim();
-		        String clasificacion = txtClasificacion.getText().trim();
+		        String clasificacion = Clasificacion [comboclasificacion.getSelectedIndex()];
 		        String genero = generos[comboGenero.getSelectedIndex()]; 
 		        String desarrollador = txtDesarrollador.getText().trim();
 		        String descripcion = txtDescripcion.getText().trim();

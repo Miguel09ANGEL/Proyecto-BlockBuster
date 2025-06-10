@@ -75,33 +75,38 @@ public class UsersModel {
 
 	// Elimina un cliente por ID.
 	public boolean deleteUser(int id) {
+	    String deleteTransactions = "DELETE FROM transactions WHERE customer_id = " + id;
+	    String deleteCustomer = "DELETE FROM customers WHERE id = " + id;
 
-		String query = "DELETE FROM customers WHERE id = " + id;
-		Connection conn = null;
-		Statement stmt = null;
-		try {
-			Class.forName("com.mysql.cj.jdbc.Driver");
-            conn = DriverManager.getConnection(url, user, password);
-			stmt = conn.createStatement();
+	    Connection conn = null;
+	    Statement stmt = null;
+	    
+	    try {
+	        Class.forName("com.mysql.cj.jdbc.Driver");
+	        conn = DriverManager.getConnection(url, user, password);
+	        stmt = conn.createStatement();
 
-			stmt.executeUpdate(query);
+	        // Primero eliminamos las transacciones asociadas
+	        stmt.executeUpdate(deleteTransactions);
+	        
+	        // Luego eliminamos el cliente
+	        int rowsAffected = stmt.executeUpdate(deleteCustomer);
 
-			return true;
+	        return rowsAffected > 0;
 
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			try {
-				stmt.close();
-				conn.close();
-			} catch (Exception e) {
-			}
-		}
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    } finally {
+	        try {
+	            if (stmt != null) stmt.close();
+	            if (conn != null) conn.close();
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	        }
+	    }
 
-		return false;
-
+	    return false;
 	}
-
 	// agregamos un usario a la base de datos
 	public boolean add(String name, String apellidoPaterno, 
 			String apellidoMaterno,java.util.Date fechaNacimiento,String telefono, String correo) {

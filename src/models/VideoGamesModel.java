@@ -13,18 +13,19 @@ public class VideoGamesModel {
 
 	private List<VideoGames> videogames = new ArrayList<>();
 
-//	String url = "jdbc:mysql://sql.freedb.tech:3306/freedb_Base_de_datos_renta?useSSL=false";
-//	String user = "freedb_G_user";
-//	String password = "%eeFW9csb4$?Dcj";
+	String url = "jdbc:mysql://sql.freedb.tech:3306/freedb_Base_de_datos_renta?useSSL=false";
+	String user = "freedb_G_user";
+	String password = "%eeFW9csb4$?Dcj";
 
-	String url = "jdbc:mysql://127.0.0.1:3306/base_de_datos_renta";
-	String user = "root";
-	String password = "gato1286OVqp";
+//	String url = "jdbc:mysql://127.0.0.1:3306/base_de_datos_renta";
+//	String user = "root";
+//	String password = "";
 		
 	public VideoGamesModel() {
 		// TODO Auto-generated constructor stub
 	}
 
+	// trae todos los videojuegos de la base de datos
 	public List getAllVideogames() {
 
 		String query = "SELECT * FROM video_games";
@@ -75,7 +76,8 @@ public class VideoGamesModel {
 		return videogames;
 	}
 
-	public boolean removeVideogame(int id) {
+	// elimina videojuegoss de la base de datos
+	public boolean deleteVideoGame(int id) {
 
 		String query = "DELETE FROM video_games WHERE id = " + id;
 		Connection conn = null;
@@ -103,6 +105,7 @@ public class VideoGamesModel {
 
 	}
 
+	// trae el videojuego de la bd con el id
 	public VideoGames getVideogames(int id) {
 
 		String query = "select * from video_games WHERE id = " + id;
@@ -131,10 +134,6 @@ public class VideoGamesModel {
 				String desarrolladoPor = rs.getString(11);
 				String descripcion = rs.getString(12);
 
-				System.out.println("ID Videojuego: " + id);
-				System.out.println("Nombre: " + nombre);
-				System.out.println("Plataforma: " + plataforma);
-
 				// Crear objeto VideoGames con los datos obtenidos
 				myVideogame = new VideoGames(id, nombre, plataforma, añoLanzamiento, disponibilidad, clasificacion,
 						genero, existencias, precioRenta, precioVenta, desarrolladoPor, descripcion, null, null);
@@ -158,7 +157,8 @@ public class VideoGamesModel {
 		return myVideogame;
 	}
 
-	public boolean updateVideogame(int id, String nombre, String plataforma, String añoLanzamiento, boolean disponibilidad,
+	// aptualiza el videojuego que esta en la bd
+	public boolean updateVideogame(int id, String nombre, String plataforma, int añoLanzamiento, boolean disponibilidad,
 			String clasificacion, String genero, int existencias, BigDecimal precioRenta, BigDecimal precioVenta,
 			String desarrolladoPor, String descripcion) {
 
@@ -196,6 +196,7 @@ public class VideoGamesModel {
 		return false;
 	}
 
+	// agrega un videojuego a la  bd
 	public boolean addVideogame(String nombre, String plataforma, int añoLanzamiento, boolean disponibilidad,
 				String clasificacion, String genero, int existencias, BigDecimal precioRenta, BigDecimal precioVenta,
 				String desarrolladoPor, String descripcion) {

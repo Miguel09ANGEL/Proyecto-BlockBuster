@@ -8,22 +8,24 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+// Maneja las operaciones de base de datos relacionadas con la tabla 'clientes'.
 public class UsersModel {
 
 	private List<User> usuarios = new ArrayList<>();
 
-//	String url = "jdbc:mysql://sql.freedb.tech:3306/freedb_Base_de_datos_renta?useSSL=false";
-//	String user = "freedb_G_user";
-//	String password = "%eeFW9csb4$?Dcj";
+	String url = "jdbc:mysql://sql.freedb.tech:3306/freedb_Base_de_datos_renta?useSSL=false";
+	String user = "freedb_G_user";
+	String password = "%eeFW9csb4$?Dcj";
 
-	String url = "jdbc:mysql://127.0.0.1:3306/base_de_datos_renta";
-	String user = "root";
-	String password = "gato1286OVqp";
+//	String url = "jdbc:mysql://127.0.0.1:3306/base_de_datos_renta";
+//	String user = "root";
+//	String password = "";
 
 	public UsersModel() {
 		// TODO Auto-generated constructor stub
 	}
-
+	
+	// selecciona todos los clientes de la base de datos.
 	public List getAll() {
 
 		String query = "select * from customers";
@@ -71,7 +73,8 @@ public class UsersModel {
 		return usuarios;
 	}
 
-	public boolean remove(int id) {
+	// Elimina un cliente por ID.
+	public boolean deleteUser(int id) {
 
 		String query = "DELETE FROM customers WHERE id = " + id;
 		Connection conn = null;
@@ -99,6 +102,7 @@ public class UsersModel {
 
 	}
 
+	// agregamos un usario a la base de datos
 	public boolean add(String name, String apellidoPaterno, 
 			String apellidoMaterno,java.util.Date fechaNacimiento,String telefono, String correo) {
 		
@@ -130,7 +134,8 @@ public class UsersModel {
 
 	}
 
-	public boolean update(int id, String nombre, String apellidoP, String apellidoM, Date fechaNacimiento, String telefono, String correo) {
+	// Actualiza la información de un cliente.
+	public boolean updateUser(int id, String nombre, String apellidoP, String apellidoM, Date fechaNacimiento, String telefono, String correo) {
 
 		String query = "UPDATE customers SET " +
                 "first_name = '" + nombre + "', " +
@@ -166,6 +171,7 @@ public class UsersModel {
 
 	}
 	
+	// Encuentra un cliente por ID.
 	public User get(int id) {
 
 		String query = "select * from customers WHERE id = " + id;

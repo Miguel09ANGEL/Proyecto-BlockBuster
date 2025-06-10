@@ -13,14 +13,15 @@ import java.util.List;
 
 public class TransactionModel {
 
-//	String url = "jdbc:mysql://sql.freedb.tech:3306/freedb_Base_de_datos_renta?useSSL=false";
-//	String user = "freedb_G_user";
-//	String password = "%eeFW9csb4$?Dcj";
+	String url = "jdbc:mysql://sql.freedb.tech:3306/freedb_Base_de_datos_renta?useSSL=false";
+	String user = "freedb_G_user";
+	String password = "%eeFW9csb4$?Dcj";
 
-	String url = "jdbc:mysql://127.0.0.1:3306/base_de_datos_renta";
-	String user = "root";
-	String password = "";
+//	String url = "jdbc:mysql://127.0.0.1:3306/base_de_datos_renta";
+//	String user = "root";
+//	String password = "";
 
+	// regresa todas las transacciones renta y ventas de la base de datos.
 	public List<Transaction> getAllTransactions() {
 		List<Transaction> transacciones = new ArrayList<>();
 		String query = "SELECT t.*, vg.name AS video_game_name, "
@@ -55,7 +56,7 @@ public class TransactionModel {
 		return transacciones;
 	}
 
-	
+	// regresa solo las rentas de la bd
 	public List<Transaction> getAllRentals() {
 		List<Transaction> rentals = new ArrayList<>();
 		String query = "SELECT t.*, vg.name AS video_game_name, "
@@ -91,6 +92,7 @@ public class TransactionModel {
 		return rentals;
 	}
 
+	// crea un renta o venta e la bd opteniendo el id de el cliente y el videojuego
 	public boolean createTransaction(int customerId, int videoGameId, String transactionType, Date returnDate,
 			BigDecimal price, String status) {
 		String query = "INSERT INTO transactions (customer_id, video_game_id, transaction_type, "
@@ -136,6 +138,7 @@ public class TransactionModel {
 		}
 	}
 
+	// aqui se optiene toda la informacion de renta realizado por un cliente
 	public List<Transaction> getRentalsByUser(int customerId) {
 		List<Transaction> transacciones = new ArrayList<>();
 		String query = "SELECT t.id, t.customer_id, t.video_game_id, vg.name AS video_game_name, "
@@ -167,6 +170,7 @@ public class TransactionModel {
 		return transacciones;
 	}
 
+	// aqui se optiene toda la informacion de venta realizado por un cliente
 	public List<Transaction> getSimplePurchasesByUser(int customerId) {
 		List<Transaction> purchases = new ArrayList<>();
 		String query = "SELECT t.id, vg.name AS video_game_name, t.transaction_date, t.price " + "FROM transactions t "
@@ -180,15 +184,15 @@ public class TransactionModel {
 			ResultSet rs = pstmt.executeQuery();
 
 			while (rs.next()) {
-				Transaction transaction = new Transaction(rs.getInt("id"), // id
-						customerId, // customerId
-						0, // videoGameId
-						null, rs.getString("video_game_name"), // videoGameName
-						"sale", // transactionType
-						new Date(rs.getTimestamp("transaction_date").getTime()), // transactionDate
-						null, // returnDate
-						rs.getBigDecimal("price"), null, // createdAt
-						null // updatedAt
+				Transaction transaction = new Transaction(rs.getInt("id"), 
+						customerId, 
+						0, 
+						null, rs.getString("video_game_name"), 
+						"sale", 
+						new Date(rs.getTimestamp("transaction_date").getTime()), 
+						null, 
+						rs.getBigDecimal("price"), null, 
+						null 
 				);
 				purchases.add(transaction);
 			}

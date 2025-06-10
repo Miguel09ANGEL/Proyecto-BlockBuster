@@ -9,6 +9,8 @@ import models.Transaction;
 import models.TransactionModel;
 import views.PromotionsView;
 
+
+// Controlador que maneja la interacción del usuario con las operaciones relacionadas con promociones.
 public class PromotionsController {
 
 	private List<Promotions> promocion = new ArrayList<>();
@@ -19,27 +21,25 @@ public class PromotionsController {
 		this.vista = new PromotionsView();
 	}
 	
-	public void indexPromocion() {
-		
+	// Muestra promociones automáticas.
+	public void showAutomaticPromotions() {		
 		PromotionsModel pm = new PromotionsModel();
-		
 		promocion = pm.getAllPromotions();
 		
 		vista.PromocionAutomatica(promocion);
 		
 	}
-	
-	public void indexPromocion2() {
-		
+	// Muestra promociones para editar.
+	public void showEditablePromotions() {
 		PromotionsModel pm = new PromotionsModel();
-		
 		promocion = pm.getAllPromotions();
 		
 		vista.EditarPromociones(promocion);
 		
 	}
 	
-	public void pending_returns() {
+	// Muestra todas las devoluciones pendientes.
+	public void showPendingReturns() {
 		TransactionModel tm = new TransactionModel();
 		List<Transaction> transaciones = tm.getAllRentals();
 		

@@ -5,13 +5,13 @@ import java.math.BigDecimal;
 public class Promotions {
 	
 	private int id;
-	private BigDecimal compraCantida;
-	private BigDecimal promocionCompra;
+	private BigDecimal purchaseAmount;
+	private BigDecimal discountAmount;
 
-	public Promotions(int id,BigDecimal compraCantida,BigDecimal promocionCompra ) {
+	public Promotions(int id,BigDecimal purchaseAmount,BigDecimal discountAmount ) {
 		this.id = id;
-		this.compraCantida = compraCantida;
-		this.promocionCompra = promocionCompra;
+		this.purchaseAmount = purchaseAmount;
+		this.discountAmount = discountAmount;
 	}
 
 	public int getId() {
@@ -22,20 +22,20 @@ public class Promotions {
 		this.id = id;
 	}
 
-	public BigDecimal getCompraCantida() {
-		return compraCantida;
+	public BigDecimal getpurchaseAmount() {
+		return purchaseAmount;
 	}
 
-	public void setCompraCantida(BigDecimal compraCantida) {
-		this.compraCantida = compraCantida;
+	public void setpurchaseAmount(BigDecimal purchaseAmount) {
+		this.purchaseAmount = purchaseAmount;
 	}
 
-	public BigDecimal getPromocionCompra() {
-		return promocionCompra;
+	public BigDecimal getdiscountAmount() {
+		return discountAmount;
 	}
 
-	public void setPromocionCompra(BigDecimal promocionCompra) {
-		this.promocionCompra = promocionCompra;
+	public void setdiscountAmount(BigDecimal discountAmount) {
+		this.discountAmount = discountAmount;
 	}
 	
 	

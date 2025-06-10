@@ -13,14 +13,15 @@ public class PromotionsModel {
 	
 	private List<Promotions> promocion = new ArrayList<>();
 
-//	String url = "jdbc:mysql://sql.freedb.tech:3306/freedb_Base_de_datos_renta?useSSL=false";
-//	String user = "freedb_G_user";
-//	String password = "%eeFW9csb4$?Dcj";
+	String url = "jdbc:mysql://sql.freedb.tech:3306/freedb_Base_de_datos_renta?useSSL=false";
+	String user = "freedb_G_user";
+	String password = "%eeFW9csb4$?Dcj";
 
-	String url = "jdbc:mysql://127.0.0.1:3306/base_de_datos_renta";
-	String user = "root";
-	String password = "";
+//	String url = "jdbc:mysql://127.0.0.1:3306/base_de_datos_renta";
+//	String user = "root";
+//	String password = "";
 	
+	//  Esta clase maneja las operaciones de base de datos relacionadas con las promociones.
 	public List getAllPromotions() {
 
 		String query = "select * from promotions";
@@ -37,11 +38,11 @@ public class PromotionsModel {
 			while (rs.next()) {
 
 				Integer id = rs.getInt(1);
-				BigDecimal compraCantida = rs.getBigDecimal(2);
-				BigDecimal promocionCompra = rs.getBigDecimal(3);
+				BigDecimal purchaseAmount = rs.getBigDecimal(2);
+				BigDecimal discountAmount = rs.getBigDecimal(3);
 				
 
-				promocion.add(new Promotions(id, compraCantida, promocionCompra));
+				promocion.add(new Promotions(id, purchaseAmount, discountAmount));
 			}
 
 			rs.close();
@@ -61,10 +62,11 @@ public class PromotionsModel {
 		return promocion;
 	}
 	
-	public boolean updatePromotion(int id, BigDecimal compraCantida, BigDecimal promocionCompra) {
+	//	Actualiza una promoción en la base de datos
+	public boolean updatePromotion(int id, BigDecimal purchaseAmount, BigDecimal discountAmount) {
 	    String query = "UPDATE promotions SET " +
-	            "purchase_amount = " + compraCantida + ", " +
-	            "frequency_discount = " + promocionCompra + " " +
+	            "purchase_amount = " + purchaseAmount + ", " +
+	            "frequency_discount = " + discountAmount + " " +
 	            "WHERE id = " + id;
 
 	    Connection conn = null;

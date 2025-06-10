@@ -389,7 +389,7 @@ public class UserViews extends JFrame {
 
 		// Llenar la tabla con datos
 		for (User usuario : usuarios) {
-			Object[] rowData = { usuario.getId(), usuario.getNombre(), usuario.getApellidoPaterno(),
+			Object[] rowData = { usuario.getId(), usuario.getfirstName(), usuario.getlastName(),
 					usuario.getApellidoMaterno(), usuario.getFechaNacimiento(), usuario.getTelefono(),
 					usuario.getCorreo() };
 			model.addRow(rowData);
@@ -431,7 +431,7 @@ public class UserViews extends JFrame {
 				model.setRowCount(0);
 
 				for (User usuario : usuarios) {
-					String nombreCompleto = (usuario.getNombre() + " " + usuario.getApellidoPaterno() + " "
+					String nombreCompleto = (usuario.getfirstName() + " " + usuario.getlastName() + " "
 							+ usuario.getApellidoMaterno()).toLowerCase();
 					String correo = usuario.getCorreo().toLowerCase();
 					String telefono = usuario.getTelefono().toLowerCase();
@@ -440,7 +440,7 @@ public class UserViews extends JFrame {
 					if (nombreCompleto.contains(textoBusqueda) || correo.contains(textoBusqueda)
 							|| telefono.contains(textoBusqueda) || id.contains(textoBusqueda)) {
 
-						Object[] rowData = { usuario.getId(), usuario.getNombre() , usuario.getApellidoPaterno(),
+						Object[] rowData = { usuario.getId(), usuario.getfirstName() , usuario.getlastName(),
 								usuario.getApellidoMaterno(), usuario.getFechaNacimiento(), usuario.getTelefono(),
 								usuario.getCorreo()
 						};
@@ -474,7 +474,7 @@ public class UserViews extends JFrame {
 
 			Runnable tarea = () -> {
 				UserController uc = new UserController();
-				uc.update2(userId);
+				uc.clientDetails(userId);
 				dispose();
 			};
 
@@ -511,7 +511,7 @@ public class UserViews extends JFrame {
 
 					// Eliminamos de la base de datos
 					UsersModel um = new UsersModel();
-					boolean eliminado = um.remove(userId);
+					boolean eliminado = um.deleteUser(userId);
 
 					if (eliminado) {
 						// Eliminar de la tabla
@@ -667,7 +667,7 @@ public class UserViews extends JFrame {
 		panelCentral.add(iniciar_1_1_2_1_1);
 
 		JLabel iniciar_1_1_1_3_1 = new JLabel(
-				user.getNombre() + " " + user.getApellidoPaterno() + " " + user.getApellidoMaterno());
+				user.getfirstName() + " " + user.getlastName() + " " + user.getApellidoMaterno());
 		iniciar_1_1_1_3_1.setHorizontalAlignment(SwingConstants.CENTER);
 		iniciar_1_1_1_3_1.setForeground(new Color(59, 55, 65));
 		iniciar_1_1_1_3_1.setFont(new Font("Calibri", Font.BOLD, 18));
@@ -712,7 +712,7 @@ public class UserViews extends JFrame {
 
 				Runnable tarea = () -> {
 					UserController uc = new UserController();
-				uc.update(user.getId());
+				uc.editClient(user.getId());
 					dispose();
 				};
 
@@ -731,7 +731,7 @@ public class UserViews extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				Runnable tarea = () -> {
 					UserController uc = new UserController();
-					uc.update3(user.getId());
+					uc.clientInformation(user.getId());
 					dispose();
 				};
 
@@ -829,7 +829,7 @@ public class UserViews extends JFrame {
 		btnCancelar.addActionListener(e -> {
 			Runnable tarea = () -> {
 				UserController uc = new UserController();
-				uc.update2(user.getId());
+				uc.clientDetails(user.getId());
 				dispose();
 			};
 
@@ -849,7 +849,7 @@ public class UserViews extends JFrame {
 				JFileChooser fileChooser = new JFileChooser();
 				fileChooser.setDialogTitle("Guardar archivo PDF");
 
-				fileChooser.setSelectedFile(new File("Informacion_Cliente_" + user.getNombre() + ".pdf"));
+				fileChooser.setSelectedFile(new File("Informacion_Cliente_" + user.getfirstName() + ".pdf"));
 
 				int userSelection = fileChooser.showSaveDialog(null);
 
@@ -879,7 +879,7 @@ public class UserViews extends JFrame {
 						
 						document.add(clienteHeader);
 						document.add(new Paragraph("ID: " + user.getId()));
-						document.add(new Paragraph("Nombre: " + user.getNombre() + " " + user.getApellidoPaterno() + " "
+						document.add(new Paragraph("Nombre: " + user.getfirstName() + " " + user.getlastName() + " "
 								+ user.getApellidoMaterno()));
 						document.add(new Paragraph("Correo: " + user.getCorreo()));
 						document.add(new Paragraph("Teléfono: " + user.getTelefono()));
@@ -914,7 +914,7 @@ public class UserViews extends JFrame {
 				JFileChooser fileChooser = new JFileChooser();
 				fileChooser.setDialogTitle("Guardar archivo PDF");
 
-				fileChooser.setSelectedFile(new File("Credencial_Cliente_" + user.getNombre() + ".pdf"));
+				fileChooser.setSelectedFile(new File("Credencial_Cliente_" + user.getfirstName() + ".pdf"));
 
 				int userSelection = fileChooser.showSaveDialog(null);
 
@@ -929,7 +929,7 @@ public class UserViews extends JFrame {
 								FontFactory.getFont(FontFactory.HELVETICA_BOLD, 14));
 						document.add(clienteHeader);
 						document.add(new Paragraph("ID: " + user.getId()));
-						document.add(new Paragraph("Nombre: " + user.getNombre() + " " + user.getApellidoPaterno() + " "
+						document.add(new Paragraph("Nombre: " + user.getfirstName() + " " + user.getlastName() + " "
 								+ user.getApellidoMaterno()));
 						document.add(new Paragraph("Correo: " + user.getCorreo()));
 
@@ -948,7 +948,7 @@ public class UserViews extends JFrame {
 		});
 		panelCentral.add(btnCredencialpdf);
 
-		JLabel iniciar_1_1 = new JLabel(user.getNombre() + " " + user.getApellidoPaterno());
+		JLabel iniciar_1_1 = new JLabel(user.getfirstName() + " " + user.getlastName());
 		iniciar_1_1.setHorizontalAlignment(SwingConstants.CENTER);
 		iniciar_1_1.setFont(new Font("Calibri", Font.BOLD, 14));
 		iniciar_1_1.setBounds(58, 177, 141, 42);
@@ -1118,7 +1118,7 @@ public class UserViews extends JFrame {
 		lblNombre.setBounds(350, 135, 100, 42);
 		panelCentral.add(lblNombre);
 
-		txtNombre = new JTextField(user.getNombre());
+		txtNombre = new JTextField(user.getfirstName());
 		txtNombre.setBackground(Color.decode("#D9D9D9"));
 		txtNombre.setBounds(350, 163, 200, 27);
 		txtNombre.setColumns(10);
@@ -1183,7 +1183,7 @@ public class UserViews extends JFrame {
 		lblApellidoPaterno.setBounds(650, 135, 122, 42);
 		panelCentral.add(lblApellidoPaterno);
 
-		txtApellidoPaterno = new JTextField(user.getApellidoPaterno());
+		txtApellidoPaterno = new JTextField(user.getlastName());
 		txtApellidoPaterno.setColumns(10);
 		txtApellidoPaterno.setBackground(Color.decode("#D9D9D9"));
 		txtApellidoPaterno.setBounds(650, 163, 200, 27);
@@ -1247,7 +1247,7 @@ public class UserViews extends JFrame {
 		btnCancelar.addActionListener(e -> {
 			Runnable tarea = () -> {
 				UserController us = new UserController();
-				us.update2(user.getId());
+				us.clientDetails(user.getId());
 				dispose();
 			};
 
@@ -1334,7 +1334,7 @@ public class UserViews extends JFrame {
 
 			// Llamar al método del modelo para actualizar
 			UsersModel us = new UsersModel();
-			boolean actualizado = us.update(user.getId(), nuevoNombre, nuevoApellidoPaterno, nuevoApellidoMaterno,
+			boolean actualizado = us.updateUser(user.getId(), nuevoNombre, nuevoApellidoPaterno, nuevoApellidoMaterno,
 					nuevaFechaNac, nuevoTelefono, nuevoCorreo);
 
 			if (actualizado) {
@@ -1342,7 +1342,7 @@ public class UserViews extends JFrame {
 						JOptionPane.INFORMATION_MESSAGE);
 				Runnable tarea = () -> {
 					UserController us1 = new UserController();
-					us1.update2(user.getId());
+					us1.clientDetails(user.getId());
 					dispose();
 				};
 

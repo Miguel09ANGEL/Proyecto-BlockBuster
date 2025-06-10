@@ -176,7 +176,7 @@ public class PromotionsView extends JFrame{
 		devoluciones.addActionListener(e -> {
 			Runnable tarea = () -> {
 				PromotionsController pc = new PromotionsController();
-				pc.pending_returns();
+				pc.showPendingReturns();
 				dispose();
 			};
 
@@ -193,7 +193,7 @@ public class PromotionsView extends JFrame{
 		btnPromocionAutomatica.addActionListener(e -> {
 			Runnable tarea = () -> {
 				PromotionsController pc = new PromotionsController();
-				pc.indexPromocion();
+				pc.showAutomaticPromotions();
 				dispose();
 			};
 
@@ -571,7 +571,7 @@ public class PromotionsView extends JFrame{
 		// Llenar la tabla con datos
 		for (Iterator iterator = promocion.iterator(); iterator.hasNext();) {
 			Promotions usuario = (Promotions) iterator.next();
-			Object[] rowData = {usuario.getCompraCantida()+" $", usuario.getPromocionCompra()+" %" };
+			Object[] rowData = {usuario.getpurchaseAmount()+" $", usuario.getdiscountAmount()+" %" };
 			model.addRow(rowData);
 		}
 
@@ -598,7 +598,7 @@ public class PromotionsView extends JFrame{
 			public void actionPerformed(ActionEvent e) {
 				Runnable tarea = () -> {
 					PromotionsController pc = new PromotionsController();
-					pc.indexPromocion2(); // llama a editar promociones
+					pc.showEditablePromotions(); // llama a editar promociones
 					dispose();
 				};
 
@@ -679,7 +679,7 @@ public class PromotionsView extends JFrame{
 			
 			Runnable tarea = () -> {
 				PromotionsController pc = new PromotionsController();
-				pc.indexPromocion();// Abre la segunda ventana(); 
+				pc.showAutomaticPromotions();// Abre la segunda ventana(); 
 				dispose();
 			};
 
@@ -713,8 +713,8 @@ public class PromotionsView extends JFrame{
 		
 		for (int i = 0; i < promocion.size() && i < 8; i++) {
 			Promotions p = promocion.get(i);
-			campos[i * 2].setText(String.valueOf(p.getCompraCantida()+"$"));
-			campos[i * 2 + 1].setText(String.valueOf(p.getPromocionCompra()+"%"));
+			campos[i * 2].setText(String.valueOf(p.getpurchaseAmount()+"$"));
+			campos[i * 2 + 1].setText(String.valueOf(p.getdiscountAmount()+"%"));
 			}
 
 		// Nombres de las etiquetas
@@ -778,7 +778,7 @@ public class PromotionsView extends JFrame{
 			        JOptionPane.showMessageDialog(layeredPane, "Actualización completada", "Éxito", JOptionPane.INFORMATION_MESSAGE);
 			        Runnable tarea = () -> {
 						PromotionsController pc = new PromotionsController();
-						pc.indexPromocion();
+						pc.showAutomaticPromotions();
 					};
 					// recibe el label donde esta el gif y la tarea a ejecutar
 					new LoadingFrame(labelGif, tarea).show();

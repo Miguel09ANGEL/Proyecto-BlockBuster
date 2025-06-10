@@ -15,41 +15,44 @@ import views.UserViews;
 public class UserController {
 
 	private UserViews vista;
+	private UsersModel modelo;
 	private List<User> usuarios = new ArrayList<>();
 
 	public UserController() {
 
 		this.vista = new UserViews();
+		this.modelo = new UsersModel();
 	}
 
+	// se muestran todos los usuarios
 	public void index() {
-		UsersModel um = new UsersModel();
-		usuarios = um.getAll();
+		usuarios = modelo.getAll();
+		
 		vista.RegistroClientes(usuarios);
 	}
 
-	public void update(int id) {
-		UsersModel um = new UsersModel();
-		User myUser = um.get(id);
+	// aqui se edita el cliente
+	public void editClient(int id) {
+		User myUser = modelo.get(id);
+		
 		vista.EditarCliente(myUser);
 	}
 
-	public void update2(int id) {
-		UsersModel um = new UsersModel();
-		User myUser = um.get(id);
+	// se muestra los detalles del cliente
+	public void clientDetails(int id) {		
+		User myUser = modelo.get(id);
 		
 		TransactionModel tm = new TransactionModel();
 		List<Transaction> misTransacciones = tm.getRentalsByUser(id);
 		List<Transaction> misVentas = tm.getSimplePurchasesByUser(id);
 
-
 		vista.DetallesCliente(myUser, (List<Transaction>) misTransacciones, (List<Transaction>) misVentas);
-
 	}
 	
-	public void update3(int id) {
-		UsersModel um = new UsersModel();
-		User myUser = um.get(id);
+	// se muestra la informacion del cliente
+	public void clientInformation(int id) {
+		User myUser = modelo.get(id);
+		
 		vista.InformacionCliente(myUser);
 	}
 

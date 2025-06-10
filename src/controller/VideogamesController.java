@@ -12,28 +12,33 @@ import views.VideogamesView;
 
 public class VideogamesController {
 
-	private VideogamesView vista;
+	private VideogamesView view;
+    private VideoGamesModel model;
 	private List<VideoGames> videogames = new ArrayList<>();
 
 	public VideogamesController() {
-		this.vista = new VideogamesView();
+		this.view = new VideogamesView();
+        this.model = new VideoGamesModel();
 	}
 
+	//	Carga y muestra la lista de videojuegos.
 	public void indexVideoGames() {
-		VideoGamesModel um = new VideoGamesModel();
-		videogames = um.getAllVideogames();
-		vista.RegistroJuegos(videogames);
+		videogames = model.getAllVideogames();
+		
+		view.RegistroJuegos(videogames);
 	}
 
+	// carga todos los detalles de lo juegos de la bd con el id 
 	public void updateVideogames(int id) {
-		VideoGamesModel vm = new VideoGamesModel();
-		VideoGames myVideogame = vm.getVideogames(id);
-		vista.DetallesJuego(myVideogame);
+		VideoGames myVideogame = model.getVideogames(id);
+		
+		view.DetallesJuego(myVideogame);
 	}
 
-	public void updateVideogames2(int id) {
-		VideoGamesModel vm = new VideoGamesModel();
-		VideoGames myVideogame = vm.getVideogames(id);
-		vista.EditarJuego(myVideogame);
+	// se encarga de editar los videojuegos de la bd con el id	
+	public void editVideoGame(int id) {
+		VideoGames myVideogame = model.getVideogames(id);
+		
+		view.EditarJuego(myVideogame);
 	}
 }

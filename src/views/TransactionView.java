@@ -371,8 +371,8 @@ public class TransactionView extends JFrame {
 
 		// Llenar la tabla con datos de videojuegos
 		for (VideoGames juego : videoGamesList) {
-			Object[] rowData = { juego.getId(), juego.getNombre(), juego.getPlataforma(),
-					juego.getExistenciasDisponibles(), "$" + juego.getPrecioRenta(), juego.getClasificacion() };
+			Object[] rowData = { juego.getId(), juego.getname(), juego.getplatform(),
+					juego.getavailableStock(), "$" + juego.getrentPrice(), juego.getclassification() };
 			model.addRow(rowData);
 		}
 
@@ -416,8 +416,8 @@ public class TransactionView extends JFrame {
 				model.setRowCount(0);
 
 				for (VideoGames juegos : videoGamesList) {
-					String nombreVideojuego = juegos.getNombre().toLowerCase();
-					String plataforma = juegos.getPlataforma().toLowerCase();
+					String nombreVideojuego = juegos.getname().toLowerCase();
+					String plataforma = juegos.getplatform().toLowerCase();
 		            String id = String.valueOf(juegos.getId()); 
 
 					if (nombreVideojuego.contains(textoBusqueda) || 
@@ -425,11 +425,11 @@ public class TransactionView extends JFrame {
 							id.contains(textoBusqueda)) {
 						
 						Object[] rowData = { juegos.getId(), 
-								juegos.getNombre(), 
-								juegos.getPlataforma(),
-								juegos.getExistenciasDisponibles(), 
-								"$" + juegos.getPrecioVenta(),
-								juegos.getClasificacion() };
+								juegos.getname(), 
+								juegos.getplatform(),
+								juegos.getavailableStock(), 
+								"$" + juegos.getsalePrice(),
+								juegos.getclassification() };
 						model.addRow(rowData);
 					}
 				}
@@ -638,8 +638,8 @@ public class TransactionView extends JFrame {
 
 		// Llenar la tabla con datos de videojuegos
 		for (VideoGames juego : videoGamesList) {
-			Object[] rowData = { juego.getId(), juego.getNombre(), juego.getPlataforma(),
-					juego.getExistenciasDisponibles(), "$" + juego.getPrecioVenta(), juego.getClasificacion() };
+			Object[] rowData = { juego.getId(), juego.getname(), juego.getplatform(),
+					juego.getavailableStock(), "$" + juego.getsalePrice(), juego.getclassification() };
 			model.addRow(rowData);
 		}
 
@@ -683,16 +683,16 @@ public class TransactionView extends JFrame {
 				model.setRowCount(0);
 
 				for (VideoGames juegos : videoGamesList) {
-					String nombreVideojuego = juegos.getNombre().toLowerCase();
-					String plataforma = juegos.getPlataforma().toLowerCase();
+					String nombreVideojuego = juegos.getname().toLowerCase();
+					String plataforma = juegos.getplatform().toLowerCase();
 					String id = String.valueOf(juegos.getId());
 
 					if (nombreVideojuego.contains(textoBusqueda) || plataforma.contains(textoBusqueda)
 							|| id.contains(textoBusqueda)) {
 
-						Object[] rowData = { juegos.getId(), juegos.getNombre(), juegos.getPlataforma(),
-								juegos.getExistenciasDisponibles(), "$" + juegos.getPrecioVenta(),
-								juegos.getClasificacion() };
+						Object[] rowData = { juegos.getId(), juegos.getname(), juegos.getplatform(),
+								juegos.getavailableStock(), "$" + juegos.getsalePrice(),
+								juegos.getclassification() };
 						model.addRow(rowData);
 					}
 				}
@@ -739,7 +739,7 @@ public class TransactionView extends JFrame {
 			if (juegoSeleccionado != null) {
 				Runnable tarea = () -> {
 					TransactionController tc = new TransactionController();
-					tc.selectCustomerVent(juegoId);
+					tc.selectCustomerSale(juegoId);
 					dispose();
 				};
 				// recibe el label donde esta el gif y la tarea a ejecutar
@@ -948,8 +948,8 @@ public class TransactionView extends JFrame {
 		for (User usuario : usuarios) {
 		    Object[] rowData = {
 		        usuario.getId(),
-		        usuario.getNombre(),
-		        usuario.getApellidoPaterno(),
+		        usuario.getfirstName(),
+		        usuario.getlastName(),
 		        usuario.getApellidoMaterno(),
 		        usuario.getFechaNacimiento(),
 		        usuario.getTelefono(),
@@ -992,8 +992,8 @@ public class TransactionView extends JFrame {
 		        model.setRowCount(0); // Limpiar tabla
 
 		        for (User usuario : usuarios) {
-		            String nombre = usuario.getNombre().toLowerCase() ;
-		            String apellidoP = usuario.getApellidoPaterno().toLowerCase();
+		            String nombre = usuario.getfirstName().toLowerCase() ;
+		            String apellidoP = usuario.getlastName().toLowerCase();
 		            String apellidoM = usuario.getApellidoMaterno() != null ? usuario.getApellidoMaterno().toLowerCase() : "";
 		            String correo = usuario.getCorreo().toLowerCase();
 		            String id = String.valueOf(usuario.getId()); 
@@ -1006,8 +1006,8 @@ public class TransactionView extends JFrame {
 
 		                Object[] rowData = {
 		                    usuario.getId(),
-		                    usuario.getNombre(),
-		                    usuario.getApellidoPaterno(),
+		                    usuario.getfirstName(),
+		                    usuario.getlastName(),
 		                    usuario.getApellidoMaterno(),
 		                    usuario.getFechaNacimiento(),
 		                    usuario.getTelefono(),
@@ -1141,7 +1141,7 @@ public class TransactionView extends JFrame {
 
 		// Nombre completo del cliente
 		JLabel lblValorNombreCliente = new JLabel(
-				user.getNombre() + " " + user.getApellidoMaterno() + " " + user.getApellidoMaterno());
+				user.getfirstName() + " " + user.getApellidoMaterno() + " " + user.getApellidoMaterno());
 		lblValorNombreCliente.setFont(new Font("Calibri", Font.PLAIN, 14));
 		lblValorNombreCliente.setBounds(450, 160, 300, 20);
 		panelCentral.add(lblValorNombreCliente);
@@ -1175,7 +1175,7 @@ public class TransactionView extends JFrame {
 		lblTituloJuego.setBounds(75, 215, 255, 42);
 		panelCentral.add(lblTituloJuego);
 
-		JLabel lblNombre = new JLabel(videogames.getNombre());
+		JLabel lblNombre = new JLabel(videogames.getname());
 		lblNombre.setFont(new Font("Anton", Font.BOLD, 14));
 		lblNombre.setBounds(135, 246, 355, 42);
 		panelCentral.add(lblNombre);
@@ -1186,7 +1186,7 @@ public class TransactionView extends JFrame {
 		lblPrecio.setBounds(450, 215, 255, 42);
 		panelCentral.add(lblPrecio);
 
-		JLabel lblValorRenta = new JLabel("" + videogames.getPrecioRenta());
+		JLabel lblValorRenta = new JLabel("" + videogames.getrentPrice());
 		lblValorRenta.setFont(new Font("Calibri", Font.BOLD, 14));
 		lblValorRenta.setBounds(465, 246, 255, 42);
 		panelCentral.add(lblValorRenta);
@@ -1241,8 +1241,9 @@ public class TransactionView extends JFrame {
 		dateChooser.setDate(calendar.getTime());
 		
 		Calendar max = Calendar.getInstance();
-		max.add(Calendar.MONTH, +1); // Máximo: hace
+		max.add(Calendar.MONTH, 1);// maximo un mes
 		dateChooser.setMaxSelectableDate(max.getTime());
+
 
 		// Configurar el campo de texto
 		JFormattedTextField textField = ((JTextFieldDateEditor) dateChooser.getDateEditor());
@@ -1311,6 +1312,21 @@ public class TransactionView extends JFrame {
 		btnSiguiente.setBounds(582, 406, 172, 30);
 		btnSiguiente.addActionListener(e -> {
 			try {
+				
+				if (lblValorDiasRenta.getText().equals("1")) {
+				    int respuesta = JOptionPane.showConfirmDialog(
+				        null,
+				        "¿Estás seguro de que solo quieres rentar por 1 día?",
+				        "Confirmar renta de 1 día",
+				        JOptionPane.YES_NO_OPTION
+				    );
+
+				    if (respuesta != JOptionPane.YES_OPTION) {
+				        return;
+				    }
+				}
+				
+				lblValorDiasRenta.getText().equals("1");
 				
 		        java.sql.Date fechaDevolucion = new java.sql.Date(dateChooser.getDate().getTime());
 		        
@@ -1384,7 +1400,7 @@ public class TransactionView extends JFrame {
 		lblCliente.setBounds(256, 85, 70, 42);
 		panelCentral.add(lblCliente);
 
-		JLabel lblNombreCliente = new JLabel(user.getNombre()+" "+user.getApellidoPaterno()+" "+user.getApellidoMaterno());
+		JLabel lblNombreCliente = new JLabel(user.getfirstName()+" "+user.getlastName()+" "+user.getApellidoMaterno());
 		lblNombreCliente.setHorizontalAlignment(SwingConstants.LEFT);
 		lblNombreCliente.setFont(new Font("Calibri", Font.BOLD, 18));
 		lblNombreCliente.setBounds(256, 102, 250, 42);
@@ -1409,14 +1425,14 @@ public class TransactionView extends JFrame {
 		lblLogoJuego.setBounds(32, 32, 184, 112);
 		panelCentral.add(lblLogoJuego);
 
-		JLabel lblTituloJuego = new JLabel(videogames.getNombre());
+		JLabel lblTituloJuego = new JLabel(videogames.getname());
 		lblTituloJuego.setHorizontalAlignment(SwingConstants.LEFT);
 		lblTituloJuego.setFont(new Font("Calibri", Font.BOLD, 24));
 		lblTituloJuego.setBounds(32, 141, 400, 42);
 		panelCentral.add(lblTituloJuego);
 
 		// Información del juego
-		JLabel lblAnioJuego = new JLabel("" + videogames.getAñoLanzamiento());
+		JLabel lblAnioJuego = new JLabel("" + videogames.getreleaseYear());
 		lblAnioJuego.setHorizontalAlignment(SwingConstants.LEFT);
 		lblAnioJuego.setFont(new Font("Calibri", Font.BOLD, 24));
 		lblAnioJuego.setBounds(42, 174, 57, 42);
@@ -1428,7 +1444,7 @@ public class TransactionView extends JFrame {
 		lblClasificacion.setBounds(188, 204, 112, 42);
 		panelCentral.add(lblClasificacion);
 
-		JLabel lblValorClasificacion = new JLabel(videogames.getClasificacion());
+		JLabel lblValorClasificacion = new JLabel(videogames.getclassification());
 		lblValorClasificacion.setHorizontalAlignment(SwingConstants.CENTER);
 		lblValorClasificacion.setFont(new Font("Calibri", Font.BOLD, 18));
 		lblValorClasificacion.setBounds(185, 232, 97, 42);
@@ -1440,7 +1456,7 @@ public class TransactionView extends JFrame {
 		lblDistribuidor.setBounds(188, 285, 112, 42);
 		panelCentral.add(lblDistribuidor);
 
-		JLabel lblNombreDistribuidor = new JLabel(videogames.getDesarrolladoPor());
+		JLabel lblNombreDistribuidor = new JLabel(videogames.getdevelopedBy());
 		lblNombreDistribuidor.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNombreDistribuidor.setFont(new Font("Calibri", Font.BOLD, 18));
 		lblNombreDistribuidor.setBounds(138, 309, 200, 42);
@@ -1533,7 +1549,7 @@ public class TransactionView extends JFrame {
 		lblProducto.setBounds(780, 215, 100, 42);
 		panelCentral.add(lblProducto);
 
-		JLabel lblPrecioProducto = new JLabel("" + videogames.getPrecioRenta());
+		JLabel lblPrecioProducto = new JLabel("" + videogames.getrentPrice());
 		lblPrecioProducto.setHorizontalAlignment(SwingConstants.LEFT);
 		lblPrecioProducto.setFont(new Font("Calibri", Font.BOLD, 18));
 		lblPrecioProducto.setBounds(860, 215, 85, 42);
@@ -1550,7 +1566,7 @@ public class TransactionView extends JFrame {
 		BigDecimal diasDerenta = BigDecimal.valueOf(diasRenta);
 		// despues selccionamos el precio de renta y lo multilicamos
 		// haci sacando el total del producto
-		BigDecimal valorTotalProducto = videogames.getPrecioRenta().multiply(diasDerenta);
+		BigDecimal valorTotalProducto = videogames.getrentPrice().multiply(diasDerenta);
 		// despues lo convertimos a un string para poder mostrarlo
 		JLabel lblValorSubtotal = new JLabel(String.valueOf(valorTotalProducto));
 		lblValorSubtotal.setHorizontalAlignment(SwingConstants.LEFT);
@@ -1672,7 +1688,7 @@ public class TransactionView extends JFrame {
 		    public void actionPerformed(ActionEvent e) {
 		        JFileChooser fileChooser = new JFileChooser();
 		        fileChooser.setDialogTitle("Guardar archivo PDF");
-		        fileChooser.setSelectedFile(new File("Detalles_Renta_" + videogames.getNombre() + ".pdf"));
+		        fileChooser.setSelectedFile(new File("Detalles_Renta_" + videogames.getname() + ".pdf"));
 
 		        int userSelection = fileChooser.showSaveDialog(null);
 
@@ -1695,8 +1711,8 @@ public class TransactionView extends JFrame {
 		                    FontFactory.getFont(FontFactory.HELVETICA_BOLD, 14));
 		                document.add(clienteHeader);
 		                
-		                document.add(new Paragraph("Nombre: " + user.getNombre() + " " + 
-		                    user.getApellidoPaterno() + " " + user.getApellidoMaterno()));
+		                document.add(new Paragraph("Nombre: " + user.getfirstName() + " " + 
+		                    user.getlastName() + " " + user.getApellidoMaterno()));
 		                document.add(new Paragraph("Correo: " + user.getCorreo()));
 		                document.add(Chunk.NEWLINE);
 
@@ -1705,11 +1721,11 @@ public class TransactionView extends JFrame {
 		                    FontFactory.getFont(FontFactory.HELVETICA_BOLD, 14));
 		                document.add(juegoHeader);
 		                
-		                document.add(new Paragraph("Título: " + videogames.getNombre()));
-		                document.add(new Paragraph("Plataforma: " + videogames.getPlataforma()));
-		                document.add(new Paragraph("Año: " + videogames.getAñoLanzamiento()));
-		                document.add(new Paragraph("Clasificación: " + videogames.getClasificacion()));
-		                document.add(new Paragraph("Desarrollador: " + videogames.getDesarrolladoPor()));
+		                document.add(new Paragraph("Título: " + videogames.getname()));
+		                document.add(new Paragraph("Plataforma: " + videogames.getplatform()));
+		                document.add(new Paragraph("Año: " + videogames.getreleaseYear()));
+		                document.add(new Paragraph("Clasificación: " + videogames.getclassification()));
+		                document.add(new Paragraph("Desarrollador: " + videogames.getdevelopedBy()));
 		                document.add(Chunk.NEWLINE);
 
 		                // Detalles de la renta
@@ -1735,7 +1751,7 @@ public class TransactionView extends JFrame {
 		                document.add(pagoHeader);
 		                
 		                
-		                document.add(new Paragraph("Precio por día: $" + videogames.getPrecioRenta()));
+		                document.add(new Paragraph("Precio por día: $" + videogames.getrentPrice()));
 		                document.add(new Paragraph("Días rentados: " + diasRenta));
 		                
 		                document.add(new Paragraph("Subtotal: $" + String.format("%.2f", subtotal)));
@@ -1986,8 +2002,8 @@ public class TransactionView extends JFrame {
 		for (User usuario : usuarios) {
 		    Object[] rowData = {
 		        usuario.getId(),
-		        usuario.getNombre(),
-		        usuario.getApellidoPaterno(),
+		        usuario.getfirstName(),
+		        usuario.getlastName(),
 		        usuario.getApellidoMaterno(),
 		        usuario.getFechaNacimiento(),
 		        usuario.getTelefono(),
@@ -2030,8 +2046,8 @@ public class TransactionView extends JFrame {
 		        model.setRowCount(0); // Limpiar tabla
 
 		        for (User usuario : usuarios) {
-		            String nombre = usuario.getNombre().toLowerCase() ;
-		            String apellidoP = usuario.getApellidoPaterno().toLowerCase();
+		            String nombre = usuario.getfirstName().toLowerCase() ;
+		            String apellidoP = usuario.getlastName().toLowerCase();
 		            String apellidoM = usuario.getApellidoMaterno() != null ? usuario.getApellidoMaterno().toLowerCase() : "";
 		            String correo = usuario.getCorreo().toLowerCase();
 		            String id = String.valueOf(usuario.getId()); 
@@ -2044,8 +2060,8 @@ public class TransactionView extends JFrame {
 
 		                Object[] rowData = {
 		                    usuario.getId(),
-		                    usuario.getNombre(),
-		                    usuario.getApellidoPaterno(),
+		                    usuario.getfirstName(),
+		                    usuario.getlastName(),
 		                    usuario.getApellidoMaterno(),
 		                    usuario.getFechaNacimiento(),
 		                    usuario.getTelefono(),
@@ -2173,7 +2189,7 @@ public class TransactionView extends JFrame {
 
 		// Nombre completo del cliente
 		JLabel lblValorNombreCliente = new JLabel(
-				user.getNombre() + " " + user.getApellidoMaterno() + " " + user.getApellidoPaterno());
+				user.getfirstName() + " " + user.getApellidoMaterno() + " " + user.getlastName());
 		lblValorNombreCliente.setFont(new Font("Calibri", Font.PLAIN, 14));
 		lblValorNombreCliente.setBounds(450, 160, 300, 20);
 		panelCentral.add(lblValorNombreCliente);
@@ -2207,7 +2223,7 @@ public class TransactionView extends JFrame {
 		lblTituloJuego.setBounds(75, 215, 255, 42);
 		panelCentral.add(lblTituloJuego);
 
-		JLabel lblNombre = new JLabel(videogames.getNombre());
+		JLabel lblNombre = new JLabel(videogames.getname());
 		lblNombre.setFont(new Font("Anton", Font.BOLD, 14));
 		lblNombre.setBounds(135, 246, 355, 42);
 		panelCentral.add(lblNombre);
@@ -2218,7 +2234,7 @@ public class TransactionView extends JFrame {
 		lblPrecio.setBounds(460, 215, 255, 42);
 		panelCentral.add(lblPrecio);
 
-		JLabel lblValorRenta = new JLabel("$ " + videogames.getPrecioVenta());
+		JLabel lblValorRenta = new JLabel("$ " + videogames.getsalePrice());
 		lblValorRenta.setFont(new Font("Calibri", Font.BOLD, 14));
 		lblValorRenta.setBounds(470, 246, 255, 42);
 		panelCentral.add(lblValorRenta);
@@ -2262,7 +2278,7 @@ public class TransactionView extends JFrame {
 		btnCancelar.addActionListener(e -> {
 			Runnable tarea = () -> {
 				TransactionController tc = new TransactionController();
-				tc.selectCustomerVent(videogames.getId());
+				tc.selectCustomerSale(videogames.getId());
 				dispose();
 			};
 
@@ -2351,7 +2367,7 @@ public class TransactionView extends JFrame {
 		panelCentral.add(lblCliente);
 
 		JLabel lblNombreCliente = new JLabel(
-				user.getNombre() + " " + user.getApellidoPaterno() + " " + user.getApellidoMaterno());
+				user.getfirstName() + " " + user.getlastName() + " " + user.getApellidoMaterno());
 		lblNombreCliente.setHorizontalAlignment(SwingConstants.LEFT);
 		lblNombreCliente.setFont(new Font("Calibri", Font.BOLD, 18));
 		lblNombreCliente.setBounds(256, 102, 250, 42);
@@ -2376,14 +2392,14 @@ public class TransactionView extends JFrame {
 		lblLogoJuego.setBounds(32, 32, 184, 112);
 		panelCentral.add(lblLogoJuego);
 
-		JLabel lblTituloJuego = new JLabel(videogames.getNombre());
+		JLabel lblTituloJuego = new JLabel(videogames.getname());
 		lblTituloJuego.setHorizontalAlignment(SwingConstants.LEFT);
 		lblTituloJuego.setFont(new Font("Calibri", Font.BOLD, 24));
 		lblTituloJuego.setBounds(32, 141, 400, 42);
 		panelCentral.add(lblTituloJuego);
 
 		// Información del juego
-		JLabel lblAnioJuego = new JLabel("" + videogames.getAñoLanzamiento());
+		JLabel lblAnioJuego = new JLabel("" + videogames.getreleaseYear());
 		lblAnioJuego.setHorizontalAlignment(SwingConstants.LEFT);
 		lblAnioJuego.setFont(new Font("Calibri", Font.BOLD, 24));
 		lblAnioJuego.setBounds(42, 174, 57, 42);
@@ -2395,7 +2411,7 @@ public class TransactionView extends JFrame {
 		lblClasificacion.setBounds(270, 204, 112, 42);
 		panelCentral.add(lblClasificacion);
 
-		JLabel lblValorClasificacion = new JLabel(videogames.getClasificacion());
+		JLabel lblValorClasificacion = new JLabel(videogames.getclassification());
 		lblValorClasificacion.setHorizontalAlignment(SwingConstants.CENTER);
 		lblValorClasificacion.setFont(new Font("Calibri", Font.BOLD, 18));
 		lblValorClasificacion.setBounds(280, 232, 97, 42);
@@ -2407,7 +2423,7 @@ public class TransactionView extends JFrame {
 		lblDistribuidor.setBounds(270, 285, 112, 42);
 		panelCentral.add(lblDistribuidor);
 
-		JLabel lblNombreDistribuidor = new JLabel(videogames.getDesarrolladoPor());
+		JLabel lblNombreDistribuidor = new JLabel(videogames.getdevelopedBy());
 		lblNombreDistribuidor.setHorizontalAlignment(SwingConstants.LEFT);
 		lblNombreDistribuidor.setFont(new Font("Calibri", Font.BOLD, 18));
 		lblNombreDistribuidor.setBounds(270, 309, 200, 42);
@@ -2467,7 +2483,7 @@ public class TransactionView extends JFrame {
 		lblProducto.setBounds(780, 215, 100, 42);
 		panelCentral.add(lblProducto);
 
-		JLabel lblPrecioProducto = new JLabel("" + videogames.getPrecioVenta());
+		JLabel lblPrecioProducto = new JLabel("" + videogames.getsalePrice());
 		lblPrecioProducto.setHorizontalAlignment(SwingConstants.LEFT);
 		lblPrecioProducto.setFont(new Font("Calibri", Font.BOLD, 18));
 		lblPrecioProducto.setBounds(860, 215, 85, 42);
@@ -2481,7 +2497,7 @@ public class TransactionView extends JFrame {
 		panelCentral.add(lblSubtotal);
 
 		// Valor subtotal (precio directo sin multiplicar por días)
-		BigDecimal subtotal = videogames.getPrecioVenta();
+		BigDecimal subtotal = videogames.getsalePrice();
 		JLabel lblValorSubtotal = new JLabel(String.valueOf(subtotal));
 		lblValorSubtotal.setHorizontalAlignment(SwingConstants.LEFT);
 		lblValorSubtotal.setFont(new Font("Calibri", Font.BOLD, 18));
@@ -2597,7 +2613,7 @@ public class TransactionView extends JFrame {
 		    public void actionPerformed(ActionEvent e) {
 		        JFileChooser fileChooser = new JFileChooser();
 		        fileChooser.setDialogTitle("Guardar archivo PDF");
-		        fileChooser.setSelectedFile(new File("Detalles_Renta_" + videogames.getNombre() + ".pdf"));
+		        fileChooser.setSelectedFile(new File("Detalles_Venta_" + videogames.getname() + ".pdf"));
 
 		        int userSelection = fileChooser.showSaveDialog(null);
 
@@ -2620,8 +2636,8 @@ public class TransactionView extends JFrame {
 		                    FontFactory.getFont(FontFactory.HELVETICA_BOLD, 14));
 		                document.add(clienteHeader);
 		                
-		                document.add(new Paragraph("Nombre: " + user.getNombre() + " " + 
-		                    user.getApellidoPaterno() + " " + user.getApellidoMaterno()));
+		                document.add(new Paragraph("Nombre: " + user.getfirstName() + " " + 
+		                    user.getlastName() + " " + user.getApellidoMaterno()));
 		                document.add(new Paragraph("Correo: " + user.getCorreo()));
 		                document.add(Chunk.NEWLINE);
 
@@ -2630,11 +2646,11 @@ public class TransactionView extends JFrame {
 		                    FontFactory.getFont(FontFactory.HELVETICA_BOLD, 14));
 		                document.add(juegoHeader);
 		                
-		                document.add(new Paragraph("Título: " + videogames.getNombre()));
-		                document.add(new Paragraph("Plataforma: " + videogames.getPlataforma()));
-		                document.add(new Paragraph("Año: " + videogames.getAñoLanzamiento()));
-		                document.add(new Paragraph("Clasificación: " + videogames.getClasificacion()));
-		                document.add(new Paragraph("Desarrollador: " + videogames.getDesarrolladoPor()));
+		                document.add(new Paragraph("Título: " + videogames.getname()));
+		                document.add(new Paragraph("Plataforma: " + videogames.getplatform()));
+		                document.add(new Paragraph("Año: " + videogames.getreleaseYear()));
+		                document.add(new Paragraph("Clasificación: " + videogames.getclassification()));
+		                document.add(new Paragraph("Desarrollador: " + videogames.getdevelopedBy()));
 		                document.add(Chunk.NEWLINE);
 
 		                // Detalles de la renta
@@ -2651,7 +2667,7 @@ public class TransactionView extends JFrame {
 		                document.add(pagoHeader);
 		                
 		                
-		                document.add(new Paragraph("Precio fijo de venta: $" + videogames.getPrecioVenta()));
+		                document.add(new Paragraph("Precio fijo de venta: $" + videogames.getsalePrice()));
 		                
 		                document.add(new Paragraph("Subtotal: $" + String.format("%.2f", subtotal)));
 		                document.add(new Paragraph("IVA (16%): $" + String.format("%.2f", iva)));

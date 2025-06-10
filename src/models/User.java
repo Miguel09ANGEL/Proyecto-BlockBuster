@@ -5,26 +5,26 @@ import java.sql.Date;
 
 public class User {
     private int id;
-    private String nombre;
-    private String apellidoPaterno;
-    private String apellidoMaterno;
-    private Date fechaNacimiento;
-    private String telefono;
-    private String correo;
+    private String firstName;
+    private String lastName;
+    private String middleName;
+    private Date birthDate;
+    private String phone;
+    private String email;
     private Date createdAt;
     private Date updatedAt;
 
     // Constructor completo
-    public User(int id, String nombre, String apellidoPaterno, String apellidoMaterno, 
-               Date fechaNacimiento, String telefono, String correo, 
+    public User(int id, String firstName, String lastName, String middleName, 
+               Date birthDate, String phone, String email, 
                Date createdAt, Date updatedAt) {
         this.id = id;
-        this.nombre = nombre;
-        this.apellidoPaterno = apellidoPaterno;
-        this.apellidoMaterno = apellidoMaterno;
-        this.fechaNacimiento = fechaNacimiento;
-        this.telefono = telefono;
-        this.correo = correo;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.middleName = middleName;
+        this.birthDate = birthDate;
+        this.phone = phone;
+        this.email = email;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
     }
@@ -37,52 +37,52 @@ public class User {
 		this.id = id;
 	}
 
-	public String getNombre() {
-		return nombre;
+	public String getfirstName() {
+		return firstName;
 	}
 
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
+	public void setfirstName(String nombre) {
+		this.firstName = nombre;
 	}
 
-	public String getApellidoPaterno() {
-		return apellidoPaterno;
+	public String getlastName() {
+		return lastName;
 	}
 
-	public void setApellidoPaterno(String apellidoPaterno) {
-		this.apellidoPaterno = apellidoPaterno;
+	public void setlastName(String apellidoPaterno) {
+		this.lastName = apellidoPaterno;
 	}
 
 	public String getApellidoMaterno() {
-		return apellidoMaterno;
+		return middleName;
 	}
 
 	public void setApellidoMaterno(String apellidoMaterno) {
-		this.apellidoMaterno = apellidoMaterno;
+		this.middleName = apellidoMaterno;
 	}
 
 	public Date getFechaNacimiento() {
-		return fechaNacimiento;
+		return birthDate;
 	}
 
 	public void setFechaNacimiento(Date fechaNacimiento) {
-		this.fechaNacimiento = fechaNacimiento;
+		this.birthDate = fechaNacimiento;
 	}
 
 	public String getTelefono() {
-		return telefono;
+		return phone;
 	}
 
 	public void setTelefono(String telefono) {
-		this.telefono = telefono;
+		this.phone = telefono;
 	}
 
 	public String getCorreo() {
-		return correo;
+		return email;
 	}
 
 	public void setCorreo(String correo) {
-		this.correo = correo;
+		this.email = correo;
 	}
 
 	public Date getCreatedAt() {

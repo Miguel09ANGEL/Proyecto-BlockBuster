@@ -5,38 +5,37 @@ import java.sql.Date;
 
 public class VideoGames {
     private int id;
-    private String nombre;
-    private String plataforma;
-    private int añoLanzamiento;
-    private boolean disponibilidad;
-    private String clasificacion;
-    private String genero;
-    private int existenciasDisponibles;
-    private BigDecimal precioRenta;
-    private BigDecimal precioVenta;
-    private String desarrolladoPor;
+    private String name;
+    private String platform;
+    private int releaseYear;
+    private boolean isAvailable;
+    private String classification;
+    private String genre;
+    private int availableStock;
+    private BigDecimal rentPrice;
+    private BigDecimal salePrice;
+    private String developedBy;
     private String descripcion;
-    
     private Date createdAt;
     private Date updatedAt;
 
     // Constructor completo
-    public VideoGames(int id, String nombre, String plataforma, int añoLanzamiento,
-                    boolean disponibilidad, String clasificacion, String genero,
-                    int existenciasDisponibles, BigDecimal precioRenta,
-                    BigDecimal precioVenta, String desarrolladoPor, String descripcion,
+    public VideoGames(int id, String name, String platform, int releaseYear,
+                    boolean isAvailable, String classification, String genre,
+                    int availableStock, BigDecimal rentPrice,
+                    BigDecimal salePrice, String developedBy, String descripcion,
                     Date createdAt, Date updatedAt) {
         this.id = id;
-        this.nombre = nombre;
-        this.plataforma = plataforma;
-        this.añoLanzamiento = añoLanzamiento;
-        this.disponibilidad = disponibilidad;
-        this.clasificacion = clasificacion;
-        this.genero = genero;
-        this.existenciasDisponibles = existenciasDisponibles;
-        this.precioRenta = precioRenta;
-        this.precioVenta = precioVenta;
-        this.desarrolladoPor = desarrolladoPor;
+        this.name = name;
+        this.platform = platform;
+        this.releaseYear = releaseYear;
+        this.isAvailable = isAvailable;
+        this.classification = classification;
+        this.genre = genre;
+        this.availableStock = availableStock;
+        this.rentPrice = rentPrice;
+        this.salePrice = salePrice;
+        this.developedBy = developedBy;
         this.descripcion = descripcion;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
@@ -50,84 +49,84 @@ public class VideoGames {
 		this.id = id;
 	}
 
-	public String getNombre() {
-		return nombre;
+	public String getname() {
+		return name;
 	}
 
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
+	public void setname(String name) {
+		this.name = name;
 	}
 
-	public String getPlataforma() {
-		return plataforma;
+	public String getplatform() {
+		return platform;
 	}
 
-	public void setPlataforma(String plataforma) {
-		this.plataforma = plataforma;
+	public void setplatform(String platform) {
+		this.platform = platform;
 	}
 
-	public int getAñoLanzamiento() {
-		return añoLanzamiento;
+	public int getreleaseYear() {
+		return releaseYear;
 	}
 
-	public void setAñoLanzamiento(int añoLanzamiento) {
-		this.añoLanzamiento = añoLanzamiento;
+	public void setreleaseYear(int releaseYear) {
+		this.releaseYear = releaseYear;
 	}
 
-	public boolean isDisponibilidad() {
-		return disponibilidad;
+	public boolean isAvailable() {
+		return isAvailable;
 	}
 
-	public void setDisponibilidad(boolean disponibilidad) {
-		this.disponibilidad = disponibilidad;
+	public void setisAvailable(boolean isAvailable) {
+		this.isAvailable = isAvailable;
 	}
 
-	public String getClasificacion() {
-		return clasificacion;
+	public String getclassification() {
+		return classification;
 	}
 
-	public void setClasificacion(String clasificacion) {
-		this.clasificacion = clasificacion;
+	public void setclassification(String classification) {
+		this.classification = classification;
 	}
 
 	public String getGenero() {
-		return genero;
+		return genre;
 	}
 
 	public void setGenero(String genero) {
-		this.genero = genero;
+		this.genre = genero;
 	}
 
-	public int getExistenciasDisponibles() {
-		return existenciasDisponibles;
+	public int getavailableStock() {
+		return availableStock;
 	}
 
-	public void setExistenciasDisponibles(int existenciasDisponibles) {
-		this.existenciasDisponibles = existenciasDisponibles;
+	public void setavailableStock(int availableStock) {
+		this.availableStock = availableStock;
 	}
 
-	public BigDecimal getPrecioRenta() {
-		return precioRenta;
+	public BigDecimal getrentPrice() {
+		return rentPrice;
 	}
 
-	public void setPrecioRenta(BigDecimal precioRenta) {
-		this.precioRenta = precioRenta;
+	public void setPrecioRenta(BigDecimal rentPrice) {
+		this.rentPrice = rentPrice;
 	}
 
-	public BigDecimal getPrecioVenta() {
-		return precioVenta;
+	public BigDecimal getsalePrice() {
+		return salePrice;
 	}
 
-	public void setPrecioVenta(BigDecimal precioVenta) {
-		this.precioVenta = precioVenta;
+	public void setsalePrice(BigDecimal salePrice) {
+		this.salePrice = salePrice;
 	}
 
-	public String getDesarrolladoPor() {
-		return desarrolladoPor;
+	public String getdevelopedBy() {
+		return developedBy;
 	}
 
-	public void setDesarrolladoPor(String desarrolladoPor) {
-		this.desarrolladoPor = desarrolladoPor;
+	public void setdevelopedBy(String developedBy) {
+		this.developedBy = developedBy;
 	}
 
 	public String getDescripcion() {

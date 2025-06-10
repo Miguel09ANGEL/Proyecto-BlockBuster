@@ -381,8 +381,8 @@ public class VideogamesView extends JFrame {
 		
 		// Llenar la tabla con datos
 		for (VideoGames juego : videoGamesList) {
-			Object[] rowData = { juego.getId(), juego.getNombre(), juego.getPlataforma(),
-					juego.getExistenciasDisponibles(), "$" + juego.getPrecioRenta(), "$" + juego.getPrecioVenta(),juego.getClasificacion() };
+			Object[] rowData = { juego.getId(), juego.getname(), juego.getplatform(),
+					juego.getavailableStock(), "$" + juego.getrentPrice(), "$" + juego.getsalePrice(),juego.getclassification() };
 			model.addRow(rowData);
 		}
 
@@ -421,16 +421,16 @@ public class VideogamesView extends JFrame {
 				model.setRowCount(0);
 
 				for (VideoGames juegos : videoGamesList) {
-					String nombreVideojuego = juegos.getNombre().toLowerCase();
-					String plataforma = juegos.getPlataforma().toLowerCase();
+					String nombreVideojuego = juegos.getname().toLowerCase();
+					String plataforma = juegos.getplatform().toLowerCase();
 					String id = String.valueOf(juegos.getId());
 
 					if (nombreVideojuego.contains(textoBusqueda) || plataforma.contains(textoBusqueda)
 							|| id.contains(textoBusqueda)) {
 
-						Object[] rowData = { juegos.getId(), juegos.getNombre(), juegos.getPlataforma(),
-								juegos.getExistenciasDisponibles(), "$" + juegos.getPrecioVenta(),
-								juegos.getClasificacion() };
+						Object[] rowData = { juegos.getId(), juegos.getname(), juegos.getplatform(),
+								juegos.getavailableStock(), "$" + juegos.getsalePrice(),
+								juegos.getclassification() };
 						model.addRow(rowData);
 					}
 				}
@@ -495,7 +495,7 @@ public class VideogamesView extends JFrame {
 						int videogameId = (int) model.getValueAt(selectedRow, 0);
 						
 						VideoGamesModel vm = new VideoGamesModel();
-						boolean eliminado = vm.removeVideogame(videogameId);
+						boolean eliminado = vm.deleteVideoGame(videogameId);
 
 						if (eliminado) {
 							// Eliminar de la tabla
@@ -577,7 +577,7 @@ public class VideogamesView extends JFrame {
 	    panelCentral.add(lblTitulo);
 
 	    // Nombre del juego
-	    JLabel lblNombre = new JLabel(videogames.getNombre());
+	    JLabel lblNombre = new JLabel(videogames.getname());
 	    lblNombre.setFont(new Font("Anton", Font.BOLD, 20));
 	    lblNombre.setBounds(55, 124, 300, 42);
 	    panelCentral.add(lblNombre);
@@ -589,7 +589,7 @@ public class VideogamesView extends JFrame {
 	    panelCentral.add(lblanio);
 
 	    // Año
-	    JLabel lblAnio = new JLabel(""+videogames.getAñoLanzamiento());
+	    JLabel lblAnio = new JLabel(""+videogames.getreleaseYear());
 	    lblAnio.setForeground(Color.decode("#3B3741"));
 	    lblAnio.setFont(new Font("Calibri", Font.BOLD, 18));
 	    lblAnio.setBounds(220, 165, 70, 42);
@@ -602,7 +602,7 @@ public class VideogamesView extends JFrame {
 	    lblClasificacion.setBounds(55, 204, 120, 42);
 	    panelCentral.add(lblClasificacion);
 
-	    JLabel lblClasificacionValor = new JLabel(videogames.getClasificacion());
+	    JLabel lblClasificacionValor = new JLabel(videogames.getclassification());
 	    lblClasificacionValor.setForeground(Color.decode("#3B3741"));
 	    lblClasificacionValor.setFont(new Font("Calibri", Font.BOLD, 18));
 	    lblClasificacionValor.setBounds(160, 204, 103, 42);
@@ -614,7 +614,7 @@ public class VideogamesView extends JFrame {
 	    lblDesarrolladores.setBounds(55, 244, 190, 42);
 	    panelCentral.add(lblDesarrolladores);
 
-	    JTextArea txtDesarrolladores = new JTextArea(videogames.getDesarrolladoPor());
+	    JTextArea txtDesarrolladores = new JTextArea(videogames.getdevelopedBy());
 	    txtDesarrolladores.setWrapStyleWord(true);
 	    txtDesarrolladores.setLineWrap(true);
 	    txtDesarrolladores.setOpaque(false);
@@ -642,7 +642,7 @@ public class VideogamesView extends JFrame {
 	    lblPlataforma.setBounds(55, 324, 110, 42);
 	    panelCentral.add(lblPlataforma);
 
-	    JLabel lblPlataformaValor = new JLabel(videogames.getPlataforma());
+	    JLabel lblPlataformaValor = new JLabel(videogames.getplatform());
 	    lblPlataformaValor.setForeground(Color.decode("#3B3741"));
 	    lblPlataformaValor.setFont(new Font("Calibri", Font.BOLD, 18));
 	    lblPlataformaValor.setBounds(150, 324, 200, 42);
@@ -670,7 +670,7 @@ public class VideogamesView extends JFrame {
 	    lblPrecioRenta.setBounds(610, 317, 200, 42);
 	    panelCentral.add(lblPrecioRenta);
 
-	    JLabel lblValorRenta = new JLabel(""+videogames.getPrecioRenta());
+	    JLabel lblValorRenta = new JLabel(""+videogames.getrentPrice());
 	    lblValorRenta.setForeground(new Color(153, 0, 0));
 	    lblValorRenta.setFont(new Font("Calibri", Font.BOLD, 20));
 	    lblValorRenta.setBounds(820, 317, 126, 42);
@@ -681,7 +681,7 @@ public class VideogamesView extends JFrame {
 	    lblPrecioVenta.setBounds(610, 353, 200, 42);
 	    panelCentral.add(lblPrecioVenta);
 
-	    JLabel lblValorVenta = new JLabel(""+videogames.getPrecioVenta());
+	    JLabel lblValorVenta = new JLabel(""+videogames.getsalePrice());
 	    lblValorVenta.setForeground(new Color(153, 0, 0));
 	    lblValorVenta.setFont(new Font("Calibri", Font.BOLD, 20));
 	    lblValorVenta.setBounds(820, 353, 126, 42);
@@ -697,7 +697,7 @@ public class VideogamesView extends JFrame {
 	        public void actionPerformed(ActionEvent e) {
 	        	Runnable tarea = () -> {
 					VideogamesController vc = new VideogamesController();
-			    vc.updateVideogames2(videogames.getId());
+			    vc.editVideoGame(videogames.getId());
 					dispose();
 				};
 
@@ -719,7 +719,7 @@ public class VideogamesView extends JFrame {
 	            JFileChooser fileChooser = new JFileChooser();
 	            fileChooser.setDialogTitle("Guardar archivo PDF");
 
-	            fileChooser.setSelectedFile(new File("Detalles_Videojuego_" + videogames.getNombre() + ".pdf"));
+	            fileChooser.setSelectedFile(new File("Detalles_Videojuego_" + videogames.getname() + ".pdf"));
 
 	            int userSelection = fileChooser.showSaveDialog(null);
 
@@ -734,18 +734,18 @@ public class VideogamesView extends JFrame {
 	                    Paragraph titulo = new Paragraph("DETALLES DEL VIDEOJUEGO\n\n");
 	                    document.add(titulo);
 
-	                    document.add(new Paragraph("Nombre: " + videogames.getNombre()));
-	                    document.add(new Paragraph("Año de lanzamiento: " + videogames.getAñoLanzamiento()));
-	                    document.add(new Paragraph("Clasificación: " + videogames.getClasificacion()));
-	                    document.add(new Paragraph("Desarrolladores: " + videogames.getDesarrolladoPor()));
+	                    document.add(new Paragraph("Nombre: " + videogames.getname()));
+	                    document.add(new Paragraph("Año de lanzamiento: " + videogames.getreleaseYear()));
+	                    document.add(new Paragraph("Clasificación: " + videogames.getclassification()));
+	                    document.add(new Paragraph("Desarrolladores: " + videogames.getdevelopedBy()));
 	                    document.add(new Paragraph("Género: " + videogames.getGenero()));
-	                    document.add(new Paragraph("Plataforma: " + videogames.getPlataforma()));
+	                    document.add(new Paragraph("Plataforma: " + videogames.getplatform()));
 
 	                    document.add(new Paragraph("\nAcerca del juego:"));
 	                    document.add(new Paragraph(videogames.getDescripcion()));
 
-	                    document.add(new Paragraph("\nPrecio por renta: $" + videogames.getPrecioRenta()));
-	                    document.add(new Paragraph("Precio por venta: $" + videogames.getPrecioVenta()));
+	                    document.add(new Paragraph("\nPrecio por renta: $" + videogames.getrentPrice()));
+	                    document.add(new Paragraph("Precio por venta: $" + videogames.getsalePrice()));
 
 	                    JOptionPane.showMessageDialog(null, "PDF guardado exitosamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
 	                } catch (FileNotFoundException | DocumentException ex) {
@@ -887,7 +887,7 @@ public class VideogamesView extends JFrame {
 	    lblNombre.setBounds(300, 130, 180, 20);
 	    panelCentral.add(lblNombre);
 
-	    txtNombreJuego = new JTextField(videogames.getNombre());
+	    txtNombreJuego = new JTextField(videogames.getname());
 	    txtNombreJuego.setBounds(300, 155, 230, 25);
 	    txtNombreJuego.addKeyListener(new KeyAdapter() {
 	        public void keyTyped(KeyEvent e) {
@@ -911,6 +911,9 @@ public class VideogamesView extends JFrame {
 	    	comboanio.addItem(year);
         }
 	    comboanio.setBounds(300, 215, 150, 25);
+	    
+	    int anioActual = videogames.getreleaseYear(); // Asumo que este método existe y devuelve int
+	    comboanio.setSelectedItem(anioActual);
 	    panelCentral.add(comboanio);
 
 	    // Sección central (Detalles técnicos)
@@ -919,7 +922,7 @@ public class VideogamesView extends JFrame {
 	    lblPlataforma.setBounds(555, 130, 180, 20);
 	    panelCentral.add(lblPlataforma);
 
-	    txtPlataforma = new JTextField(videogames.getPlataforma());
+	    txtPlataforma = new JTextField(videogames.getplatform());
 	    txtPlataforma.setBounds(555, 155, 150, 25);
 	    txtPlataforma.addKeyListener(new KeyAdapter() {
 	        public void keyTyped(KeyEvent e) {
@@ -938,7 +941,7 @@ public class VideogamesView extends JFrame {
 
 	    // CheckBox para disponibilidad
 	    JCheckBox chkDisponible = new JCheckBox("Disponible");
-	    chkDisponible.setSelected(videogames.isDisponibilidad());
+	    chkDisponible.setSelected(videogames.isAvailable());
 	    chkDisponible.setBounds(500, 215, 100, 25);
 	    panelCentral.add(chkDisponible);
 
@@ -952,7 +955,7 @@ public class VideogamesView extends JFrame {
 
 	    JComboBox<String> comboclasificacion = new JComboBox<String>(Clasificacion);
 	    
-	    String ClasificacionActual = videogames.getClasificacion(); 
+	    String ClasificacionActual = videogames.getclassification(); 
 	   
 	    if (ClasificacionActual != null && !ClasificacionActual.isEmpty()) {
 	        boolean encontrado = false;
@@ -1014,7 +1017,7 @@ public class VideogamesView extends JFrame {
 	    lblExistencias.setBounds(500, 250, 180, 20);
 	    panelCentral.add(lblExistencias);
 
-	    txtExistencias = new JTextField(String.valueOf(videogames.getExistenciasDisponibles()));
+	    txtExistencias = new JTextField(String.valueOf(videogames.getavailableStock()));
 	    txtExistencias.setBounds(500, 275, 200, 25);
 	    txtExistencias.addKeyListener(new KeyAdapter() { /////////////Aqui sirve para solo colocar letras o numeros
 	        public void keyTyped(KeyEvent e) {
@@ -1031,7 +1034,7 @@ public class VideogamesView extends JFrame {
 	    lblPrecioRenta.setBounds(300, 310, 180, 20);
 	    panelCentral.add(lblPrecioRenta);
 
-	    txtPrecioRenta = new JTextField(String.valueOf(videogames.getPrecioRenta()));
+	    txtPrecioRenta = new JTextField(String.valueOf(videogames.getrentPrice()));
 	    txtPrecioRenta.setBounds(300, 335, 180, 25);
 	    txtPrecioRenta.addKeyListener(new KeyAdapter() { /////////////Aqui sirve para solo colocar letras o numeros
 	        public void keyTyped(KeyEvent e) {
@@ -1048,7 +1051,7 @@ public class VideogamesView extends JFrame {
 	    lblPrecioVenta.setBounds(500, 310, 180, 20);
 	    panelCentral.add(lblPrecioVenta);
 
-	    txtPrecioVenta = new JTextField(String.valueOf(videogames.getPrecioVenta()));
+	    txtPrecioVenta = new JTextField(String.valueOf(videogames.getsalePrice()));
 	    txtPrecioVenta.setBounds(500, 335, 200, 25);
 	    txtPrecioVenta.addKeyListener(new KeyAdapter() { /////////////Aqui sirve para solo colocar letras o numeros
 	        public void keyTyped(KeyEvent e) {
@@ -1066,7 +1069,7 @@ public class VideogamesView extends JFrame {
 	    lblDesarrollador.setBounds(730, 130, 180, 20);
 	    panelCentral.add(lblDesarrollador);
 
-	    txtDescripcion = new JTextField(videogames.getDesarrolladoPor());
+	    txtDescripcion = new JTextField(videogames.getdevelopedBy());
 	    txtDescripcion.setBounds(730, 155, 240, 25);
 	    txtDescripcion.addKeyListener(new KeyAdapter() {
 	        public void keyTyped(KeyEvent e) {
@@ -1204,6 +1207,20 @@ public class VideogamesView extends JFrame {
 	            BigDecimal PrecioRenta = new BigDecimal(txtPrecioRenta.getText().trim());
 	            BigDecimal PrecioVenta = new BigDecimal(txtPrecioVenta.getText().trim());
 	            
+	            if (PrecioRenta.compareTo(BigDecimal.ZERO) == 0 || PrecioVenta.compareTo(BigDecimal.ZERO) == 0) {
+		            JOptionPane.showMessageDialog(this, "Los precios no pueden ser cero", "Error", JOptionPane.ERROR_MESSAGE);
+		            return;
+		        }
+
+		        // Validar constraint de la base de datos (precioVenta > precioRenta)
+		        if (PrecioVenta.compareTo(PrecioRenta) <= 0) {
+		            JOptionPane.showMessageDialog(this, 
+		                "El precio de venta debe ser MAYOR que el precio de renta", 
+		                "Error", 
+		                JOptionPane.ERROR_MESSAGE);
+		            return;
+		        }
+	            
 	            if (ExistenciasDisponibles < 0) {
 	                txtExistencias.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
 	                throw new NumberFormatException("Las existencias no pueden ser negativas");
@@ -1227,11 +1244,11 @@ public class VideogamesView extends JFrame {
 	            String Genero = (String) comboGenero.getSelectedItem();     
 	            String DesarrolladoPor = txtDescripcion.getText().trim();
 	            String Descripcion = txtAreaDescripcion.getText().trim();
-	            String AñoLanzamiento = (String) comboclasificacion.getSelectedItem();
-
+	            Integer anioSeleccionado = (Integer) comboanio.getSelectedItem();
+	            
 	            // Actualizar el videojuego
 	            VideoGamesModel vm = new VideoGamesModel();
-	            boolean actualizado = vm.updateVideogame(videogames.getId(), Nombre, Plataforma, AñoLanzamiento, 
+	            boolean actualizado = vm.updateVideogame(videogames.getId(), Nombre, Plataforma, anioSeleccionado, 
 	                    Disponibilidad, clasificacion,Genero,ExistenciasDisponibles, 
 	                    PrecioRenta, PrecioVenta, DesarrolladoPor, Descripcion);
 	            
@@ -1619,16 +1636,30 @@ public class VideogamesView extends JFrame {
 
 		    try {
 		        // Validaciones numéricas
-		        int año = Integer.parseInt(txtAnioLanzamiento.getText().trim());
+//		        int año = Integer.parseInt(txtAnioLanzamiento.getText().trim());
 		        int existencias = Integer.parseInt(txtExistencias.getText().trim());
 		        BigDecimal precioRenta = new BigDecimal(txtPrecioRenta.getText().trim());
 		        BigDecimal precioVenta = new BigDecimal(txtPrecioVenta.getText().trim());
 		        
-		        // Validaciones adicionales
-		        if (año <= 0) {
-		            txtAnioLanzamiento.setBorder(BorderFactory.createLineBorder(Color.RED));
-		            throw new NumberFormatException("El año de lanzamiento debe ser un número positivo");
+		        if (precioRenta.compareTo(BigDecimal.ZERO) == 0 || precioVenta.compareTo(BigDecimal.ZERO) == 0) {
+		            JOptionPane.showMessageDialog(this, "Los precios no pueden ser cero", "Error", JOptionPane.ERROR_MESSAGE);
+		            return;
 		        }
+
+		        // Validar constraint de la base de datos (precioVenta > precioRenta)
+		        if (precioVenta.compareTo(precioRenta) <= 0) {
+		            JOptionPane.showMessageDialog(this, 
+		                "El precio de venta debe ser MAYOR que el precio de renta", 
+		                "Error", 
+		                JOptionPane.ERROR_MESSAGE);
+		            return;
+		        }
+		        
+		        // Validaciones adicionales
+//		        if (año <= 0) {
+//		            txtAnioLanzamiento.setBorder(BorderFactory.createLineBorder(Color.RED));
+//		            throw new NumberFormatException("El año de lanzamiento debe ser un número positivo");
+//		        }
 		        
 		        if (existencias < 0) {
 		            txtExistencias.setBorder(BorderFactory.createLineBorder(Color.RED));
@@ -1652,9 +1683,11 @@ public class VideogamesView extends JFrame {
 		        String genero = generos[comboGenero.getSelectedIndex()]; 
 		        String desarrollador = txtDesarrollador.getText().trim();
 		        String descripcion = txtDescripcion.getText().trim();
+	            Integer anioSeleccionado = (Integer) comboanio.getSelectedItem();
+
 
 		        VideoGamesModel modelo = new VideoGamesModel();
-		        boolean exito = modelo.addVideogame(nombre, plataforma, año, disponibilidad, clasificacion, genero,
+		        boolean exito = modelo.addVideogame(nombre, plataforma, anioSeleccionado, disponibilidad, clasificacion, genero,
 		                existencias, precioRenta, precioVenta, desarrollador, descripcion);
 
 		        if (exito) {

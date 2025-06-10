@@ -85,17 +85,7 @@ public class TransactionView extends JFrame {
 		layeredPane.setPreferredSize(new Dimension(900, 650));
 		setContentPane(layeredPane);
 		
-		ImageIcon gifIcon = new ImageIcon(getClass().getResource("/images/loading.gif"));
-		JLabel labelGif = new JLabel(gifIcon);
-
-		// Tamaño del GIF
-		int gifWidth = gifIcon.getIconWidth();
-		int gifHeight = gifIcon.getIconHeight();
-
-		// Centrar el GIF en la ventana de 900x650
-		labelGif.setBounds((900 - gifWidth) / 2, (650 - gifHeight) / 2, gifWidth, gifHeight);
-		labelGif.setVisible(false);
-		layeredPane.add(labelGif, JLayeredPane.PALETTE_LAYER);
+		JLabel labelGif = GifLoading.crearLabelGif(layeredPane);
 
 		// 1. PANEL BLANCO (fondo completo)
 		JPanel panelIzq = new JPanel();
@@ -258,17 +248,7 @@ public class TransactionView extends JFrame {
 		layeredPane.setPreferredSize(new Dimension(1024, 576));
 		setContentPane(layeredPane);
 		
-		ImageIcon gifIcon = new ImageIcon(getClass().getResource("/images/loading.gif"));
-		JLabel labelGif = new JLabel(gifIcon);
-
-		// Tamaño del GIF
-		int gifWidth = gifIcon.getIconWidth();
-		int gifHeight = gifIcon.getIconHeight();
-
-		// Centrar el GIF en la ventana de 900x650
-		labelGif.setBounds((900 - gifWidth) / 2, (650 - gifHeight) / 2, gifWidth, gifHeight);
-		labelGif.setVisible(false);
-		layeredPane.add(labelGif, JLayeredPane.PALETTE_LAYER);
+		JLabel labelGif = GifLoading.crearLabelGif(layeredPane);
 
 		// Panel izquierdo (menú)
 		JPanel panelIzq = new JPanel();
@@ -496,7 +476,8 @@ public class TransactionView extends JFrame {
 		btnCancelar.setBounds(26, 420, 172, 30);
 		btnCancelar.addActionListener(e -> {
 			Runnable tarea = () -> {
-				AdministradorRentaCompra();
+				TransactionView tv = new TransactionView();
+				tv.AdministradorRentaCompra(); // Abre la segunda ventana
 				dispose();
 			};
 
@@ -527,17 +508,7 @@ public class TransactionView extends JFrame {
 		layeredPane.setPreferredSize(new Dimension(900, 650));
 		setContentPane(layeredPane);
 		
-		ImageIcon gifIcon = new ImageIcon(getClass().getResource("/images/loading.gif"));
-		JLabel labelGif = new JLabel(gifIcon);
-
-		// Tamaño del GIF
-		int gifWidth = gifIcon.getIconWidth();
-		int gifHeight = gifIcon.getIconHeight();
-
-		// Centrar el GIF en la ventana de 900x650
-		labelGif.setBounds((900 - gifWidth) / 2, (650 - gifHeight) / 2, gifWidth, gifHeight);
-		labelGif.setVisible(false);
-		layeredPane.add(labelGif, JLayeredPane.PALETTE_LAYER);
+		JLabel labelGif = GifLoading.crearLabelGif(layeredPane);
 
 		// 1. PANEL BLANCO (fondo completo)
 		JPanel panelIzq = new JPanel();
@@ -751,7 +722,7 @@ public class TransactionView extends JFrame {
 		panelCentral.add(btnVender);
 
 		// Botón para cancelar/regresar
-		JButton btnCancelar = new JButton("CANCELAR");
+		JButton btnCancelar = new JButton("REGRESAR");
 		btnCancelar.setForeground(Color.WHITE);
 		btnCancelar.setBackground(Color.decode("#B82F2F"));
 		btnCancelar.setFont(new Font("Arial", Font.BOLD, 14));
@@ -803,17 +774,7 @@ public class TransactionView extends JFrame {
 		layeredPane.setPreferredSize(new Dimension(900, 650));
 		setContentPane(layeredPane);
 		
-		ImageIcon gifIcon = new ImageIcon(getClass().getResource("/images/loading.gif"));
-		JLabel labelGif = new JLabel(gifIcon);
-
-		// Tamaño del GIF
-		int gifWidth = gifIcon.getIconWidth();
-		int gifHeight = gifIcon.getIconHeight();
-
-		// Centrar el GIF en la ventana de 900x650
-		labelGif.setBounds((900 - gifWidth) / 2, (650 - gifHeight) / 2, gifWidth, gifHeight);
-		labelGif.setVisible(false);
-		layeredPane.add(labelGif, JLayeredPane.PALETTE_LAYER);
+		JLabel labelGif = GifLoading.crearLabelGif(layeredPane);
 
 		// 1. PANEL BLANCO (fondo completo)
 		JPanel panelIzq = new JPanel();
@@ -1050,7 +1011,7 @@ public class TransactionView extends JFrame {
 		});
 		panelCentral.add(btnSiguiente);
 		
-		JButton btnEliminar = new JButton("CANCELAR");
+		JButton btnEliminar = new JButton("REGRESAR");
 		btnEliminar.setForeground(Color.WHITE);
 		btnEliminar.setBackground(Color.decode("#B82F2F"));
 		btnEliminar.setFont(new Font("Arial", Font.BOLD, 14));
@@ -1058,7 +1019,7 @@ public class TransactionView extends JFrame {
 		btnEliminar.addActionListener(e -> {
 			int cancelar;
 			
-			cancelar = JOptionPane.showConfirmDialog(null, "¿Seguro que quieres cancelar?","Confirmar cancelacion",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE);
+			cancelar = JOptionPane.showConfirmDialog(null, "¿Seguro que quieres regresar?","Confirmar",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE);
 			
 			if(cancelar == JOptionPane.YES_OPTION) {
 				Runnable tarea = () -> {
@@ -1145,7 +1106,7 @@ public class TransactionView extends JFrame {
 
 		JLabel lblValorIDCliente = new JLabel(String.valueOf(user.getId()));
 		lblValorIDCliente.setFont(new Font("Calibri", Font.PLAIN, 14));
-		lblValorIDCliente.setBounds(170, 170, 200, 20);
+		lblValorIDCliente.setBounds(185, 160, 200, 20);
 		panelCentral.add(lblValorIDCliente);
 
 		// Correo electrónico
@@ -1167,7 +1128,7 @@ public class TransactionView extends JFrame {
 		panelCentral.add(lblTituloJuego);
 
 		JLabel lblNombre = new JLabel(videogames.getname());
-		lblNombre.setFont(new Font("Calibri", Font.BOLD, 14));
+		lblNombre.setFont(new Font("Calibri", Font.PLAIN, 14));
 		lblNombre.setBounds(135, 246, 355, 42);
 		panelCentral.add(lblNombre);
 
@@ -1178,7 +1139,7 @@ public class TransactionView extends JFrame {
 		panelCentral.add(lblPrecio);
 
 		JLabel lblValorRenta = new JLabel("" + videogames.getrentPrice());
-		lblValorRenta.setFont(new Font("Calibri", Font.BOLD, 14));
+		lblValorRenta.setFont(new Font("Calibri", Font.PLAIN, 14));
 		lblValorRenta.setBounds(465, 246, 255, 42);
 		panelCentral.add(lblValorRenta);
 
@@ -1190,7 +1151,7 @@ public class TransactionView extends JFrame {
 
 		JLabel lblValorFecha = new JLabel(fechaFormateada);
 		lblValorFecha.setHorizontalAlignment(SwingConstants.CENTER);
-		lblValorFecha.setFont(new Font("Calibri", Font.BOLD, 14));
+		lblValorFecha.setFont(new Font("Calibri", Font.PLAIN, 14));
 		lblValorFecha.setBounds(75, 320, 255, 42);
 		panelCentral.add(lblValorFecha);
 
@@ -1202,7 +1163,7 @@ public class TransactionView extends JFrame {
 
 		JLabel lblValorTipo = new JLabel("Renta");
 		lblValorTipo.setHorizontalAlignment(SwingConstants.CENTER);
-		lblValorTipo.setFont(new Font("Calibri", Font.BOLD, 14));
+		lblValorTipo.setFont(new Font("Calibri", Font.PLAIN, 14));
 		lblValorTipo.setBounds(700, 246, 101, 42);
 		panelCentral.add(lblValorTipo);
 		
@@ -1214,9 +1175,15 @@ public class TransactionView extends JFrame {
 
 		lblValorDiasRenta = new JLabel("1");
 		lblValorDiasRenta.setHorizontalAlignment(SwingConstants.CENTER);
-		lblValorDiasRenta.setFont(new Font("Calibri", Font.BOLD, 14));
+		lblValorDiasRenta.setFont(new Font("Calibri", Font.PLAIN, 14));
 		lblValorDiasRenta.setBounds(625, 320, 255, 20);
 		panelCentral.add(lblValorDiasRenta);
+		
+		JLabel lblFechaDevolucion = new JLabel("Fecha de devolución:");
+		lblFechaDevolucion.setHorizontalAlignment(SwingConstants.LEFT);
+		lblFechaDevolucion.setFont(new Font("Calibri", Font.BOLD, 14));
+		lblFechaDevolucion.setBounds(450, 293, 300, 27);
+		panelCentral.add(lblFechaDevolucion);
 		
 		JDateChooser dateChooser = new JDateChooser();
 		dateChooser.setDateFormatString("dd/MM/yyyy");
@@ -1271,7 +1238,7 @@ public class TransactionView extends JFrame {
 		layeredPane.add(barraRoja, JLayeredPane.PALETTE_LAYER);
 
 		// Botones
-		JButton btnCancelar = new JButton("CANCELAR");
+		JButton btnCancelar = new JButton("REGRESAR");
 		btnCancelar.setForeground(Color.WHITE);
 		btnCancelar.setBackground(Color.decode("#B82F2F"));
 		btnCancelar.setFont(new Font("Arial", Font.BOLD, 14));
@@ -1279,7 +1246,7 @@ public class TransactionView extends JFrame {
 		btnCancelar.addActionListener(e -> {
 			int cancelar;
 
-			cancelar = JOptionPane.showConfirmDialog(null, "¿Seguro que quieres cancelar?", "Confirmar cancelacion",
+			cancelar = JOptionPane.showConfirmDialog(null, "¿Seguro que quieres regresar?", "Confirmar",
 					JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 
 			if (cancelar == JOptionPane.YES_OPTION) {
@@ -1362,9 +1329,13 @@ public class TransactionView extends JFrame {
 		panelCentral.setBounds(5, 62, 998, 475); // (x, y, ancho, alto)
 		layeredPane.add(panelCentral, JLayeredPane.PALETTE_LAYER);
 
-		// Logotipo
-		ImageIcon iconoOriginal = new ImageIcon(getClass().getResource("/images/Contra.png"));
-		Image imagenEscalada = iconoOriginal.getImage().getScaledInstance(100, 70, Image.SCALE_SMOOTH);
+		JLabel lblFoto = new JLabel();
+		lblFoto.setBounds(30, 20, 150, 100);
+		lblFoto.setBorder(BorderFactory.createLineBorder(Color.GRAY));
+		ImageIcon icon = new ImageIcon(getClass().getResource("/ImagesCustomer/GameVacio.png"));
+		Image img = icon.getImage().getScaledInstance(lblFoto.getWidth(), lblFoto.getHeight(), Image.SCALE_SMOOTH);
+		lblFoto.setIcon(new ImageIcon(img));
+		panelCentral.add(lblFoto);
 
 		// Título principal
 		JLabel lblTitulo = new JLabel("RENTA DE VIDEOJUEGO");
@@ -1398,13 +1369,6 @@ public class TransactionView extends JFrame {
 		lblEmailCliente.setFont(new Font("Calibri", Font.BOLD, 18));
 		lblEmailCliente.setBounds(469, 102, 250, 42);
 		panelCentral.add(lblEmailCliente);
-
-		// Logo del juego
-//		ImageIcon iconoOrigina = new ImageIcon(getClass().getResource("/images/Contra.png"));
-		Image imagen = iconoOriginal.getImage().getScaledInstance(180, 120, Image.SCALE_SMOOTH);
-		JLabel lblLogoJuego = new JLabel(new ImageIcon(imagen));
-		lblLogoJuego.setBounds(32, 32, 184, 112);
-		panelCentral.add(lblLogoJuego);
 
 		JLabel lblTituloJuego = new JLabel(videogames.getname());
 		lblTituloJuego.setHorizontalAlignment(SwingConstants.LEFT);
@@ -1601,19 +1565,19 @@ public class TransactionView extends JFrame {
 		panelCentral.add(lblTotal);
 		
 		// Botones
-		JButton btnCancelar = new JButton("CANCELAR");
+		JButton btnCancelar = new JButton("REGRESAR");
 		btnCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
 				int cancelar;
 
-				cancelar = JOptionPane.showConfirmDialog(null, "¿Seguro que quieres cancelar?", "Confirmar cancelacion",
+				cancelar = JOptionPane.showConfirmDialog(null, "¿Seguro que quieres regresar?", "Confirmar",
 						JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 
 				if (cancelar == JOptionPane.YES_OPTION) {
 					Runnable tarea = () -> {
 						TransactionController tc = new TransactionController();
-						tc.rentalOperation(videogames.getId(), user.getId());
+						tc.salesOperation(videogames.getId(), user.getId());
 						dispose();
 					};
 
@@ -1630,25 +1594,16 @@ public class TransactionView extends JFrame {
 		panelCentral.add(btnCancelar);
 		
 		
-		JButton btnRegresar = new JButton("REGRESAR");
+		JButton btnRegresar = new JButton("INICIO");
 		btnRegresar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-
-				int cancelar;
-
-				cancelar = JOptionPane.showConfirmDialog(null, "¿Seguro que quieres regresar?", "Confirmar",
-						JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-
-				if (cancelar == JOptionPane.YES_OPTION) {
-					Runnable tarea = () -> {
-						TransactionView tv = new TransactionView();
-						tv.AdministradorRentaCompra();
-						dispose();
-					};
-
-					// recibe el label donde esta el gif y la tarea a ejecutar
-					new LoadingFrame(labelGif, tarea).show();
-				}
+				Runnable tarea = () -> {
+					TransactionView tv = new TransactionView();
+					tv.AdministradorRentaCompra();
+					dispose();
+				};
+				// recibe el label donde esta el gif y la tarea a ejecutar
+				new LoadingFrame(labelGif, tarea).show();
 			}
 		});
 		btnRegresar.setForeground(Color.WHITE);
@@ -1661,9 +1616,9 @@ public class TransactionView extends JFrame {
 		
 		JButton btnDescargarPDF = new JButton("DESCARGAR (PDF)");
 		btnDescargarPDF.setForeground(Color.WHITE);
-		btnDescargarPDF.setBackground(Color.decode("#6D91B9"));
+		btnDescargarPDF.setBackground(Color.decode("#263C54"));
 		btnDescargarPDF.setFont(new Font("Arial", Font.BOLD, 14));
-		btnDescargarPDF.setBounds(621, 406, 183, 33);
+		btnDescargarPDF.setBounds(690, 406, 183, 33);
 		btnDescargarPDF.setEnabled(false); // Con esto se desabilita el boton al inicio
 		btnDescargarPDF.addActionListener(new ActionListener() {
 		    public void actionPerformed(ActionEvent e) {
@@ -1838,17 +1793,7 @@ public class TransactionView extends JFrame {
 		layeredPane.setPreferredSize(new Dimension(900, 650));
 		setContentPane(layeredPane);
 		
-		ImageIcon gifIcon = new ImageIcon(getClass().getResource("/images/loading.gif"));
-		JLabel labelGif = new JLabel(gifIcon);
-
-		// Tamaño del GIF
-		int gifWidth = gifIcon.getIconWidth();
-		int gifHeight = gifIcon.getIconHeight();
-
-		// Centrar el GIF en la ventana de 900x650
-		labelGif.setBounds((900 - gifWidth) / 2, (650 - gifHeight) / 2, gifWidth, gifHeight);
-		labelGif.setVisible(false);
-		layeredPane.add(labelGif, JLayeredPane.PALETTE_LAYER);
+		JLabel labelGif = GifLoading.crearLabelGif(layeredPane);
 
 		// 1. PANEL BLANCO (fondo completo)
 		JPanel panelIzq = new JPanel();
@@ -2173,7 +2118,7 @@ public class TransactionView extends JFrame {
 
 		JLabel lblValorIDCliente = new JLabel(String.valueOf(user.getId()));
 		lblValorIDCliente.setFont(new Font("Calibri", Font.PLAIN, 14));
-		lblValorIDCliente.setBounds(170, 170, 200, 20);
+		lblValorIDCliente.setBounds(190, 160, 200, 20);
 		panelCentral.add(lblValorIDCliente);
 
 		// Correo electrónico
@@ -2195,7 +2140,7 @@ public class TransactionView extends JFrame {
 		panelCentral.add(lblTituloJuego);
 
 		JLabel lblNombre = new JLabel(videogames.getname());
-		lblNombre.setFont(new Font("Calibri", Font.BOLD, 14));
+		lblNombre.setFont(new Font("Calibri", Font.PLAIN, 14));
 		lblNombre.setBounds(135, 246, 355, 42);
 		panelCentral.add(lblNombre);
 
@@ -2206,19 +2151,19 @@ public class TransactionView extends JFrame {
 		panelCentral.add(lblPrecio);
 
 		JLabel lblValorRenta = new JLabel("$ " + videogames.getsalePrice());
-		lblValorRenta.setFont(new Font("Calibri", Font.BOLD, 14));
+		lblValorRenta.setFont(new Font("Calibri", Font.PLAIN, 14));
 		lblValorRenta.setBounds(470, 246, 255, 42);
 		panelCentral.add(lblValorRenta);
 
 		JLabel lblFecha = new JLabel("Fecha:");
-		lblFecha.setHorizontalAlignment(SwingConstants.CENTER);
+		lblFecha.setHorizontalAlignment(SwingConstants.LEFT);
 		lblFecha.setFont(new Font("Calibri", Font.BOLD, 14));
 		lblFecha.setBounds(460, 293, 255, 42);
 		panelCentral.add(lblFecha);
 
 		JLabel lblValorFecha = new JLabel(fechaFormateada);
-		lblValorFecha.setHorizontalAlignment(SwingConstants.CENTER);
-		lblValorFecha.setFont(new Font("Calibri", Font.BOLD, 14));
+		lblValorFecha.setHorizontalAlignment(SwingConstants.LEFT);
+		lblValorFecha.setFont(new Font("Calibri", Font.PLAIN, 14));
 		lblValorFecha.setBounds(460, 320, 255, 42);
 		panelCentral.add(lblValorFecha);
 
@@ -2230,7 +2175,7 @@ public class TransactionView extends JFrame {
 
 		JLabel lblValorTipo = new JLabel("Venta");
 		lblValorTipo.setHorizontalAlignment(SwingConstants.CENTER);
-		lblValorTipo.setFont(new Font("Calibri", Font.BOLD, 14));
+		lblValorTipo.setFont(new Font("Calibri", Font.PLAIN, 14));
 		lblValorTipo.setBounds(700, 246, 101, 42);
 		panelCentral.add(lblValorTipo);
 
@@ -2241,7 +2186,7 @@ public class TransactionView extends JFrame {
 		layeredPane.add(barraRoja, JLayeredPane.PALETTE_LAYER);
 
 		// Botones
-		JButton btnCancelar = new JButton("CANCELAR");
+		JButton btnCancelar = new JButton("REGRESAR");
 		btnCancelar.setForeground(Color.WHITE);
 		btnCancelar.setBackground(Color.decode("#B82F2F"));
 		btnCancelar.setFont(new Font("Arial", Font.BOLD, 14));
@@ -2308,9 +2253,13 @@ public class TransactionView extends JFrame {
 		panelCentral.setBounds(5, 62, 998, 475);
 		layeredPane.add(panelCentral, JLayeredPane.PALETTE_LAYER);
 
-		// Logo del juego
-		ImageIcon iconoOriginal = new ImageIcon(getClass().getResource("/images/Contra.png"));
-		Image imagenEscalada = iconoOriginal.getImage().getScaledInstance(100, 70, Image.SCALE_SMOOTH);
+		JLabel lblFoto = new JLabel();
+		lblFoto.setBounds(30, 20, 150, 100);
+		lblFoto.setBorder(BorderFactory.createLineBorder(Color.GRAY));
+		ImageIcon icon = new ImageIcon(getClass().getResource("/ImagesCustomer/GameVacio.png"));
+		Image img = icon.getImage().getScaledInstance(lblFoto.getWidth(), lblFoto.getHeight(), Image.SCALE_SMOOTH);
+		lblFoto.setIcon(new ImageIcon(img));
+		panelCentral.add(lblFoto);
 
 		// Título principal
 		JLabel lblTitulo = new JLabel("VENTA DE VIDEOJUEGO");
@@ -2345,13 +2294,6 @@ public class TransactionView extends JFrame {
 		lblEmailCliente.setFont(new Font("Calibri", Font.BOLD, 18));
 		lblEmailCliente.setBounds(469, 102, 250, 42);
 		panelCentral.add(lblEmailCliente);
-
-		// Logo del juego
-		ImageIcon iconoOrigina = new ImageIcon(getClass().getResource("/images/Contra.png"));
-		Image imagen = iconoOriginal.getImage().getScaledInstance(180, 120, Image.SCALE_SMOOTH);
-		JLabel lblLogoJuego = new JLabel(new ImageIcon(imagen));
-		lblLogoJuego.setBounds(32, 32, 184, 112);
-		panelCentral.add(lblLogoJuego);
 
 		JLabel lblTituloJuego = new JLabel(videogames.getname());
 		lblTituloJuego.setHorizontalAlignment(SwingConstants.LEFT);
@@ -2504,20 +2446,20 @@ public class TransactionView extends JFrame {
 		panelCentral.add(lbltotal);
 
 		// Botones
-		JButton btnCancelar = new JButton("CANCELAR");
+		JButton btnCancelar = new JButton("REGRESAR");
 		btnCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
 				int cancelar;
 
-				cancelar = JOptionPane.showConfirmDialog(null, "¿Seguro que quieres cancelar?", "Confirmar cancelacion",
+				cancelar = JOptionPane.showConfirmDialog(null, "¿Seguro que quieres regresar?", "Confirmar",
 						JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 
 				if (cancelar == JOptionPane.YES_OPTION) {
 
 					Runnable tarea = () -> {
 						TransactionController tc = new TransactionController();
-						tc.rentalOperation(videogames.getId(), user.getId());
+						tc.salesOperation(videogames.getId(), user.getId());
 						dispose();
 					};
 
@@ -2534,27 +2476,19 @@ public class TransactionView extends JFrame {
 		panelCentral.add(btnCancelar);
 		
 		
-		JButton btnRegresar = new JButton("REGRESAR");
+		JButton btnRegresar = new JButton("INICIO");
 		btnRegresar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				int cancelar;
+				Runnable tarea = () -> {
+					TransactionView tv = new TransactionView();
+					tv.AdministradorRentaCompra();
+					dispose();
+				};
 
-				cancelar = JOptionPane.showConfirmDialog(null, "¿Volver al inicio?", "Confirmar",
-						JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+				// recibe el label donde esta el gif y la tarea a ejecutar
+				new LoadingFrame(labelGif, tarea).show();
 
-				if (cancelar == JOptionPane.YES_OPTION) {
-
-					Runnable tarea = () -> {
-						TransactionView tv = new TransactionView();
-						tv.AdministradorRentaCompra();
-						dispose();
-					};
-
-					// recibe el label donde esta el gif y la tarea a ejecutar
-					new LoadingFrame(labelGif, tarea).show();
-					
-				}
 			}
 		});
 		btnRegresar.setForeground(Color.WHITE);
@@ -2566,9 +2500,9 @@ public class TransactionView extends JFrame {
 
 		JButton btnDescargarPDF = new JButton("DESCARGAR (PDF)");
 		btnDescargarPDF.setForeground(Color.WHITE);
-		btnDescargarPDF.setBackground(Color.decode("#6D91B9"));
+		btnDescargarPDF.setBackground(Color.decode("#263C54"));
 		btnDescargarPDF.setFont(new Font("Arial", Font.BOLD, 14));
-		btnDescargarPDF.setBounds(621, 406, 183, 33);
+		btnDescargarPDF.setBounds(690, 406, 183, 33);
 		btnDescargarPDF.setEnabled(false); // Con esto se desabilita el boton al inicio
 		btnDescargarPDF.addActionListener(new ActionListener() {
 		    public void actionPerformed(ActionEvent e) {

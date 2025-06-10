@@ -438,15 +438,17 @@ public class VideogamesView extends JFrame {
 		  
 		    // Obtener datos del juego seleccionado
 		    int juegoId = (int) model.getValueAt(selectedRow, 0);
-
-		    // Cerrar esta ventana y abrir ventana de edición con los datos cargados
-		    dispose();
 		    
-		    int videogameId = (int) model.getValueAt(selectedRow, 0);
+		    Runnable tarea = () -> {
+		    	int videogameId = (int) model.getValueAt(selectedRow, 0);
 
-			VideogamesController vc = new VideogamesController();
-		    vc.updateVideogames(videogameId);
-		    
+				VideogamesController vc = new VideogamesController();
+			    vc.updateVideogames(videogameId);
+				dispose();
+			};
+
+			// recibe el label donde esta el gif y la tarea a ejecutar
+			new LoadingFrame(labelGif, tarea).show();
 		});
 		panelCentral.add(btnEditar);
 
@@ -546,6 +548,14 @@ public class VideogamesView extends JFrame {
 	    lblTitulo.setHorizontalAlignment(JLabel.CENTER);
 	    lblTitulo.setFont(new Font("Anton", Font.BOLD, 20));
 	    panelCentral.add(lblTitulo);
+	    
+	    JLabel lblFoto = new JLabel();
+		lblFoto.setBounds(90, 20, 150, 100);
+		lblFoto.setBorder(BorderFactory.createLineBorder(Color.GRAY));
+		ImageIcon icon = new ImageIcon(getClass().getResource("/ImagesCustomer/GameVacio.png"));
+		Image img = icon.getImage().getScaledInstance(lblFoto.getWidth(), lblFoto.getHeight(), Image.SCALE_SMOOTH);
+		lblFoto.setIcon(new ImageIcon(img));
+		panelCentral.add(lblFoto);
 
 	    // Nombre del juego
 	    JLabel lblNombre = new JLabel(videogames.getname());
@@ -786,17 +796,7 @@ public class VideogamesView extends JFrame {
 	    layeredPane.setPreferredSize(new Dimension(1024, 576));
 	    setContentPane(layeredPane);
 	    
-	    ImageIcon gifIcon = new ImageIcon(getClass().getResource("/images/loading.gif"));
-		JLabel labelGif = new JLabel(gifIcon);
-
-		// Tamaño del GIF
-		int gifWidth = gifIcon.getIconWidth();
-		int gifHeight = gifIcon.getIconHeight();
-
-		// Centrar el GIF en la ventana de 900x650
-		labelGif.setBounds((900 - gifWidth) / 2, (650 - gifHeight) / 2, gifWidth, gifHeight);
-		labelGif.setVisible(false);
-		layeredPane.add(labelGif, JLayeredPane.PALETTE_LAYER);
+	    JLabel labelGif = GifLoading.crearLabelGif(layeredPane);
 
 	    // Panel central gris
 	    JPanel panelCentral = new JPanel();
@@ -818,39 +818,13 @@ public class VideogamesView extends JFrame {
 	    lblTitulo.setBounds(350, 78, 350, 42);
 	    panelCentral.add(lblTitulo);
 
-	    // 1) JLabel para mostrar la imagen
 	    JLabel lblFoto = new JLabel();
-	    lblFoto.setBounds(84, 160, 150, 150);
-	    lblFoto.setBorder(BorderFactory.createLineBorder(Color.GRAY));
-	    panelCentral.add(lblFoto);
-
-	    // 2) Botón para cargar imagen
-	    JButton btnCargarFoto = new JButton("CARGAR FOTO");
-	    btnCargarFoto.setBounds(84, 320, 150, 25);
-	    btnCargarFoto.addActionListener(new ActionListener() {
-
-			// 3) Variable para almacenar el archivo seleccionado
-			final File[] imagenSeleccionada = new File[1];
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				JFileChooser fileChooser = new JFileChooser();
-				FileNameExtensionFilter filtrado = new FileNameExtensionFilter("JPG, PNG & GIF", "jpg", "png", "gif");
-				fileChooser.setFileFilter(filtrado);
-
-				int respuesta = fileChooser.showOpenDialog(btnCargarFoto);
-				if (respuesta == JFileChooser.APPROVE_OPTION) {
-					imagenSeleccionada[0] = fileChooser.getSelectedFile();
-					String ruta = imagenSeleccionada[0].getAbsolutePath();
-
-					// Escalamos la imagen para caber en el JLabel
-					Image img = new ImageIcon(ruta).getImage().getScaledInstance(lblFoto.getWidth(),
-							lblFoto.getHeight(), Image.SCALE_SMOOTH);
-					lblFoto.setIcon(new ImageIcon(img));
-				}
-			}
-		});
-	    panelCentral.add(btnCargarFoto);
+		lblFoto.setBounds(84, 160, 150, 150);
+		lblFoto.setBorder(BorderFactory.createLineBorder(Color.GRAY));
+		ImageIcon icon = new ImageIcon(getClass().getResource("/ImagesCustomer/GameVacio.png"));
+		Image img = icon.getImage().getScaledInstance(lblFoto.getWidth(), lblFoto.getHeight(), Image.SCALE_SMOOTH);
+		lblFoto.setIcon(new ImageIcon(img));
+		panelCentral.add(lblFoto);
 
 	    // Sección izquierda (Datos básicos)
 	    JLabel lblNombre = new JLabel("Nombre del Videojuego:");
@@ -1287,17 +1261,7 @@ public class VideogamesView extends JFrame {
 	    layeredPane.setPreferredSize(new Dimension(1024, 576));
 	    setContentPane(layeredPane);
 	    
-	    ImageIcon gifIcon = new ImageIcon(getClass().getResource("/images/loading.gif"));
-		JLabel labelGif = new JLabel(gifIcon);
-
-		// Tamaño del GIF
-		int gifWidth = gifIcon.getIconWidth();
-		int gifHeight = gifIcon.getIconHeight();
-
-		// Centrar el GIF en la ventana de 900x650
-		labelGif.setBounds((900 - gifWidth) / 2, (650 - gifHeight) / 2, gifWidth, gifHeight);
-		labelGif.setVisible(false);
-		layeredPane.add(labelGif, JLayeredPane.PALETTE_LAYER);
+	    JLabel labelGif = GifLoading.crearLabelGif(layeredPane);
 
 	    // Panel central gris
 	    JPanel panelCentral = new JPanel();
@@ -1318,40 +1282,15 @@ public class VideogamesView extends JFrame {
 	    lblTitulo.setFont(new Font("Calibri", Font.BOLD, 24));
 	    lblTitulo.setBounds(350, 78, 550, 42);
 	    panelCentral.add(lblTitulo);
-	    
-	    // 1) JLabel para mostrar la imagen
-	    JLabel lblFoto = new JLabel();
-	    lblFoto.setBounds(84, 160, 150, 150);
-	    lblFoto.setBorder(BorderFactory.createLineBorder(Color.GRAY));
-	    panelCentral.add(lblFoto);
 
 	    // 2) Botón para cargar imagen
-	    JButton btnCargarFoto = new JButton("CARGAR FOTO");
-	    btnCargarFoto.setBounds(84, 320, 150, 25);
-		btnCargarFoto.addActionListener(new ActionListener() {
-
-			// 3) Variable para almacenar el archivo seleccionado
-			final File[] imagenSeleccionada = new File[1];
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				JFileChooser fileChooser = new JFileChooser();
-				FileNameExtensionFilter filtrado = new FileNameExtensionFilter("JPG, PNG & GIF", "jpg", "png", "gif");
-				fileChooser.setFileFilter(filtrado);
-
-				int respuesta = fileChooser.showOpenDialog(btnCargarFoto);
-				if (respuesta == JFileChooser.APPROVE_OPTION) {
-					imagenSeleccionada[0] = fileChooser.getSelectedFile();
-					String ruta = imagenSeleccionada[0].getAbsolutePath();
-
-					// Escalamos la imagen para caber en el JLabel
-					Image img = new ImageIcon(ruta).getImage().getScaledInstance(lblFoto.getWidth(),
-							lblFoto.getHeight(), Image.SCALE_SMOOTH);
-					lblFoto.setIcon(new ImageIcon(img));
-				}
-			}
-		});
-		panelCentral.add(btnCargarFoto);
+	    JLabel lblFoto = new JLabel();
+		lblFoto.setBounds(84, 160, 150, 150);
+		lblFoto.setBorder(BorderFactory.createLineBorder(Color.GRAY));
+		ImageIcon icon = new ImageIcon(getClass().getResource("/ImagesCustomer/GameVacio.png"));
+		Image img = icon.getImage().getScaledInstance(lblFoto.getWidth(), lblFoto.getHeight(), Image.SCALE_SMOOTH);
+		lblFoto.setIcon(new ImageIcon(img));
+		panelCentral.add(lblFoto);
 	    
 	    // Sección izquierda (Datos básicos)
 	    JLabel lblNombre = new JLabel("Nombre del Videojuego:");

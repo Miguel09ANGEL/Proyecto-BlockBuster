@@ -42,6 +42,7 @@ import models.User;
 import models.UsersModel;
 import models.VideoGames;
 import models.VideoGamesModel;
+import utils.GifLoading;
 import utils.LoadingFrame;
 
 public class HomeView extends JFrame {
@@ -63,17 +64,7 @@ public class HomeView extends JFrame {
 		setContentPane(layeredPane);
 		
 		
-		ImageIcon gifIcon = new ImageIcon(getClass().getResource("/images/loading.gif"));
-		JLabel labelGif = new JLabel(gifIcon);
-
-		// Tamaño del GIF
-		int gifWidth = gifIcon.getIconWidth();
-		int gifHeight = gifIcon.getIconHeight();
-
-		// Centrar el GIF en la ventana de 900x650
-		labelGif.setBounds((900 - gifWidth) / 2, (650 - gifHeight) / 2, gifWidth, gifHeight);
-		labelGif.setVisible(false);
-		layeredPane.add(labelGif, JLayeredPane.PALETTE_LAYER);
+		JLabel labelGif = GifLoading.crearLabelGif(layeredPane);
 
 		
 		JPanel barraRoja = new JPanel();
@@ -180,7 +171,7 @@ public class HomeView extends JFrame {
 
 		JLabel iniciar = new JLabel("¡BIENVENIDO/A AL PANEL DE ADMINISTRADOR");
 		iniciar.setSize(548, 60);
-		iniciar.setLocation(119, 112);
+		iniciar.setLocation(100, 112);
 		iniciar.setHorizontalAlignment(JLabel.CENTER);
 		iniciar.setFont(new Font("Calibri", Font.BOLD, 24));
 		panelCentral.add(iniciar);

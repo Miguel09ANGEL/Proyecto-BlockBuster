@@ -43,6 +43,7 @@ import models.User;
 import models.UsersModel;
 import models.VideoGames;
 import models.VideoGamesModel;
+import utils.GifLoading;
 import utils.LoadingFrame;
 
 public class AuthViews extends JFrame {
@@ -69,17 +70,7 @@ public class AuthViews extends JFrame {
 		layeredPane.setPreferredSize(new Dimension(900, 650));
 		setContentPane(layeredPane);
 
-		ImageIcon gifIcon = new ImageIcon(getClass().getResource("/images/loading.gif"));
-		JLabel labelGif = new JLabel(gifIcon);
-
-		// Tamaño del GIF
-		int gifWidth = gifIcon.getIconWidth();
-		int gifHeight = gifIcon.getIconHeight();
-
-		// Centrar el GIF en la ventana de 900x650
-		labelGif.setBounds((900 - gifWidth) / 2, (650 - gifHeight) / 2, gifWidth, gifHeight);
-		labelGif.setVisible(false);
-		layeredPane.add(labelGif, JLayeredPane.PALETTE_LAYER);
+		JLabel labelGif = GifLoading.crearLabelGif(layeredPane);
 
 		// Configuración básica de la ventana
 		setTitle("Panel Administrador");

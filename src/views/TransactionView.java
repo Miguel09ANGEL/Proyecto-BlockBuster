@@ -67,6 +67,7 @@ import models.TransactionModel;
 import models.User;
 import models.UsersModel;
 import models.VideoGames;
+import utils.GifLoading;
 import utils.LoadingFrame;
 
 public class TransactionView extends JFrame {
@@ -1107,17 +1108,7 @@ public class TransactionView extends JFrame {
 		layeredPane.setPreferredSize(new Dimension(900, 650));
 		setContentPane(layeredPane);
 		
-		ImageIcon gifIcon = new ImageIcon(getClass().getResource("/images/loading.gif"));
-		JLabel labelGif = new JLabel(gifIcon);
-
-		// Tamaño del GIF
-		int gifWidth = gifIcon.getIconWidth();
-		int gifHeight = gifIcon.getIconHeight();
-
-		// Centrar el GIF en la ventana de 900x650
-		labelGif.setBounds((900 - gifWidth) / 2, (650 - gifHeight) / 2, gifWidth, gifHeight);
-		labelGif.setVisible(false);
-		layeredPane.add(labelGif, JLayeredPane.PALETTE_LAYER);
+		JLabel labelGif = GifLoading.crearLabelGif(layeredPane);
 
 		// 2. PANEL GRIS CENTRAl
 		JPanel panelCentral = new JPanel();
@@ -1154,7 +1145,7 @@ public class TransactionView extends JFrame {
 
 		JLabel lblValorIDCliente = new JLabel(String.valueOf(user.getId()));
 		lblValorIDCliente.setFont(new Font("Calibri", Font.PLAIN, 14));
-		lblValorIDCliente.setBounds(250, 140, 200, 20);
+		lblValorIDCliente.setBounds(170, 170, 200, 20);
 		panelCentral.add(lblValorIDCliente);
 
 		// Correo electrónico
@@ -1176,7 +1167,7 @@ public class TransactionView extends JFrame {
 		panelCentral.add(lblTituloJuego);
 
 		JLabel lblNombre = new JLabel(videogames.getname());
-		lblNombre.setFont(new Font("Anton", Font.BOLD, 14));
+		lblNombre.setFont(new Font("Calibri", Font.BOLD, 14));
 		lblNombre.setBounds(135, 246, 355, 42);
 		panelCentral.add(lblNombre);
 
@@ -1362,17 +1353,7 @@ public class TransactionView extends JFrame {
 		layeredPane.setPreferredSize(new Dimension(900, 650));
 		setContentPane(layeredPane);
 		
-		ImageIcon gifIcon = new ImageIcon(getClass().getResource("/images/loading.gif"));
-		JLabel labelGif = new JLabel(gifIcon);
-
-		// Tamaño del GIF
-		int gifWidth = gifIcon.getIconWidth();
-		int gifHeight = gifIcon.getIconHeight();
-
-		// Centrar el GIF en la ventana de 900x650
-		labelGif.setBounds((900 - gifWidth) / 2, (650 - gifHeight) / 2, gifWidth, gifHeight);
-		labelGif.setVisible(false);
-		layeredPane.add(labelGif, JLayeredPane.PALETTE_LAYER);
+		JLabel labelGif = GifLoading.crearLabelGif(layeredPane);
 
 		// 2. PANEL GRIS CENTRAL
 		JPanel panelCentral = new JPanel();
@@ -1387,7 +1368,7 @@ public class TransactionView extends JFrame {
 
 		// Título principal
 		JLabel lblTitulo = new JLabel("RENTA DE VIDEOJUEGO");
-		lblTitulo.setSize(285, 42);
+		lblTitulo.setSize(500, 42);
 		lblTitulo.setLocation(442, 32);
 		lblTitulo.setHorizontalAlignment(JLabel.CENTER);
 		lblTitulo.setFont(new Font("Calibri", Font.BOLD, 24));
@@ -1427,21 +1408,21 @@ public class TransactionView extends JFrame {
 
 		JLabel lblTituloJuego = new JLabel(videogames.getname());
 		lblTituloJuego.setHorizontalAlignment(SwingConstants.LEFT);
-		lblTituloJuego.setFont(new Font("Calibri", Font.BOLD, 24));
-		lblTituloJuego.setBounds(32, 141, 400, 42);
+		lblTituloJuego.setFont(new Font("Calibri", Font.BOLD, 18));
+		lblTituloJuego.setBounds(32, 141, 600, 42);
 		panelCentral.add(lblTituloJuego);
 
 		// Información del juego
 		JLabel lblAnioJuego = new JLabel("" + videogames.getreleaseYear());
 		lblAnioJuego.setHorizontalAlignment(SwingConstants.LEFT);
-		lblAnioJuego.setFont(new Font("Calibri", Font.BOLD, 24));
-		lblAnioJuego.setBounds(42, 174, 57, 42);
+		lblAnioJuego.setFont(new Font("Calibri", Font.BOLD, 18));
+		lblAnioJuego.setBounds(42, 174, 200, 42);
 		panelCentral.add(lblAnioJuego);
 
 		JLabel lblClasificacion = new JLabel("Clasificación:");
 		lblClasificacion.setHorizontalAlignment(SwingConstants.LEFT);
 		lblClasificacion.setFont(new Font("Calibri", Font.BOLD, 18));
-		lblClasificacion.setBounds(188, 204, 112, 42);
+		lblClasificacion.setBounds(188, 204, 300, 42);
 		panelCentral.add(lblClasificacion);
 
 		JLabel lblValorClasificacion = new JLabel(videogames.getclassification());
@@ -1453,7 +1434,7 @@ public class TransactionView extends JFrame {
 		JLabel lblDistribuidor = new JLabel("Distribuidores:");
 		lblDistribuidor.setHorizontalAlignment(SwingConstants.LEFT);
 		lblDistribuidor.setFont(new Font("Calibri", Font.BOLD, 18));
-		lblDistribuidor.setBounds(188, 285, 112, 42);
+		lblDistribuidor.setBounds(188, 285, 300, 42);
 		panelCentral.add(lblDistribuidor);
 
 		JLabel lblNombreDistribuidor = new JLabel(videogames.getdevelopedBy());
@@ -1466,7 +1447,7 @@ public class TransactionView extends JFrame {
 		JLabel lblFechaRenta = new JLabel("Fecha de renta:");
 		lblFechaRenta.setHorizontalAlignment(SwingConstants.LEFT);
 		lblFechaRenta.setFont(new Font("Calibri", Font.BOLD, 18));
-		lblFechaRenta.setBounds(428, 204, 126, 42);
+		lblFechaRenta.setBounds(428, 204, 300, 42);
 		panelCentral.add(lblFechaRenta);
 
 		LocalDate fechaActual = LocalDate.now();
@@ -1481,7 +1462,7 @@ public class TransactionView extends JFrame {
 		JLabel lblFechaLimite = new JLabel("Límite de devolución");
 		lblFechaLimite.setHorizontalAlignment(SwingConstants.LEFT);
 		lblFechaLimite.setFont(new Font("Calibri", Font.BOLD, 18));
-		lblFechaLimite.setBounds(407, 285, 157, 42);
+		lblFechaLimite.setBounds(407, 285, 300, 42);
 		panelCentral.add(lblFechaLimite);
 		
 	    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
@@ -1496,7 +1477,7 @@ public class TransactionView extends JFrame {
 		JLabel lblDiasRenta = new JLabel("Días de renta:");
 		lblDiasRenta.setHorizontalAlignment(SwingConstants.LEFT);
 		lblDiasRenta.setFont(new Font("Calibri", Font.BOLD, 18));
-		lblDiasRenta.setBounds(626, 204, 126, 42);
+		lblDiasRenta.setBounds(626, 204, 200, 42);
 		panelCentral.add(lblDiasRenta);
 	
 		// esta la logica para sacar los dias de renta
@@ -1516,7 +1497,7 @@ public class TransactionView extends JFrame {
 		JLabel lblInfoPago = new JLabel("Información de pago");
 		lblInfoPago.setHorizontalAlignment(SwingConstants.LEFT);
 		lblInfoPago.setFont(new Font("Calibri", Font.BOLD, 18));
-		lblInfoPago.setBounds(780, 141, 167, 42);
+		lblInfoPago.setBounds(780, 141, 300, 42);
 		panelCentral.add(lblInfoPago);
 
 		JLabel lblTipoPago = new JLabel("Tipo:");
@@ -1540,7 +1521,7 @@ public class TransactionView extends JFrame {
 		JLabel lblValorCantidad = new JLabel("1");
 		lblValorCantidad.setHorizontalAlignment(SwingConstants.LEFT);
 		lblValorCantidad.setFont(new Font("Calibri", Font.BOLD, 18));
-		lblValorCantidad.setBounds(860, 174, 57, 42);
+		lblValorCantidad.setBounds(880, 174, 57, 42);
 		panelCentral.add(lblValorCantidad);
 
 		JLabel lblProducto = new JLabel("Producto:");
@@ -1682,7 +1663,7 @@ public class TransactionView extends JFrame {
 		btnDescargarPDF.setForeground(Color.WHITE);
 		btnDescargarPDF.setBackground(Color.decode("#6D91B9"));
 		btnDescargarPDF.setFont(new Font("Arial", Font.BOLD, 14));
-		btnDescargarPDF.setBounds(680, 406, 183, 33);
+		btnDescargarPDF.setBounds(621, 406, 183, 33);
 		btnDescargarPDF.setEnabled(false); // Con esto se desabilita el boton al inicio
 		btnDescargarPDF.addActionListener(new ActionListener() {
 		    public void actionPerformed(ActionEvent e) {
@@ -2155,17 +2136,7 @@ public class TransactionView extends JFrame {
 		layeredPane.setPreferredSize(new Dimension(900, 650));
 		setContentPane(layeredPane);
 		
-		ImageIcon gifIcon = new ImageIcon(getClass().getResource("/images/loading.gif"));
-		JLabel labelGif = new JLabel(gifIcon);
-
-		// Tamaño del GIF
-		int gifWidth = gifIcon.getIconWidth();
-		int gifHeight = gifIcon.getIconHeight();
-
-		// Centrar el GIF en la ventana de 900x650
-		labelGif.setBounds((900 - gifWidth) / 2, (650 - gifHeight) / 2, gifWidth, gifHeight);
-		labelGif.setVisible(false);
-		layeredPane.add(labelGif, JLayeredPane.PALETTE_LAYER);
+		JLabel labelGif = GifLoading.crearLabelGif(layeredPane);
 
 		// Panel principal
 		JPanel panelCentral = new JPanel();
@@ -2202,7 +2173,7 @@ public class TransactionView extends JFrame {
 
 		JLabel lblValorIDCliente = new JLabel(String.valueOf(user.getId()));
 		lblValorIDCliente.setFont(new Font("Calibri", Font.PLAIN, 14));
-		lblValorIDCliente.setBounds(250, 140, 200, 20);
+		lblValorIDCliente.setBounds(170, 170, 200, 20);
 		panelCentral.add(lblValorIDCliente);
 
 		// Correo electrónico
@@ -2224,7 +2195,7 @@ public class TransactionView extends JFrame {
 		panelCentral.add(lblTituloJuego);
 
 		JLabel lblNombre = new JLabel(videogames.getname());
-		lblNombre.setFont(new Font("Anton", Font.BOLD, 14));
+		lblNombre.setFont(new Font("Calibri", Font.BOLD, 14));
 		lblNombre.setBounds(135, 246, 355, 42);
 		panelCentral.add(lblNombre);
 
@@ -2242,13 +2213,13 @@ public class TransactionView extends JFrame {
 		JLabel lblFecha = new JLabel("Fecha:");
 		lblFecha.setHorizontalAlignment(SwingConstants.CENTER);
 		lblFecha.setFont(new Font("Calibri", Font.BOLD, 14));
-		lblFecha.setBounds(70, 293, 255, 42);
+		lblFecha.setBounds(460, 293, 255, 42);
 		panelCentral.add(lblFecha);
 
 		JLabel lblValorFecha = new JLabel(fechaFormateada);
 		lblValorFecha.setHorizontalAlignment(SwingConstants.CENTER);
 		lblValorFecha.setFont(new Font("Calibri", Font.BOLD, 14));
-		lblValorFecha.setBounds(75, 320, 255, 42);
+		lblValorFecha.setBounds(460, 320, 255, 42);
 		panelCentral.add(lblValorFecha);
 
 		JLabel lblTipo = new JLabel("Tipo:");
@@ -2328,17 +2299,7 @@ public class TransactionView extends JFrame {
 		layeredPane.setPreferredSize(new Dimension(900, 650));
 		setContentPane(layeredPane);
 		
-		ImageIcon gifIcon = new ImageIcon(getClass().getResource("/images/loading.gif"));
-		JLabel labelGif = new JLabel(gifIcon);
-
-		// Tamaño del GIF
-		int gifWidth = gifIcon.getIconWidth();
-		int gifHeight = gifIcon.getIconHeight();
-
-		// Centrar el GIF en la ventana de 900x650
-		labelGif.setBounds((900 - gifWidth) / 2, (650 - gifHeight) / 2, gifWidth, gifHeight);
-		labelGif.setVisible(false);
-		layeredPane.add(labelGif, JLayeredPane.PALETTE_LAYER);
+		JLabel labelGif = GifLoading.crearLabelGif(layeredPane);
 
 		// Panel principal
 		JPanel panelCentral = new JPanel();
@@ -2402,13 +2363,13 @@ public class TransactionView extends JFrame {
 		JLabel lblAnioJuego = new JLabel("" + videogames.getreleaseYear());
 		lblAnioJuego.setHorizontalAlignment(SwingConstants.LEFT);
 		lblAnioJuego.setFont(new Font("Calibri", Font.BOLD, 24));
-		lblAnioJuego.setBounds(42, 174, 57, 42);
+		lblAnioJuego.setBounds(42, 174, 200, 42);
 		panelCentral.add(lblAnioJuego);
 
 		JLabel lblClasificacion = new JLabel("Clasificación:");
 		lblClasificacion.setHorizontalAlignment(SwingConstants.LEFT);
 		lblClasificacion.setFont(new Font("Calibri", Font.BOLD, 18));
-		lblClasificacion.setBounds(270, 204, 112, 42);
+		lblClasificacion.setBounds(270, 204, 300, 42);
 		panelCentral.add(lblClasificacion);
 
 		JLabel lblValorClasificacion = new JLabel(videogames.getclassification());
@@ -2420,7 +2381,7 @@ public class TransactionView extends JFrame {
 		JLabel lblDistribuidor = new JLabel("Distribuidores:");
 		lblDistribuidor.setHorizontalAlignment(SwingConstants.LEFT);
 		lblDistribuidor.setFont(new Font("Calibri", Font.BOLD, 18));
-		lblDistribuidor.setBounds(270, 285, 112, 42);
+		lblDistribuidor.setBounds(270, 285, 200, 42);
 		panelCentral.add(lblDistribuidor);
 
 		JLabel lblNombreDistribuidor = new JLabel(videogames.getdevelopedBy());
@@ -2433,7 +2394,7 @@ public class TransactionView extends JFrame {
 		JLabel lblFechaRenta = new JLabel("Fecha de renta:");
 		lblFechaRenta.setHorizontalAlignment(SwingConstants.LEFT);
 		lblFechaRenta.setFont(new Font("Calibri", Font.BOLD, 18));
-		lblFechaRenta.setBounds(520, 204, 126, 42);
+		lblFechaRenta.setBounds(520, 204, 250, 42);
 		panelCentral.add(lblFechaRenta);
 
 		LocalDate fechaActual = LocalDate.now();
@@ -2449,7 +2410,7 @@ public class TransactionView extends JFrame {
 		JLabel lblInfoPago = new JLabel("Información de pago");
 		lblInfoPago.setHorizontalAlignment(SwingConstants.LEFT);
 		lblInfoPago.setFont(new Font("Calibri", Font.BOLD, 18));
-		lblInfoPago.setBounds(780, 141, 167, 42);
+		lblInfoPago.setBounds(780, 141, 300, 42);
 		panelCentral.add(lblInfoPago);
 
 		JLabel lblTipoPago = new JLabel("Tipo:");
@@ -2473,7 +2434,7 @@ public class TransactionView extends JFrame {
 		JLabel lblValorCantidad = new JLabel("1");
 		lblValorCantidad.setHorizontalAlignment(SwingConstants.LEFT);
 		lblValorCantidad.setFont(new Font("Calibri", Font.BOLD, 18));
-		lblValorCantidad.setBounds(860, 174, 57, 42);
+		lblValorCantidad.setBounds(880, 174, 57, 42);
 		panelCentral.add(lblValorCantidad);
 
 		// Producto y precio (sin cambios)
@@ -2486,7 +2447,7 @@ public class TransactionView extends JFrame {
 		JLabel lblPrecioProducto = new JLabel("" + videogames.getsalePrice());
 		lblPrecioProducto.setHorizontalAlignment(SwingConstants.LEFT);
 		lblPrecioProducto.setFont(new Font("Calibri", Font.BOLD, 18));
-		lblPrecioProducto.setBounds(860, 215, 85, 42);
+		lblPrecioProducto.setBounds(880, 215, 85, 42);
 		panelCentral.add(lblPrecioProducto);
 
 		// Subtotal (directamente el precio de venta)
@@ -2501,7 +2462,7 @@ public class TransactionView extends JFrame {
 		JLabel lblValorSubtotal = new JLabel(String.valueOf(subtotal));
 		lblValorSubtotal.setHorizontalAlignment(SwingConstants.LEFT);
 		lblValorSubtotal.setFont(new Font("Calibri", Font.BOLD, 18));
-		lblValorSubtotal.setBounds(860, 248, 78, 42);
+		lblValorSubtotal.setBounds(880, 248, 78, 42);
 		panelCentral.add(lblValorSubtotal);
 
 		// Operaciones (IVA y Total)
@@ -2510,7 +2471,7 @@ public class TransactionView extends JFrame {
 		BigDecimal total = subtotal.add(iva);
 
 		// Formato para mostrar solo 2 decimales
-		DecimalFormat formato = new DecimalFormat("#0.00");
+		DecimalFormat formato = new DecimalFormat("#0.");
 
 		// Mostrar IVA
 		JLabel lblValorIVA = new JLabel(formato.format(iva));
@@ -2607,7 +2568,7 @@ public class TransactionView extends JFrame {
 		btnDescargarPDF.setForeground(Color.WHITE);
 		btnDescargarPDF.setBackground(Color.decode("#6D91B9"));
 		btnDescargarPDF.setFont(new Font("Arial", Font.BOLD, 14));
-		btnDescargarPDF.setBounds(680, 406, 183, 33);
+		btnDescargarPDF.setBounds(621, 406, 183, 33);
 		btnDescargarPDF.setEnabled(false); // Con esto se desabilita el boton al inicio
 		btnDescargarPDF.addActionListener(new ActionListener() {
 		    public void actionPerformed(ActionEvent e) {

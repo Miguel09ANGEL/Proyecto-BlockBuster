@@ -1,5 +1,7 @@
-/views/
-/models/
-/images/
+/aplication/
 /controller/
+/models/
+/module-info.class
 /utils/
+/.gitignore
+/views/

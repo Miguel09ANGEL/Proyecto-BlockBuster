@@ -282,17 +282,7 @@ public class UserViews extends JFrame {
 		layeredPane.setPreferredSize(new Dimension(900, 650));
 		setContentPane(layeredPane);
 		
-		ImageIcon gifIcon = new ImageIcon(getClass().getResource("/images/loading.gif"));
-		JLabel labelGif = new JLabel(gifIcon);
-
-		// Tamaño del GIF
-		int gifWidth = gifIcon.getIconWidth();
-		int gifHeight = gifIcon.getIconHeight();
-
-		// Centrar el GIF en la ventana de 900x650
-		labelGif.setBounds((900 - gifWidth) / 2, (650 - gifHeight) / 2, gifWidth, gifHeight);
-		labelGif.setVisible(false);
-		layeredPane.add(labelGif, JLayeredPane.PALETTE_LAYER);
+		JLabel labelGif = GifLoading.crearLabelGif(layeredPane);
 
 		// 1. PANEL BLANCO (fondo completo)
 		JPanel panelIzq = new JPanel();
@@ -377,7 +367,7 @@ public class UserViews extends JFrame {
 		layeredPane.add(panelCentral, JLayeredPane.PALETTE_LAYER);
 
 		JLabel iniciar = new JLabel("REGISTRO DE CLIENTES");
-		iniciar.setSize(236, 60);
+		iniciar.setSize(400, 60);
 		iniciar.setLocation(143, 11);
 		iniciar.setHorizontalAlignment(JLabel.CENTER);
 		iniciar.setFont(new Font("Calibri", Font.BOLD, 24));
@@ -469,7 +459,7 @@ public class UserViews extends JFrame {
 			int selectedRow = table.getSelectedRow();
 
 			if (selectedRow == -1) {
-				JOptionPane.showMessageDialog(layeredPane, "Por favor seleccione un usuario", "Advertencia",
+				JOptionPane.showMessageDialog(layeredPane, "Por favor seleccione un cliente", "Advertencia",
 						JOptionPane.WARNING_MESSAGE);
 				return;
 			}
@@ -499,14 +489,14 @@ public class UserViews extends JFrame {
 				int selectedRow = table.getSelectedRow();
 
 				if (selectedRow == -1) {
-					JOptionPane.showMessageDialog(layeredPane, "Por favor seleccione un usuario", "Advertencia",
+					JOptionPane.showMessageDialog(layeredPane, "Por favor seleccione un cliente", "Advertencia",
 							JOptionPane.WARNING_MESSAGE);
 					return;
 				}
 
 				// Confirmamos eliminacion
 				int confirm = JOptionPane.showConfirmDialog(layeredPane,
-						"¿Está seguro que desea eliminar este usuario?", "Confirmar eliminación",
+						"¿Está seguro que desea eliminar este cliente?", "Confirmar eliminación",
 						JOptionPane.YES_NO_OPTION);
 
 				if (confirm == JOptionPane.YES_OPTION) {
@@ -521,9 +511,9 @@ public class UserViews extends JFrame {
 					if (eliminado) {
 						// Eliminar de la tabla
 						model.removeRow(selectedRow);
-						JOptionPane.showMessageDialog(layeredPane, "Usuario eliminado correctamente");
+						JOptionPane.showMessageDialog(layeredPane, "Cliente eliminado correctamente");
 					} else {
-						JOptionPane.showMessageDialog(layeredPane, "Error al eliminar el usuario", "Error",
+						JOptionPane.showMessageDialog(layeredPane, "Error al eliminar el cliente", "Error",
 								JOptionPane.ERROR_MESSAGE);
 					}
 				}
@@ -554,17 +544,7 @@ public class UserViews extends JFrame {
 		layeredPane.setPreferredSize(new Dimension(900, 650));
 		setContentPane(layeredPane);
 		
-		ImageIcon gifIcon = new ImageIcon(getClass().getResource("/images/loading.gif"));
-		JLabel labelGif = new JLabel(gifIcon);
-
-		// Tamaño del GIF
-		int gifWidth = gifIcon.getIconWidth();
-		int gifHeight = gifIcon.getIconHeight();
-
-		// Centrar el GIF en la ventana de 900x650
-		labelGif.setBounds((900 - gifWidth) / 2, (650 - gifHeight) / 2, gifWidth, gifHeight);
-		labelGif.setVisible(false);
-		layeredPane.add(labelGif, JLayeredPane.PALETTE_LAYER);
+		JLabel labelGif = GifLoading.crearLabelGif(layeredPane);
 
 		// 2. PANEL GRIS CENTRAl
 		JPanel panelCentral = new JPanel();
@@ -582,7 +562,7 @@ public class UserViews extends JFrame {
 		iniciar.setSize(331, 42);
 		iniciar.setLocation(334, 12);
 		iniciar.setHorizontalAlignment(JLabel.CENTER);
-		iniciar.setFont(new Font("Anton", Font.BOLD, 20));
+		iniciar.setFont(new Font("Calibri", Font.BOLD, 20));
 		panelCentral.add(iniciar);
 
 		ImageIcon iconoOrigina = new ImageIcon(getClass().getResource("/images/Block.png"));
@@ -604,7 +584,7 @@ public class UserViews extends JFrame {
 		JLabel HistorialRentas = new JLabel("Historial de rentas:");
 		HistorialRentas.setHorizontalAlignment(SwingConstants.LEFT);
 		HistorialRentas.setFont(new Font("Calibri", Font.BOLD, 18));
-		HistorialRentas.setBounds(250, 140, 200, 42);
+		HistorialRentas.setBounds(250, 140, 400, 42);
 		panelCentral.add(HistorialRentas);
 
 		// Crear unan tabla
@@ -638,7 +618,7 @@ public class UserViews extends JFrame {
 		JLabel HistorialVentas = new JLabel("Historial de ventas:");
 		HistorialVentas.setHorizontalAlignment(SwingConstants.LEFT);
 		HistorialVentas.setFont(new Font("Calibri", Font.BOLD, 18));
-		HistorialVentas.setBounds(750, 140, 200, 42);
+		HistorialVentas.setBounds(750, 140, 400, 42);
 		panelCentral.add(HistorialVentas);
 
 		String[] purchaseColumnNames = { "Juego", "Fecha de Compra", "Precio" };
@@ -702,7 +682,7 @@ public class UserViews extends JFrame {
 		iniciar_1_1_1_3_1_1_1.setHorizontalAlignment(SwingConstants.CENTER);
 		iniciar_1_1_1_3_1_1_1.setForeground(new Color(59, 55, 65));
 		iniciar_1_1_1_3_1_1_1.setFont(new Font("Calibri", Font.BOLD, 18));
-		iniciar_1_1_1_3_1_1_1.setBounds(733, 79, 145, 42);
+		iniciar_1_1_1_3_1_1_1.setBounds(733, 79, 300, 42);
 		panelCentral.add(iniciar_1_1_1_3_1_1_1);
 
 		// botones
@@ -788,17 +768,7 @@ public class UserViews extends JFrame {
 		layeredPane.setPreferredSize(new Dimension(900, 650));
 		setContentPane(layeredPane);
 		
-		ImageIcon gifIcon = new ImageIcon(getClass().getResource("/images/loading.gif"));
-		JLabel labelGif = new JLabel(gifIcon);
-
-		// Tamaño del GIF
-		int gifWidth = gifIcon.getIconWidth();
-		int gifHeight = gifIcon.getIconHeight();
-
-		// Centrar el GIF en la ventana de 900x650
-		labelGif.setBounds((900 - gifWidth) / 2, (650 - gifHeight) / 2, gifWidth, gifHeight);
-		labelGif.setVisible(false);
-		layeredPane.add(labelGif, JLayeredPane.PALETTE_LAYER);
+		JLabel labelGif = GifLoading.crearLabelGif(layeredPane);
 
 		// 2. PANEL GRIS CENTRAl
 		JPanel panelCentral = new JPanel();
@@ -955,7 +925,7 @@ public class UserViews extends JFrame {
 
 		JLabel iniciar_1_1 = new JLabel(user.getfirstName() + " " + user.getlastName());
 		iniciar_1_1.setHorizontalAlignment(SwingConstants.CENTER);
-		iniciar_1_1.setFont(new Font("Calibri", Font.BOLD, 14));
+		iniciar_1_1.setFont(new Font("Calibri", Font.BOLD, 18));
 		iniciar_1_1.setBounds(58, 177, 141, 42);
 		panelCentral.add(iniciar_1_1);
 
@@ -967,8 +937,8 @@ public class UserViews extends JFrame {
 
 		JLabel iniciar_1_1_1 = new JLabel(user.getCorreo());
 		iniciar_1_1_1.setHorizontalAlignment(SwingConstants.CENTER);
-		iniciar_1_1_1.setFont(new Font("Calibri", Font.BOLD, 14));
-		iniciar_1_1_1.setBounds(58, 287, 141, 42);
+		iniciar_1_1_1.setFont(new Font("Calibri", Font.BOLD, 18));
+		iniciar_1_1_1.setBounds(58, 287, 300, 42);
 		panelCentral.add(iniciar_1_1_1);
 
 		JLabel iniciar_1_3 = new JLabel("Fecha de nacimineto:");
@@ -979,7 +949,7 @@ public class UserViews extends JFrame {
 
 		JLabel iniciar_1_1_2 = new JLabel("" + user.getFechaNacimiento());
 		iniciar_1_1_2.setHorizontalAlignment(SwingConstants.CENTER);
-		iniciar_1_1_2.setFont(new Font("Calibri", Font.BOLD, 14));
+		iniciar_1_1_2.setFont(new Font("Calibri", Font.BOLD, 18));
 		iniciar_1_1_2.setBounds(394, 177, 141, 42);
 		panelCentral.add(iniciar_1_1_2);
 
@@ -991,7 +961,7 @@ public class UserViews extends JFrame {
 
 		JLabel iniciar_1_1_1_1 = new JLabel("" + user.getId());
 		iniciar_1_1_1_1.setHorizontalAlignment(SwingConstants.CENTER);
-		iniciar_1_1_1_1.setFont(new Font("Calibri", Font.BOLD, 14));
+		iniciar_1_1_1_1.setFont(new Font("Calibri", Font.BOLD, 18));
 		iniciar_1_1_1_1.setBounds(394, 287, 141, 42);
 		panelCentral.add(iniciar_1_1_1_1);
 
@@ -1003,7 +973,7 @@ public class UserViews extends JFrame {
 
 		JLabel iniciar_1_1_2_1 = new JLabel(user.getTelefono());
 		iniciar_1_1_2_1.setHorizontalAlignment(SwingConstants.CENTER);
-		iniciar_1_1_2_1.setFont(new Font("Calibri", Font.BOLD, 14));
+		iniciar_1_1_2_1.setFont(new Font("Calibri", Font.BOLD, 18));
 		iniciar_1_1_2_1.setBounds(709, 177, 141, 42);
 		panelCentral.add(iniciar_1_1_2_1);
 
@@ -1015,7 +985,7 @@ public class UserViews extends JFrame {
 
 		JLabel iniciar_1_1_1_1_1 = new JLabel("" + user.getCreatedAt());
 		iniciar_1_1_1_1_1.setHorizontalAlignment(SwingConstants.CENTER);
-		iniciar_1_1_1_1_1.setFont(new Font("Calibri", Font.BOLD, 14));
+		iniciar_1_1_1_1_1.setFont(new Font("Calibri", Font.BOLD, 18));
 		iniciar_1_1_1_1_1.setBounds(709, 287, 141, 42);
 		panelCentral.add(iniciar_1_1_1_1_1);
 
@@ -1047,17 +1017,7 @@ public class UserViews extends JFrame {
 		layeredPane.setPreferredSize(new Dimension(900, 650));
 		setContentPane(layeredPane);
 		
-		ImageIcon gifIcon = new ImageIcon(getClass().getResource("/images/loading.gif"));
-		JLabel labelGif = new JLabel(gifIcon);
-
-		// Tamaño del GIF
-		int gifWidth = gifIcon.getIconWidth();
-		int gifHeight = gifIcon.getIconHeight();
-
-		// Centrar el GIF en la ventana de 900x650
-		labelGif.setBounds((900 - gifWidth) / 2, (650 - gifHeight) / 2, gifWidth, gifHeight);
-		labelGif.setVisible(false);
-		layeredPane.add(labelGif, JLayeredPane.PALETTE_LAYER);
+		JLabel labelGif = GifLoading.crearLabelGif(layeredPane);
 
 		// Panel central
 		JPanel panelCentral = new JPanel();
@@ -1172,7 +1132,7 @@ public class UserViews extends JFrame {
 		txtTelefono.addKeyListener(new KeyAdapter() {
 			public void keyTyped(KeyEvent e) {
 				char numero = e.getKeyChar();
-				if (!Character.isDigit(numero) || txtTelefono.getText().length() >= 11) {
+				if (!Character.isDigit(numero) || txtTelefono.getText().length() == 11) {
 					e.consume();
 				}
 			}
@@ -1234,7 +1194,7 @@ public class UserViews extends JFrame {
 		txtCorreo.addKeyListener(new KeyAdapter() { ///////////// Aqui sirve para solo colocar letras o numeros
 			public void keyTyped(KeyEvent e) {
 
-				if (txtCorreo.getText().length() >= 50) {
+				if (txtCorreo.getText().length() >= 50 ) {
 					e.consume();
 				}
 			}
@@ -1393,17 +1353,7 @@ public class UserViews extends JFrame {
 		layeredPane.setPreferredSize(new Dimension(900, 650));
 		setContentPane(layeredPane);
 		
-		ImageIcon gifIcon = new ImageIcon(getClass().getResource("/images/loading.gif"));
-		JLabel labelGif = new JLabel(gifIcon);
-
-		// Tamaño del GIF
-		int gifWidth = gifIcon.getIconWidth();
-		int gifHeight = gifIcon.getIconHeight();
-
-		// Centrar el GIF en la ventana de 900x650
-		labelGif.setBounds((900 - gifWidth) / 2, (650 - gifHeight) / 2, gifWidth, gifHeight);
-		labelGif.setVisible(false);
-		layeredPane.add(labelGif, JLayeredPane.PALETTE_LAYER);
+		JLabel labelGif = GifLoading.crearLabelGif(layeredPane);
 
 		// Panel gris central donde van los formularios y botones
 		JPanel panelCentral = new JPanel();
@@ -1485,7 +1435,7 @@ public class UserViews extends JFrame {
 		JLabel lblApellidoMaterno = new JLabel("Apellido materno:");
 		lblApellidoMaterno.setHorizontalAlignment(SwingConstants.LEFT);
 		lblApellidoMaterno.setFont(new Font("Calibri", Font.BOLD, 14));
-		lblApellidoMaterno.setBounds(350, 209, 115, 42);
+		lblApellidoMaterno.setBounds(350, 209, 400, 42);
 		panelCentral.add(lblApellidoMaterno);
 
 		textFieldApellidoMaterno = new JTextField();
@@ -1517,7 +1467,7 @@ public class UserViews extends JFrame {
 		textFieldTelefono.addKeyListener(new KeyAdapter() { ///////////// Aqui sirve para solo colocar letras o numeros
 			public void keyTyped(KeyEvent e) {
 				char numero = e.getKeyChar();
-				if (!Character.isDigit(numero) || textFieldTelefono.getText().length() >= 11) {
+				if (!Character.isDigit(numero) || textFieldTelefono.getText().length() == 11) {
 					e.consume();
 				}
 			}
@@ -1528,7 +1478,7 @@ public class UserViews extends JFrame {
 		JLabel lblApellidoPaterno = new JLabel("Apellido paterno:");
 		lblApellidoPaterno.setHorizontalAlignment(SwingConstants.LEFT);
 		lblApellidoPaterno.setFont(new Font("Calibri", Font.BOLD, 14));
-		lblApellidoPaterno.setBounds(650, 135, 122, 42);
+		lblApellidoPaterno.setBounds(650, 135, 400, 42);
 		panelCentral.add(lblApellidoPaterno);
 
 		textFieldApellidoPaterno = new JTextField();
@@ -1550,7 +1500,7 @@ public class UserViews extends JFrame {
 		JLabel lblFechaNacimiento = new JLabel("Fecha de nacimiento:");
 		lblFechaNacimiento.setHorizontalAlignment(SwingConstants.LEFT);
 		lblFechaNacimiento.setFont(new Font("Calibri", Font.BOLD, 14));
-		lblFechaNacimiento.setBounds(650, 209, 136, 42);
+		lblFechaNacimiento.setBounds(650, 209, 400, 42);
 		panelCentral.add(lblFechaNacimiento);
 
 		// Crear JDateChooser
@@ -1594,10 +1544,11 @@ public class UserViews extends JFrame {
 		textFieldCorreo.setBounds(650, 311, 200, 27);
 		textFieldCorreo.addKeyListener(new KeyAdapter() { ///////////// Aqui sirve para solo colocar letras o numeros
 			public void keyTyped(KeyEvent e) {
-
-				if (textFieldCorreo.getText().length() >= 50) {
-					e.consume();
-				}
+		        
+		        char correo = e.getKeyChar();
+		        if (!(Character.isLetterOrDigit(correo) || correo == '@' || textFieldCorreo.getText().length() >= 50)) {
+		            e.consume();
+		        }
 			}
 		});
 		panelCentral.add(textFieldCorreo);
@@ -1675,6 +1626,13 @@ public class UserViews extends JFrame {
 				return;
 
 			}
+			
+			if (!correo.contains("@")) {
+		        textFieldCorreo.setBorder(BorderFactory.createLineBorder(Color.RED));
+		        JOptionPane.showMessageDialog(null, "El correo electrónico debe contener '@'", "Error", JOptionPane.ERROR_MESSAGE);
+		        camposValidos = false;
+		        return;
+		    }
 
 			java.util.Date fechaSeleccionada = dateChooser.getDate();
 			java.sql.Date fechaNacimiento = null;

@@ -44,6 +44,7 @@ import com.itextpdf.text.pdf.PdfWriter;
 import controller.VideogamesController;
 import models.VideoGames;
 import models.VideoGamesModel;
+import utils.GifLoading;
 import utils.LoadingFrame;
 
 public class VideogamesView extends JFrame {
@@ -67,17 +68,7 @@ public class VideogamesView extends JFrame {
 		layeredPane.setPreferredSize(new Dimension(900, 650));
 		setContentPane(layeredPane);
 		
-		ImageIcon gifIcon = new ImageIcon(getClass().getResource("/images/loading.gif"));
-		JLabel labelGif = new JLabel(gifIcon);
-
-		// Tamaño del GIF
-		int gifWidth = gifIcon.getIconWidth();
-		int gifHeight = gifIcon.getIconHeight();
-
-		// Centrar el GIF en la ventana de 900x650
-		labelGif.setBounds((900 - gifWidth) / 2, (650 - gifHeight) / 2, gifWidth, gifHeight);
-		labelGif.setVisible(false);
-		layeredPane.add(labelGif, JLayeredPane.PALETTE_LAYER);
+		JLabel labelGif = GifLoading.crearLabelGif(layeredPane);
 
 		// 1. PANEL BLANCO (fondo completo)
 		JPanel panelIzq = new JPanel();
@@ -268,17 +259,7 @@ public class VideogamesView extends JFrame {
 		layeredPane.setPreferredSize(new Dimension(900, 650));
 		setContentPane(layeredPane);
 		
-		ImageIcon gifIcon = new ImageIcon(getClass().getResource("/images/loading.gif"));
-		JLabel labelGif = new JLabel(gifIcon);
-
-		// Tamaño del GIF
-		int gifWidth = gifIcon.getIconWidth();
-		int gifHeight = gifIcon.getIconHeight();
-
-		// Centrar el GIF en la ventana de 900x650
-		labelGif.setBounds((900 - gifWidth) / 2, (650 - gifHeight) / 2, gifWidth, gifHeight);
-		labelGif.setVisible(false);
-		layeredPane.add(labelGif, JLayeredPane.PALETTE_LAYER);
+		JLabel labelGif = GifLoading.crearLabelGif(layeredPane);
 
 		// 1. PANEL BLANCO (fondo completo)
 		JPanel panelIzq = new JPanel();
@@ -363,7 +344,7 @@ public class VideogamesView extends JFrame {
 		layeredPane.add(panelCentral, JLayeredPane.PALETTE_LAYER);
 
 		JLabel iniciar = new JLabel("REGISTRO DE JUEGOS");
-		iniciar.setSize(236, 60);
+		iniciar.setSize(500, 60);
 		iniciar.setLocation(143, 11);
 		iniciar.setHorizontalAlignment(JLabel.CENTER);
 		iniciar.setFont(new Font("Calibri", Font.BOLD, 24));
@@ -500,9 +481,9 @@ public class VideogamesView extends JFrame {
 						if (eliminado) {
 							// Eliminar de la tabla
 							model.removeRow(selectedRow);
-							JOptionPane.showMessageDialog(layeredPane, "Usuario eliminado correctamente");
+							JOptionPane.showMessageDialog(layeredPane, "Cliente eliminado correctamente");
 						} else {
-							JOptionPane.showMessageDialog(layeredPane, "Error al eliminar el usuario", "Error",
+							JOptionPane.showMessageDialog(layeredPane, "Error al eliminar el Cliente", "Error",
 									JOptionPane.ERROR_MESSAGE);
 						}
 						
@@ -549,17 +530,7 @@ public class VideogamesView extends JFrame {
 	    layeredPane.setPreferredSize(new Dimension(900, 650));
 	    setContentPane(layeredPane);
 	    
-	    ImageIcon gifIcon = new ImageIcon(getClass().getResource("/images/loading.gif"));
-		JLabel labelGif = new JLabel(gifIcon);
-
-		// Tamaño del GIF
-		int gifWidth = gifIcon.getIconWidth();
-		int gifHeight = gifIcon.getIconHeight();
-
-		// Centrar el GIF en la ventana de 900x650
-		labelGif.setBounds((900 - gifWidth) / 2, (650 - gifHeight) / 2, gifWidth, gifHeight);
-		labelGif.setVisible(false);
-		layeredPane.add(labelGif, JLayeredPane.PALETTE_LAYER);
+	    JLabel labelGif = GifLoading.crearLabelGif(layeredPane);
 
 	    // Panel central gris
 	    JPanel panelCentral = new JPanel();
@@ -578,7 +549,7 @@ public class VideogamesView extends JFrame {
 
 	    // Nombre del juego
 	    JLabel lblNombre = new JLabel(videogames.getname());
-	    lblNombre.setFont(new Font("Anton", Font.BOLD, 20));
+	    lblNombre.setFont(new Font("Calibri", Font.BOLD, 18));
 	    lblNombre.setBounds(55, 124, 300, 42);
 	    panelCentral.add(lblNombre);
 	    
@@ -592,7 +563,7 @@ public class VideogamesView extends JFrame {
 	    JLabel lblAnio = new JLabel(""+videogames.getreleaseYear());
 	    lblAnio.setForeground(Color.decode("#3B3741"));
 	    lblAnio.setFont(new Font("Calibri", Font.BOLD, 18));
-	    lblAnio.setBounds(220, 165, 70, 42);
+	    lblAnio.setBounds(240, 165, 70, 42);
 	    panelCentral.add(lblAnio);
 
 	    // Clasificación
@@ -605,7 +576,7 @@ public class VideogamesView extends JFrame {
 	    JLabel lblClasificacionValor = new JLabel(videogames.getclassification());
 	    lblClasificacionValor.setForeground(Color.decode("#3B3741"));
 	    lblClasificacionValor.setFont(new Font("Calibri", Font.BOLD, 18));
-	    lblClasificacionValor.setBounds(160, 204, 103, 42);
+	    lblClasificacionValor.setBounds(180, 204, 103, 42);
 	    panelCentral.add(lblClasificacionValor);
 
 	    // Desarrolladores
@@ -621,7 +592,7 @@ public class VideogamesView extends JFrame {
 	    txtDesarrolladores.setEditable(false);
 	    txtDesarrolladores.setFont(new Font("Calibri Light", Font.BOLD, 18));
 	    txtDesarrolladores.setForeground(Color.decode("#3B3741"));
-	    txtDesarrolladores.setBounds(180, 255, 318, 70);
+	    txtDesarrolladores.setBounds(200, 255, 318, 70);
 	    panelCentral.add(txtDesarrolladores);
 
 	    // Género
@@ -633,7 +604,7 @@ public class VideogamesView extends JFrame {
 	    JLabel lblGeneroValor = new JLabel(videogames.getGenero());
 	    lblGeneroValor.setForeground(Color.decode("#3B3741"));
 	    lblGeneroValor.setFont(new Font("Calibri", Font.BOLD, 18));
-	    lblGeneroValor.setBounds(130, 284, 200, 42);
+	    lblGeneroValor.setBounds(140, 284, 200, 42);
 	    panelCentral.add(lblGeneroValor);
 
 	    // Plataforma
@@ -645,7 +616,7 @@ public class VideogamesView extends JFrame {
 	    JLabel lblPlataformaValor = new JLabel(videogames.getplatform());
 	    lblPlataformaValor.setForeground(Color.decode("#3B3741"));
 	    lblPlataformaValor.setFont(new Font("Calibri", Font.BOLD, 18));
-	    lblPlataformaValor.setBounds(150, 324, 200, 42);
+	    lblPlataformaValor.setBounds(170, 324, 200, 42);
 	    panelCentral.add(lblPlataformaValor);
 
 	    // Descripción
@@ -655,7 +626,7 @@ public class VideogamesView extends JFrame {
 	    panelCentral.add(lblAcercaDe);
 
 	    JTextArea txtDescripcion = new JTextArea(videogames.getDescripcion());
-	    txtDescripcion.setFont(new Font("Calibri Light", Font.BOLD, 20));
+	    txtDescripcion.setFont(new Font("Calibri Light", Font.BOLD, 18));
 	    txtDescripcion.setForeground(Color.decode("#3B3741"));
 	    txtDescripcion.setLineWrap(true);
 	    txtDescripcion.setWrapStyleWord(true);
@@ -666,24 +637,24 @@ public class VideogamesView extends JFrame {
 
 	    // Precios
 	    JLabel lblPrecioRenta = new JLabel("Precio por renta (mxn):");
-	    lblPrecioRenta.setFont(new Font("Calibri", Font.BOLD, 20));
-	    lblPrecioRenta.setBounds(610, 317, 200, 42);
+	    lblPrecioRenta.setFont(new Font("Calibri", Font.BOLD, 18));
+	    lblPrecioRenta.setBounds(510, 317, 200, 42);
 	    panelCentral.add(lblPrecioRenta);
 
 	    JLabel lblValorRenta = new JLabel(""+videogames.getrentPrice());
 	    lblValorRenta.setForeground(new Color(153, 0, 0));
-	    lblValorRenta.setFont(new Font("Calibri", Font.BOLD, 20));
+	    lblValorRenta.setFont(new Font("Calibri", Font.BOLD, 18));
 	    lblValorRenta.setBounds(820, 317, 126, 42);
 	    panelCentral.add(lblValorRenta);
 	    
 	    JLabel lblPrecioVenta = new JLabel("Precio por venta (mxn):");
-	    lblPrecioVenta.setFont(new Font("Calibri", Font.BOLD, 20));
-	    lblPrecioVenta.setBounds(610, 353, 200, 42);
+	    lblPrecioVenta.setFont(new Font("Calibri", Font.BOLD, 18));
+	    lblPrecioVenta.setBounds(510, 353, 200, 42);
 	    panelCentral.add(lblPrecioVenta);
 
 	    JLabel lblValorVenta = new JLabel(""+videogames.getsalePrice());
 	    lblValorVenta.setForeground(new Color(153, 0, 0));
-	    lblValorVenta.setFont(new Font("Calibri", Font.BOLD, 20));
+	    lblValorVenta.setFont(new Font("Calibri", Font.BOLD, 18));
 	    lblValorVenta.setBounds(820, 353, 126, 42);
 	    panelCentral.add(lblValorVenta);
 
@@ -771,7 +742,7 @@ public class VideogamesView extends JFrame {
 				Runnable tarea = () -> {
 					VideogamesController vc = new VideogamesController();
 
-				vc.indexVideoGames();
+					vc.indexVideoGames();
 					dispose();
 				};
 
@@ -1100,20 +1071,26 @@ public class VideogamesView extends JFrame {
 	    btnCancelar.setForeground(Color.WHITE);
 	    btnCancelar.setBounds(300, 420, 150, 30);
 		btnCancelar.addActionListener(e -> {
-			Runnable tarea = () -> {
-				VideogamesController vc = new VideogamesController();
-				vc.updateVideogames(videogames.getId());
-				dispose();
-			};
 
-			// recibe el label donde esta el gif y la tarea a ejecutar
-			new LoadingFrame(labelGif, tarea).show();
+			int confirm = JOptionPane.showConfirmDialog(layeredPane, "¿Está seguro que desea cancelar cambios?",
+					"Confirmar cancelación", JOptionPane.YES_NO_OPTION);
 
-	    });
-	    panelCentral.add(btnCancelar);
+			if (confirm == JOptionPane.YES_OPTION) {
+				Runnable tarea = () -> {
+					VideogamesController vc = new VideogamesController();
+					vc.updateVideogames(videogames.getId());
+					dispose();
+				};
 
-	    JButton btnConfirmar = new JButton("Confirmar Cambios");
-	    btnConfirmar.setBackground(Color.decode("#263C54"));
+				// recibe el label donde esta el gif y la tarea a ejecutar
+				new LoadingFrame(labelGif, tarea).show();
+			}
+
+		});
+		panelCentral.add(btnCancelar);
+
+		JButton btnConfirmar = new JButton("Confirmar Cambios");
+		btnConfirmar.setBackground(Color.decode("#263C54"));
 	    btnConfirmar.setForeground(Color.WHITE);
 	    btnConfirmar.setBounds(550, 420, 150, 30);
 	    btnConfirmar.addActionListener(e -> {
@@ -1339,7 +1316,7 @@ public class VideogamesView extends JFrame {
 	    // Título
 	    JLabel lblTitulo = new JLabel("AGREGAR NUEVO VIDEOJUEGO");
 	    lblTitulo.setFont(new Font("Calibri", Font.BOLD, 24));
-	    lblTitulo.setBounds(350, 78, 350, 42);
+	    lblTitulo.setBounds(350, 78, 550, 42);
 	    panelCentral.add(lblTitulo);
 	    
 	    // 1) JLabel para mostrar la imagen

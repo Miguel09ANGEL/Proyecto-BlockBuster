@@ -36,6 +36,7 @@ import models.Promotions;
 import models.PromotionsModel;
 import models.Transaction;
 import models.User;
+import utils.GifLoading;
 import utils.LoadingFrame;
 
 public class PromotionsView extends JFrame{
@@ -60,17 +61,7 @@ public class PromotionsView extends JFrame{
 		layeredPane.setPreferredSize(new Dimension(900, 650));
 		setContentPane(layeredPane);
 		
-		ImageIcon gifIcon = new ImageIcon(getClass().getResource("/images/loading.gif"));
-		JLabel labelGif = new JLabel(gifIcon);
-
-		// Tamaño del GIF
-		int gifWidth = gifIcon.getIconWidth();
-		int gifHeight = gifIcon.getIconHeight();
-
-		// Centrar el GIF en la ventana de 900x650
-		labelGif.setBounds((900 - gifWidth) / 2, (650 - gifHeight) / 2, gifWidth, gifHeight);
-		labelGif.setVisible(false);
-		layeredPane.add(labelGif, JLayeredPane.PALETTE_LAYER);
+		JLabel labelGif = GifLoading.crearLabelGif(layeredPane);
 
 		// 1. PANEL BLANCO (fondo completo)
 		JPanel panelIzq = new JPanel();
@@ -243,17 +234,7 @@ public class PromotionsView extends JFrame{
 		layeredPane.setPreferredSize(new Dimension(900, 650));
 		setContentPane(layeredPane);
 		
-		ImageIcon gifIcon = new ImageIcon(getClass().getResource("/images/loading.gif"));
-		JLabel labelGif = new JLabel(gifIcon);
-
-		// Tamaño del GIF
-		int gifWidth = gifIcon.getIconWidth();
-		int gifHeight = gifIcon.getIconHeight();
-
-		// Centrar el GIF en la ventana de 900x650
-		labelGif.setBounds((900 - gifWidth) / 2, (650 - gifHeight) / 2, gifWidth, gifHeight);
-		labelGif.setVisible(false);
-		layeredPane.add(labelGif, JLayeredPane.PALETTE_LAYER);
+		JLabel labelGif = GifLoading.crearLabelGif(layeredPane);
 
 
 		// 1. PANEL BLANCO (fondo completo)
@@ -324,8 +305,8 @@ public class PromotionsView extends JFrame{
 		btnNuevaOperacion.setBounds(10, 364, 237, 100);
 		btnNuevaOperacion.addActionListener(e -> {
 			Runnable tarea = () -> {
-				TransactionView tv = new TransactionView();
-				tv.AdministradorRentaCompra(); // Abre la segunda ventana
+				PromotionsView pv = new PromotionsView();
+				pv.NuevaOperacion(); // Abre la segunda ventana
 				dispose();
 			};
 
@@ -342,7 +323,7 @@ public class PromotionsView extends JFrame{
 		layeredPane.add(panelCentral, JLayeredPane.PALETTE_LAYER);
 
 		JLabel iniciar = new JLabel("DEVOLUCIONES PENDIENTES");
-		iniciar.setSize(324, 60);
+		iniciar.setSize(500, 60);
 		iniciar.setLocation(143, 11);
 		iniciar.setHorizontalAlignment(JLabel.CENTER);
 		iniciar.setFont(new Font("Calibri", Font.BOLD, 24));

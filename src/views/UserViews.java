@@ -1035,7 +1035,7 @@ public class UserViews extends JFrame {
 		txtTelefono.addKeyListener(new KeyAdapter() {
 			public void keyTyped(KeyEvent e) {
 				char numero = e.getKeyChar();
-				if (!Character.isDigit(numero) || txtTelefono.getText().length() >= 12) {
+				if (!Character.isDigit(numero) || txtTelefono.getText().length() >= 11) {
 					e.consume();
 				}
 			}
@@ -1348,14 +1348,14 @@ public class UserViews extends JFrame {
 		lblTelefono.setBounds(350, 282, 87, 42);
 		panelCentral.add(lblTelefono);
 
-		textFieldTelefono = new JTextField();
+		textFieldTelefono = new JTextField("+");
 		textFieldTelefono.setColumns(10);
 		textFieldTelefono.setBackground(new Color(217, 217, 217));
 		textFieldTelefono.setBounds(350, 311, 200, 27);
 		textFieldTelefono.addKeyListener(new KeyAdapter() { ///////////// Aqui sirve para solo colocar letras o numeros
 			public void keyTyped(KeyEvent e) {
 				char numero = e.getKeyChar();
-				if (!Character.isDigit(numero) || textFieldTelefono.getText().length() >= 12) {
+				if (!Character.isDigit(numero) || textFieldTelefono.getText().length() >= 11) {
 					e.consume();
 				}
 			}

@@ -900,6 +900,20 @@ public class UserViews extends JFrame {
 					try {
 						PdfWriter.getInstance(document, new FileOutputStream(fileToSave));
 						document.open();
+						
+						// parte donde se pone la imgagen
+						try {
+				            URL imageUrl = getClass().getResource("/ImagesCustomer/userVacio.png");
+
+						       com.itextpdf.text.Image fotoCliente = com.itextpdf.text.Image.getInstance(imageUrl);
+						    fotoCliente.scaleToFit(100, 100); // Ajustar tamaño
+						    fotoCliente.setAlignment(Element.ALIGN_RIGHT); // Alineación derecha
+						    document.add(fotoCliente);
+						} catch (Exception ex) {
+						    ex.printStackTrace();
+						    // Continúa sin imagen si falla
+						}
+						
 						Paragraph clienteHeader = new Paragraph("TARJETA DE CLIENTE\n",
 								FontFactory.getFont(FontFactory.HELVETICA_BOLD, 14));
 						document.add(clienteHeader);

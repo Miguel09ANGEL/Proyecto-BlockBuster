@@ -12,6 +12,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.math.BigDecimal;
+import java.net.URL;
 import java.util.Iterator;
 import java.util.List;
 
@@ -38,6 +39,8 @@ import javax.swing.table.DefaultTableModel;
 import com.formdev.flatlaf.FlatLightLaf;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Element;
+import com.itextpdf.text.FontFactory;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfWriter;
 
@@ -711,8 +714,22 @@ public class VideogamesView extends JFrame {
 	                try {
 	                    PdfWriter.getInstance(document, new FileOutputStream(fileToSave));
 	                    document.open();
+	                    
+	                 // parte donde se pone la imgagen
+						try {
+				            URL imageUrl = getClass().getResource("/ImagesCustomer/GameVacio.png");
 
-	                    Paragraph titulo = new Paragraph("DETALLES DEL VIDEOJUEGO\n\n");
+						       com.itextpdf.text.Image fotoCliente = com.itextpdf.text.Image.getInstance(imageUrl);
+						    fotoCliente.scaleToFit(100, 100); // Ajustar tamaño
+						    fotoCliente.setAlignment(Element.ALIGN_RIGHT); // Alineación derecha
+						    document.add(fotoCliente);
+						} catch (Exception ex) {
+						    ex.printStackTrace();
+						    // Continúa sin imagen si falla
+						}
+
+	                    Paragraph titulo = new Paragraph("DETALLES DEL VIDEOJUEGO\n\n", 
+	                    		FontFactory.getFont(FontFactory.HELVETICA_BOLD, 14));
 	                    document.add(titulo);
 
 	                    document.add(new Paragraph("Nombre: " + videogames.getname()));
@@ -722,7 +739,8 @@ public class VideogamesView extends JFrame {
 	                    document.add(new Paragraph("Género: " + videogames.getGenero()));
 	                    document.add(new Paragraph("Plataforma: " + videogames.getplatform()));
 
-	                    document.add(new Paragraph("\nAcerca del juego:"));
+	                    document.add(new Paragraph("\nAcerca del juego:",
+	                    		FontFactory.getFont(FontFactory.HELVETICA_BOLD, 14)));
 	                    document.add(new Paragraph(videogames.getDescripcion()));
 
 	                    document.add(new Paragraph("\nPrecio por renta: $" + videogames.getrentPrice()));

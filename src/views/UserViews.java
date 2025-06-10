@@ -679,10 +679,10 @@ public class UserViews extends JFrame {
 		panelCentral.add(iniciar_1_1_2_1_1_1_1);
 
 		JLabel iniciar_1_1_1_3_1_1_1 = new JLabel(user.getTelefono());
-		iniciar_1_1_1_3_1_1_1.setHorizontalAlignment(SwingConstants.CENTER);
+		iniciar_1_1_1_3_1_1_1.setHorizontalAlignment(SwingConstants.LEFT);
 		iniciar_1_1_1_3_1_1_1.setForeground(new Color(59, 55, 65));
 		iniciar_1_1_1_3_1_1_1.setFont(new Font("Calibri", Font.BOLD, 18));
-		iniciar_1_1_1_3_1_1_1.setBounds(733, 79, 300, 42);
+		iniciar_1_1_1_3_1_1_1.setBounds(760, 79, 300, 42);
 		panelCentral.add(iniciar_1_1_1_3_1_1_1);
 
 		// botones
@@ -794,7 +794,7 @@ public class UserViews extends JFrame {
 		JLabel iniciar_1 = new JLabel("Nombre:");
 		iniciar_1.setHorizontalAlignment(SwingConstants.CENTER);
 		iniciar_1.setFont(new Font("Calibri", Font.BOLD, 18));
-		iniciar_1.setBounds(84, 150, 87, 42); // Ajusta tamaño si es necesario
+		iniciar_1.setBounds(90, 150, 87, 42); // Ajusta tamaño si es necesario
 		panelCentral.add(iniciar_1);
 
 		JButton btnCancelar = new JButton("CANCELAR");
@@ -923,20 +923,20 @@ public class UserViews extends JFrame {
 		});
 		panelCentral.add(btnCredencialpdf);
 
-		JLabel iniciar_1_1 = new JLabel(user.getfirstName() + " " + user.getlastName());
-		iniciar_1_1.setHorizontalAlignment(SwingConstants.CENTER);
+		JLabel iniciar_1_1 = new JLabel(user.getfirstName() + " " + user.getlastName() + " " + user.getApellidoMaterno());
+		iniciar_1_1.setHorizontalAlignment(SwingConstants.LEFT);
 		iniciar_1_1.setFont(new Font("Calibri", Font.BOLD, 18));
-		iniciar_1_1.setBounds(58, 177, 141, 42);
+		iniciar_1_1.setBounds(58, 177, 400, 42);
 		panelCentral.add(iniciar_1_1);
 
 		JLabel iniciar_1_2 = new JLabel("Correo:");
 		iniciar_1_2.setHorizontalAlignment(SwingConstants.CENTER);
 		iniciar_1_2.setFont(new Font("Calibri", Font.BOLD, 18));
-		iniciar_1_2.setBounds(84, 262, 87, 42);
+		iniciar_1_2.setBounds(90, 262, 87, 42);
 		panelCentral.add(iniciar_1_2);
 
 		JLabel iniciar_1_1_1 = new JLabel(user.getCorreo());
-		iniciar_1_1_1.setHorizontalAlignment(SwingConstants.CENTER);
+		iniciar_1_1_1.setHorizontalAlignment(SwingConstants.LEFT);
 		iniciar_1_1_1.setFont(new Font("Calibri", Font.BOLD, 18));
 		iniciar_1_1_1.setBounds(58, 287, 300, 42);
 		panelCentral.add(iniciar_1_1_1);

@@ -1267,7 +1267,7 @@ public class TransactionView extends JFrame {
 		btnSiguiente.setForeground(Color.WHITE);
 		btnSiguiente.setBackground(Color.decode("#6D91B9"));
 		btnSiguiente.setFont(new Font("Arial", Font.BOLD, 14));
-		btnSiguiente.setBounds(582, 406, 172, 30);
+		btnSiguiente.setBounds(620, 406, 172, 30);
 		btnSiguiente.addActionListener(e -> {
 			try {
 				
@@ -2208,7 +2208,7 @@ public class TransactionView extends JFrame {
 		btnSiguiente.setForeground(Color.WHITE);
 		btnSiguiente.setBackground(Color.decode("#6D91B9"));
 		btnSiguiente.setFont(new Font("Arial", Font.BOLD, 14));
-		btnSiguiente.setBounds(582, 406, 183, 33);
+		btnSiguiente.setBounds(620, 406, 183, 33);
 		btnSiguiente.addActionListener(e -> {
 			try {
 

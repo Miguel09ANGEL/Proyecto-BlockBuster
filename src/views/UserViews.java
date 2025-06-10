@@ -81,7 +81,7 @@ public class UserViews extends JFrame {
 		layeredPane.setPreferredSize(new Dimension(900, 650));
 		setContentPane(layeredPane);
 
-		ImageIcon gifIcon = new ImageIcon(getClass().getResource("/images/gifCarga2.gif"));
+		ImageIcon gifIcon = new ImageIcon(getClass().getResource("/images/loading.gif"));
 		JLabel labelGif = new JLabel(gifIcon);
 
 		// Tamaño del GIF
@@ -111,6 +111,19 @@ public class UserViews extends JFrame {
 		btnClientes.setBackground(Color.decode("#263C54"));
 		btnClientes.setForeground(Color.WHITE);
 		btnClientes.setBounds(10, 11, 237, 100); // x, y, ancho, alto
+		btnClientes.addActionListener(e -> {
+
+			// se crea el objeto runnable que es la tarea que tiene que recibir
+			Runnable tarea = () -> {
+				UserViews uv = new UserViews();
+				uv.AdministradorCliente(); // Abre la segunda ventana
+				dispose();
+			};
+
+			// recibe el label donde esta el gif y la tarea a ejecutar
+			new LoadingFrame(labelGif, tarea).show();
+
+		});
 
 		panelIzq.add(btnClientes);
 
@@ -121,9 +134,14 @@ public class UserViews extends JFrame {
 		btnVideojuegos.setBounds(10, 128, 237, 100);
 		panelIzq.add(btnVideojuegos);
 		btnVideojuegos.addActionListener(e -> {
-			dispose(); // Cierra la ventana actual
-			VideogamesView vv = new VideogamesView();
-			vv.AdministradorJuegos(); // Abre la segunda ventana
+			Runnable tarea = () -> {
+				VideogamesView vv = new VideogamesView();
+				vv.AdministradorJuegos(); // Abre la segunda ventana
+				dispose();
+			};
+
+			// recibe el label donde esta el gif y la tarea a ejecutar
+			new LoadingFrame(labelGif, tarea).show();
 		});
 
 		JButton btnRentaYCompra = new JButton("RENTA Y COMPRA");
@@ -133,9 +151,14 @@ public class UserViews extends JFrame {
 		btnRentaYCompra.setBounds(10, 242, 237, 100);
 		btnRentaYCompra.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				dispose();
-				TransactionView tv = new TransactionView();
-				tv.AdministradorRentaCompra(); // Abre la segunda ventana
+				Runnable tarea = () -> {
+					TransactionView tv = new TransactionView();
+					tv.AdministradorRentaCompra(); // Abre la segunda ventana
+					dispose();
+				};
+
+				// recibe el label donde esta el gif y la tarea a ejecutar
+				new LoadingFrame(labelGif, tarea).show();
 			}
 		});
 		panelIzq.add(btnRentaYCompra);
@@ -146,9 +169,14 @@ public class UserViews extends JFrame {
 		btnNuevaOperacion.setBackground(new Color(38, 60, 84));
 		btnNuevaOperacion.setBounds(10, 364, 237, 100);
 		btnNuevaOperacion.addActionListener(e -> {
-			dispose(); // Cierra la ventana actual
-			PromotionsView pv = new PromotionsView();
-			pv.NuevaOperacion(); // Abre la segunda ventana
+			Runnable tarea = () -> {
+				PromotionsView pv = new PromotionsView();
+				pv.NuevaOperacion(); // Abre la segunda ventana
+				dispose();
+			};
+
+			// recibe el label donde esta el gif y la tarea a ejecutar
+			new LoadingFrame(labelGif, tarea).show();
 		});
 		panelIzq.add(btnNuevaOperacion);
 
@@ -205,10 +233,17 @@ public class UserViews extends JFrame {
 		btnAgregarCliente.setBackground(new Color(38, 60, 84));
 		btnAgregarCliente.setBounds(442, 261, 206, 100);
 		btnAgregarCliente.addActionListener(e -> {
-			dispose(); // Cierra la ventana actual
 
-			UserViews uv = new UserViews();
-			uv.AgregarCliente();
+			// se crea el objeto runnable que es la tarea que tiene que recibir
+			Runnable tarea = () -> {
+				UserViews uv = new UserViews();
+				uv.AgregarCliente();
+				dispose();
+			};
+
+			// recibe el label donde esta el gif y la tarea a ejecutar
+			new LoadingFrame(labelGif, tarea).show();
+
 		});
 		panelCentral.add(btnAgregarCliente);
 
@@ -241,6 +276,18 @@ public class UserViews extends JFrame {
 		JLayeredPane layeredPane = new JLayeredPane();
 		layeredPane.setPreferredSize(new Dimension(900, 650));
 		setContentPane(layeredPane);
+		
+		ImageIcon gifIcon = new ImageIcon(getClass().getResource("/images/loading.gif"));
+		JLabel labelGif = new JLabel(gifIcon);
+
+		// Tamaño del GIF
+		int gifWidth = gifIcon.getIconWidth();
+		int gifHeight = gifIcon.getIconHeight();
+
+		// Centrar el GIF en la ventana de 900x650
+		labelGif.setBounds((900 - gifWidth) / 2, (650 - gifHeight) / 2, gifWidth, gifHeight);
+		labelGif.setVisible(false);
+		layeredPane.add(labelGif, JLayeredPane.PALETTE_LAYER);
 
 		// 1. PANEL BLANCO (fondo completo)
 		JPanel panelIzq = new JPanel();
@@ -255,8 +302,14 @@ public class UserViews extends JFrame {
 		btnClientes.setForeground(Color.WHITE);
 		btnClientes.setBounds(10, 11, 237, 100);
 		btnClientes.addActionListener(e -> {
-			dispose(); // Cierra la ventana actual
-			AdministradorCliente(); // Abre la segunda ventana
+			Runnable tarea = () -> {
+				UserViews uv = new UserViews();
+				uv.AdministradorCliente(); // Abre la segunda ventana
+				dispose();
+			};
+
+			// recibe el label donde esta el gif y la tarea a ejecutar
+			new LoadingFrame(labelGif, tarea).show();
 		});
 		panelIzq.add(btnClientes);
 
@@ -267,9 +320,14 @@ public class UserViews extends JFrame {
 		btnVideojuegos.setBounds(10, 128, 237, 100);
 		panelIzq.add(btnVideojuegos);
 		btnVideojuegos.addActionListener(e -> {
-			dispose(); // Cierra la ventana actual
-			VideogamesView vv = new VideogamesView();
-			vv.AdministradorJuegos(); // Abre la segunda ventana
+			Runnable tarea = () -> {
+				VideogamesView vv = new VideogamesView();
+				vv.AdministradorJuegos(); // Abre la segunda ventana
+				dispose();
+			};
+
+			// recibe el label donde esta el gif y la tarea a ejecutar
+			new LoadingFrame(labelGif, tarea).show();
 		});
 
 		JButton btnRentaYCompra = new JButton("RENTA Y COMPRA");
@@ -278,9 +336,14 @@ public class UserViews extends JFrame {
 		btnRentaYCompra.setBackground(new Color(38, 60, 84));
 		btnRentaYCompra.setBounds(10, 242, 237, 100);
 		btnRentaYCompra.addActionListener(e -> {
-			dispose(); // Cierra la ventana actual
-			TransactionView tv = new TransactionView();
-			tv.AdministradorRentaCompra(); // Abre la segunda ventana
+			Runnable tarea = () -> {
+				TransactionView tv = new TransactionView();
+				tv.AdministradorRentaCompra(); // Abre la segunda ventana
+				dispose();
+			};
+
+			// recibe el label donde esta el gif y la tarea a ejecutar
+			new LoadingFrame(labelGif, tarea).show();
 		});
 		panelIzq.add(btnRentaYCompra);
 
@@ -290,9 +353,14 @@ public class UserViews extends JFrame {
 		btnNuevaOperacion.setBackground(new Color(38, 60, 84));
 		btnNuevaOperacion.setBounds(10, 364, 237, 100);
 		btnNuevaOperacion.addActionListener(e -> {
-			dispose(); // Cierra la ventana actual
-			PromotionsView pv = new PromotionsView();
-			pv.NuevaOperacion(); // Abre la segunda ventana
+			Runnable tarea = () -> {
+				PromotionsView pv = new PromotionsView();
+				pv.NuevaOperacion(); // Abre la segunda ventana
+				dispose();
+			};
+
+			// recibe el label donde esta el gif y la tarea a ejecutar
+			new LoadingFrame(labelGif, tarea).show();
 		});
 		panelIzq.add(btnNuevaOperacion);
 
@@ -404,10 +472,14 @@ public class UserViews extends JFrame {
 			// Obtener datos del usuario seleccionado
 			int userId = (int) model.getValueAt(selectedRow, 0);
 
-			dispose();
-			UserController uc = new UserController();
-			uc.update2(userId);
+			Runnable tarea = () -> {
+				UserController uc = new UserController();
+				uc.update2(userId);
+				dispose();
+			};
 
+			// recibe el label donde esta el gif y la tarea a ejecutar
+			new LoadingFrame(labelGif, tarea).show();
 		});
 		panelCentral.add(btnEditar);
 
@@ -435,6 +507,7 @@ public class UserViews extends JFrame {
 				if (confirm == JOptionPane.YES_OPTION) {
 					// Obtener ID del usuario seleccionado
 					int userId = (int) model.getValueAt(selectedRow, 0);
+					
 
 					// Eliminamos de la base de datos
 					UsersModel um = new UsersModel();
@@ -475,6 +548,18 @@ public class UserViews extends JFrame {
 		JLayeredPane layeredPane = new JLayeredPane();
 		layeredPane.setPreferredSize(new Dimension(900, 650));
 		setContentPane(layeredPane);
+		
+		ImageIcon gifIcon = new ImageIcon(getClass().getResource("/images/loading.gif"));
+		JLabel labelGif = new JLabel(gifIcon);
+
+		// Tamaño del GIF
+		int gifWidth = gifIcon.getIconWidth();
+		int gifHeight = gifIcon.getIconHeight();
+
+		// Centrar el GIF en la ventana de 900x650
+		labelGif.setBounds((900 - gifWidth) / 2, (650 - gifHeight) / 2, gifWidth, gifHeight);
+		labelGif.setVisible(false);
+		layeredPane.add(labelGif, JLayeredPane.PALETTE_LAYER);
 
 		// 2. PANEL GRIS CENTRAl
 		JPanel panelCentral = new JPanel();
@@ -624,10 +709,15 @@ public class UserViews extends JFrame {
 		btnEditar.setBounds(398, 403, 183, 33);
 		btnEditar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				dispose();
-				UserController uc = new UserController();
+
+				Runnable tarea = () -> {
+					UserController uc = new UserController();
 				uc.update(user.getId());
-				// EditarCliente();
+					dispose();
+				};
+
+				// recibe el label donde esta el gif y la tarea a ejecutar
+				new LoadingFrame(labelGif, tarea).show();
 			}
 		});
 		panelCentral.add(btnEditar);
@@ -639,9 +729,15 @@ public class UserViews extends JFrame {
 		btnConfirmar.setBounds(641, 403, 183, 33);
 		btnConfirmar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				dispose();
-				UserController uc = new UserController();
-				uc.update3(user.getId());
+				Runnable tarea = () -> {
+					UserController uc = new UserController();
+					uc.update3(user.getId());
+					dispose();
+				};
+
+				// recibe el label donde esta el gif y la tarea a ejecutar
+				new LoadingFrame(labelGif, tarea).show();
+
 			}
 		});
 		panelCentral.add(btnConfirmar);
@@ -653,9 +749,15 @@ public class UserViews extends JFrame {
 		btnRegresar.setBounds(150, 403, 183, 33);
 		btnRegresar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				dispose();
-				UserController uc = new UserController();
-				uc.index();
+				Runnable tarea = () -> {
+					UserController uc = new UserController();
+					uc.index();
+					dispose();
+				};
+
+				// recibe el label donde esta el gif y la tarea a ejecutar
+				new LoadingFrame(labelGif, tarea).show();
+
 			}
 		});
 		panelCentral.add(btnRegresar);
@@ -680,6 +782,18 @@ public class UserViews extends JFrame {
 		JLayeredPane layeredPane = new JLayeredPane();
 		layeredPane.setPreferredSize(new Dimension(900, 650));
 		setContentPane(layeredPane);
+		
+		ImageIcon gifIcon = new ImageIcon(getClass().getResource("/images/loading.gif"));
+		JLabel labelGif = new JLabel(gifIcon);
+
+		// Tamaño del GIF
+		int gifWidth = gifIcon.getIconWidth();
+		int gifHeight = gifIcon.getIconHeight();
+
+		// Centrar el GIF en la ventana de 900x650
+		labelGif.setBounds((900 - gifWidth) / 2, (650 - gifHeight) / 2, gifWidth, gifHeight);
+		labelGif.setVisible(false);
+		layeredPane.add(labelGif, JLayeredPane.PALETTE_LAYER);
 
 		// 2. PANEL GRIS CENTRAl
 		JPanel panelCentral = new JPanel();
@@ -713,9 +827,15 @@ public class UserViews extends JFrame {
 		btnCancelar.setForeground(Color.WHITE);
 		btnCancelar.setBounds(103, 406, 183, 33);
 		btnCancelar.addActionListener(e -> {
-			dispose(); // Cierra la ventana actual
-			UserController uc = new UserController();
-			uc.update2(user.getId());
+			Runnable tarea = () -> {
+				UserController uc = new UserController();
+				uc.update2(user.getId());
+				dispose();
+			};
+
+			// recibe el label donde esta el gif y la tarea a ejecutar
+			new LoadingFrame(labelGif, tarea).show();
+
 		});
 		panelCentral.add(btnCancelar);
 
@@ -921,6 +1041,18 @@ public class UserViews extends JFrame {
 		JLayeredPane layeredPane = new JLayeredPane();
 		layeredPane.setPreferredSize(new Dimension(900, 650));
 		setContentPane(layeredPane);
+		
+		ImageIcon gifIcon = new ImageIcon(getClass().getResource("/images/loading.gif"));
+		JLabel labelGif = new JLabel(gifIcon);
+
+		// Tamaño del GIF
+		int gifWidth = gifIcon.getIconWidth();
+		int gifHeight = gifIcon.getIconHeight();
+
+		// Centrar el GIF en la ventana de 900x650
+		labelGif.setBounds((900 - gifWidth) / 2, (650 - gifHeight) / 2, gifWidth, gifHeight);
+		labelGif.setVisible(false);
+		layeredPane.add(labelGif, JLayeredPane.PALETTE_LAYER);
 
 		// Panel central
 		JPanel panelCentral = new JPanel();
@@ -1113,9 +1245,15 @@ public class UserViews extends JFrame {
 		btnCancelar.setFont(new Font("Arial", Font.BOLD, 14));
 		btnCancelar.setBounds(300, 420, 150, 30);
 		btnCancelar.addActionListener(e -> {
-			dispose();
-			UserController us = new UserController();
-			us.update2(user.getId());
+			Runnable tarea = () -> {
+				UserController us = new UserController();
+				us.update2(user.getId());
+				dispose();
+			};
+
+			// recibe el label donde esta el gif y la tarea a ejecutar
+			new LoadingFrame(labelGif, tarea).show();
+
 		});
 		panelCentral.add(btnCancelar);
 
@@ -1202,9 +1340,16 @@ public class UserViews extends JFrame {
 			if (actualizado) {
 				JOptionPane.showMessageDialog(panelCentral, "Cliente actualizado correctamente", "Éxito",
 						JOptionPane.INFORMATION_MESSAGE);
-				dispose();
-				UserController us1 = new UserController();
-				us1.update2(user.getId());
+				Runnable tarea = () -> {
+					UserController us1 = new UserController();
+					us1.update2(user.getId());
+					dispose();
+				};
+
+				// recibe el label donde esta el gif y la tarea a ejecutar
+				new LoadingFrame(labelGif, tarea).show();
+
+				
 			} else {
 				JOptionPane.showMessageDialog(panelCentral, "Error al actualizar el cliente", "Error",
 						JOptionPane.ERROR_MESSAGE);
@@ -1242,6 +1387,18 @@ public class UserViews extends JFrame {
 		JLayeredPane layeredPane = new JLayeredPane();
 		layeredPane.setPreferredSize(new Dimension(900, 650));
 		setContentPane(layeredPane);
+		
+		ImageIcon gifIcon = new ImageIcon(getClass().getResource("/images/loading.gif"));
+		JLabel labelGif = new JLabel(gifIcon);
+
+		// Tamaño del GIF
+		int gifWidth = gifIcon.getIconWidth();
+		int gifHeight = gifIcon.getIconHeight();
+
+		// Centrar el GIF en la ventana de 900x650
+		labelGif.setBounds((900 - gifWidth) / 2, (650 - gifHeight) / 2, gifWidth, gifHeight);
+		labelGif.setVisible(false);
+		layeredPane.add(labelGif, JLayeredPane.PALETTE_LAYER);
 
 		// Panel gris central donde van los formularios y botones
 		JPanel panelCentral = new JPanel();
@@ -1447,8 +1604,15 @@ public class UserViews extends JFrame {
 		btnCancelar.setFont(new Font("Arial", Font.BOLD, 14));
 		btnCancelar.setBounds(300, 420, 150, 30);
 		btnCancelar.addActionListener(e -> {
-			dispose(); // Cierra esta ventana
-			AdministradorCliente();
+			Runnable tarea = () -> {
+				UserViews uv = new UserViews();
+				uv.AdministradorCliente(); // Abre la segunda ventana
+				dispose();
+			};
+
+			// recibe el label donde esta el gif y la tarea a ejecutar
+			new LoadingFrame(labelGif, tarea).show();
+			
 		});
 		panelCentral.add(btnCancelar);
 
@@ -1531,8 +1695,14 @@ public class UserViews extends JFrame {
 
 			if (agregado) {
 				JOptionPane.showMessageDialog(null, "Cliente agregado correctamente.");
-				dispose();
-				AdministradorCliente();
+				Runnable tarea = () -> {
+					UserViews uv = new UserViews();
+					uv.AdministradorCliente(); // Abre la segunda ventana
+					dispose();
+				};
+
+				// recibe el label donde esta el gif y la tarea a ejecutar
+				new LoadingFrame(labelGif, tarea).show();
 			} else {
 				JOptionPane.showMessageDialog(null,
 						"No se pudo agregar el cliente. Verifica que el correo no esté duplicado.", "Error",

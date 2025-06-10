@@ -36,6 +36,7 @@ import models.Promotions;
 import models.PromotionsModel;
 import models.Transaction;
 import models.User;
+import utils.LoadingFrame;
 
 public class PromotionsView extends JFrame{
 
@@ -58,6 +59,18 @@ public class PromotionsView extends JFrame{
 		JLayeredPane layeredPane = new JLayeredPane();
 		layeredPane.setPreferredSize(new Dimension(900, 650));
 		setContentPane(layeredPane);
+		
+		ImageIcon gifIcon = new ImageIcon(getClass().getResource("/images/loading.gif"));
+		JLabel labelGif = new JLabel(gifIcon);
+
+		// Tamaño del GIF
+		int gifWidth = gifIcon.getIconWidth();
+		int gifHeight = gifIcon.getIconHeight();
+
+		// Centrar el GIF en la ventana de 900x650
+		labelGif.setBounds((900 - gifWidth) / 2, (650 - gifHeight) / 2, gifWidth, gifHeight);
+		labelGif.setVisible(false);
+		layeredPane.add(labelGif, JLayeredPane.PALETTE_LAYER);
 
 		// 1. PANEL BLANCO (fondo completo)
 		JPanel panelIzq = new JPanel();
@@ -73,9 +86,16 @@ public class PromotionsView extends JFrame{
 		btnClientes.setBounds(10, 11, 237, 100); // x, y, ancho, alto
 		btnClientes.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				dispose();
-				UserViews uv = new UserViews();
-				uv.AdministradorCliente(); // Abre la segunda ventana
+				
+				// se crea el objeto runnable que es la tarea que tiene que recibir
+				Runnable tarea = () -> {
+					UserViews uv = new UserViews();
+					uv.AdministradorCliente(); // Abre la segunda ventana
+					dispose();
+				};
+
+				// recibe el label donde esta el gif y la tarea a ejecutar
+				new LoadingFrame(labelGif, tarea).show();
 			}
 		});
 		panelIzq.add(btnClientes);
@@ -87,9 +107,15 @@ public class PromotionsView extends JFrame{
 		btnVideojuegos.setBounds(10, 128, 237, 100);
 		btnVideojuegos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				dispose();
-				VideogamesView vv = new VideogamesView();
-				vv.AdministradorJuegos(); // Abre la segunda ventana
+				// se crea el objeto runnable que es la tarea que tiene que recibir
+				Runnable tarea = () -> {
+					VideogamesView vv = new VideogamesView();
+					vv.AdministradorJuegos(); // Abre la segunda ventana
+					dispose();
+				};
+
+				// recibe el label donde esta el gif y la tarea a ejecutar
+				new LoadingFrame(labelGif, tarea).show();
 			}
 		});
 		panelIzq.add(btnVideojuegos);
@@ -101,9 +127,14 @@ public class PromotionsView extends JFrame{
 		btnRentaYCompra.setBounds(10, 242, 237, 100);
 		btnRentaYCompra.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				dispose();
-				TransactionView tv = new TransactionView();
-				tv.AdministradorRentaCompra(); // Abre la segunda ventana
+				Runnable tarea = () -> {
+					TransactionView tv = new TransactionView();
+					tv.AdministradorRentaCompra(); // Abre la segunda ventana
+					dispose();
+				};
+
+				// recibe el label donde esta el gif y la tarea a ejecutar
+				new LoadingFrame(labelGif, tarea).show();
 			}
 		});
 		panelIzq.add(btnRentaYCompra);
@@ -113,12 +144,6 @@ public class PromotionsView extends JFrame{
 		btnNuevaOperacion.setFont(new Font("Calibri", Font.BOLD, 16));
 		btnNuevaOperacion.setBackground(new Color(38, 60, 84));
 		btnNuevaOperacion.setBounds(10, 364, 237, 100);
-		btnNuevaOperacion.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				dispose();
-				NuevaOperacion(); // Abre la segunda ventana
-			}
-		});
 		panelIzq.add(btnNuevaOperacion);
 
 		// 2. PANEL GRIS CENTRAl
@@ -149,20 +174,32 @@ public class PromotionsView extends JFrame{
 		devoluciones.setFont(new Font("Calibri", Font.BOLD, 16));
 		devoluciones.setBackground(new Color(38, 60, 84));
 		devoluciones.addActionListener(e -> {
-			dispose(); // Cierra la ventana actual
-			PromotionsController pc = new PromotionsController();
-			pc.pending_returns();
+			Runnable tarea = () -> {
+				PromotionsController pc = new PromotionsController();
+				pc.pending_returns();
+				dispose();
+			};
+
+			// recibe el label donde esta el gif y la tarea a ejecutar
+			new LoadingFrame(labelGif, tarea).show();	
+		
 		});
 
-		JButton btnPromocionAutomatica = new JButton("<html><center>PROMOCIÓN AUTOMATICA<html>");
+		JButton btnPromocionAutomatica = new JButton("<html><center>PROMOCIÓNES<html>");
 		btnPromocionAutomatica.setForeground(Color.WHITE);
 		btnPromocionAutomatica.setFont(new Font("Calibri", Font.BOLD, 16));
 		btnPromocionAutomatica.setBackground(new Color(38, 60, 84));
 		btnPromocionAutomatica.setBounds(442, 261, 206, 100);
 		btnPromocionAutomatica.addActionListener(e -> {
-			dispose(); // Cierra la ventana actual
-			PromotionsController pc = new PromotionsController();
-			pc.indexPromocion();// Abre la segunda ventana
+			Runnable tarea = () -> {
+				PromotionsController pc = new PromotionsController();
+				pc.indexPromocion();
+				dispose();
+			};
+
+			// recibe el label donde esta el gif y la tarea a ejecutar
+			new LoadingFrame(labelGif, tarea).show();
+
 		});
 		panelCentral.add(btnPromocionAutomatica);
 
@@ -205,6 +242,19 @@ public class PromotionsView extends JFrame{
 		JLayeredPane layeredPane = new JLayeredPane();
 		layeredPane.setPreferredSize(new Dimension(900, 650));
 		setContentPane(layeredPane);
+		
+		ImageIcon gifIcon = new ImageIcon(getClass().getResource("/images/loading.gif"));
+		JLabel labelGif = new JLabel(gifIcon);
+
+		// Tamaño del GIF
+		int gifWidth = gifIcon.getIconWidth();
+		int gifHeight = gifIcon.getIconHeight();
+
+		// Centrar el GIF en la ventana de 900x650
+		labelGif.setBounds((900 - gifWidth) / 2, (650 - gifHeight) / 2, gifWidth, gifHeight);
+		labelGif.setVisible(false);
+		layeredPane.add(labelGif, JLayeredPane.PALETTE_LAYER);
+
 
 		// 1. PANEL BLANCO (fondo completo)
 		JPanel panelIzq = new JPanel();
@@ -219,9 +269,16 @@ public class PromotionsView extends JFrame{
 		btnClientes.setForeground(Color.WHITE);
 		btnClientes.setBounds(10, 11, 237, 100);
 		btnClientes.addActionListener(e -> {
-			dispose(); // Cierra la ventana actual
-			UserViews uv = new UserViews();
-			uv.AdministradorCliente(); // Abre la segunda ventana
+			// se crea el objeto runnable que es la tarea que tiene que recibir
+			Runnable tarea = () -> {
+				UserViews uv = new UserViews();
+				uv.AdministradorCliente(); // Abre la segunda ventana
+				dispose();
+			};
+
+			// recibe el label donde esta el gif y la tarea a ejecutar
+			new LoadingFrame(labelGif, tarea).show();
+		
 		});
 		panelIzq.add(btnClientes);
 
@@ -232,9 +289,15 @@ public class PromotionsView extends JFrame{
 		btnVideojuegos.setBounds(10, 128, 237, 100);
 		panelIzq.add(btnVideojuegos);
 		btnVideojuegos.addActionListener(e -> {
-			dispose(); // Cierra la ventana actual
-			VideogamesView vv = new VideogamesView();
-			vv.AdministradorJuegos(); // Abre la segunda ventana
+			// se crea el objeto runnable que es la tarea que tiene que recibir
+			Runnable tarea = () -> {
+				VideogamesView vv = new VideogamesView();
+				vv.AdministradorJuegos(); // Abre la segunda ventana
+				dispose();
+			};
+
+			// recibe el label donde esta el gif y la tarea a ejecutar
+			new LoadingFrame(labelGif, tarea).show();
 		});
 
 		JButton btnRentaYCompra = new JButton("RENTA Y COMPRA");
@@ -243,9 +306,14 @@ public class PromotionsView extends JFrame{
 		btnRentaYCompra.setBackground(new Color(38, 60, 84));
 		btnRentaYCompra.setBounds(10, 242, 237, 100);
 		btnRentaYCompra.addActionListener(e -> {
-			dispose(); // Cierra la ventana actual
-			TransactionView tv = new TransactionView();
-			tv.AdministradorRentaCompra(); // Abre la segunda ventana
+			Runnable tarea = () -> {
+				TransactionView tv = new TransactionView();
+				tv.AdministradorRentaCompra(); // Abre la segunda ventana
+				dispose();
+			};
+
+			// recibe el label donde esta el gif y la tarea a ejecutar
+			new LoadingFrame(labelGif, tarea).show();
 		});
 		panelIzq.add(btnRentaYCompra);
 
@@ -255,8 +323,14 @@ public class PromotionsView extends JFrame{
 		btnNuevaOperacion.setBackground(new Color(38, 60, 84));
 		btnNuevaOperacion.setBounds(10, 364, 237, 100);
 		btnNuevaOperacion.addActionListener(e -> {
-			dispose(); // Cierra la ventana actual
-			NuevaOperacion(); // Abre la segunda ventana
+			Runnable tarea = () -> {
+				TransactionView tv = new TransactionView();
+				tv.AdministradorRentaCompra(); // Abre la segunda ventana
+				dispose();
+			};
+
+			// recibe el label donde esta el gif y la tarea a ejecutar
+			new LoadingFrame(labelGif, tarea).show();
 		});
 		panelIzq.add(btnNuevaOperacion);
 
@@ -376,6 +450,18 @@ public class PromotionsView extends JFrame{
 		JLayeredPane layeredPane = new JLayeredPane();
 		layeredPane.setPreferredSize(new Dimension(900, 650));
 		setContentPane(layeredPane);
+		
+		ImageIcon gifIcon = new ImageIcon(getClass().getResource("/images/loading.gif"));
+		JLabel labelGif = new JLabel(gifIcon);
+
+		// Tamaño del GIF
+		int gifWidth = gifIcon.getIconWidth();
+		int gifHeight = gifIcon.getIconHeight();
+
+		// Centrar el GIF en la ventana de 900x650
+		labelGif.setBounds((900 - gifWidth) / 2, (650 - gifHeight) / 2, gifWidth, gifHeight);
+		labelGif.setVisible(false);
+		layeredPane.add(labelGif, JLayeredPane.PALETTE_LAYER);
 
 		// 1. PANEL BLANCO (fondo completo)
 		JPanel panelIzq = new JPanel();
@@ -390,9 +476,15 @@ public class PromotionsView extends JFrame{
 		btnClientes.setForeground(Color.WHITE);
 		btnClientes.setBounds(10, 11, 237, 100);
 		btnClientes.addActionListener(e -> {
-			dispose(); // Cierra la ventana actual
-			UserViews uv = new UserViews();
-			uv.AdministradorCliente(); // Abre la segunda ventana
+			// se crea el objeto runnable que es la tarea que tiene que recibir
+			Runnable tarea = () -> {
+				UserViews uv = new UserViews();
+				uv.AdministradorCliente(); // Abre la segunda ventana
+				dispose();
+			};
+
+			// recibe el label donde esta el gif y la tarea a ejecutar
+			new LoadingFrame(labelGif, tarea).show();
 		});
 		panelIzq.add(btnClientes);
 
@@ -403,9 +495,15 @@ public class PromotionsView extends JFrame{
 		btnVideojuegos.setBounds(10, 128, 237, 100);
 		panelIzq.add(btnVideojuegos);
 		btnVideojuegos.addActionListener(e -> {
-			dispose(); // Cierra la ventana actual
-			VideogamesView vv = new VideogamesView();
-			vv.AdministradorJuegos(); // Abre la segunda ventana
+			// se crea el objeto runnable que es la tarea que tiene que recibir
+			Runnable tarea = () -> {
+				VideogamesView vv = new VideogamesView();
+				vv.AdministradorJuegos(); // Abre la segunda ventana
+				dispose();
+			};
+
+			// recibe el label donde esta el gif y la tarea a ejecutar
+			new LoadingFrame(labelGif, tarea).show();
 		});
 
 		JButton btnRentaYCompra = new JButton("RENTA Y COMPRA");
@@ -414,9 +512,14 @@ public class PromotionsView extends JFrame{
 		btnRentaYCompra.setBackground(new Color(38, 60, 84));
 		btnRentaYCompra.setBounds(10, 242, 237, 100);
 		btnRentaYCompra.addActionListener(e -> {
-			dispose(); // Cierra la ventana actual
-			TransactionView tv = new TransactionView();
-			tv.AdministradorRentaCompra(); // Abre la segunda ventana
+			Runnable tarea = () -> {
+				TransactionView tv = new TransactionView();
+				tv.AdministradorRentaCompra(); // Abre la segunda ventana
+				dispose();
+			};
+
+			// recibe el label donde esta el gif y la tarea a ejecutar
+			new LoadingFrame(labelGif, tarea).show();
 		});
 		panelIzq.add(btnRentaYCompra);
 
@@ -426,8 +529,15 @@ public class PromotionsView extends JFrame{
 		btnNuevaOperacion.setBackground(new Color(38, 60, 84));
 		btnNuevaOperacion.setBounds(10, 364, 237, 100);
 		btnNuevaOperacion.addActionListener(e -> {
-			dispose(); // Cierra la ventana actual
-			NuevaOperacion(); // Abre la segunda ventana
+			Runnable tarea = () -> {
+				TransactionView tv = new TransactionView();
+				tv.AdministradorRentaCompra(); // Abre la segunda ventana
+				dispose();
+			};
+
+			// recibe el label donde esta el gif y la tarea a ejecutar
+			new LoadingFrame(labelGif, tarea).show();
+			
 		});
 		panelIzq.add(btnNuevaOperacion);
 
@@ -438,39 +548,12 @@ public class PromotionsView extends JFrame{
 		panelCentral.setBounds(277, 62, 731, 475);
 		layeredPane.add(panelCentral, JLayeredPane.PALETTE_LAYER);
 
-		JLabel iniciar = new JLabel("PROMOCIÓN AUTOMATICA");
+		JLabel iniciar = new JLabel("PROMOCIÓNES");
 		iniciar.setSize(324, 60);
 		iniciar.setLocation(143, 11);
 		iniciar.setHorizontalAlignment(JLabel.CENTER);
 		iniciar.setFont(new Font("Calibri", Font.BOLD, 24));
 		panelCentral.add(iniciar);
-
-//		JButton btnBuscar = new JButton("Buscar");
-//		btnBuscar.setFont(new Font("League Spartan Light", Font.PLAIN, 14));
-//		btnBuscar.setBounds(619, 25, 86, 25);
-//		panelCentral.add(btnBuscar);
-		// Datos de la tabla
-		Object[][] data = { { "Identificador", "Nombre", "Plataforma", }, { "", "", "", }, { "", "", "", },
-				{ "", "", "", }, { "", "", "", }, { "", "", "", }, { "", "", "", }, { "", "", "", },
-
-		};
-
-		DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
-		centerRenderer.setHorizontalAlignment(JLabel.CENTER);
-
-		// Tabla
-		JTable table = new JTable(data, new String[] { "", "", "", });
-		panelCentral.add(table);
-		table.setFont(new Font("Segoe UI", Font.PLAIN, 16));
-		table.setBounds(10, 61, 368, 356);
-		table.setBorder(BorderFactory.createLineBorder(new Color(204, 204, 204)));
-		table.setShowGrid(true);
-		table.setGridColor(new Color(204, 204, 204));
-		table.setTableHeader(null);
-		table.setDefaultRenderer(Object.class, centerRenderer);
-		table.setRowHeight(35);
-		table.setShowHorizontalLines(true);
-		table.setShowVerticalLines(true);
 
 
 		DefaultTableCellRenderer centerRendere = new DefaultTableCellRenderer();
@@ -505,7 +588,7 @@ public class PromotionsView extends JFrame{
 
 		// Agregar la tabla a un JScrollPane
 		JScrollPane scrollPane = new JScrollPane(table2);
-		scrollPane.setBounds(406, 61, 315, 356);
+		scrollPane.setBounds(26, 80, 680, 330);
 		panelCentral.add(scrollPane);
 
 		JButton btnEditarPromocion = new JButton("EDITAR PROMOCIÓN");
@@ -513,10 +596,14 @@ public class PromotionsView extends JFrame{
 		btnEditarPromocion.setBackground(Color.decode("#6D91B9"));
 		btnEditarPromocion.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				dispose();
-				
-				PromotionsController pc = new PromotionsController();
-				pc.indexPromocion2(); //llama a editar promociones
+				Runnable tarea = () -> {
+					PromotionsController pc = new PromotionsController();
+					pc.indexPromocion2(); // llama a editar promociones
+					dispose();
+				};
+
+				// recibe el label donde esta el gif y la tarea a ejecutar
+				new LoadingFrame(labelGif, tarea).show();
 			}
 		});
 		btnEditarPromocion.setBounds(279, 428, 195, 30);
@@ -550,6 +637,18 @@ public class PromotionsView extends JFrame{
 		JLayeredPane layeredPane = new JLayeredPane();
 		layeredPane.setPreferredSize(new Dimension(900, 650));
 		setContentPane(layeredPane);
+		
+		ImageIcon gifIcon = new ImageIcon(getClass().getResource("/images/loading.gif"));
+		JLabel labelGif = new JLabel(gifIcon);
+
+		// Tamaño del GIF
+		int gifWidth = gifIcon.getIconWidth();
+		int gifHeight = gifIcon.getIconHeight();
+
+		// Centrar el GIF en la ventana de 900x650
+		labelGif.setBounds((900 - gifWidth) / 2, (650 - gifHeight) / 2, gifWidth, gifHeight);
+		labelGif.setVisible(false);
+		layeredPane.add(labelGif, JLayeredPane.PALETTE_LAYER);
 
 		// 2. PANEL GRIS CENTRAl
 		JPanel panelCentral = new JPanel();
@@ -577,10 +676,16 @@ public class PromotionsView extends JFrame{
 		btnCancelar.setForeground(Color.WHITE);
 		btnCancelar.setBounds(175, 406, 183, 33);
 		btnCancelar.addActionListener(e -> {
-			dispose(); // Cierra la ventana actual
-			PromotionsController pc = new PromotionsController();
-			pc.indexPromocion();// Abre la segunda ventana(); 
 			
+			Runnable tarea = () -> {
+				PromotionsController pc = new PromotionsController();
+				pc.indexPromocion();// Abre la segunda ventana(); 
+				dispose();
+			};
+
+			// recibe el label donde esta el gif y la tarea a ejecutar
+			new LoadingFrame(labelGif, tarea).show();
+
 		});
 		panelCentral.add(btnCancelar);
 		
@@ -671,8 +776,13 @@ public class PromotionsView extends JFrame{
 			            }
 			        }
 			        JOptionPane.showMessageDialog(layeredPane, "Actualización completada", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-			        PromotionsController pc = new PromotionsController();
-			        pc.indexPromocion();
+			        Runnable tarea = () -> {
+						PromotionsController pc = new PromotionsController();
+						pc.indexPromocion();
+					};
+					// recibe el label donde esta el gif y la tarea a ejecutar
+					new LoadingFrame(labelGif, tarea).show();
+			        
 			    }
 	        }
 		});

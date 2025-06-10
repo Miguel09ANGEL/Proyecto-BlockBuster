@@ -43,6 +43,7 @@ import models.User;
 import models.UsersModel;
 import models.VideoGames;
 import models.VideoGamesModel;
+import utils.LoadingFrame;
 
 public class AuthViews extends JFrame {
 	
@@ -63,16 +64,33 @@ public class AuthViews extends JFrame {
 			ex.printStackTrace();
 		}
 
+		// Usamos JLayeredPane para superponer componentes
+		JLayeredPane layeredPane = new JLayeredPane();
+		layeredPane.setPreferredSize(new Dimension(900, 650));
+		setContentPane(layeredPane);
+
+		ImageIcon gifIcon = new ImageIcon(getClass().getResource("/images/loading.gif"));
+		JLabel labelGif = new JLabel(gifIcon);
+
+		// Tamaño del GIF
+		int gifWidth = gifIcon.getIconWidth();
+		int gifHeight = gifIcon.getIconHeight();
+
+		// Centrar el GIF en la ventana de 900x650
+		labelGif.setBounds((900 - gifWidth) / 2, (650 - gifHeight) / 2, gifWidth, gifHeight);
+		labelGif.setVisible(false);
+		layeredPane.add(labelGif, JLayeredPane.PALETTE_LAYER);
+
 		// Configuración básica de la ventana
 		setTitle("Panel Administrador");
 		setSize(1024, 576);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLocationRelativeTo(null);
 
-		// Usamos JLayeredPane para superponer componentes
-		JLayeredPane layeredPane = new JLayeredPane();
-		layeredPane.setPreferredSize(new Dimension(900, 650));
-		setContentPane(layeredPane);
+//		// Usamos JLayeredPane para superponer componentes
+//		JLayeredPane layeredPane = new JLayeredPane();
+//		layeredPane.setPreferredSize(new Dimension(900, 650));
+//		setContentPane(layeredPane);
 
 		// 1. PANEL BLANCO (fondo completo)
 		JPanel fondoBlanco = new JPanel();
@@ -101,7 +119,7 @@ public class AuthViews extends JFrame {
 		iniciar.setFont(new Font("Calibri", Font.BOLD, 24));
 		panelCentral.add(iniciar);
 
-		JLabel first_name = new JLabel("Ingresar su primer nombre:");
+		JLabel first_name = new JLabel("Ingresar usuario:");
 		first_name.setHorizontalAlignment(SwingConstants.LEFT);
 		first_name.setFont(new Font("SansSerif", Font.BOLD, 20));
 		first_name.setBounds(60, 146, 290, 26);
@@ -129,7 +147,7 @@ public class AuthViews extends JFrame {
 		password.setFont(new Font("Montserrat ", Font.BOLD, 15));
 		panelCentral.add(password);
 		
-		JButton acceder = new JButton("Acceder");
+		JButton acceder = new JButton("ACCEDER");
 		acceder.setBackground(Color.decode("#263C54")); // Color de fondo (azul oscuro)
 		acceder.setForeground(Color.WHITE); // Color del texto (blanco)
 		acceder.setFont(new Font("Calibri", Font.BOLD, 17));
@@ -146,7 +164,7 @@ public class AuthViews extends JFrame {
 		        // Validaciones
 		        if(emailIngresado.isEmpty()) {
 		        	first_name_fld.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
-		            JOptionPane.showMessageDialog(null, "Por favor ingrese su primer nombre:", "Error", JOptionPane.ERROR_MESSAGE);
+		            JOptionPane.showMessageDialog(null, "Por favor ingrese su usuario", "Error", JOptionPane.ERROR_MESSAGE);
 		            return;
 		        }
 
@@ -161,11 +179,16 @@ public class AuthViews extends JFrame {
 		        Admins admin = auth.authenticate(emailIngresado, passIngresada);
 
 		        if(admin != null) {
-		            dispose();
-		            HomeView hv = new HomeView();
-		            hv.Inicio(); // Inicia la vista principal
+		        	Runnable tarea = () -> {
+		        		dispose();
+			            HomeView hv = new HomeView();
+			            hv.Inicio(); // Inicia la vista principal
+					};
+					// recibe el label donde esta el gif y la tarea a ejecutar
+					new LoadingFrame(labelGif, tarea).show();
+		        
 		        } else {
-		            JOptionPane.showMessageDialog(null, "Email o contraseña incorrectos", "Error", JOptionPane.ERROR_MESSAGE);
+		            JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrectos", "Error", JOptionPane.ERROR_MESSAGE);
 		            first_name_fld.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
 		            password.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
 		        }

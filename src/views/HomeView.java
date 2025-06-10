@@ -42,6 +42,7 @@ import models.User;
 import models.UsersModel;
 import models.VideoGames;
 import models.VideoGamesModel;
+import utils.LoadingFrame;
 
 public class HomeView extends JFrame {
 	
@@ -61,6 +62,20 @@ public class HomeView extends JFrame {
 		layeredPane.setPreferredSize(new Dimension(900, 650));
 		setContentPane(layeredPane);
 		
+		
+		ImageIcon gifIcon = new ImageIcon(getClass().getResource("/images/loading.gif"));
+		JLabel labelGif = new JLabel(gifIcon);
+
+		// Tamaño del GIF
+		int gifWidth = gifIcon.getIconWidth();
+		int gifHeight = gifIcon.getIconHeight();
+
+		// Centrar el GIF en la ventana de 900x650
+		labelGif.setBounds((900 - gifWidth) / 2, (650 - gifHeight) / 2, gifWidth, gifHeight);
+		labelGif.setVisible(false);
+		layeredPane.add(labelGif, JLayeredPane.PALETTE_LAYER);
+
+		
 		JPanel barraRoja = new JPanel();
 		barraRoja.setBackground(Color.decode("#B44635"));
 		barraRoja.setBounds(0, 0, 1024, 60);
@@ -79,9 +94,17 @@ public class HomeView extends JFrame {
 		btnClientes.setForeground(Color.WHITE);
 		btnClientes.setBounds(10, 11, 237, 100); // x, y, ancho, alto
 		btnClientes.addActionListener(e -> {
-			dispose(); // Cierra la ventana actual
-			UserViews uv = new UserViews();
-			uv.AdministradorCliente(); // Abre la segunda ventana
+
+			// se crea el objeto runnable que es la tarea que tiene que recibir
+			Runnable tarea = () -> {
+				UserViews uv = new UserViews();
+				uv.AdministradorCliente(); // Abre la segunda ventana
+				dispose();
+			};
+
+			// recibe el label donde esta el gif y la tarea a ejecutar
+			new LoadingFrame(labelGif, tarea).show();
+
 		});
 		panelIzq.add(btnClientes);
 
@@ -92,9 +115,15 @@ public class HomeView extends JFrame {
 		btnVideojuegos.setBounds(10, 128, 237, 100);
 		panelIzq.add(btnVideojuegos);
 		btnVideojuegos.addActionListener(e -> {
-			dispose(); // Cierra la ventana actual
-			VideogamesView vv = new VideogamesView();
-			vv.AdministradorJuegos(); // Abre la segunda ventana
+			Runnable tarea = () -> {
+				VideogamesView vv = new VideogamesView();
+				vv.AdministradorJuegos(); // Abre la segunda ventana
+				dispose();
+			};
+
+			// recibe el label donde esta el gif y la tarea a ejecutar
+			new LoadingFrame(labelGif, tarea).show();
+			
 		});
 
 		JButton btnRentaYCompra = new JButton("RENTA Y COMPRA");
@@ -104,9 +133,15 @@ public class HomeView extends JFrame {
 		btnRentaYCompra.setBounds(10, 242, 237, 100);
 		btnRentaYCompra.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				dispose();
-				TransactionView tv = new TransactionView();
-				tv.AdministradorRentaCompra(); // Abre la segunda ventana
+				Runnable tarea = () -> {
+					TransactionView tv = new TransactionView();
+					tv.AdministradorRentaCompra(); // Abre la segunda ventana
+					dispose();
+				};
+
+				// recibe el label donde esta el gif y la tarea a ejecutar
+				new LoadingFrame(labelGif, tarea).show();
+				
 			}
 		});
 		panelIzq.add(btnRentaYCompra);
@@ -117,9 +152,15 @@ public class HomeView extends JFrame {
 		btnNuevaOperacion.setBackground(new Color(38, 60, 84));
 		btnNuevaOperacion.setBounds(10, 364, 237, 100);
 		btnNuevaOperacion.addActionListener(e -> {
-			dispose(); // Cierra la ventana actual
-			PromotionsView pv = new PromotionsView();
-			pv.NuevaOperacion(); // Abre la segunda ventana
+			Runnable tarea = () -> {
+				PromotionsView pv = new PromotionsView();
+				pv.NuevaOperacion(); // Abre la segunda ventana
+				dispose();
+			};
+
+			// recibe el label donde esta el gif y la tarea a ejecutar
+			new LoadingFrame(labelGif, tarea).show();
+
 		});
 		panelIzq.add(btnNuevaOperacion);
 

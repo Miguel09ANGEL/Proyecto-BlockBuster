@@ -67,6 +67,7 @@ import models.TransactionModel;
 import models.User;
 import models.UsersModel;
 import models.VideoGames;
+import utils.LoadingFrame;
 
 public class TransactionView extends JFrame {
 
@@ -82,6 +83,18 @@ public class TransactionView extends JFrame {
 		JLayeredPane layeredPane = new JLayeredPane();
 		layeredPane.setPreferredSize(new Dimension(900, 650));
 		setContentPane(layeredPane);
+		
+		ImageIcon gifIcon = new ImageIcon(getClass().getResource("/images/loading.gif"));
+		JLabel labelGif = new JLabel(gifIcon);
+
+		// Tamaño del GIF
+		int gifWidth = gifIcon.getIconWidth();
+		int gifHeight = gifIcon.getIconHeight();
+
+		// Centrar el GIF en la ventana de 900x650
+		labelGif.setBounds((900 - gifWidth) / 2, (650 - gifHeight) / 2, gifWidth, gifHeight);
+		labelGif.setVisible(false);
+		layeredPane.add(labelGif, JLayeredPane.PALETTE_LAYER);
 
 		// 1. PANEL BLANCO (fondo completo)
 		JPanel panelIzq = new JPanel();
@@ -96,9 +109,14 @@ public class TransactionView extends JFrame {
 		btnClientes.setForeground(Color.WHITE);
 		btnClientes.setBounds(10, 11, 237, 100); // x, y, ancho, alto
 		btnClientes.addActionListener(e -> {
-			dispose(); // Cierra la ventana actual
-			UserViews uv = new UserViews();
-			uv.AdministradorCliente(); // Abre la segunda ventana
+			Runnable tarea = () -> {
+				UserViews uv = new UserViews();
+				uv.AdministradorCliente(); // Abre la segunda ventana
+				dispose();
+			};
+
+			// recibe el label donde esta el gif y la tarea a ejecutar
+			new LoadingFrame(labelGif, tarea).show();
 		});
 		panelIzq.add(btnClientes);
 
@@ -108,9 +126,15 @@ public class TransactionView extends JFrame {
 		btnVideojuegos.setBackground(new Color(38, 60, 84));
 		btnVideojuegos.setBounds(10, 128, 237, 100);
 		btnVideojuegos.addActionListener(e -> {
-			dispose(); // Cierra la ventana actual
-			VideogamesView vv = new VideogamesView();
-			vv.AdministradorJuegos(); // Abre la segunda ventana
+			// se crea el objeto runnable que es la tarea que tiene que recibir
+			Runnable tarea = () -> {
+				VideogamesView vv = new VideogamesView();
+				vv.AdministradorJuegos(); // Abre la segunda ventana
+				dispose();
+			};
+
+			// recibe el label donde esta el gif y la tarea a ejecutar
+			new LoadingFrame(labelGif, tarea).show();
 		});
 		panelIzq.add(btnVideojuegos);
 
@@ -127,9 +151,15 @@ public class TransactionView extends JFrame {
 		btnNuevaOperacion.setBackground(new Color(38, 60, 84));
 		btnNuevaOperacion.setBounds(10, 364, 237, 100);
 		btnNuevaOperacion.addActionListener(e -> {
-			dispose(); // Cierra la ventana actual
-			PromotionsView pv = new PromotionsView();
-			pv.NuevaOperacion(); // Abre la segunda ventana
+			Runnable tarea = () -> {
+				PromotionsView pv = new PromotionsView();
+				pv.NuevaOperacion(); // Abre la segunda ventana
+				dispose();
+			};
+
+			// recibe el label donde esta el gif y la tarea a ejecutar
+			new LoadingFrame(labelGif, tarea).show();
+
 		});
 		panelIzq.add(btnNuevaOperacion);
 
@@ -161,10 +191,14 @@ public class TransactionView extends JFrame {
 		renta.setFont(new Font("Calibri", Font.BOLD, 16));
 		renta.setBackground(new Color(38, 60, 84));
 		renta.addActionListener(e -> {
-			dispose(); // Cierra la ventana actual
-			TransactionController tc = new TransactionController();
-			tc.rentalIndex(); // Abre la segunda ventana
+			Runnable tarea = () -> {
+				TransactionController tc = new TransactionController();
+				tc.rentalIndex(); // Abre la segunda ventana
+				dispose();
+			};
 
+			// recibe el label donde esta el gif y la tarea a ejecutar
+			new LoadingFrame(labelGif, tarea).show();
 		});
 
 		JButton btnCompra = new JButton("VENTA");
@@ -173,9 +207,15 @@ public class TransactionView extends JFrame {
 		btnCompra.setBackground(new Color(38, 60, 84));
 		btnCompra.setBounds(425, 242, 206, 100);
 		btnCompra.addActionListener(e -> {
-			dispose(); // Cierra la ventana actual
-			TransactionController tc = new TransactionController();
-			tc.salesIndex();// Abre la segunda ventana
+			Runnable tarea = () -> {
+				TransactionController tc = new TransactionController();
+				tc.salesIndex();// Abre la segunda ventana
+				dispose();
+			};
+
+			// recibe el label donde esta el gif y la tarea a ejecutar
+			new LoadingFrame(labelGif, tarea).show();
+
 		});
 		panelCentral.add(btnCompra);
 
@@ -216,6 +256,18 @@ public class TransactionView extends JFrame {
 		JLayeredPane layeredPane = new JLayeredPane();
 		layeredPane.setPreferredSize(new Dimension(1024, 576));
 		setContentPane(layeredPane);
+		
+		ImageIcon gifIcon = new ImageIcon(getClass().getResource("/images/loading.gif"));
+		JLabel labelGif = new JLabel(gifIcon);
+
+		// Tamaño del GIF
+		int gifWidth = gifIcon.getIconWidth();
+		int gifHeight = gifIcon.getIconHeight();
+
+		// Centrar el GIF en la ventana de 900x650
+		labelGif.setBounds((900 - gifWidth) / 2, (650 - gifHeight) / 2, gifWidth, gifHeight);
+		labelGif.setVisible(false);
+		layeredPane.add(labelGif, JLayeredPane.PALETTE_LAYER);
 
 		// Panel izquierdo (menú)
 		JPanel panelIzq = new JPanel();
@@ -231,9 +283,14 @@ public class TransactionView extends JFrame {
 		btnClientes.setForeground(Color.WHITE);
 		btnClientes.setBounds(10, 11, 237, 100);
 		btnClientes.addActionListener(e -> {
-			dispose();
-			UserViews uv = new UserViews();
-			uv.AdministradorCliente();
+			Runnable tarea = () -> {
+				UserViews uv = new UserViews();
+				uv.AdministradorCliente(); // Abre la segunda ventana
+				dispose();
+			};
+
+			// recibe el label donde esta el gif y la tarea a ejecutar
+			new LoadingFrame(labelGif, tarea).show();
 		});
 		panelIzq.add(btnClientes);
 
@@ -243,9 +300,14 @@ public class TransactionView extends JFrame {
 		btnVideojuegos.setBackground(new Color(38, 60, 84));
 		btnVideojuegos.setBounds(10, 128, 237, 100);
 		btnVideojuegos.addActionListener(e -> {
-			dispose();
-			VideogamesView vv = new VideogamesView();
-			vv.AdministradorJuegos();
+			Runnable tarea = () -> {
+				VideogamesView vv = new VideogamesView();
+				vv.AdministradorJuegos(); // Abre la segunda ventana
+				dispose();
+			};
+
+			// recibe el label donde esta el gif y la tarea a ejecutar
+			new LoadingFrame(labelGif, tarea).show();
 		});
 		panelIzq.add(btnVideojuegos);
 
@@ -255,8 +317,14 @@ public class TransactionView extends JFrame {
 		btnRentaYCompra.setBackground(new Color(38, 60, 84));
 		btnRentaYCompra.setBounds(10, 242, 237, 100);
 		btnRentaYCompra.addActionListener(e -> {
-			dispose();
-			AdministradorRentaCompra();
+			Runnable tarea = () -> {
+				TransactionView tv = new TransactionView();
+				tv.AdministradorRentaCompra(); // Abre la segunda ventana
+				dispose();
+			};
+
+			// recibe el label donde esta el gif y la tarea a ejecutar
+			new LoadingFrame(labelGif, tarea).show();
 		});
 		panelIzq.add(btnRentaYCompra);
 
@@ -266,9 +334,15 @@ public class TransactionView extends JFrame {
 		btnNuevaOperacion.setBackground(new Color(38, 60, 84));
 		btnNuevaOperacion.setBounds(10, 364, 237, 100);
 		btnNuevaOperacion.addActionListener(e -> {
-			dispose();
-			PromotionsView pv = new PromotionsView();
-			pv.NuevaOperacion();
+			Runnable tarea = () -> {
+				PromotionsView pv = new PromotionsView();
+				pv.NuevaOperacion(); // Abre la segunda ventana
+				dispose();
+			};
+
+			// recibe el label donde esta el gif y la tarea a ejecutar
+			new LoadingFrame(labelGif, tarea).show();
+
 		});
 		panelIzq.add(btnNuevaOperacion);
 
@@ -401,9 +475,14 @@ public class TransactionView extends JFrame {
 			}
 
 			if (juegoSeleccionado != null) {
-				dispose();
-				TransactionController tc = new TransactionController();
-				tc.selectCustomerRent(juegoId);
+				Runnable tarea = () -> {
+					TransactionController tc = new TransactionController();
+					tc.selectCustomerRent(juegoId);
+					dispose();
+				};
+
+				// recibe el label donde esta el gif y la tarea a ejecutar
+				new LoadingFrame(labelGif, tarea).show();
 			}
 		});
 		panelCentral.add(btnRentar);
@@ -415,8 +494,14 @@ public class TransactionView extends JFrame {
 		btnCancelar.setFont(new Font("Arial", Font.BOLD, 14));
 		btnCancelar.setBounds(26, 420, 172, 30);
 		btnCancelar.addActionListener(e -> {
-			dispose();
-			AdministradorRentaCompra();
+			Runnable tarea = () -> {
+				AdministradorRentaCompra();
+				dispose();
+			};
+
+			// recibe el label donde esta el gif y la tarea a ejecutar
+			new LoadingFrame(labelGif, tarea).show();
+
 		});
 		panelCentral.add(btnCancelar);
 
@@ -440,6 +525,18 @@ public class TransactionView extends JFrame {
 		JLayeredPane layeredPane = new JLayeredPane();
 		layeredPane.setPreferredSize(new Dimension(900, 650));
 		setContentPane(layeredPane);
+		
+		ImageIcon gifIcon = new ImageIcon(getClass().getResource("/images/loading.gif"));
+		JLabel labelGif = new JLabel(gifIcon);
+
+		// Tamaño del GIF
+		int gifWidth = gifIcon.getIconWidth();
+		int gifHeight = gifIcon.getIconHeight();
+
+		// Centrar el GIF en la ventana de 900x650
+		labelGif.setBounds((900 - gifWidth) / 2, (650 - gifHeight) / 2, gifWidth, gifHeight);
+		labelGif.setVisible(false);
+		layeredPane.add(labelGif, JLayeredPane.PALETTE_LAYER);
 
 		// 1. PANEL BLANCO (fondo completo)
 		JPanel panelIzq = new JPanel();
@@ -454,9 +551,14 @@ public class TransactionView extends JFrame {
 		btnClientes.setForeground(Color.WHITE);
 		btnClientes.setBounds(10, 11, 237, 100);
 		btnClientes.addActionListener(e -> {
-			dispose(); // Cierra la ventana actual
-			UserViews uv = new UserViews();
-			uv.AdministradorCliente(); // Cierra la ventana actual
+			Runnable tarea = () -> {
+				UserViews uv = new UserViews();
+				uv.AdministradorCliente(); // Abre la segunda ventana
+				dispose();
+			};
+
+			// recibe el label donde esta el gif y la tarea a ejecutar
+			new LoadingFrame(labelGif, tarea).show();
 		});
 		panelIzq.add(btnClientes);
 
@@ -467,9 +569,14 @@ public class TransactionView extends JFrame {
 		btnVideojuegos.setBounds(10, 128, 237, 100);
 		panelIzq.add(btnVideojuegos);
 		btnVideojuegos.addActionListener(e -> {
-			dispose(); // Cierra la ventana actual
-			VideogamesView vv = new VideogamesView();
-			vv.AdministradorJuegos();// Cierra la ventana actual
+			Runnable tarea = () -> {
+				VideogamesView vv = new VideogamesView();
+				vv.AdministradorJuegos(); // Abre la segunda ventana
+				dispose();
+			};
+
+			// recibe el label donde esta el gif y la tarea a ejecutar
+			new LoadingFrame(labelGif, tarea).show();
 		});
 
 		JButton btnRentaYCompra = new JButton("RENTA Y COMPRA");
@@ -478,8 +585,14 @@ public class TransactionView extends JFrame {
 		btnRentaYCompra.setBackground(new Color(38, 60, 84));
 		btnRentaYCompra.setBounds(10, 242, 237, 100);
 		btnRentaYCompra.addActionListener(e -> {
-			dispose(); // Cierra la ventana actual
-			AdministradorRentaCompra(); // Cierra la ventana actual
+			Runnable tarea = () -> {
+				TransactionView tv = new TransactionView();
+				tv.AdministradorRentaCompra(); // Abre la segunda ventana
+				dispose();
+			};
+
+			// recibe el label donde esta el gif y la tarea a ejecutar
+			new LoadingFrame(labelGif, tarea).show();
 		});
 		panelIzq.add(btnRentaYCompra);
 
@@ -489,9 +602,14 @@ public class TransactionView extends JFrame {
 		btnNuevaOperacion.setBackground(new Color(38, 60, 84));
 		btnNuevaOperacion.setBounds(10, 364, 237, 100);
 		btnNuevaOperacion.addActionListener(e -> {
-			dispose(); // Cierra la ventana actual
-			PromotionsView pv = new PromotionsView();
-			pv.NuevaOperacion(); // Cierra la ventana actual
+			Runnable tarea = () -> {
+				PromotionsView pv = new PromotionsView();
+				pv.NuevaOperacion(); // Abre la segunda ventana
+				dispose();
+			};
+
+			// recibe el label donde esta el gif y la tarea a ejecutar
+			new LoadingFrame(labelGif, tarea).show();
 		});
 		panelIzq.add(btnNuevaOperacion);
 
@@ -619,9 +737,14 @@ public class TransactionView extends JFrame {
 			}
 
 			if (juegoSeleccionado != null) {
-				dispose();
-				TransactionController tc = new TransactionController();
-				tc.selectCustomerVent(juegoId);
+				Runnable tarea = () -> {
+					TransactionController tc = new TransactionController();
+					tc.selectCustomerVent(juegoId);
+					dispose();
+				};
+				// recibe el label donde esta el gif y la tarea a ejecutar
+				new LoadingFrame(labelGif, tarea).show();
+				
 			}
 		});
 		panelCentral.add(btnVender);
@@ -633,8 +756,14 @@ public class TransactionView extends JFrame {
 		btnCancelar.setFont(new Font("Arial", Font.BOLD, 14));
 		btnCancelar.setBounds(26, 420, 172, 30);
 		btnCancelar.addActionListener(e -> {
-			dispose();
-			AdministradorRentaCompra();
+			Runnable tarea = () -> {
+				TransactionView tv = new TransactionView();
+				tv.AdministradorRentaCompra(); // Abre la segunda ventana
+				dispose();
+			};
+
+			// recibe el label donde esta el gif y la tarea a ejecutar
+			new LoadingFrame(labelGif, tarea).show();
 		});
 		panelCentral.add(btnCancelar);
 
@@ -672,6 +801,18 @@ public class TransactionView extends JFrame {
 		JLayeredPane layeredPane = new JLayeredPane();
 		layeredPane.setPreferredSize(new Dimension(900, 650));
 		setContentPane(layeredPane);
+		
+		ImageIcon gifIcon = new ImageIcon(getClass().getResource("/images/loading.gif"));
+		JLabel labelGif = new JLabel(gifIcon);
+
+		// Tamaño del GIF
+		int gifWidth = gifIcon.getIconWidth();
+		int gifHeight = gifIcon.getIconHeight();
+
+		// Centrar el GIF en la ventana de 900x650
+		labelGif.setBounds((900 - gifWidth) / 2, (650 - gifHeight) / 2, gifWidth, gifHeight);
+		labelGif.setVisible(false);
+		layeredPane.add(labelGif, JLayeredPane.PALETTE_LAYER);
 
 		// 1. PANEL BLANCO (fondo completo)
 		JPanel panelIzq = new JPanel();
@@ -692,9 +833,15 @@ public class TransactionView extends JFrame {
 					JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 
 			if (cancelar == JOptionPane.YES_OPTION) {
-				dispose(); // Cierra la ventana actual
-				UserViews uv = new UserViews();
-				uv.AdministradorCliente(); // Abre la segunda ventana
+				
+				Runnable tarea = () -> {
+					UserViews uv = new UserViews();
+					uv.AdministradorCliente(); // Abre la segunda ventana
+					dispose();
+				};
+
+				// recibe el label donde esta el gif y la tarea a ejecutar
+				new LoadingFrame(labelGif, tarea).show();
 			}
 
 		});
@@ -713,9 +860,14 @@ public class TransactionView extends JFrame {
 					JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 
 			if (cancelar == JOptionPane.YES_OPTION) {
-				dispose(); // Cierra la ventana actual
-				VideogamesView vv = new VideogamesView();
-				vv.AdministradorJuegos(); // Abre la segunda ventana
+				Runnable tarea = () -> {
+					VideogamesView vv = new VideogamesView();
+					vv.AdministradorJuegos(); // Abre la segunda ventana
+					dispose();
+				};
+
+				// recibe el label donde esta el gif y la tarea a ejecutar
+				new LoadingFrame(labelGif, tarea).show();
 			}
 
 		});
@@ -732,9 +884,14 @@ public class TransactionView extends JFrame {
 					JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 
 			if (cancelar == JOptionPane.YES_OPTION) {
-				dispose(); // Cierra la ventana actual
-				TransactionView tv = new TransactionView();
-				tv.AdministradorRentaCompra(); // Abre la segunda ventana
+				Runnable tarea = () -> {
+					TransactionView tv = new TransactionView();
+					tv.AdministradorRentaCompra(); // Abre la segunda ventana
+					dispose();
+				};
+
+				// recibe el label donde esta el gif y la tarea a ejecutar
+				new LoadingFrame(labelGif, tarea).show();
 			}
 
 		});
@@ -752,9 +909,14 @@ public class TransactionView extends JFrame {
 					JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 
 			if (cancelar == JOptionPane.YES_OPTION) {
-				dispose(); // Cierra la ventana actual
-				PromotionsView pv = new PromotionsView();
-				pv.NuevaOperacion(); // Abre la segunda ventana
+				Runnable tarea = () -> {
+					PromotionsView pv = new PromotionsView();
+					pv.NuevaOperacion(); // Abre la segunda ventana
+					dispose();
+				};
+
+				// recibe el label donde esta el gif y la tarea a ejecutar
+				new LoadingFrame(labelGif, tarea).show();
 			}
 		});
 		panelIzq.add(btnNuevaOperacion);
@@ -876,11 +1038,14 @@ public class TransactionView extends JFrame {
 
 			// Obtener datos del usuario seleccionado
 			int userId = (int) model.getValueAt(selectedRow, 0);
+			Runnable tarea = () -> {
+				TransactionController tc = new TransactionController();
+				tc.rentalOperation(videojuegos.getId(), userId);
+				dispose();
+			};
 
-			dispose();			
-			TransactionController tc = new TransactionController();
-			tc.rentalOperation(videojuegos.getId(), userId);
-
+			// recibe el label donde esta el gif y la tarea a ejecutar
+			new LoadingFrame(labelGif, tarea).show();
 		});
 		panelCentral.add(btnSiguiente);
 		
@@ -895,9 +1060,14 @@ public class TransactionView extends JFrame {
 			cancelar = JOptionPane.showConfirmDialog(null, "¿Seguro que quieres cancelar?","Confirmar cancelacion",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE);
 			
 			if(cancelar == JOptionPane.YES_OPTION) {
-				dispose();
-				TransactionController tc = new TransactionController();
-				tc.rentalIndex();
+				Runnable tarea = () -> {
+					TransactionController tc = new TransactionController();
+					tc.rentalIndex();
+					dispose();
+				};
+
+				// recibe el label donde esta el gif y la tarea a ejecutar
+				new LoadingFrame(labelGif, tarea).show();
 			}
 			
 		});
@@ -936,6 +1106,18 @@ public class TransactionView extends JFrame {
 		JLayeredPane layeredPane = new JLayeredPane();
 		layeredPane.setPreferredSize(new Dimension(900, 650));
 		setContentPane(layeredPane);
+		
+		ImageIcon gifIcon = new ImageIcon(getClass().getResource("/images/loading.gif"));
+		JLabel labelGif = new JLabel(gifIcon);
+
+		// Tamaño del GIF
+		int gifWidth = gifIcon.getIconWidth();
+		int gifHeight = gifIcon.getIconHeight();
+
+		// Centrar el GIF en la ventana de 900x650
+		labelGif.setBounds((900 - gifWidth) / 2, (650 - gifHeight) / 2, gifWidth, gifHeight);
+		labelGif.setVisible(false);
+		layeredPane.add(labelGif, JLayeredPane.PALETTE_LAYER);
 
 		// 2. PANEL GRIS CENTRAl
 		JPanel panelCentral = new JPanel();
@@ -1109,10 +1291,15 @@ public class TransactionView extends JFrame {
 					JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 
 			if (cancelar == JOptionPane.YES_OPTION) {
-				dispose();
+				Runnable tarea = () -> {
+					TransactionController tc = new TransactionController();
+					tc.selectCustomerRent(videogames.getId());
+					dispose();
+				};
 
-				TransactionController tc = new TransactionController();
-				tc.selectCustomerRent(videogames.getId());
+				// recibe el label donde esta el gif y la tarea a ejecutar
+				new LoadingFrame(labelGif, tarea).show();
+
 			}
 		});
 		panelCentral.add(btnCancelar);
@@ -1126,10 +1313,15 @@ public class TransactionView extends JFrame {
 			try {
 				
 		        java.sql.Date fechaDevolucion = new java.sql.Date(dateChooser.getDate().getTime());
+		        
+		        Runnable tarea = () -> {
+		        	TransactionController tc = new TransactionController();
+					tc.rentalDetails(user.getId(), videogames.getId(), fechaDevolucion);
+					dispose();
+				};
 
-				dispose();
-				TransactionController tc = new TransactionController();
-				tc.rentalDetails(user.getId(), videogames.getId(), fechaDevolucion);
+				// recibe el label donde esta el gif y la tarea a ejecutar
+				new LoadingFrame(labelGif, tarea).show();
 
 			} catch (Exception ex) {
 				JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
@@ -1153,6 +1345,18 @@ public class TransactionView extends JFrame {
 		JLayeredPane layeredPane = new JLayeredPane();
 		layeredPane.setPreferredSize(new Dimension(900, 650));
 		setContentPane(layeredPane);
+		
+		ImageIcon gifIcon = new ImageIcon(getClass().getResource("/images/loading.gif"));
+		JLabel labelGif = new JLabel(gifIcon);
+
+		// Tamaño del GIF
+		int gifWidth = gifIcon.getIconWidth();
+		int gifHeight = gifIcon.getIconHeight();
+
+		// Centrar el GIF en la ventana de 900x650
+		labelGif.setBounds((900 - gifWidth) / 2, (650 - gifHeight) / 2, gifWidth, gifHeight);
+		labelGif.setVisible(false);
+		layeredPane.add(labelGif, JLayeredPane.PALETTE_LAYER);
 
 		// 2. PANEL GRIS CENTRAL
 		JPanel panelCentral = new JPanel();
@@ -1410,9 +1614,15 @@ public class TransactionView extends JFrame {
 						JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 
 				if (cancelar == JOptionPane.YES_OPTION) {
-					dispose();
-					TransactionController tc = new TransactionController();
-					tc.rentalOperation(videogames.getId(), user.getId());
+					Runnable tarea = () -> {
+						TransactionController tc = new TransactionController();
+						tc.rentalOperation(videogames.getId(), user.getId());
+						dispose();
+					};
+
+					// recibe el label donde esta el gif y la tarea a ejecutar
+					new LoadingFrame(labelGif, tarea).show();
+
 				}
 			}
 		});
@@ -1433,9 +1643,14 @@ public class TransactionView extends JFrame {
 						JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 
 				if (cancelar == JOptionPane.YES_OPTION) {
-					dispose();
-					TransactionView tv = new TransactionView();
-					tv.AdministradorRentaCompra();
+					Runnable tarea = () -> {
+						TransactionView tv = new TransactionView();
+						tv.AdministradorRentaCompra();
+						dispose();
+					};
+
+					// recibe el label donde esta el gif y la tarea a ejecutar
+					new LoadingFrame(labelGif, tarea).show();
 				}
 			}
 		});
@@ -1625,6 +1840,18 @@ public class TransactionView extends JFrame {
 		JLayeredPane layeredPane = new JLayeredPane();
 		layeredPane.setPreferredSize(new Dimension(900, 650));
 		setContentPane(layeredPane);
+		
+		ImageIcon gifIcon = new ImageIcon(getClass().getResource("/images/loading.gif"));
+		JLabel labelGif = new JLabel(gifIcon);
+
+		// Tamaño del GIF
+		int gifWidth = gifIcon.getIconWidth();
+		int gifHeight = gifIcon.getIconHeight();
+
+		// Centrar el GIF en la ventana de 900x650
+		labelGif.setBounds((900 - gifWidth) / 2, (650 - gifHeight) / 2, gifWidth, gifHeight);
+		labelGif.setVisible(false);
+		layeredPane.add(labelGif, JLayeredPane.PALETTE_LAYER);
 
 		// 1. PANEL BLANCO (fondo completo)
 		JPanel panelIzq = new JPanel();
@@ -1645,9 +1872,14 @@ public class TransactionView extends JFrame {
 					JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 
 			if (cancelar == JOptionPane.YES_OPTION) {
-				dispose(); // Cierra la ventana actual
-				UserViews uv = new UserViews();
-				uv.AdministradorCliente(); // Abre la segunda ventana
+				Runnable tarea = () -> {
+					UserViews uv = new UserViews();
+					uv.AdministradorCliente(); // Abre la segunda ventana
+					dispose();
+				};
+
+				// recibe el label donde esta el gif y la tarea a ejecutar
+				new LoadingFrame(labelGif, tarea).show();
 			}
 
 		});
@@ -1666,9 +1898,14 @@ public class TransactionView extends JFrame {
 					JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 
 			if (cancelar == JOptionPane.YES_OPTION) {
-				dispose(); // Cierra la ventana actual
-				VideogamesView vv = new VideogamesView();
-				vv.AdministradorJuegos(); // Abre la segunda ventana
+				Runnable tarea = () -> {
+					VideogamesView vv = new VideogamesView();
+					vv.AdministradorJuegos(); // Abre la segunda ventana
+					dispose();
+				};
+
+				// recibe el label donde esta el gif y la tarea a ejecutar
+				new LoadingFrame(labelGif, tarea).show();
 			}
 
 		});
@@ -1685,9 +1922,14 @@ public class TransactionView extends JFrame {
 					JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 
 			if (cancelar == JOptionPane.YES_OPTION) {
-				dispose(); // Cierra la ventana actual
-				TransactionView tv = new TransactionView();
-				tv.AdministradorRentaCompra(); // Abre la segunda ventana
+				Runnable tarea = () -> {
+					TransactionView tv = new TransactionView();
+					tv.AdministradorRentaCompra(); // Abre la segunda ventana
+					dispose();
+				};
+
+				// recibe el label donde esta el gif y la tarea a ejecutar
+				new LoadingFrame(labelGif, tarea).show();
 			}
 
 		});
@@ -1705,9 +1947,14 @@ public class TransactionView extends JFrame {
 					JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 
 			if (cancelar == JOptionPane.YES_OPTION) {
-				dispose(); // Cierra la ventana actual
-				PromotionsView pv = new PromotionsView();
-				pv.NuevaOperacion(); // Abre la segunda ventana
+				Runnable tarea = () -> {
+					PromotionsView pv = new PromotionsView();
+					pv.NuevaOperacion(); // Abre la segunda ventana
+					dispose();
+				};
+
+				// recibe el label donde esta el gif y la tarea a ejecutar
+				new LoadingFrame(labelGif, tarea).show();
 			}
 		});
 		panelIzq.add(btnNuevaOperacion);
@@ -1829,11 +2076,14 @@ public class TransactionView extends JFrame {
 
 			// Obtener datos del usuario seleccionado
 			int userId = (int) model.getValueAt(selectedRow, 0);
+			Runnable tarea = () -> {
+				TransactionController tc = new TransactionController();
+				tc.salesOperation(videojuegos.getId(), userId);
+				dispose();
+			};
 
-			dispose();			
-			TransactionController tc = new TransactionController();
-			tc.salesOperation(videojuegos.getId(), userId);
-
+			// recibe el label donde esta el gif y la tarea a ejecutar
+			new LoadingFrame(labelGif, tarea).show();
 		});
 		panelCentral.add(btnSiguiente);
 		
@@ -1848,9 +2098,14 @@ public class TransactionView extends JFrame {
 			cancelar = JOptionPane.showConfirmDialog(null, "¿Seguro que quieres cancelar?","Confirmar cancelacion",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE);
 			
 			if(cancelar == JOptionPane.YES_OPTION) {
-				dispose();
-				TransactionController tc = new TransactionController();
-				tc.salesIndex();
+				Runnable tarea = () -> {
+					TransactionController tc = new TransactionController();
+					tc.salesIndex();
+					dispose();
+				};
+
+				// recibe el label donde esta el gif y la tarea a ejecutar
+				new LoadingFrame(labelGif, tarea).show();
 			}
 			
 		});
@@ -1883,6 +2138,18 @@ public class TransactionView extends JFrame {
 		JLayeredPane layeredPane = new JLayeredPane();
 		layeredPane.setPreferredSize(new Dimension(900, 650));
 		setContentPane(layeredPane);
+		
+		ImageIcon gifIcon = new ImageIcon(getClass().getResource("/images/loading.gif"));
+		JLabel labelGif = new JLabel(gifIcon);
+
+		// Tamaño del GIF
+		int gifWidth = gifIcon.getIconWidth();
+		int gifHeight = gifIcon.getIconHeight();
+
+		// Centrar el GIF en la ventana de 900x650
+		labelGif.setBounds((900 - gifWidth) / 2, (650 - gifHeight) / 2, gifWidth, gifHeight);
+		labelGif.setVisible(false);
+		layeredPane.add(labelGif, JLayeredPane.PALETTE_LAYER);
 
 		// Panel principal
 		JPanel panelCentral = new JPanel();
@@ -1993,9 +2260,14 @@ public class TransactionView extends JFrame {
 		btnCancelar.setFont(new Font("Arial", Font.BOLD, 14));
 		btnCancelar.setBounds(175, 406, 183, 33);
 		btnCancelar.addActionListener(e -> {
-			dispose();
-			TransactionController tc = new TransactionController();
-			tc.selectCustomerVent(videogames.getId());
+			Runnable tarea = () -> {
+				TransactionController tc = new TransactionController();
+				tc.selectCustomerVent(videogames.getId());
+				dispose();
+			};
+
+			// recibe el label donde esta el gif y la tarea a ejecutar
+			new LoadingFrame(labelGif, tarea).show();
 
 		});
 		panelCentral.add(btnCancelar);
@@ -2007,9 +2279,15 @@ public class TransactionView extends JFrame {
 		btnSiguiente.setBounds(582, 406, 183, 33);
 		btnSiguiente.addActionListener(e -> {
 			try {
-				dispose();
-				TransactionController tc = new TransactionController();
-				tc.indexDetallesCompra(user.getId(), videogames.getId());
+
+				Runnable tarea = () -> {
+					TransactionController tc = new TransactionController();
+					tc.indexDetallesCompra(user.getId(), videogames.getId());
+					dispose();
+				};
+
+				// recibe el label donde esta el gif y la tarea a ejecutar
+				new LoadingFrame(labelGif, tarea).show();
 
 			} catch (Exception ex) {
 				JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
@@ -2033,6 +2311,18 @@ public class TransactionView extends JFrame {
 		JLayeredPane layeredPane = new JLayeredPane();
 		layeredPane.setPreferredSize(new Dimension(900, 650));
 		setContentPane(layeredPane);
+		
+		ImageIcon gifIcon = new ImageIcon(getClass().getResource("/images/loading.gif"));
+		JLabel labelGif = new JLabel(gifIcon);
+
+		// Tamaño del GIF
+		int gifWidth = gifIcon.getIconWidth();
+		int gifHeight = gifIcon.getIconHeight();
+
+		// Centrar el GIF en la ventana de 900x650
+		labelGif.setBounds((900 - gifWidth) / 2, (650 - gifHeight) / 2, gifWidth, gifHeight);
+		labelGif.setVisible(false);
+		layeredPane.add(labelGif, JLayeredPane.PALETTE_LAYER);
 
 		// Panel principal
 		JPanel panelCentral = new JPanel();
@@ -2247,9 +2537,16 @@ public class TransactionView extends JFrame {
 						JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 
 				if (cancelar == JOptionPane.YES_OPTION) {
-					dispose();
-					TransactionController tc = new TransactionController();
-					tc.rentalOperation(videogames.getId(), user.getId());
+
+					Runnable tarea = () -> {
+						TransactionController tc = new TransactionController();
+						tc.rentalOperation(videogames.getId(), user.getId());
+						dispose();
+					};
+
+					// recibe el label donde esta el gif y la tarea a ejecutar
+					new LoadingFrame(labelGif, tarea).show();
+
 				}
 			}
 		});
@@ -2266,13 +2563,20 @@ public class TransactionView extends JFrame {
 
 				int cancelar;
 
-				cancelar = JOptionPane.showConfirmDialog(null, "¿Seguro que quieres regresar?", "Confirmar",
+				cancelar = JOptionPane.showConfirmDialog(null, "¿Volver al inicio?", "Confirmar",
 						JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 
 				if (cancelar == JOptionPane.YES_OPTION) {
-					dispose();
-					TransactionView tv = new TransactionView();
-					tv.AdministradorRentaCompra();
+
+					Runnable tarea = () -> {
+						TransactionView tv = new TransactionView();
+						tv.AdministradorRentaCompra();
+						dispose();
+					};
+
+					// recibe el label donde esta el gif y la tarea a ejecutar
+					new LoadingFrame(labelGif, tarea).show();
+					
 				}
 			}
 		});

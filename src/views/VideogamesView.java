@@ -44,6 +44,7 @@ import com.itextpdf.text.pdf.PdfWriter;
 import controller.VideogamesController;
 import models.VideoGames;
 import models.VideoGamesModel;
+import utils.LoadingFrame;
 
 public class VideogamesView extends JFrame {
 
@@ -65,6 +66,18 @@ public class VideogamesView extends JFrame {
 		JLayeredPane layeredPane = new JLayeredPane();
 		layeredPane.setPreferredSize(new Dimension(900, 650));
 		setContentPane(layeredPane);
+		
+		ImageIcon gifIcon = new ImageIcon(getClass().getResource("/images/loading.gif"));
+		JLabel labelGif = new JLabel(gifIcon);
+
+		// Tamaño del GIF
+		int gifWidth = gifIcon.getIconWidth();
+		int gifHeight = gifIcon.getIconHeight();
+
+		// Centrar el GIF en la ventana de 900x650
+		labelGif.setBounds((900 - gifWidth) / 2, (650 - gifHeight) / 2, gifWidth, gifHeight);
+		labelGif.setVisible(false);
+		layeredPane.add(labelGif, JLayeredPane.PALETTE_LAYER);
 
 		// 1. PANEL BLANCO (fondo completo)
 		JPanel panelIzq = new JPanel();
@@ -80,9 +93,14 @@ public class VideogamesView extends JFrame {
 		btnClientes.setBounds(10, 11, 237, 100); // x, y, ancho, alto
 		btnClientes.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				dispose();
-				UserViews uv = new UserViews();
-				uv.AdministradorCliente(); // Abre la segunda ventana
+				Runnable tarea = () -> {
+					UserViews uv = new UserViews();
+					uv.AdministradorCliente(); // Abre la segunda ventana
+					dispose();
+				};
+
+				// recibe el label donde esta el gif y la tarea a ejecutar
+				new LoadingFrame(labelGif, tarea).show();
 			}
 		});
 		panelIzq.add(btnClientes);
@@ -94,8 +112,14 @@ public class VideogamesView extends JFrame {
 		btnVideojuegos.setBounds(10, 128, 237, 100);
 		btnVideojuegos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				dispose();
-				AdministradorJuegos(); // Abre la segunda ventana
+				Runnable tarea = () -> {
+					VideogamesView vv = new VideogamesView();
+					vv.AdministradorJuegos(); // Abre la segunda ventana
+					dispose();
+				};
+
+				// recibe el label donde esta el gif y la tarea a ejecutar
+				new LoadingFrame(labelGif, tarea).show();
 			}
 		});
 		panelIzq.add(btnVideojuegos);
@@ -107,9 +131,14 @@ public class VideogamesView extends JFrame {
 		btnRentaYCompra.setBounds(10, 242, 237, 100);
 		btnRentaYCompra.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				dispose();
-				TransactionView tv = new TransactionView();
-				tv.AdministradorRentaCompra(); // Abre la segunda ventana
+				Runnable tarea = () -> {
+					TransactionView tv = new TransactionView();
+					tv.AdministradorRentaCompra(); // Abre la segunda ventana
+					dispose();
+				};
+
+				// recibe el label donde esta el gif y la tarea a ejecutar
+				new LoadingFrame(labelGif, tarea).show();
 			}
 		});
 		panelIzq.add(btnRentaYCompra);
@@ -121,9 +150,14 @@ public class VideogamesView extends JFrame {
 		btnNuevaOperacion.setBounds(10, 364, 237, 100);
 		btnNuevaOperacion.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				dispose();
-				PromotionsView pv = new PromotionsView();
-				pv.NuevaOperacion(); // Abre la segunda ventana
+				Runnable tarea = () -> {
+					PromotionsView pv = new PromotionsView();
+					pv.NuevaOperacion(); // Abre la segunda ventana
+					dispose();
+				};
+
+				// recibe el label donde esta el gif y la tarea a ejecutar
+				new LoadingFrame(labelGif, tarea).show();
 			}
 		});
 		panelIzq.add(btnNuevaOperacion);
@@ -156,11 +190,15 @@ public class VideogamesView extends JFrame {
 		registros.setFont(new Font("Calibri", Font.BOLD, 16));
 		registros.setBackground(new Color(38, 60, 84));
 		registros.addActionListener(e -> {
-//			RegistroJuegos(); // Abre la segunda ventana
-			
-			dispose(); // Cierra la ventana actual
-			VideogamesController lt = new VideogamesController();
-			lt.indexVideoGames();
+			Runnable tarea = () -> {
+				VideogamesController lt = new VideogamesController();
+				lt.indexVideoGames();
+				dispose();
+			};
+
+			// recibe el label donde esta el gif y la tarea a ejecutar
+			new LoadingFrame(labelGif, tarea).show();
+
 		});
 
 		JButton btnAgregarVideojuegos = new JButton("<html><center>AGREGAR VIDEOJUEGOS<html>");
@@ -169,10 +207,15 @@ public class VideogamesView extends JFrame {
 		btnAgregarVideojuegos.setBackground(new Color(38, 60, 84));
 		btnAgregarVideojuegos.setBounds(442, 261, 206, 100);
 		btnAgregarVideojuegos.addActionListener(e -> {
-			dispose();
-			VideogamesView vgm = new VideogamesView();
-			vgm.AgregarJuego();
-			
+			Runnable tarea = () -> {
+				VideogamesView vgm = new VideogamesView();
+				vgm.AgregarJuego();
+				dispose();
+			};
+
+			// recibe el label donde esta el gif y la tarea a ejecutar
+			new LoadingFrame(labelGif, tarea).show();
+
 		});
 		panelCentral.add(btnAgregarVideojuegos);
 
@@ -203,6 +246,7 @@ public class VideogamesView extends JFrame {
 
 		setVisible(true);
 	}
+	
 
 
 	public void RegistroJuegos( List<VideoGames> videoGamesList) {
@@ -223,6 +267,18 @@ public class VideogamesView extends JFrame {
 		JLayeredPane layeredPane = new JLayeredPane();
 		layeredPane.setPreferredSize(new Dimension(900, 650));
 		setContentPane(layeredPane);
+		
+		ImageIcon gifIcon = new ImageIcon(getClass().getResource("/images/loading.gif"));
+		JLabel labelGif = new JLabel(gifIcon);
+
+		// Tamaño del GIF
+		int gifWidth = gifIcon.getIconWidth();
+		int gifHeight = gifIcon.getIconHeight();
+
+		// Centrar el GIF en la ventana de 900x650
+		labelGif.setBounds((900 - gifWidth) / 2, (650 - gifHeight) / 2, gifWidth, gifHeight);
+		labelGif.setVisible(false);
+		layeredPane.add(labelGif, JLayeredPane.PALETTE_LAYER);
 
 		// 1. PANEL BLANCO (fondo completo)
 		JPanel panelIzq = new JPanel();
@@ -237,10 +293,14 @@ public class VideogamesView extends JFrame {
 		btnClientes.setForeground(Color.WHITE);
 		btnClientes.setBounds(10, 11, 237, 100);
 		btnClientes.addActionListener(e -> {
-			dispose(); // Cierra la ventana actual
-			UserViews uv = new UserViews();
-			uv.AdministradorCliente();
-			; // Cierra la ventana actual
+			Runnable tarea = () -> {
+				UserViews uv = new UserViews();
+				uv.AdministradorCliente(); // Abre la segunda ventana
+				dispose();
+			};
+
+			// recibe el label donde esta el gif y la tarea a ejecutar
+			new LoadingFrame(labelGif, tarea).show();
 		});
 		panelIzq.add(btnClientes);
 
@@ -251,8 +311,14 @@ public class VideogamesView extends JFrame {
 		btnVideojuegos.setBounds(10, 128, 237, 100);
 		panelIzq.add(btnVideojuegos);
 		btnVideojuegos.addActionListener(e -> {
-			dispose(); // Cierra la ventana actual
-			AdministradorJuegos();
+			Runnable tarea = () -> {
+				VideogamesView vv = new VideogamesView();
+				vv.AdministradorJuegos(); // Abre la segunda ventana
+				dispose();
+			};
+
+			// recibe el label donde esta el gif y la tarea a ejecutar
+			new LoadingFrame(labelGif, tarea).show();
 		});
 
 		JButton btnRentaYCompra = new JButton("RENTA Y COMPRA");
@@ -262,9 +328,14 @@ public class VideogamesView extends JFrame {
 		btnRentaYCompra.setBounds(10, 242, 237, 100);
 		panelIzq.add(btnRentaYCompra);
 		btnRentaYCompra.addActionListener(e -> {
-			dispose(); // Cierra la ventana actual
-			TransactionView tv = new TransactionView();
-			tv.AdministradorRentaCompra();
+			Runnable tarea = () -> {
+				TransactionView tv = new TransactionView();
+				tv.AdministradorRentaCompra(); // Abre la segunda ventana
+				dispose();
+			};
+
+			// recibe el label donde esta el gif y la tarea a ejecutar
+			new LoadingFrame(labelGif, tarea).show();
 		});
 
 		JButton btnClientes_3 = new JButton("NUEVA OPERACIÓN");
@@ -274,9 +345,14 @@ public class VideogamesView extends JFrame {
 		btnClientes_3.setBounds(10, 364, 237, 100);
 		panelIzq.add(btnClientes_3);
 		btnClientes_3.addActionListener(e -> {
-			dispose(); // Cierra la ventana actual
-			PromotionsView pv = new PromotionsView();
-			pv.NuevaOperacion();
+			Runnable tarea = () -> {
+				PromotionsView pv = new PromotionsView();
+				pv.NuevaOperacion(); // Abre la segunda ventana
+				dispose();
+			};
+
+			// recibe el label donde esta el gif y la tarea a ejecutar
+			new LoadingFrame(labelGif, tarea).show();
 		});
 
 		// 2. PANEL GRIS CENTRAL
@@ -459,6 +535,8 @@ public class VideogamesView extends JFrame {
 		}
 	}
 
+
+
 	public void DetallesJuego(VideoGames videogames) {
 	    // Configuración de la ventana
 	    setTitle("Detalles Videojuego");
@@ -470,6 +548,18 @@ public class VideogamesView extends JFrame {
 	    JLayeredPane layeredPane = new JLayeredPane();
 	    layeredPane.setPreferredSize(new Dimension(900, 650));
 	    setContentPane(layeredPane);
+	    
+	    ImageIcon gifIcon = new ImageIcon(getClass().getResource("/images/loading.gif"));
+		JLabel labelGif = new JLabel(gifIcon);
+
+		// Tamaño del GIF
+		int gifWidth = gifIcon.getIconWidth();
+		int gifHeight = gifIcon.getIconHeight();
+
+		// Centrar el GIF en la ventana de 900x650
+		labelGif.setBounds((900 - gifWidth) / 2, (650 - gifHeight) / 2, gifWidth, gifHeight);
+		labelGif.setVisible(false);
+		layeredPane.add(labelGif, JLayeredPane.PALETTE_LAYER);
 
 	    // Panel central gris
 	    JPanel panelCentral = new JPanel();
@@ -605,9 +695,15 @@ public class VideogamesView extends JFrame {
 	    btnEditar.setBounds(394, 417, 183, 33); // Ajusta posición si es necesario
 	    btnEditar.addActionListener(new ActionListener() {
 	        public void actionPerformed(ActionEvent e) {
-	        	dispose();
-	        	VideogamesController vc = new VideogamesController();
+	        	Runnable tarea = () -> {
+					VideogamesController vc = new VideogamesController();
 			    vc.updateVideogames2(videogames.getId());
+					dispose();
+				};
+
+				// recibe el label donde esta el gif y la tarea a ejecutar
+				new LoadingFrame(labelGif, tarea).show();
+
 	        }
 	        
 	    });
@@ -672,10 +768,15 @@ public class VideogamesView extends JFrame {
 		panelCentral.add(btnRegresar);
 		btnRegresar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				dispose();
-				VideogamesController vc = new VideogamesController();
+				Runnable tarea = () -> {
+					VideogamesController vc = new VideogamesController();
 
 				vc.indexVideoGames();
+					dispose();
+				};
+
+				// recibe el label donde esta el gif y la tarea a ejecutar
+				new LoadingFrame(labelGif, tarea).show();
 
 			}
 		});
@@ -690,6 +791,7 @@ public class VideogamesView extends JFrame {
 	    setVisible(true);
 	}
 
+	
 	public void EditarJuego(VideoGames videogames) {
 	    // Declaración de campos de texto con nombres descriptivos
 	    JTextField txtNombreJuego;
@@ -712,6 +814,18 @@ public class VideogamesView extends JFrame {
 	    JLayeredPane layeredPane = new JLayeredPane();
 	    layeredPane.setPreferredSize(new Dimension(1024, 576));
 	    setContentPane(layeredPane);
+	    
+	    ImageIcon gifIcon = new ImageIcon(getClass().getResource("/images/loading.gif"));
+		JLabel labelGif = new JLabel(gifIcon);
+
+		// Tamaño del GIF
+		int gifWidth = gifIcon.getIconWidth();
+		int gifHeight = gifIcon.getIconHeight();
+
+		// Centrar el GIF en la ventana de 900x650
+		labelGif.setBounds((900 - gifWidth) / 2, (650 - gifHeight) / 2, gifWidth, gifHeight);
+		labelGif.setVisible(false);
+		layeredPane.add(labelGif, JLayeredPane.PALETTE_LAYER);
 
 	    // Panel central gris
 	    JPanel panelCentral = new JPanel();
@@ -982,10 +1096,16 @@ public class VideogamesView extends JFrame {
 	    btnCancelar.setBackground(Color.decode("#B82F2F"));
 	    btnCancelar.setForeground(Color.WHITE);
 	    btnCancelar.setBounds(300, 420, 150, 30);
-	    btnCancelar.addActionListener(e -> {
-	        dispose();
-	        VideogamesController vc = new VideogamesController();
-	        vc.updateVideogames(videogames.getId());
+		btnCancelar.addActionListener(e -> {
+			Runnable tarea = () -> {
+				VideogamesController vc = new VideogamesController();
+				vc.updateVideogames(videogames.getId());
+				dispose();
+			};
+
+			// recibe el label donde esta el gif y la tarea a ejecutar
+			new LoadingFrame(labelGif, tarea).show();
+
 	    });
 	    panelCentral.add(btnCancelar);
 
@@ -1115,12 +1235,17 @@ public class VideogamesView extends JFrame {
 	                    Disponibilidad, clasificacion,Genero,ExistenciasDisponibles, 
 	                    PrecioRenta, PrecioVenta, DesarrolladoPor, Descripcion);
 	            
-	            if (actualizado) {
-	                JOptionPane.showMessageDialog(this, "Cambios guardados exitosamente");
-	                dispose();
-	                
-	                VideogamesController vc = new VideogamesController();
-	                vc.updateVideogames(videogames.getId());
+				if (actualizado) {
+					JOptionPane.showMessageDialog(this, "Cambios guardados exitosamente");
+					Runnable tarea = () -> {
+						VideogamesController vc = new VideogamesController();
+						vc.updateVideogames(videogames.getId());
+						dispose();
+	    			};
+
+	    			// recibe el label donde esta el gif y la tarea a ejecutar
+	    			new LoadingFrame(labelGif, tarea).show();
+
 	            } else {
 	                JOptionPane.showMessageDialog(this, "Error al guardar los cambios", "Error", JOptionPane.ERROR_MESSAGE);
 	            }
@@ -1167,6 +1292,18 @@ public class VideogamesView extends JFrame {
 	    JLayeredPane layeredPane = new JLayeredPane();
 	    layeredPane.setPreferredSize(new Dimension(1024, 576));
 	    setContentPane(layeredPane);
+	    
+	    ImageIcon gifIcon = new ImageIcon(getClass().getResource("/images/loading.gif"));
+		JLabel labelGif = new JLabel(gifIcon);
+
+		// Tamaño del GIF
+		int gifWidth = gifIcon.getIconWidth();
+		int gifHeight = gifIcon.getIconHeight();
+
+		// Centrar el GIF en la ventana de 900x650
+		labelGif.setBounds((900 - gifWidth) / 2, (650 - gifHeight) / 2, gifWidth, gifHeight);
+		labelGif.setVisible(false);
+		layeredPane.add(labelGif, JLayeredPane.PALETTE_LAYER);
 
 	    // Panel central gris
 	    JPanel panelCentral = new JPanel();
@@ -1522,9 +1659,15 @@ public class VideogamesView extends JFrame {
 
 		        if (exito) {
 		            JOptionPane.showMessageDialog(this, "Juego agregado exitosamente");
-		            dispose();
-		            VideogamesController vc = new VideogamesController();
+		            Runnable tarea = () -> {
+						VideogamesController vc = new VideogamesController();
 		            vc.indexVideoGames();
+						dispose();
+					};
+
+					// recibe el label donde esta el gif y la tarea a ejecutar
+					new LoadingFrame(labelGif, tarea).show();
+
 		        } else {
 		            JOptionPane.showMessageDialog(this, "Error al agregar el juego", "Error",
 		                    JOptionPane.ERROR_MESSAGE);
@@ -1545,8 +1688,14 @@ public class VideogamesView extends JFrame {
 		btnCancelar.setFont(new Font("Arial", Font.BOLD, 14));
 		btnCancelar.setBounds(300, 420, 150, 30);
 		btnCancelar.addActionListener(e -> {
-			dispose();
-			AdministradorJuegos();
+			Runnable tarea = () -> {
+				VideogamesView vv = new VideogamesView();
+				vv.AdministradorJuegos(); // Abre la segunda ventana
+				dispose();
+			};
+
+			// recibe el label donde esta el gif y la tarea a ejecutar
+			new LoadingFrame(labelGif, tarea).show();
 		});
 		panelCentral.add(btnCancelar);
 		

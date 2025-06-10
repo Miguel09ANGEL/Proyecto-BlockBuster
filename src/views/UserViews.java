@@ -61,6 +61,7 @@ import models.User;
 import models.UsersModel;
 import models.VideoGames;
 import models.VideoGamesModel;
+import utils.GifLoading;
 import utils.LoadingFrame;
 
 public class UserViews extends JFrame {
@@ -81,17 +82,21 @@ public class UserViews extends JFrame {
 		layeredPane.setPreferredSize(new Dimension(900, 650));
 		setContentPane(layeredPane);
 
-		ImageIcon gifIcon = new ImageIcon(getClass().getResource("/images/loading.gif"));
-		JLabel labelGif = new JLabel(gifIcon);
+//		ImageIcon gifIcon = new ImageIcon(getClass().getResource("/images/loading.gif"));
+//		JLabel labelGif = new JLabel(gifIcon);
+//
+//		// Tamaño del GIF
+//		int gifWidth = gifIcon.getIconWidth();
+//		int gifHeight = gifIcon.getIconHeight();
+//
+//		// Centrar el GIF en la ventana de 900x650
+//		labelGif.setBounds((900 - gifWidth) / 2, (650 - gifHeight) / 2, gifWidth, gifHeight);
+//		labelGif.setVisible(false);
+//		layeredPane.add(labelGif, JLayeredPane.PALETTE_LAYER);
+		
+		// solo usa este
+		JLabel labelGif = GifLoading.crearLabelGif(layeredPane);
 
-		// Tamaño del GIF
-		int gifWidth = gifIcon.getIconWidth();
-		int gifHeight = gifIcon.getIconHeight();
-
-		// Centrar el GIF en la ventana de 900x650
-		labelGif.setBounds((900 - gifWidth) / 2, (650 - gifHeight) / 2, gifWidth, gifHeight);
-		labelGif.setVisible(false);
-		layeredPane.add(labelGif, JLayeredPane.PALETTE_LAYER);
 
 		// 3. PANEL ROJO SUPERIOR (barra de título)
 		JPanel barraRoja = new JPanel();

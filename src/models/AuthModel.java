@@ -8,17 +8,16 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import utils.DatabaseConfg;
+
 public class AuthModel {
 
 	private List<Admins> administrators  = new ArrayList<>();
-
-	String url = "jdbc:mysql://sql.freedb.tech:3306/freedb_Base_de_datos_renta?useSSL=false";
-	String user = "freedb_G_user";
-	String password = "%eeFW9csb4$?Dcj";
-
-//	String url = "jdbc:mysql://127.0.0.1:3306/base_de_datos_renta";
-//	String user = "root";
-//	String password = "";
+	DatabaseConfg credentials = new DatabaseConfg();
+	
+	String url = credentials.URL;
+	String user = credentials.USER;
+	String password = credentials.PASSWORD;
 	
 	public List<Admins> getAll() {
         String query = "SELECT * FROM administrators";

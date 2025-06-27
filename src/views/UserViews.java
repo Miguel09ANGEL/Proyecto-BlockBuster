@@ -81,22 +81,9 @@ public class UserViews extends JFrame {
 		JLayeredPane layeredPane = new JLayeredPane();
 		layeredPane.setPreferredSize(new Dimension(900, 650));
 		setContentPane(layeredPane);
-
-//		ImageIcon gifIcon = new ImageIcon(getClass().getResource("/images/loading.gif"));
-//		JLabel labelGif = new JLabel(gifIcon);
-//
-//		// Tamaño del GIF
-//		int gifWidth = gifIcon.getIconWidth();
-//		int gifHeight = gifIcon.getIconHeight();
-//
-//		// Centrar el GIF en la ventana de 900x650
-//		labelGif.setBounds((900 - gifWidth) / 2, (650 - gifHeight) / 2, gifWidth, gifHeight);
-//		labelGif.setVisible(false);
-//		layeredPane.add(labelGif, JLayeredPane.PALETTE_LAYER);
 		
 		// solo usa este
 		JLabel labelGif = GifLoading.crearLabelGif(layeredPane);
-
 
 		// 3. PANEL ROJO SUPERIOR (barra de título)
 		JPanel barraRoja = new JPanel();
@@ -272,6 +259,7 @@ public class UserViews extends JFrame {
 			ex.printStackTrace();
 		}
 		// Configuración básica de la ventana
+		
 		setTitle("Registro de Clientes");
 		setSize(1024, 576);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -1065,28 +1053,28 @@ public class UserViews extends JFrame {
 		panelCentral.add(lblFoto);
 
 		// SE COMENTO YA QUE LA LOGICA PARA GUARDAR NO SEA IMPLEMENTADO	
-//		// 2) Botón para cargar imagen
-//		JButton btnCargarFoto = new JButton("CARGAR FOTO");
-//		btnCargarFoto.setBounds(84, 320, 150, 25);
-//		btnCargarFoto.addActionListener(new ActionListener() {
-//			@Override
-//			public void actionPerformed(ActionEvent e) {
-//				JFileChooser fileChooser = new JFileChooser();
-//				FileNameExtensionFilter filtrado = new FileNameExtensionFilter("JPG, PNG & GIF", "jpg", "png", "gif");
-//				fileChooser.setFileFilter(filtrado);
-//
-//				int respuesta = fileChooser.showOpenDialog(btnCargarFoto);
-//				if (respuesta == JFileChooser.APPROVE_OPTION) {
-//					String ruta = fileChooser.getSelectedFile().getPath();
-//
-//					// Escalamos la imagen para caber en el JLabel
-//					Image img = new ImageIcon(ruta).getImage().getScaledInstance(lblFoto.getWidth(),
-//							lblFoto.getHeight(), Image.SCALE_SMOOTH);
-//					lblFoto.setIcon(new ImageIcon(img));
-//				}
-//			}
-//		});
-//		panelCentral.add(btnCargarFoto);
+		// 2) Botón para cargar imagen
+		JButton btnCargarFoto = new JButton("CARGAR FOTO");
+		btnCargarFoto.setBounds(84, 320, 150, 25);
+		btnCargarFoto.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				JFileChooser fileChooser = new JFileChooser();
+				FileNameExtensionFilter filtrado = new FileNameExtensionFilter("JPG, PNG & GIF", "jpg", "png", "gif");
+				fileChooser.setFileFilter(filtrado);
+
+				int respuesta = fileChooser.showOpenDialog(btnCargarFoto);
+				if (respuesta == JFileChooser.APPROVE_OPTION) {
+					String ruta = fileChooser.getSelectedFile().getPath();
+
+					// Escalamos la imagen para caber en el JLabel
+					Image img = new ImageIcon(ruta).getImage().getScaledInstance(lblFoto.getWidth(),
+							lblFoto.getHeight(), Image.SCALE_SMOOTH);
+					lblFoto.setIcon(new ImageIcon(img));
+				}
+			}
+		});
+		panelCentral.add(btnCargarFoto);
 
 		// -------- SECCIÓN IZQUIERDA --------
 
@@ -1401,28 +1389,28 @@ public class UserViews extends JFrame {
 		panelCentral.add(lblFoto);
 
 //		 SE COMENTO YA QUE LA LOGICA PARA GUARDAR NO SEA IMPLEMENTADO
-//		// 2) Botón para cargar imagen
-//		JButton btnCargarFoto = new JButton("CARGAR FOTO");
-//		btnCargarFoto.setBounds(84, 320, 150, 25);
-//		btnCargarFoto.addActionListener(new ActionListener() {
-//			@Override
-//			public void actionPerformed(ActionEvent e) {
-//				JFileChooser fileChooser = new JFileChooser();
-//				FileNameExtensionFilter filtrado = new FileNameExtensionFilter("JPG, PNG & GIF", "jpg", "png", "gif");
-//				fileChooser.setFileFilter(filtrado);
-//
-//				int respuesta = fileChooser.showOpenDialog(btnCargarFoto);
-//				if (respuesta == JFileChooser.APPROVE_OPTION) {
-//					String ruta = fileChooser.getSelectedFile().getPath();
-//
-//					// Escalamos la imagen para caber en el JLabel
-//					Image img = new ImageIcon(ruta).getImage().getScaledInstance(lblFoto.getWidth(),
-//							lblFoto.getHeight(), Image.SCALE_SMOOTH);
-//					lblFoto.setIcon(new ImageIcon(img));
-//				}
-//			}
-//		});
-//		panelCentral.add(btnCargarFoto);
+		// 2) Botón para cargar imagen
+		JButton btnCargarFoto = new JButton("CARGAR FOTO");
+		btnCargarFoto.setBounds(84, 320, 150, 25);
+		btnCargarFoto.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				JFileChooser fileChooser = new JFileChooser();
+				FileNameExtensionFilter filtrado = new FileNameExtensionFilter("JPG, PNG & GIF", "jpg", "png", "gif");
+				fileChooser.setFileFilter(filtrado);
+
+				int respuesta = fileChooser.showOpenDialog(btnCargarFoto);
+				if (respuesta == JFileChooser.APPROVE_OPTION) {
+					String ruta = fileChooser.getSelectedFile().getPath();
+
+					// Escalamos la imagen para caber en el JLabel
+					Image img = new ImageIcon(ruta).getImage().getScaledInstance(lblFoto.getWidth(),
+							lblFoto.getHeight(), Image.SCALE_SMOOTH);
+					lblFoto.setIcon(new ImageIcon(img));
+				}
+			}
+		});
+		panelCentral.add(btnCargarFoto);
 
 		// Etiqueta y campo para Nombre
 		JLabel lblNombre = new JLabel("Nombre:");

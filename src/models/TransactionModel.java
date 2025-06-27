@@ -6,6 +6,7 @@ import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Types;
 import java.util.ArrayList;
@@ -94,50 +95,107 @@ public class TransactionModel {
 
 	// crea un renta o venta e la bd opteniendo el id de el cliente y el videojuego
 	public boolean createTransaction(int customerId, int videoGameId, String transactionType, Date returnDate,
-			BigDecimal price, String status) {
-		String query = "INSERT INTO transactions (customer_id, video_game_id, transaction_type, "
-				+ "transaction_date, return_date, price, status) " + "VALUES (?, ?, ?, ?, ?, ?, ?)";
+	        BigDecimal price, String status) {
+	    // Consultas SQL
+	    String transactionQuery = "INSERT INTO transactions (customer_id, video_game_id, transaction_type, "
+	            + "transaction_date, return_date, price, status) VALUES (?, ?, ?, ?, ?, ?, ?)";
+	    
+	    String updateStockQuery = "UPDATE video_games SET available_stock = available_stock - 1 WHERE id = ?";
+	    String verifyStockQuery = "SELECT available_stock FROM video_games WHERE id = ? FOR UPDATE";
+	    String verifyGameQuery = "SELECT id FROM video_games WHERE id = ?";
 
-		Connection conn = null;
-		PreparedStatement pstmt = null;
+	    Connection conn = null;
+	    PreparedStatement pstmt = null;
+	    boolean success = false;
 
-		try {
-			Class.forName("com.mysql.cj.jdbc.Driver");
-			conn = DriverManager.getConnection(url, user, password);
-			pstmt = conn.prepareStatement(query);
+	    try {
+	        // 1. Establecer conexión
+	        Class.forName("com.mysql.cj.jdbc.Driver");
+	        conn = DriverManager.getConnection(url, user, password);
+	        conn.setAutoCommit(false);
 
-			pstmt.setInt(1, customerId);
-			pstmt.setInt(2, videoGameId);
-			pstmt.setString(3, transactionType);
-			pstmt.setDate(4, new java.sql.Date(System.currentTimeMillis()));
+	        System.out.println("=== INICIO DE TRANSACCIÓN ===");
+	        System.out.println("Tipo de transacción recibido: '" + transactionType + "'");
 
-			if (returnDate != null) {
-				pstmt.setDate(5, new java.sql.Date(returnDate.getTime()));
-			} else {
-				pstmt.setNull(5, Types.DATE);
-			}
+	        // 2. Si es rental (alquiler), verificar y actualizar stock
+	        if (transactionType != null && transactionType.equalsIgnoreCase("rental")) {
+	            System.out.println("Procesando una RENTA - verificando stock...");
+	            
+	            // Verificar stock
+	            pstmt = conn.prepareStatement(verifyStockQuery);
+	            pstmt.setInt(1, videoGameId);
+	            ResultSet rs = pstmt.executeQuery();
+	            
+	            if (rs.next()) {
+	                int currentStock = rs.getInt("available_stock");
+	                System.out.println("Stock actual: " + currentStock);
+	                
+	                if (currentStock <= 0) {
+	                    System.out.println("ERROR: Stock insuficiente");
+	                    conn.rollback();
+	                    return false;
+	                }
 
-			pstmt.setBigDecimal(6, price);
-			pstmt.setString(7, status);
+	                // Actualizar stock
+	                pstmt = conn.prepareStatement(updateStockQuery);
+	                pstmt.setInt(1, videoGameId);
+	                int updated = pstmt.executeUpdate();
+	                
+	                if (updated == 1) {
+	                    System.out.println("Stock actualizado correctamente");
+	                } else {
+	                    System.out.println("ERROR: No se pudo actualizar el stock");
+	                    conn.rollback();
+	                    return false;
+	                }
+	            }
+	        } else {
+	            System.out.println("Transacción de tipo: " + transactionType + " - No se actualiza stock");
+	        }
 
-			int affectedRows = pstmt.executeUpdate();
-			return affectedRows > 0;
+	        // 3. Crear el registro de transacción
+	        System.out.println("Creando registro de transacción...");
+	        pstmt = conn.prepareStatement(transactionQuery);
+	        pstmt.setInt(1, customerId);
+	        pstmt.setInt(2, videoGameId);
+	        pstmt.setString(3, transactionType.toLowerCase()); // Asegurar minúsculas para el ENUM
+	        pstmt.setTimestamp(4, new java.sql.Timestamp(System.currentTimeMillis()));
+	        pstmt.setTimestamp(5, returnDate != null ? new java.sql.Timestamp(returnDate.getTime()) : null);
+	        pstmt.setBigDecimal(6, price);
+	        pstmt.setString(7, status.toLowerCase()); // Asegurar minúsculas para el ENUM
 
-		} catch (Exception e) {
-			e.printStackTrace();
-			return false;
-		} finally {
-			try {
-				if (pstmt != null)
-					pstmt.close();
-				if (conn != null)
-					conn.close();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
+	        int created = pstmt.executeUpdate();
+	        if (created == 1) {
+	            conn.commit();
+	            System.out.println("Transacción completada con éxito!");
+	            success = true;
+	        } else {
+	            conn.rollback();
+	            System.out.println("ERROR: No se pudo crear la transacción");
+	        }
+
+	    } catch (Exception e) {
+	        System.out.println("ERROR: " + e.getMessage());
+	        try {
+	            if (conn != null) conn.rollback();
+	        } catch (Exception ex) {
+	            System.out.println("ERROR en rollback: " + ex.getMessage());
+	        }
+	    } finally {
+	        try {
+	            if (pstmt != null) pstmt.close();
+	            if (conn != null) {
+	                conn.setAutoCommit(true);
+	                conn.close();
+	            }
+	        } catch (Exception e) {
+	            System.out.println("ERROR cerrando conexiones: " + e.getMessage());
+	        }
+	    }
+
+	    return success;
 	}
-
+	
 	// aqui se optiene toda la informacion de renta realizado por un cliente
 	public List<Transaction> getRentalsByUser(int customerId) {
 		List<Transaction> transacciones = new ArrayList<>();

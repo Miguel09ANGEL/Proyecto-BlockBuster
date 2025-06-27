@@ -47,9 +47,6 @@ import utils.GifLoading;
 import utils.LoadingFrame;
 
 public class AuthViews extends JFrame {
-	
-	// se manda a llamar a la clase UsersModel
-	UsersModel um = new UsersModel();
 
 	public AuthViews() {
 		// TODO Auto-generated constructor stub
@@ -77,11 +74,6 @@ public class AuthViews extends JFrame {
 		setSize(1024, 576);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLocationRelativeTo(null);
-
-//		// Usamos JLayeredPane para superponer componentes
-//		JLayeredPane layeredPane = new JLayeredPane();
-//		layeredPane.setPreferredSize(new Dimension(900, 650));
-//		setContentPane(layeredPane);
 
 		// 1. PANEL BLANCO (fondo completo)
 		JPanel fondoBlanco = new JPanel();
@@ -187,29 +179,6 @@ public class AuthViews extends JFrame {
 		});
 
 		panelCentral.add(acceder);
-
-		//lo de adminitrador lo haremos despues
-		
-//		JLabel lblagregarNuevoAdministrador = new JLabel("¿Agregar nuevo administrador?");
-//		lblagregarNuevoAdministrador.setHorizontalAlignment(SwingConstants.CENTER);
-//		lblagregarNuevoAdministrador.setFont(new Font("SansSerif", Font.BOLD, 14));
-//		lblagregarNuevoAdministrador.setBounds(27, 410, 224, 26);
-//		panelCentral.add(lblagregarNuevoAdministrador);
-//
-//		JButton btnAgregarAqui = new JButton("Agregar aqui");
-//		btnAgregarAqui.setForeground(Color.BLACK);
-//		btnAgregarAqui.setFont(new Font("Calibri", Font.BOLD, 15));
-//		btnAgregarAqui.setBackground(Color.decode("#F2F2F2"));
-//		btnAgregarAqui.setBounds(247, 414, 111, 26);
-//		panelCentral.add(btnAgregarAqui);
-//		btnAgregarAqui.addActionListener(new ActionListener() {
-//			public void actionPerformed(ActionEvent e) {
-//				dispose(); // Cierra la ventana actual
-//				AuthViews codigoregistro= new AuthViews();
-//				codigoregistro.CodigoRegistro();
-//			}
-//		});
-//		panelCentral.add(btnAgregarAqui);
 
 		// 3. PANEL ROJO SUPERIOR (barra de título)
 		JPanel barraRoja = new JPanel();

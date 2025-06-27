@@ -753,7 +753,7 @@ public class TransactionView extends JFrame {
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
-	}
+	} 
 
 	public void SeleccionClienteRenta(VideoGames videojuegos ,List<User> usuarios) {
 

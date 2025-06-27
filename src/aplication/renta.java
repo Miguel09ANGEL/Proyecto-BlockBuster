@@ -10,9 +10,6 @@ public class renta {
 		AuthController app = new AuthController();
 		app.login();
 		
-		
-//		app.framePrueba();
-
 	}
 
 }

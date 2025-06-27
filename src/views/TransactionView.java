@@ -1816,6 +1816,8 @@ public class TransactionView extends JFrame {
 		            btnCancelar.setVisible(false);// Aqui Oculta Cancelar y aparece Regresar
 		            btnRegresar.setVisible(true);
 		            
+		            btnConfirmacionCompra.setEnabled(false); // se desabilita el boton confirmar renta
+		            
 		            panelCentral.revalidate();
 		            panelCentral.repaint();///////
 				
@@ -2687,6 +2689,8 @@ public class TransactionView extends JFrame {
 					
 					btnCancelar.setVisible(false);// Aqui Oculta Cancelar y aparece Regresar
 		            btnRegresar.setVisible(true);
+		            
+		            btnConfirmacionCompra.setEnabled(false); // se desabilita el boton confirmar venta
 		            
 		            panelCentral.revalidate();
 		            panelCentral.repaint();///////

@@ -118,7 +118,7 @@ public class TransactionModel {
 	        System.out.println("Tipo de transacción recibido: '" + transactionType + "'");
 
 	        // 2. Si es rental (alquiler), verificar y actualizar stock
-	        if (transactionType != null && transactionType.equalsIgnoreCase("rental")) {
+	        if (transactionType != null && (transactionType.equalsIgnoreCase("rental") || transactionType.equalsIgnoreCase("sale"))) {
 	            System.out.println("Procesando una RENTA - verificando stock...");
 	            
 	            // Verificar stock

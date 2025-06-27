@@ -342,23 +342,63 @@ public class TransactionView extends JFrame {
 		panelCentral.add(lblTitulo);
 
 		// Modelo de tabla con columnas
+		// Modelo de tabla con columnas
 		String[] columnNames = { "ID", "Nombre", "Plataforma", "Existencias", "Precio Renta", "Clasificación" };
 		DefaultTableModel model = new DefaultTableModel(columnNames, 0) {
-			@Override
-			public boolean isCellEditable(int row, int column) {
-				return false; // Hacer que la tabla no sea editable
-			}
+		    @Override
+		    public boolean isCellEditable(int row, int column) {
+		        return false; // Hacer que la tabla no sea editable
+		    }
 		};
 
 		// Llenar la tabla con datos de videojuegos
 		for (VideoGames juego : videoGamesList) {
-			Object[] rowData = { juego.getId(), juego.getname(), juego.getplatform(),
-					juego.getavailableStock(), "$" + juego.getrentPrice(), juego.getclassification() };
-			model.addRow(rowData);
+		    Object[] rowData = { juego.getId(), juego.getname(), juego.getplatform(),
+		            juego.getavailableStock(), "$" + juego.getrentPrice(), juego.getclassification() };
+		    model.addRow(rowData);
 		}
 
 		// Crear la tabla con el modelo
 		JTable table = new JTable(model);
+
+		// Configurar renderizador para resaltar juegos sin stock
+		table.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
+		    @Override
+		    public Component getTableCellRendererComponent(JTable table, Object value, 
+		            boolean isSelected, boolean hasFocus, int row, int column) {
+		        Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+		        
+		        // Obtener el valor de existencias (columna 3)
+		        int stock = Integer.parseInt(table.getModel().getValueAt(row, 3).toString());
+		        
+		        if (stock <= 0) {
+		            c.setBackground(new Color(255, 200, 200)); // Fondo rojo claro
+		            c.setForeground(Color.GRAY); // Texto gris
+		        } else {
+		            c.setBackground(isSelected ? table.getSelectionBackground() : table.getBackground());
+		            c.setForeground(isSelected ? table.getSelectionForeground() : table.getForeground());
+		        }
+		        
+		        return c;
+		    }
+		});
+
+		// Configurar selector de filas con validación de stock
+		table.getSelectionModel().addListSelectionListener(e -> {
+		    if (!e.getValueIsAdjusting()) {
+		        int selectedRow = table.getSelectedRow();
+		        if (selectedRow >= 0) {
+		            int stock = Integer.parseInt(table.getModel().getValueAt(selectedRow, 3).toString());
+		            if (stock <= 0) {
+		                JOptionPane.showMessageDialog(null, 
+		                    "Este juego no tiene existencias disponibles", 
+		                    "Advertencia", 
+		                    JOptionPane.WARNING_MESSAGE);
+		                table.clearSelection(); // Deseleccionar automáticamente
+		            }
+		        }
+		    }
+		});
 
 		// Configurar apariencia de la tabla
 		table.setFont(new Font("Arial", Font.PLAIN, 14));
@@ -377,7 +417,6 @@ public class TransactionView extends JFrame {
 		JScrollPane scrollPane = new JScrollPane(table);
 		scrollPane.setBounds(26, 80, 680, 330);
 		panelCentral.add(scrollPane);
-
 		// Buscador icon
 		ImageIcon Buscadorpng = new ImageIcon(getClass().getResource("/images/Buscador.png"));
 		Image imagenEscalada = Buscadorpng.getImage().getScaledInstance(30, 29, Image.SCALE_SMOOTH);

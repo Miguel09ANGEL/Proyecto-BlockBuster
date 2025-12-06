@@ -37,7 +37,7 @@ Cada usuario puede ver un historial detallado de sus transacciones anteriores.
 ## 📸 Capturas
 
 
-<img width="917" height="741" alt="Captura de pantalla 2025-10-07 173638" src="https://github.com/user-attachments/assets/43df024b-f07c-4185-8abe-b0782a7935b0" alt="Panel Administrador 2" width="400"  />
+<img width="917" height="741" alt="Captura de pantalla 2025-10-07 173638" src="https://github.com/user-attachments/assets/43df024b-f07c-4185-8abe-b0782a7935b0" alt="Panel Administrador 2" width="100"  />
 
 
 <img src="https://github.com/user-attachments/assets/ab1bac6a-207d-4203-b4dd-234accd39004" alt="Panel Administrador 23_05_2025" width="400">
